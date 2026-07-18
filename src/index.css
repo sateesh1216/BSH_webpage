@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+/* Tailwind v4 CSS-first theme: --color-* vars auto-generate
+   bg-primary, text-primary, bg-primary-hover, bg-primary-light, etc. */
+@theme {
+  --color-primary: #155EEF;
+  --color-primary-hover: #004EEB;
+  --color-primary-light: #EFF5FF;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-slate-700 antialiased;
+    background-image:
+      radial-gradient(circle at 80% 15%, rgba(21, 94, 239, 0.12), transparent 40%),
+      radial-gradient(circle at 10% 70%, rgba(21, 94, 239, 0.08), transparent 40%),
+      linear-gradient(180deg, #FFFFFF 0%, #FBFDFF 100%);
+    background-attachment: fixed;
+  }
+}

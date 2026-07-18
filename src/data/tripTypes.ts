@@ -1,0 +1,1 @@
+export const tripTypes: string[] = ["One Way", "Round Trip"];
