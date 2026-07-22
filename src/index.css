@@ -1,13 +1,17 @@
 @import "tailwindcss";
 
-/* Tailwind v4 CSS-first theme: --color-* vars auto-generate
-   bg-primary, text-primary, bg-primary-hover, bg-primary-light, etc. */
+/* -------------------------------------------------------------------------- */
+/* Theme                                                                      */
+/* -------------------------------------------------------------------------- */
 @theme {
   --color-primary: #155EEF;
   --color-primary-hover: #004EEB;
   --color-primary-light: #EFF5FF;
 }
 
+/* -------------------------------------------------------------------------- */
+/* Base                                                                        */
+/* -------------------------------------------------------------------------- */
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -15,10 +19,144 @@
 
   body {
     @apply font-sans text-slate-700 antialiased;
+
     background-image:
-      radial-gradient(circle at 80% 15%, rgba(21, 94, 239, 0.12), transparent 40%),
-      radial-gradient(circle at 10% 70%, rgba(21, 94, 239, 0.08), transparent 40%),
-      linear-gradient(180deg, #FFFFFF 0%, #FBFDFF 100%);
+      radial-gradient(circle at 85% 10%, rgba(21, 94, 239, 0.10), transparent 35%),
+      radial-gradient(circle at 15% 75%, rgba(21, 94, 239, 0.08), transparent 40%),
+      linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+
     background-attachment: fixed;
+    overflow-x: hidden;
+  }
+
+  * {
+    @apply border-slate-200;
+  }
+
+  img {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  ::selection {
+    background: rgba(21, 94, 239, 0.18);
+    color: #155EEF;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Animations                                                                  */
+/* -------------------------------------------------------------------------- */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 25px rgba(21, 94, 239, .18);
+  }
+
+  50% {
+    box-shadow: 0 0 45px rgba(21, 94, 239, .35);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Utilities                                                                   */
+/* -------------------------------------------------------------------------- */
+
+@layer utilities {
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-fade-up {
+    animation: fadeUp .8s ease forwards;
+  }
+
+  .animate-zoom {
+    animation: zoomIn .7s ease forwards;
+  }
+
+  .animate-glow {
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+
+  .glass {
+    background: rgba(255,255,255,.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,.35);
+  }
+
+  .section-padding {
+    @apply py-16 md:py-20 lg:py-24;
+  }
+
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      90deg,
+      #155EEF,
+      #3B82F6,
+      #60A5FA
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .shadow-premium {
+    box-shadow:
+      0 20px 40px rgba(15, 23, 42, .08),
+      0 8px 18px rgba(21, 94, 239, .08);
+  }
+
+  .shadow-hover {
+    transition: all .35s ease;
+  }
+
+  .shadow-hover:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 30px 60px rgba(15, 23, 42, .12),
+      0 15px 35px rgba(21, 94, 239, .12);
   }
 }

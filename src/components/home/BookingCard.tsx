@@ -1,340 +1,282 @@
 import { useState } from "react";
-import {
-  Locate,
-  Navigation2,
-  X,
-  Phone,
-  Car,
-  Clock,
-  Plane,
-  Map as MapIcon,
-  CalendarDays,
-  Users,
-  ArrowRight,
-  type LucideIcon,
-} from "lucide-react";
-import { vehicles } from "../../data/vehicles";
-import LocationAutocomplete, { POPULAR_DROP_PLACES } from "../booking/LocationAutocomplete";
+import { createPortal } from "react-dom";
+import { X, Phone, MessageCircle, Send, CheckCircle2, ExternalLink } from "lucide-react";
 
-// Backend endpoint that sends the WhatsApp message via Twilio.
-// In dev, Vite proxies "/api" to your backend server (see vite.config.ts).
-const SEND_WHATSAPP_ENDPOINT = "/api/send-whatsapp";
+const ADMIN_WHATSAPP_NUMBER = "918886803322";
 
-type TabKey = "Outstation" | "Local" | "Airport" | "Tour";
-
-const TAB_ORDER: TabKey[] = ["Outstation", "Local", "Airport", "Tour"];
-
-type TabConfig = {
-  icon: LucideIcon;
-  label: string;
-  subTypeOptions: string[];
-  dropLabel: string;
-  dropPlaceholder: string;
+export type TripDetails = {
+  tripType: string;
+  tripOption: string;
+  pickup: string;
+  drop: string;
+  departureDate: string;
+  passengers: string;
 };
 
-const TAB_CONFIG: Record<TabKey, TabConfig> = {
-  Outstation: {
-    icon: Car,
-    label: "Outstation",
-    subTypeOptions: ["One Way", "Round Trip"],
-    dropLabel: "Drop Location",
-    dropPlaceholder: "Enter drop location",
-  },
-  Local: {
-    icon: Clock,
-    label: "Local",
-    subTypeOptions: ["One Way", "Round Trip"],
-    dropLabel: "Drop Location",
-    dropPlaceholder: "Enter drop location",
-  },
-  Airport: {
-    icon: Plane,
-    label: "Airport",
-    subTypeOptions: ["One Way", "Round Trip"],
-    dropLabel: "Drop Location",
-    dropPlaceholder: "Visakhapatnam Airport",
-  },
-  Tour: {
-    icon: MapIcon,
-    label: "Tour",
-    subTypeOptions: ["One Day", "Multi Day"],
-    dropLabel: "Destination",
-    dropPlaceholder: "Enter destination",
-  },
+type BookingModalProps = {
+  open: boolean;
+  onClose: () => void;
+  trip: TripDetails;
 };
 
-const PASSENGER_OPTIONS = [1, 2, 3, 4, 5, 6];
+function formatDate(value: string) {
+  if (!value) return "Not specified";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
 
-export default function BookingCard() {
-  const [tripType, setTripType] = useState<TabKey>("Outstation");
-  const [subType, setSubType] = useState<string>(TAB_CONFIG.Outstation.subTypeOptions[0]);
-  const [pickup, setPickup] = useState("");
-  const [drop, setDrop] = useState("");
-  const [departureDate, setDepartureDate] = useState("");
-  const [passengers, setPassengers] = useState(1);
+function buildWhatsAppMessage(trip: TripDetails, mobile: string, whatsapp: string, name: string) {
+  const lines = [
+    "*New Taxi Booking Request*",
+    "",
+    name.trim() ? `*Name:* ${name.trim()}` : null,
+    `*Trip Type:* ${trip.tripType} (${trip.tripOption})`,
+    `*Pickup:* ${trip.pickup}`,
+    `*Drop:* ${trip.drop}`,
+    `*Departure:* ${formatDate(trip.departureDate)}`,
+    `*Passengers:* ${trip.passengers}`,
+    `*Mobile Number:* ${mobile}`,
+    `*WhatsApp Number:* ${whatsapp}`,
+  ].filter(Boolean);
+
+  return lines.join("\n");
+}
+
+function isValidIndianMobile(value: string) {
+  const digits = value.replace(/\D/g, "");
+  const normalized = digits.length > 10 ? digits.slice(-10) : digits;
+  return /^[6-9]\d{9}$/.test(normalized);
+}
+
+export default function BookingModal({ open, onClose, trip }: BookingModalProps) {
+  const [name, setName] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [sameAsMobile, setSameAsMobile] = useState(true);
   const [error, setError] = useState("");
+  const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [waUrl, setWaUrl] = useState("");
 
-  const [showModal, setShowModal] = useState(false);
-  const [phone, setPhone] = useState("");
-  const [phoneError, setPhoneError] = useState("");
-  const [isSending, setIsSending] = useState(false);
-  const [sendSuccess, setSendSuccess] = useState(false);
+  if (!open) return null;
 
-  const config = TAB_CONFIG[tripType];
-  // Vehicle isn't picked in this bar (chosen later from the Fleet section) —
-  // default to the first vehicle so the WhatsApp payload still carries a value.
-  const defaultVehicleLabel = vehicles[0]?.label ?? "";
+  const effectiveWhatsapp = sameAsMobile ? mobile : whatsapp;
 
-  function handleTabChange(tab: TabKey) {
-    setTripType(tab);
-    setSubType(TAB_CONFIG[tab].subTypeOptions[0]);
-    setError("");
-  }
+  function handleSubmit() {
+    if (isSubmitting) return; // guard against double-clicks
 
-  function handleSearch() {
-    if (!pickup.trim() || !drop.trim()) {
-      setError("Please enter both pickup and drop locations.");
+    if (!isValidIndianMobile(mobile)) {
+      setError("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+    if (!sameAsMobile && !isValidIndianMobile(whatsapp)) {
+      setError("Please enter a valid 10-digit WhatsApp number.");
       return;
     }
     setError("");
-    setShowModal(true);
-  }
+    setIsSubmitting(true);
 
-  function closeModal() {
-    setShowModal(false);
-    setPhoneError("");
-    setSendSuccess(false);
-  }
+    const message = buildWhatsAppMessage(trip, mobile.trim(), effectiveWhatsapp.trim(), name);
+    const url = `https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    setWaUrl(url);
 
-  async function handleSendWhatsApp() {
-    const digitsOnly = phone.replace(/\D/g, "");
+    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
 
-    if (digitsOnly.length < 10) {
-      setPhoneError("Please enter a valid phone number.");
-      return;
+    if (!newWindow) {
+      console.warn("WhatsApp popup was blocked; showing fallback link.");
     }
 
-    setPhoneError("");
-    setIsSending(true);
-
-    try {
-      const response = await fetch(SEND_WHATSAPP_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          phone: digitsOnly,
-          pickup,
-          drop,
-          tripType,
-          subType,
-          departureDate,
-          passengers,
-          vehicle: defaultVehicleLabel,
-        }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json().catch(() => ({}));
-        throw new Error(data.error || "Failed to send message.");
-      }
-
-      // Message is sent automatically by the backend — no customer action needed.
-      setSendSuccess(true);
-      setPhone("");
-      setTimeout(() => {
-        setShowModal(false);
-        setSendSuccess(false);
-      }, 1500);
-    } catch (err) {
-      setPhoneError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
-    } finally {
-      setIsSending(false);
-    }
+    setIsSubmitting(false);
+    setSent(true);
   }
 
-  return (
-    <div className="w-full rounded-2xl border border-slate-100 bg-white p-5 shadow-[0_10px_30px_rgba(16,24,40,0.08)] sm:p-6">
-      {/* Tabs */}
-      <div className="flex flex-wrap gap-6 border-b border-slate-100 pb-3">
-        {TAB_ORDER.map((tab) => {
-          const TabIcon = TAB_CONFIG[tab].icon;
-          const active = tab === tripType;
-          return (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => handleTabChange(tab)}
-              className={`-mb-3 flex items-center gap-1.5 border-b-2 pb-3 text-sm font-semibold transition-colors ${
-                active
-                  ? "border-primary text-primary"
-                  : "border-transparent text-slate-400 hover:text-slate-600"
-              }`}
-            >
-              <TabIcon size={16} />
-              {TAB_CONFIG[tab].label}
-            </button>
-          );
-        })}
-      </div>
+  function handleClose() {
+    setSent(false);
+    setName("");
+    setMobile("");
+    setWhatsapp("");
+    setSameAsMobile(true);
+    setError("");
+    setWaUrl("");
+    onClose();
+  }
 
-      {/* Fields row */}
-      <div className="mt-5 flex flex-col divide-y divide-slate-100 lg:flex-row lg:items-end lg:divide-x lg:divide-y-0">
-        <div className="min-w-0 flex-1 py-4 first:pt-0 lg:py-0 lg:pr-4 lg:first:pl-0">
-          <LocationAutocomplete
-            id="pickup"
-            label="Pickup Location"
-            value={pickup}
-            onChange={setPickup}
-            placeholder="Enter pickup location"
-            icon={Locate}
-            limitToVizag
-            bare
-          />
-        </div>
-
-        <div className="min-w-0 flex-1 py-4 lg:px-4 lg:py-0">
-          <LocationAutocomplete
-            id="drop"
-            label={config.dropLabel}
-            value={drop}
-            onChange={setDrop}
-            placeholder={config.dropPlaceholder}
-            icon={Navigation2}
-            limitToVizag={false}
-            popularPlaces={POPULAR_DROP_PLACES}
-            bare
-          />
-        </div>
-
-        <div className="py-4 lg:px-4 lg:py-0">
-          <p className="mb-1.5 text-xs font-medium text-slate-500">Trip Type</p>
-          <div className="inline-flex rounded-xl bg-slate-100 p-1">
-            {config.subTypeOptions.map((option) => (
-              <button
-                key={option}
-                type="button"
-                onClick={() => setSubType(option)}
-                className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
-                  subType === option
-                    ? "bg-primary text-white shadow-sm"
-                    : "text-slate-500 hover:text-slate-700"
-                }`}
-              >
-                {option}
-              </button>
-            ))}
+  return createPortal(
+    <div
+      className="fixed inset-0 z-9999 isolate flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-md"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="booking-modal-title"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) handleClose();
+      }}
+    >
+      <div className="relative z-10000 max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
+        <div className="mb-5 flex items-start justify-between">
+          <div>
+            <h2 id="booking-modal-title" className="text-lg font-bold text-slate-900">
+              {sent ? "Request sent!" : "Confirm your booking"}
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">
+              {sent
+                ? "We've opened WhatsApp with your trip details."
+                : "Share your number and we'll confirm on WhatsApp."}
+            </p>
           </div>
-        </div>
-
-        <div className="py-4 lg:px-4 lg:py-0">
-          <label htmlFor="departure" className="mb-1.5 block text-xs font-medium text-slate-500">
-            Departure Date
-          </label>
-          <div className="flex items-center gap-2">
-            <CalendarDays size={16} className="shrink-0 text-primary" />
-            <input
-              id="departure"
-              type="datetime-local"
-              value={departureDate}
-              onChange={(event) => setDepartureDate(event.target.value)}
-              className="w-full min-w-0 bg-transparent text-sm text-slate-800 outline-none"
-            />
-          </div>
-        </div>
-
-        <div className="py-4 lg:px-4 lg:py-0">
-          <label htmlFor="passengers" className="mb-1.5 block text-xs font-medium text-slate-500">
-            Passengers
-          </label>
-          <div className="flex items-center gap-2">
-            <Users size={16} className="shrink-0 text-primary" />
-            <select
-              id="passengers"
-              value={passengers}
-              onChange={(event) => setPassengers(Number(event.target.value))}
-              className="w-full min-w-0 bg-transparent text-sm text-slate-800 outline-none"
-            >
-              {PASSENGER_OPTIONS.map((count) => (
-                <option key={count} value={count}>
-                  {count} Passenger{count > 1 ? "s" : ""}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <div className="pt-4 lg:pl-4 lg:pt-0">
           <button
             type="button"
-            onClick={handleSearch}
-            className="flex w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-hover lg:w-auto"
+            onClick={handleClose}
+            aria-label="Close"
+            className="shrink-0 rounded-full p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
           >
-            Search Taxi
-            <ArrowRight size={16} />
+            <X size={18} />
           </button>
         </div>
-      </div>
 
-      {error && <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">⚠ {error}</p>}
-
-      {showModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4"
-          onClick={closeModal}
-        >
-          <div
-            className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="flex items-center justify-between">
-              <h4 className="text-lg font-bold text-slate-900">Enter Your Number</h4>
-              <button
-                type="button"
-                onClick={closeModal}
-                aria-label="Close"
-                className="rounded-full p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
-              >
-                <X size={18} />
-              </button>
+        {!sent ? (
+          <>
+            <div className="mb-5 space-y-1.5 rounded-xl bg-slate-50 p-3.5 text-sm">
+              <p className="text-slate-700">
+                <span className="font-semibold text-slate-500">Trip: </span>
+                {trip.tripType} · {trip.tripOption}
+              </p>
+              <p className="truncate text-slate-700">
+                <span className="font-semibold text-slate-500">Pickup: </span>
+                {trip.pickup}
+              </p>
+              <p className="truncate text-slate-700">
+                <span className="font-semibold text-slate-500">Drop: </span>
+                {trip.drop}
+              </p>
+              <p className="text-slate-700">
+                <span className="font-semibold text-slate-500">Departure: </span>
+                {formatDate(trip.departureDate)}
+              </p>
+              <p className="text-slate-700">
+                <span className="font-semibold text-slate-500">Passengers: </span>
+                {trip.passengers}
+              </p>
             </div>
-            <p className="mt-1 text-sm text-slate-500">
-              We&apos;ll automatically send your trip details to this number on WhatsApp.
-            </p>
 
-            <div className="mt-4">
-              <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-slate-700">
-                Phone Number
-              </label>
-              <div className="flex items-center gap-2 rounded-xl border border-slate-200 px-3.5 py-2.5 transition-colors focus-within:border-primary">
-                <Phone size={18} className="shrink-0 text-primary" />
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="booking-name" className="mb-1.5 block text-xs font-medium text-slate-500">
+                  Your name (optional)
+                </label>
                 <input
-                  id="phone"
-                  type="tel"
-                  value={phone}
-                  onChange={(event) => setPhone(event.target.value)}
-                  placeholder="Enter your WhatsApp number"
-                  autoComplete="tel"
-                  disabled={isSending}
-                  className="w-full text-sm text-slate-800 outline-none placeholder:text-slate-400 disabled:opacity-60"
+                  id="booking-name"
+                  type="text"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  placeholder="Enter your name"
+                  className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm text-slate-800 outline-none transition-colors focus:border-primary placeholder:text-slate-400"
                 />
               </div>
-              {phoneError && <p className="mt-2 text-sm text-red-600">⚠ {phoneError}</p>}
-              {sendSuccess && (
-                <p className="mt-2 text-sm text-green-600">✓ Sent! Check your WhatsApp.</p>
-              )}
-            </div>
 
+              <div>
+                <label htmlFor="booking-mobile" className="mb-1.5 block text-xs font-medium text-slate-500">
+                  Mobile number
+                </label>
+                <div className="flex items-center gap-2 rounded-xl border border-slate-200 px-3.5 py-2.5 transition-colors focus-within:border-primary">
+                  <Phone size={16} className="shrink-0 text-primary" />
+                  <input
+                    id="booking-mobile"
+                    type="tel"
+                    inputMode="numeric"
+                    value={mobile}
+                    onChange={(event) => setMobile(event.target.value)}
+                    placeholder="10-digit mobile number"
+                    className="w-full min-w-0 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
+                  />
+                </div>
+              </div>
+
+              <label className="flex items-center gap-2 text-xs font-medium text-slate-500">
+                <input
+                  type="checkbox"
+                  checked={sameAsMobile}
+                  onChange={(event) => setSameAsMobile(event.target.checked)}
+                  className="h-3.5 w-3.5 rounded border-slate-300 text-primary focus:ring-primary/30"
+                />
+                My WhatsApp number is the same as my mobile number
+              </label>
+
+              {!sameAsMobile && (
+                <div>
+                  <label htmlFor="booking-whatsapp" className="mb-1.5 block text-xs font-medium text-slate-500">
+                    WhatsApp number
+                  </label>
+                  <div className="flex items-center gap-2 rounded-xl border border-slate-200 px-3.5 py-2.5 transition-colors focus-within:border-primary">
+                    <MessageCircle size={16} className="shrink-0 text-primary" />
+                    <input
+                      id="booking-whatsapp"
+                      type="tel"
+                      inputMode="numeric"
+                      value={whatsapp}
+                      onChange={(event) => setWhatsapp(event.target.value)}
+                      placeholder="10-digit WhatsApp number"
+                      className="w-full min-w-0 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {error && (
+                <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600 ring-1 ring-inset ring-red-100">
+                  ⚠ {error}
+                </p>
+              )}
+
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition-all duration-150 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-xl active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <Send size={16} />
+                {isSubmitting ? "Sending..." : "Send booking on WhatsApp"}
+              </button>
+
+              <p className="text-center text-[11px] text-slate-400">
+                We'll open WhatsApp with your trip details pre-filled to send to our team.
+              </p>
+            </div>
+          </>
+        ) : (
+          <div className="flex flex-col items-center gap-3 py-4 text-center">
+            <CheckCircle2 size={40} className="text-primary" />
+            <p className="text-sm text-slate-600">
+              If WhatsApp didn't open automatically, check your pop-up blocker, or tap below.
+            </p>
+            {waUrl && (
+              <a
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-primary/25 transition-colors hover:bg-primary-hover"
+              >
+                Open WhatsApp
+                <ExternalLink size={14} />
+              </a>
+            )}
             <button
               type="button"
-              onClick={handleSendWhatsApp}
-              disabled={isSending || sendSuccess}
-              className="mt-5 w-full rounded-xl bg-primary py-3.5 text-sm font-semibold text-white transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-70"
+              onClick={handleClose}
+              className="mt-1 rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:border-primary/40 hover:text-primary"
             >
-              {isSending ? "Sending..." : sendSuccess ? "Sent" : "Submit"}
+              Done
             </button>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </div>,
+    document.body
   );
 }

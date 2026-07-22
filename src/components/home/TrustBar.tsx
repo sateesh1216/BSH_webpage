@@ -19,7 +19,7 @@ const trustItems: TrustItem[] = [
 
 export default function TrustBar() {
   return (
-    <section className="relative z-10 pb-16">
+    <section className="relative z-10 pb-8 py-10">
       <div className="w-full px-6 sm:px-10 lg:px-16">
         <SectionHeading eyebrow="Why Choose BSH Taxi Services" />
 
@@ -27,9 +27,9 @@ export default function TrustBar() {
           {trustItems.map(({ icon: Icon, title, description }) => (
             <div
               key={title}
-              className="group flex min-h-[128px] items-center gap-4 rounded-2xl border border-slate-100 bg-white px-6 py-6 shadow-[0_10px_30px_rgba(16,24,40,0.06)] transition-all duration-200 hover:-translate-y-1.5 hover:border-primary/20 hover:shadow-[0_20px_45px_rgba(16,24,40,0.12)]"
+              className="group flex min-h-32 items-center gap-4 rounded-2xl border border-slate-100 bg-white px-6 py-6 shadow-[0_10px_30px_rgba(16,24,40,0.06)] transition-all duration-200 hover:-translate-y-1.5 hover:border-primary/20 hover:shadow-[0_20px_45px_rgba(16,24,40,0.12)]"
             >
-              <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-primary-light to-blue-50 text-primary ring-1 ring-primary/10 transition-transform duration-200 group-hover:scale-110 group-hover:rotate-3">
+              <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-linear-to-br from-primary-light to-blue-50 text-primary ring-1 ring-primary/10 transition-transform duration-200 group-hover:scale-110 group-hover:rotate-3">
                 <Icon size={24} strokeWidth={2} />
               </div>
               <div>

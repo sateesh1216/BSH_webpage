@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { LucideIcon } from "lucide-react";
 import { Loader2, MapPin, Star } from "lucide-react";
 
@@ -14,29 +15,32 @@ type LocationAutocompleteProps = {
   id: string;
   label: string;
   value: string;
-  onChange: (value: string) => void;
+  // Second arg is populated whenever the value came from picking a
+  // suggestion (popular list or live search) — omitted for free-typed
+  // text so callers know not to trust stale coordinates.
+  onChange: (value: string, coords?: { lat: string; lon: string }) => void;
   placeholder: string;
   icon: LucideIcon;
-  /** Restrict results to ~35km around Vizag (pickup). Set false for drop (anywhere in India). */
   limitToVizag?: boolean;
-  /** Shown as quick picks before the user types anything, and filtered as they type. */
   popularPlaces?: PlaceSuggestion[];
 };
 
-// Photon (by Komoot) — free, keyless geocoder purpose-built for autocomplete/
-// typeahead. Unlike Nominatim (a search engine with a strict 1 req/sec policy
-// and weak partial-word matching), Photon does fuzzy, prefix-aware matching
-// designed for exactly this "search as you type" use case.
 const PHOTON_ENDPOINT = "https://photon.komoot.io/api/";
-
-// Visakhapatnam city center — used to bias/restrict pickup results to a local radius.
 const VIZAG_CENTER = { lat: 17.6868, lon: 83.2185 };
-const RADIUS_KM = 35;
 
-// Rough bounding box in degrees for a ~35km radius around Vizag.
-// Photon's bbox param is minLon,minLat,maxLon,maxLat.
-const DEG_LAT = RADIUS_KM / 111;
-const DEG_LON = RADIUS_KM / 106;
+// Two different radii on purpose:
+//  - SEARCH_RADIUS_KM is what we send to Photon as the bbox — generous,
+//    so it doesn't quietly exclude real nearby places (Anakapalli,
+//    Bheemunipatnam, Paravada, Yelamanchili, etc. all sit past a tight
+//    30-35km box even though they're common pickup points).
+//  - We no longer *hard-filter* results a second time on the client by
+//    that box (that was the actual bug — a place Photon correctly
+//    returned would still get dropped). Instead we sort by distance
+//    from the city center, so close-by places surface first without
+//    silently disappearing when they're a bit further out.
+const SEARCH_RADIUS_KM = 65;
+const DEG_LAT = SEARCH_RADIUS_KM / 111;
+const DEG_LON = SEARCH_RADIUS_KM / 106;
 const VIZAG_BBOX = [
   VIZAG_CENTER.lon - DEG_LON,
   VIZAG_CENTER.lat - DEG_LAT,
@@ -44,14 +48,8 @@ const VIZAG_BBOX = [
   VIZAG_CENTER.lat + DEG_LAT,
 ].join(",");
 
-// Minimum characters before we hit the live API. 1 = search starts on the
-// very first keystroke (backed by the local popular-places list below so it
-// still feels instant, since the API itself has a short debounce).
 const MIN_CHARS_FOR_SEARCH = 1;
 
-// Common Vizag pickup localities — since most pickups happen inside the
-// city, this gives instant, zero-latency matches while the user is still
-// typing their first letter or two, before/alongside the live API call.
 export const POPULAR_PICKUP_PLACES: PlaceSuggestion[] = [
   { primary: "RTC Complex", secondary: "Visakhapatnam, Andhra Pradesh, India", fullLabel: "RTC Complex, Visakhapatnam, Andhra Pradesh, India", lat: "17.7274", lon: "83.3061" },
   { primary: "Vizag Railway Station", secondary: "Visakhapatnam, Andhra Pradesh, India", fullLabel: "Visakhapatnam Railway Station, Visakhapatnam, Andhra Pradesh, India", lat: "17.7128", lon: "83.2971" },
@@ -65,10 +63,10 @@ export const POPULAR_PICKUP_PLACES: PlaceSuggestion[] = [
   { primary: "Simhachalam", secondary: "Visakhapatnam, Andhra Pradesh, India", fullLabel: "Simhachalam, Visakhapatnam, Andhra Pradesh, India", lat: "17.7642", lon: "83.2569" },
   { primary: "Beach Road", secondary: "Visakhapatnam, Andhra Pradesh, India", fullLabel: "Beach Road, Visakhapatnam, Andhra Pradesh, India", lat: "17.7112", lon: "83.3247" },
   { primary: "Steel Plant", secondary: "Visakhapatnam, Andhra Pradesh, India", fullLabel: "Visakhapatnam Steel Plant, Visakhapatnam, Andhra Pradesh, India", lat: "17.6300", lon: "83.1930" },
+  { primary: "Anakapalli", secondary: "Visakhapatnam District, Andhra Pradesh, India", fullLabel: "Anakapalli, Visakhapatnam District, Andhra Pradesh, India", lat: "17.6910", lon: "83.0037" },
+  { primary: "Bheemunipatnam", secondary: "Visakhapatnam, Andhra Pradesh, India", fullLabel: "Bheemunipatnam, Visakhapatnam, Andhra Pradesh, India", lat: "17.8905", lon: "83.4514" },
 ];
 
-// A handful of common long-distance drop destinations from Vizag.
-// Coordinates are city-center approximations; fine for a quick-pick list.
 export const POPULAR_DROP_PLACES: PlaceSuggestion[] = [
   { primary: "Hyderabad", secondary: "Telangana, India", fullLabel: "Hyderabad, Telangana, India", lat: "17.3850", lon: "78.4867" },
   { primary: "Vijayawada", secondary: "Andhra Pradesh, India", fullLabel: "Vijayawada, Andhra Pradesh, India", lat: "16.5062", lon: "80.6480" },
@@ -80,11 +78,8 @@ export const POPULAR_DROP_PLACES: PlaceSuggestion[] = [
   { primary: "Bhubaneswar", secondary: "Odisha, India", fullLabel: "Bhubaneswar, Odisha, India", lat: "20.2961", lon: "85.8245" },
 ];
 
-// Photon returns GeoJSON-style features. Build display strings from
-// whatever address parts are present (name/street/city/state/country),
-// since not every result has every field.
 type PhotonFeature = {
-  geometry: { coordinates: [number, number] }; // [lon, lat]
+  geometry: { coordinates: [number, number] };
   properties: {
     name?: string;
     street?: string;
@@ -110,7 +105,6 @@ function photonFeatureToSuggestion(feature: PhotonFeature): PlaceSuggestion {
     "Unnamed location";
 
   const secondaryParts = [
-    // Avoid repeating the primary value in the secondary line.
     p.street && p.name && p.street !== primary ? p.street : null,
     p.district,
     p.city,
@@ -118,22 +112,31 @@ function photonFeatureToSuggestion(feature: PhotonFeature): PlaceSuggestion {
     p.country,
   ].filter(Boolean);
 
-  // De-dupe consecutive identical parts (e.g. district === city).
   const secondary = Array.from(new Set(secondaryParts)).join(", ");
-
   const fullLabel = [primary, secondary].filter(Boolean).join(", ");
 
   return { primary, secondary, fullLabel, lat: String(lat), lon: String(lon) };
 }
 
-// Case-insensitive "starts with" or "word starts with" match, so typing "m"
-// matches both "MVP Colony" and "Madhurawada".
 function matchesQuery(place: PlaceSuggestion, query: string): boolean {
   const q = query.trim().toLowerCase();
   if (!q) return true;
   const haystack = `${place.primary} ${place.secondary}`.toLowerCase();
   return haystack.split(/[\s,]+/).some((word) => word.startsWith(q)) || haystack.startsWith(q);
 }
+
+// Rough distance in km between two lat/lon points (haversine).
+function distanceKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 6371;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+type Coords = { top: number; left: number; width: number };
 
 export default function LocationAutocomplete({
   id,
@@ -150,24 +153,27 @@ export default function LocationAutocomplete({
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [highlightIndex, setHighlightIndex] = useState(-1);
+  const [coords, setCoords] = useState<Coords | null>(null);
+
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const skipNextFetchRef = useRef(false);
-  const requestIdRef = useRef(0); // guards against out-of-order responses
+  const requestIdRef = useRef(0);
+  // Only real DOM events (focus, typing) set this to true. The search
+  // effect below refuses to touch `isOpen` until this is true, so no
+  // amount of effect re-invocation (StrictMode double-mount, prop churn,
+  // parent re-renders, etc.) can pop the dropdown open on its own.
+  const hasInteractedRef = useRef(false);
 
   const trimmedValue = value.trim();
 
-  // Local, zero-latency matches from the popular-places list — shown
-  // instantly on every keystroke (including the very first letter) while
-  // the debounced API call is still in flight.
   const localMatches = popularPlaces?.length
     ? popularPlaces.filter((place) => matchesQuery(place, trimmedValue)).slice(0, 6)
     : [];
 
   const showingLocalOnly = trimmedValue.length < MIN_CHARS_FOR_SEARCH && localMatches.length > 0;
 
-  // Merge local matches with live API results once both are available,
-  // de-duping by fullLabel so a place doesn't show up twice.
   const mergedSuggestions = (() => {
     if (showingLocalOnly) return localMatches;
     const seen = new Set(localMatches.map((p) => p.fullLabel));
@@ -175,19 +181,45 @@ export default function LocationAutocomplete({
     return [...localMatches, ...apiOnly];
   })();
 
+  // Recompute the dropdown's fixed-position coordinates from the input
+  // wrapper's real position on screen — this is what lets the portal
+  // render it above *everything*, regardless of parent overflow/z-index.
+  const updateCoords = () => {
+    if (!wrapperRef.current) return;
+    const rect = wrapperRef.current.getBoundingClientRect();
+    setCoords({ top: rect.bottom + 6, left: rect.left, width: rect.width });
+  };
+
+  useLayoutEffect(() => {
+    if (!isOpen) return;
+    updateCoords();
+    const handle = () => updateCoords();
+    window.addEventListener("scroll", handle, true);
+    window.addEventListener("resize", handle);
+    return () => {
+      window.removeEventListener("scroll", handle, true);
+      window.removeEventListener("resize", handle);
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
+      const target = event.target as Node;
+      const insideWrapper = wrapperRef.current?.contains(target);
+      const insideDropdown = dropdownRef.current?.contains(target);
+      if (!insideWrapper && !insideDropdown) setIsOpen(false);
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
-    // Skip the fetch that would otherwise fire right after the user picks a
-    // suggestion (since selecting one also updates `value`).
+    // Never let this effect open the dropdown on its own — only after the
+    // user has actually focused or typed into the field. This also covers
+    // the empty-value branch below, which would otherwise auto-open the
+    // "popular places" list for a field that starts out blank (e.g. Drop).
+    if (!hasInteractedRef.current) return;
+
     if (skipNextFetchRef.current) {
       skipNextFetchRef.current = false;
       return;
@@ -210,16 +242,12 @@ export default function LocationAutocomplete({
       try {
         const params = new URLSearchParams({
           q: value,
-          lang: "en", // English-only labels, no Telugu/regional script
-          limit: "8",
-          // Bias results toward Vizag for both pickup and drop — pickup gets
-          // a hard bbox restriction below, drop just gets a gentle nudge so
-          // "M" still surfaces Mumbai/Manali etc. alongside local matches.
+          lang: "en",
+          limit: "10",
           lat: String(VIZAG_CENTER.lat),
           lon: String(VIZAG_CENTER.lon),
         });
 
-        // Hard-restrict pickup to the ~35km Vizag box; drop searches all of India.
         if (limitToVizag) {
           params.set("bbox", VIZAG_BBOX);
         }
@@ -228,24 +256,24 @@ export default function LocationAutocomplete({
         if (!response.ok) throw new Error("Search failed");
         const data: { features: PhotonFeature[] } = await response.json();
 
-        // Ignore stale responses if a newer keystroke has already fired a request.
         if (thisRequestId !== requestIdRef.current) return;
 
-        const results = data.features
-          .map(photonFeatureToSuggestion)
-          // Photon's bbox is a soft filter for some queries; belt-and-braces
-          // re-check for pickup so results genuinely stay within India/Vizag.
-          .filter((s) => {
-            if (!limitToVizag) return true;
-            const lat = parseFloat(s.lat);
-            const lon = parseFloat(s.lon);
-            return (
-              lat >= VIZAG_CENTER.lat - DEG_LAT &&
-              lat <= VIZAG_CENTER.lat + DEG_LAT &&
-              lon >= VIZAG_CENTER.lon - DEG_LON &&
-              lon <= VIZAG_CENTER.lon + DEG_LON
-            );
-          });
+        let results = data.features.map(photonFeatureToSuggestion);
+
+        // Don't hard-exclude results here — Photon's bbox param already
+        // scoped the search. Re-filtering client-side with the same box
+        // was dropping legitimate places that Photon correctly returned
+        // near the edge. Instead, just bring the closest-to-center
+        // results to the top so relevant local places surface first.
+        if (limitToVizag) {
+          results = results
+            .map((s) => ({
+              s,
+              d: distanceKm(VIZAG_CENTER.lat, VIZAG_CENTER.lon, parseFloat(s.lat), parseFloat(s.lon)),
+            }))
+            .sort((a, b) => a.d - b.d)
+            .map(({ s }) => s);
+        }
 
         setSuggestions(results);
         setIsOpen(true);
@@ -259,7 +287,7 @@ export default function LocationAutocomplete({
       } finally {
         if (thisRequestId === requestIdRef.current) setIsLoading(false);
       }
-    }, 200); // Photon is fast enough for a shorter debounce than Nominatim
+    }, 200);
 
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -268,7 +296,9 @@ export default function LocationAutocomplete({
 
   function selectSuggestion(suggestion: PlaceSuggestion) {
     skipNextFetchRef.current = true;
-    onChange(suggestion.fullLabel);
+    // Pass the coordinates along so the caller (BookingWizard) can hand
+    // them straight to the map instead of re-geocoding this same text.
+    onChange(suggestion.fullLabel, { lat: suggestion.lat, lon: suggestion.lon });
     setSuggestions([]);
     setIsOpen(false);
   }
@@ -297,6 +327,8 @@ export default function LocationAutocomplete({
     !showingLocalOnly &&
     mergedSuggestions.length === 0;
 
+  const dropdownVisible = isOpen && coords && (mergedSuggestions.length > 0 || showEmptyState);
+
   return (
     <div className="relative" ref={wrapperRef}>
       <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-slate-700">
@@ -307,8 +339,17 @@ export default function LocationAutocomplete({
         <input
           id={id}
           value={value}
-          onChange={(event) => onChange(event.target.value)}
-          onFocus={() => (mergedSuggestions.length > 0 || popularPlaces?.length) && setIsOpen(true)}
+          onChange={(event) => {
+            hasInteractedRef.current = true;
+            // Free typing has no known coordinate — the caller should
+            // treat this as invalidating any previously selected point.
+            onChange(event.target.value);
+          }}
+          onFocus={() => {
+            hasInteractedRef.current = true;
+            updateCoords();
+            if (mergedSuggestions.length > 0 || popularPlaces?.length) setIsOpen(true);
+          }}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           autoComplete="off"
@@ -317,61 +358,73 @@ export default function LocationAutocomplete({
         {isLoading && <Loader2 size={16} className="shrink-0 animate-spin text-slate-400" />}
       </div>
 
-      {isOpen && (mergedSuggestions.length > 0 || showEmptyState) && (
-        <div className="absolute z-20 mt-1.5 w-full overflow-hidden rounded-xl border border-slate-100 bg-white shadow-lg">
-          {(showingLocalOnly || (localMatches.length > 0 && trimmedValue.length >= MIN_CHARS_FOR_SEARCH)) && (
-            <div className="flex items-center gap-1.5 border-b border-slate-100 bg-slate-50 px-3.5 py-1.5 text-[11px] font-medium text-slate-500">
-              <Star size={12} className="text-primary" />
-              {limitToVizag ? "Popular Vizag pickup points" : "Popular destinations"}
-            </div>
-          )}
+      {dropdownVisible &&
+        createPortal(
+          <div
+            ref={dropdownRef}
+            style={{
+              position: "fixed",
+              top: coords!.top,
+              left: coords!.left,
+              width: coords!.width,
+              zIndex: 9999,
+            }}
+            className="overflow-hidden rounded-xl border border-slate-100 bg-white shadow-xl"
+          >
+            {(showingLocalOnly || (localMatches.length > 0 && trimmedValue.length >= MIN_CHARS_FOR_SEARCH)) && (
+              <div className="flex items-center gap-1.5 border-b border-slate-100 bg-slate-50 px-3.5 py-1.5 text-[11px] font-medium text-slate-500">
+                <Star size={12} className="text-primary" />
+                {limitToVizag ? "Popular Vizag pickup points" : "Popular destinations"}
+              </div>
+            )}
 
-          {mergedSuggestions.length > 0 ? (
-            <ul className="max-h-72 overflow-y-auto py-1">
-              {mergedSuggestions.map((suggestion, index) => (
-                <li key={`${suggestion.lat}-${suggestion.lon}-${suggestion.primary}`}>
-                  <button
-                    type="button"
-                    onMouseDown={(event) => event.preventDefault()} // keep input focus
-                    onClick={() => selectSuggestion(suggestion)}
-                    onMouseEnter={() => setHighlightIndex(index)}
-                    className={`flex w-full items-start gap-2.5 px-3.5 py-2.5 text-left transition-colors ${
-                      index === highlightIndex ? "bg-primary/5" : "hover:bg-slate-50"
-                    }`}
-                  >
-                    <MapPin
-                      size={16}
-                      className={`mt-0.5 shrink-0 ${
-                        index === highlightIndex ? "text-primary" : "text-slate-400"
+            {mergedSuggestions.length > 0 ? (
+              <ul className="max-h-72 overflow-y-auto py-1">
+                {mergedSuggestions.map((suggestion, index) => (
+                  <li key={`${suggestion.lat}-${suggestion.lon}-${suggestion.primary}`}>
+                    <button
+                      type="button"
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => selectSuggestion(suggestion)}
+                      onMouseEnter={() => setHighlightIndex(index)}
+                      className={`flex w-full items-start gap-2.5 px-3.5 py-2.5 text-left transition-colors ${
+                        index === highlightIndex ? "bg-primary/5" : "hover:bg-slate-50"
                       }`}
-                    />
-                    <span className="min-w-0">
-                      <span className="block truncate text-sm font-medium text-slate-800">
-                        {suggestion.primary}
-                      </span>
-                      {suggestion.secondary && (
-                        <span className="block truncate text-xs text-slate-500">
-                          {suggestion.secondary}
+                    >
+                      <MapPin
+                        size={16}
+                        className={`mt-0.5 shrink-0 ${
+                          index === highlightIndex ? "text-primary" : "text-slate-400"
+                        }`}
+                      />
+                      <span className="min-w-0">
+                        <span className="block truncate text-sm font-medium text-slate-800">
+                          {suggestion.primary}
                         </span>
-                      )}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="px-3.5 py-3 text-sm text-slate-500">
-              {limitToVizag
-                ? `No locations found within ${RADIUS_KM} km. Try a nearby landmark or area name.`
-                : "No locations found. Try a different city or landmark name."}
-            </p>
-          )}
+                        {suggestion.secondary && (
+                          <span className="block truncate text-xs text-slate-500">
+                            {suggestion.secondary}
+                          </span>
+                        )}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="px-3.5 py-3 text-sm text-slate-500">
+                {limitToVizag
+                  ? `No locations found near Visakhapatnam. Try a nearby landmark or area name.`
+                  : "No locations found. Try a different city or landmark name."}
+              </p>
+            )}
 
-          <div className="border-t border-slate-100 bg-slate-50 px-3.5 py-1.5 text-right text-[11px] text-slate-400">
-            Powered by Photon (OpenStreetMap)
-          </div>
-        </div>
-      )}
+            <div className="border-t border-slate-100 bg-slate-50 px-3.5 py-1.5 text-right text-[11px] text-slate-400">
+              Powered by Photon (OpenStreetMap)
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

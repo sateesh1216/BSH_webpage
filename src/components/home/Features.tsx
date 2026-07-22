@@ -81,7 +81,7 @@ const destinations: Destination[] = [
 ];
 
 const vehicles: Vehicle[] = [
-  { name: "Swift Dzire", ratePerKm: 13, seats: 4 },
+  { name: "Swift Dzire", ratePerKm: 14, seats: 4 },
   { name: "Maruti Ertiga", ratePerKm: 16, seats: 6 },
   { name: "Toyota Innova", ratePerKm: 18, seats: 7 },
   { name: "Tempo Traveller", ratePerKm: 22, seats: 12 },
@@ -102,7 +102,7 @@ function SectionHeading({
         align === "center" ? "justify-center" : ""
       }`}
     >
-      <span className="h-4 w-1.5 rounded-full bg-gradient-to-b from-blue-500 to-blue-700" />
+      <span className="h-4 w-1.5 rounded-full bg-linear-to-b from-blue-500 to-blue-700" />
       <h2 className="text-[15px] font-extrabold uppercase tracking-[0.08em] text-slate-900">
         {children}
       </h2>
@@ -152,7 +152,7 @@ export default function Features() {
   }
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-b from-slate-50 via-slate-50 to-white py-20">
+    <section className="relative w-full overflow-hidden bg-linear-to-b from-slate-50 via-slate-50 to-white py-10">
       {/* Decorative background accents */}
       <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-blue-200/30 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-blue-100/40 blur-3xl" />
@@ -220,7 +220,7 @@ export default function Features() {
                         />
                       )}
                       {/* Gradient overlay for legibility + polish */}
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-70" />
+                      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-slate-900/40 via-transparent to-transparent opacity-70" />
 
                       {/* Distance chip */}
                       <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 text-[10px] font-semibold text-slate-700 shadow-sm backdrop-blur-sm">
@@ -394,7 +394,7 @@ export default function Features() {
                   </div>
                 </div>
 
-                <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 px-4 py-3.5 text-center shadow-md shadow-blue-600/20">
+                <div className="relative overflow-hidden rounded-lg bg-linear-to-br from-blue-600 to-blue-700 px-4 py-3.5 text-center shadow-md shadow-blue-600/20">
                   <Sparkles
                     size={44}
                     className="pointer-events-none absolute -right-2 -top-2 text-white/10"
