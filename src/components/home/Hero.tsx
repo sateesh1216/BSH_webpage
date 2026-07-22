@@ -100,7 +100,7 @@ export default function Hero() {
           {/* Mobile / tablet hero image — the two-column layout (and the image
               inside it) only exists from lg up, so phones and tablets need
               their own visible photo instead of seeing nothing at all. */}
-          <div className="relative mt-7 mx-[4%] h-56 w-[108] overflow-hidden rounded-2xl sm:mt-8 sm:h-72 md:h-80 lg:hidden">
+          <div className="relative mt-7 mx-[4%] h-56 w-full overflow-hidden rounded-2xl sm:mt-8 sm:h-72 md:h-80 lg:hidden">
             <div
               aria-hidden="true"
               className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-primary/20 blur-3xl"
