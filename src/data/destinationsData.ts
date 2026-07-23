@@ -1,7 +1,14 @@
 // Temporary fallback while you source the real destination photos above.
 // Once downloaded, swap these imports for the real files with matching names.
-import fallbackImage from "../assets/cars/innova-crysta-in-vizag-bshtaxiservices.png";
-
+import Aruku from "../assets/Destinations/arakut-taxi-services-bshtaxiservices.png";
+import lambasingi from "../assets/Destinations/Lambasingi-taxi-services-bshtaxiservices.png";
+import VizagLocal from "../assets/Destinations/Vizag Local-taxi-services-bshtaxiservices.png";
+import Simhachalam  from "../assets/Destinations/Simhachalam- Temple-taxi-services-bshtaxiservices.png";
+import Tirupati  from "../assets/Destinations/Tirupati-taxi-service-Packages-bshtaxiservices (2).png";
+import Annavaram  from "../assets/Destinations/Annavaram Temple -taxi-services-bshtaxiservices.png";
+import vizagairport  from "../assets/Destinations/Airport-taxi-services-bshtaxiservices.png";
+import Vanjangi  from "../assets/Destinations/Vanjangi-taxi-services-bshtaxiservices.png";
+import Arasavalli  from "../assets/Destinations/Arasavalli Temple -taxi-services-bshtaxiservices.png";
 export type DestinationPlace = {
   name: string;
   image: string;
@@ -55,7 +62,7 @@ export const destinations: Destination[] = [
   {
     slug: "araku-valley",
     name: "Araku Valley",
-    image: fallbackImage, // replace with "../assets/destinations/araku-valley.jpg"
+    image: Aruku, // replace with "../assets/destinations/araku-valley.jpg"
     distanceFromVizag: "120 KM from Vizag",
     distanceKm: 120,
     driveTime: "3 hrs",
@@ -109,49 +116,49 @@ export const destinations: Destination[] = [
     places: [
       {
         name: "Borra Caves",
-        image: fallbackImage,
+        image: lambasingi,
         description:
           "Million-year-old limestone caves discovered in 1807, roughly 36 km from Araku — a detour well worth the drive.",
       },
       {
         name: "Katika Waterfalls",
-        image: fallbackImage,
+        image: lambasingi,
         tag: "Only Car Parking",
         description: "A cascading forest waterfall, also known locally as Chaparai Falls.",
       },
       {
         name: "Galikonda Viewpoint",
-        image: fallbackImage,
+        image: lambasingi,
         description: "Perched atop Andhra Pradesh's highest hill, with sweeping valley and sunrise views.",
       },
       {
         name: "Coffee Plantation",
-        image: fallbackImage,
+        image: lambasingi,
         description: "Shade-grown Arabica estates on the Ananthagiri hills where pepper vines wind around silver oaks.",
       },
       {
         name: "Coffee Museum",
-        image: fallbackImage,
+        image: lambasingi,
         description: "Traces the journey of Araku coffee from bean to cup, with tastings and handcrafted chocolate.",
       },
       {
         name: "Tribal Museum",
-        image: fallbackImage,
+        image: lambasingi,
         description: "A window into the art, tools and traditions of the Eastern Ghats' indigenous communities.",
       },
       {
         name: "Padmapuram Gardens",
-        image: fallbackImage,
+        image: lambasingi,
         description: "Terraced botanical gardens with tree-top huts and a toy train ride.",
       },
       {
         name: "Damuku View Point",
-        image: fallbackImage,
+        image: lambasingi,
         description: "A quiet lookout over layered valleys, popular for photography.",
       },
       {
         name: "Coffee House",
-        image: fallbackImage,
+        image: lambasingi,
         description: "A cosy stop for a fresh cup of locally grown filter coffee before heading back.",
       },
     ],
@@ -159,7 +166,7 @@ export const destinations: Destination[] = [
   {
     slug: "lambasingi",
     name: "Lambasingi",
-    image: fallbackImage, // replace with "../assets/destinations/lambasingi.jpg"
+    image: lambasingi, // replace with "../assets/destinations/lambasingi.jpg"
     distanceFromVizag: "100 KM from Vizag",
     category: "Hill Station",
     description:
@@ -205,9 +212,9 @@ driveTime: "3 hrs",
   },
 
   {
-    slug: "rushikonda-beach",
-    name: "Rushikonda Beach",
-    image: fallbackImage, // replace with "../assets/destinations/rushikonda-beach.jpg"
+    slug: "Vizag-Local",
+    name: "Vizag Local",
+    image: VizagLocal, // replace with "../assets/destinations/rushikonda-beach.jpg"
     distanceFromVizag: "15 KM from Vizag",
     category: "Beach",
     description:
@@ -252,7 +259,7 @@ driveTime: "25 mins",
   {
     slug: "simhachalam-temple",
     name: "Simhachalam Temple",
-    image: fallbackImage, // replace with "../assets/destinations/simhachalam-temple.jpg"
+    image: Simhachalam, // replace with "../assets/destinations/simhachalam-temple.jpg"
     distanceFromVizag: "16 KM from Vizag",
     category: "Temple",
     description:
@@ -296,9 +303,9 @@ driveTime: "25 mins",
       "The main idol is smeared in sandalwood paste 364 days of the year — devotees see the deity's actual form for only a few hours, once annually.",
   },
   {
-    slug: "kailasagiri",
-    name: "Kailasagiri",
-    image: fallbackImage, // replace with "../assets/destinations/kailasagiri.jpg"
+    slug: "Tirupati",
+    name: "Tirupati",
+    image: Tirupati, // replace with "../assets/destinations/kailasagiri.jpg"
     distanceFromVizag: "15 KM from Vizag",
     distanceKm: 15,
     driveTime: "25 mins",
@@ -341,103 +348,10 @@ driveTime: "25 mins",
     funFact:
       "The ropeway was Andhra Pradesh's first cable car system, and the hill is officially declared a plastic-free zone to preserve it.",
   },
-  {
-    slug: "bheemili-beach",
-    name: "Bheemili (Bheemunipatnam) Beach",
-    image: fallbackImage, // replace with "../assets/destinations/bheemili-beach.jpg"
-    distanceFromVizag: "25 KM from Vizag",
-    distanceKm: 25,
-    driveTime: "45 mins",
-    sources: ["Yovizag", "Go2India"],
-    category: "Beach",
-    description:
-      "A quiet colonial-era beach town at the mouth of the Gosthani river, known for its Dutch cemetery, lighthouse, and calmer shoreline.",
-    seoTitle: "Vizag to Bheemili Beach Taxi | Coastal Road Trip | BSH Taxi Services",
-    seoDescription:
-      "Book a taxi from Visakhapatnam to Bheemili Beach along the scenic coastal road. Comfortable cabs to explore Bheemunipatnam's beach and Dutch heritage sites.",
-    keywords: [
-      "vizag to bheemili beach taxi",
-      "bheemunipatnam cab booking online",
-      "visakhapatnam coastal road taxi",
-      "bheemili beach day trip taxi",
-      "bheemili beach taxi fare from vizag",
-      "vizag coastal drive taxi package",
-      "bheemili dutch cemetery taxi tour",
-      "thotlakonda bheemili combo taxi",
-      "best taxi service bheemili vizag",
-      "one day trip taxi bheemunipatnam",
-    ],
-    history:
-      "Bheemunipatnam, shortened locally to Bheemili, is one of India's oldest municipalities, formally established in 1861. Its history stretches back to the 17th century, when it was a key Dutch East India Company trading post on the Coromandel Coast — the settlement's name appears in colonial records under dozens of spellings, from Bimlipatam to Bimelepatnam. The town still holds a 17th-century Dutch cemetery with around 52 pyramid-shaped tombs, several inscribed in Dutch, along with the ruins of a Dutch fort and colonial-era churches. A lighthouse built in 1868, when Bheemili's port handled cargo bound for Chennai and Kolkata under British rule, still stands on the shore today.",
-    highlights: [
-      "One of India's oldest municipalities (est. 1861)",
-      "17th-century Dutch cemetery with ~52 tombs",
-      "Working 1868 lighthouse and old Dutch fort ruins",
-      "Calmer, safer waters than Vizag's city beaches",
-    ],
-    quickFacts: [
-      { label: "Founded", value: "17th century (Dutch)" },
-      { label: "Municipality Since", value: "1861" },
-      { label: "Lighthouse Built", value: "1868" },
-      { label: "River", value: "Gosthani" },
-    ],
-    bestTimeToVisit:
-      "Mornings for the old town and cemetery, late afternoon for the beach and sunset over the river mouth.",
-    howToReach:
-      "A scenic 40–50 minute drive north from Vizag along the coastal road, passing Rushikonda and Thotlakonda on the way.",
-    funFact:
-      "Some of the Dutch cemetery's gravestones record the actual cause of death of the settler buried beneath — a detail rarely seen on colonial-era graves in India.",
-  },
-  {
-    slug: "thotlakonda",
-    name: "Thotlakonda Buddhist Complex",
-    image: fallbackImage, // replace with "../assets/destinations/thotlakonda.jpg"
-    distanceFromVizag: "15 KM from Vizag",
-    distanceKm: 15,
-    driveTime: "30 mins",
-    sources: ["AP State Archaeology Dept.", "Wanderlog"],
-    category: "Heritage & Buddhist Site",
-    description:
-      "A 2,000-year-old hilltop Buddhist monastery overlooking the Bay of Bengal, with excavated stupas, viharas and rock-cut water tanks.",
-    seoTitle: "Thotlakonda Taxi Service from Vizag | Buddhist Heritage Tour | BSH Taxi",
-    seoDescription:
-      "Book a taxi to Thotlakonda Buddhist Complex from Visakhapatnam. Comfortable cabs to this ancient hilltop monastery overlooking the Bay of Bengal, 24/7 booking.",
-    keywords: [
-      "vizag to thotlakonda taxi",
-      "thotlakonda buddhist complex cab",
-      "visakhapatnam heritage site taxi",
-      "thotlakonda bavikonda taxi tour",
-      "thotlakonda taxi fare from vizag",
-      "vizag heritage sightseeing taxi package",
-      "thotlakonda bheemili combo taxi",
-      "buddhist circuit taxi vizag",
-      "best taxi service thotlakonda vizag",
-      "coastal heritage tour taxi vizag",
-    ],
-    history:
-      "Thotlakonda takes its name from the Telugu for \"hill of stone wells,\" a reference to the rock-cut cisterns carved into its bedrock to store water for resident monks. The site was rediscovered by the Indian Navy during an aerial survey in the 1970s while scouting locations for a naval base, and excavated by the Andhra Pradesh State Archaeology Department through the 1980s and early '90s. What emerged was a 120-acre Hinayana Buddhist monastic complex dating to roughly the 3rd century BCE–2nd century CE, thought to have housed upward of 100 monks and served as a rest stop for maritime traders along the Bay of Bengal. Excavations turned up Satavahana-era coins, Roman silver coins, terracotta tiles, carved stupa models and Buddha footprint reliefs, pointing to trade links stretching as far as the Roman Empire.",
-    highlights: [
-      "2,000+ year old monastic complex atop a coastal hill",
-      "Excavated stupas, viharas, and a communal dining hall",
-      "Roman and Satavahana-era coins found on site",
-      "Sweeping, uncrowded views of the Bay of Bengal",
-    ],
-    quickFacts: [
-      { label: "Era", value: "3rd c. BCE – 2nd c. CE" },
-      { label: "Discovered", value: "1970s (Indian Navy survey)" },
-      { label: "Area", value: "~120 acres" },
-      { label: "Nearby Sites", value: "Bavikonda, Pavuralakonda" },
-    ],
-    bestTimeToVisit: "Early morning or late afternoon, avoiding the midday sun since there's little shade on the open hilltop.",
-    howToReach:
-      "About 30 minutes from Vizag along the Bheemili coastal road, roughly 6 km past Rushikonda Beach.",
-    funFact:
-      "No record of royal patronage has ever been found for Thotlakonda — it appears to have thrived purely on the support of local traders and pilgrims.",
-  },
-  {
+    {
     slug: "annavaram-temple",
     name: "Annavaram (Sri Satyanarayana Swamy Temple)",
-    image: fallbackImage, // replace with "../assets/destinations/annavaram-temple.jpg"
+    image: Annavaram, // replace with "../assets/destinations/annavaram-temple.jpg"
     distanceFromVizag: "110 KM from Vizag",
     distanceKm: 110,
     driveTime: "2.5 hrs",
@@ -482,9 +396,103 @@ driveTime: "25 mins",
       "The temple's daily Annadanam feeds thousands of pilgrims for free, one of the largest such programs in coastal Andhra Pradesh.",
   },
   {
+    slug: "Arasavalli",
+    name: "Arasavalli(Sri Sri Sri Suryanarayana Swamy Vari Devasthanam)",
+    image: Arasavalli, // replace with "../assets/destinations/bheemili-beach.jpg"
+    distanceFromVizag: "25 KM from Vizag",
+    distanceKm: 25,
+    driveTime: "45 mins",
+    sources: ["Yovizag", "Go2India"],
+    category: "Beach",
+    description:
+      "A quiet colonial-era beach town at the mouth of the Gosthani river, known for its Dutch cemetery, lighthouse, and calmer shoreline.",
+    seoTitle: "Vizag to Bheemili Beach Taxi | Coastal Road Trip | BSH Taxi Services",
+    seoDescription:
+      "Book a taxi from Visakhapatnam to Bheemili Beach along the scenic coastal road. Comfortable cabs to explore Bheemunipatnam's beach and Dutch heritage sites.",
+    keywords: [
+      "vizag to bheemili beach taxi",
+      "bheemunipatnam cab booking online",
+      "visakhapatnam coastal road taxi",
+      "bheemili beach day trip taxi",
+      "bheemili beach taxi fare from vizag",
+      "vizag coastal drive taxi package",
+      "bheemili dutch cemetery taxi tour",
+      "thotlakonda bheemili combo taxi",
+      "best taxi service bheemili vizag",
+      "one day trip taxi bheemunipatnam",
+    ],
+    history:
+      "Bheemunipatnam, shortened locally to Bheemili, is one of India's oldest municipalities, formally established in 1861. Its history stretches back to the 17th century, when it was a key Dutch East India Company trading post on the Coromandel Coast — the settlement's name appears in colonial records under dozens of spellings, from Bimlipatam to Bimelepatnam. The town still holds a 17th-century Dutch cemetery with around 52 pyramid-shaped tombs, several inscribed in Dutch, along with the ruins of a Dutch fort and colonial-era churches. A lighthouse built in 1868, when Bheemili's port handled cargo bound for Chennai and Kolkata under British rule, still stands on the shore today.",
+    highlights: [
+      "One of India's oldest municipalities (est. 1861)",
+      "17th-century Dutch cemetery with ~52 tombs",
+      "Working 1868 lighthouse and old Dutch fort ruins",
+      "Calmer, safer waters than Vizag's city beaches",
+    ],
+    quickFacts: [
+      { label: "Founded", value: "17th century (Dutch)" },
+      { label: "Municipality Since", value: "1861" },
+      { label: "Lighthouse Built", value: "1868" },
+      { label: "River", value: "Gosthani" },
+    ],
+    bestTimeToVisit:
+      "Mornings for the old town and cemetery, late afternoon for the beach and sunset over the river mouth.",
+    howToReach:
+      "A scenic 40–50 minute drive north from Vizag along the coastal road, passing Rushikonda and Thotlakonda on the way.",
+    funFact:
+      "Some of the Dutch cemetery's gravestones record the actual cause of death of the settler buried beneath — a detail rarely seen on colonial-era graves in India.",
+  },
+  {
+    slug: "Vanjangi-Hills",
+    name: "Vanjangi Hills",
+    image: Vanjangi, // replace with "../assets/destinations/thotlakonda.jpg"
+    distanceFromVizag: "15 KM from Vizag",
+    distanceKm: 15,
+    driveTime: "30 mins",
+    sources: ["AP State Archaeology Dept.", "Wanderlog"],
+    category: "Heritage & Buddhist Site",
+    description:
+      "A 2,000-year-old hilltop Buddhist monastery overlooking the Bay of Bengal, with excavated stupas, viharas and rock-cut water tanks.",
+    seoTitle: "Thotlakonda Taxi Service from Vizag | Buddhist Heritage Tour | BSH Taxi",
+    seoDescription:
+      "Book a taxi to Thotlakonda Buddhist Complex from Visakhapatnam. Comfortable cabs to this ancient hilltop monastery overlooking the Bay of Bengal, 24/7 booking.",
+    keywords: [
+      "vizag to thotlakonda taxi",
+      "thotlakonda buddhist complex cab",
+      "visakhapatnam heritage site taxi",
+      "thotlakonda bavikonda taxi tour",
+      "thotlakonda taxi fare from vizag",
+      "vizag heritage sightseeing taxi package",
+      "thotlakonda bheemili combo taxi",
+      "buddhist circuit taxi vizag",
+      "best taxi service thotlakonda vizag",
+      "coastal heritage tour taxi vizag",
+    ],
+    history:
+      "Thotlakonda takes its name from the Telugu for \"hill of stone wells,\" a reference to the rock-cut cisterns carved into its bedrock to store water for resident monks. The site was rediscovered by the Indian Navy during an aerial survey in the 1970s while scouting locations for a naval base, and excavated by the Andhra Pradesh State Archaeology Department through the 1980s and early '90s. What emerged was a 120-acre Hinayana Buddhist monastic complex dating to roughly the 3rd century BCE–2nd century CE, thought to have housed upward of 100 monks and served as a rest stop for maritime traders along the Bay of Bengal. Excavations turned up Satavahana-era coins, Roman silver coins, terracotta tiles, carved stupa models and Buddha footprint reliefs, pointing to trade links stretching as far as the Roman Empire.",
+    highlights: [
+      "2,000+ year old monastic complex atop a coastal hill",
+      "Excavated stupas, viharas, and a communal dining hall",
+      "Roman and Satavahana-era coins found on site",
+      "Sweeping, uncrowded views of the Bay of Bengal",
+    ],
+    quickFacts: [
+      { label: "Era", value: "3rd c. BCE – 2nd c. CE" },
+      { label: "Discovered", value: "1970s (Indian Navy survey)" },
+      { label: "Area", value: "~120 acres" },
+      { label: "Nearby Sites", value: "Bavikonda, Pavuralakonda" },
+    ],
+    bestTimeToVisit: "Early morning or late afternoon, avoiding the midday sun since there's little shade on the open hilltop.",
+    howToReach:
+      "About 30 minutes from Vizag along the Bheemili coastal road, roughly 6 km past Rushikonda Beach.",
+    funFact:
+      "No record of royal patronage has ever been found for Thotlakonda — it appears to have thrived purely on the support of local traders and pilgrims.",
+  },
+
+  {
     slug: "vizag-airport",
     name: "Vizag Airport",
-    image: fallbackImage, // replace with "../assets/destinations/vizag-airport.jpg"
+    image: vizagairport, // replace with "../assets/destinations/vizag-airport.jpg"
     distanceFromVizag: "12 KM from Vizag",
     category: "Transit",
     description: "Regular flights across major cities. We provide 24/7 airport transfers.",

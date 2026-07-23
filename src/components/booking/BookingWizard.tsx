@@ -19,14 +19,13 @@ import {
   MessageCircle,
   Mail,
   User,
-
   MapPinned,
-
-
   Headphones,
   Home,
   Lock,
   BookOpen,
+  Sparkles,
+  Crown,
 } from "lucide-react";
 import LocationAutocomplete, {
   POPULAR_PICKUP_PLACES,
@@ -38,7 +37,6 @@ import type {
   PassengerDetails,
   Vehicle,
 } from "../../data/Bookingconfig";
-
 
 import {
   SUPPORT_PHONE_DISPLAY,
@@ -85,8 +83,10 @@ function FieldShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 transition-colors focus-within:border-primary">
-      <Icon size={16} className="shrink-0 text-primary" />
+    <div className="group flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-white px-3 py-2.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-200 focus-within:border-primary focus-within:shadow-[0_0_0_3.5px_var(--tw-shadow-color)] focus-within:shadow-primary/12 hover:border-slate-300">
+      <span className="flex 'h-6' 'w-6.5' h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary transition-all duration-200 group-focus-within:bg-primary group-focus-within:text-white group-focus-within:shadow-sm group-focus-within:shadow-primary/40">
+        <Icon size={13} className="shrink-0" />
+      </span>
       {children}
     </div>
   );
@@ -94,9 +94,24 @@ function FieldShell({
 
 function Label({ htmlFor, children }: { htmlFor?: string; children: React.ReactNode }) {
   return (
-    <label htmlFor={htmlFor} className="mb-1 block text-xs font-medium text-slate-700">
+    <label htmlFor={htmlFor} className="mb-1.5 flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-500">
       {children}
     </label>
+  );
+}
+
+function SectionEyebrow({ step, title, sub }: { step: number; title: string; sub: string }) {
+  return (
+    <div className="mb-1">
+      <div className="flex items-center gap-2">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-linear-to-r from-primary/10 to-primary/3 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.12em] text-primary ring-1 ring-inset ring-primary/15">
+          <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+          Step {step} of 6
+        </span>
+      </div>
+      <h2 className="mt-2 text-[1.35rem] font-extrabold tracking-tight text-slate-900">{title}</h2>
+      <p className="mt-1 text-[13px] text-slate-500">{sub}</p>
+    </div>
   );
 }
 
@@ -110,12 +125,12 @@ function SummaryRow({
   value: string;
 }) {
   return (
-    <div className="flex items-center justify-between py-1.5 text-xs">
-      <div className="flex items-center gap-1.5 text-slate-500">
-        <Icon size={14} className="text-primary" />
+    <div className="flex items-center justify-between py-2 text-xs">
+      <div className="flex items-center gap-1.5 text-slate-400">
+        <Icon size={13} className="text-primary/70" />
         <span>{label}</span>
       </div>
-      <span className="font-medium text-slate-800">{value}</span>
+      <span className="max-w-[55%] truncate text-right font-semibold text-slate-800">{value}</span>
     </div>
   );
 }
@@ -125,39 +140,110 @@ function SummaryRow({
 /* ---------------------------------------------------------------------- */
 
 function Stepper({ currentIndex }: { currentIndex: number }) {
+  const progressPct =
+    STEPS.length > 1
+      ? (currentIndex / (STEPS.length - 1)) * 100
+      : 0;
+
   return (
-    <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2 border-b border-slate-100 px-4 py-3">
-      {STEPS.map((step, i) => {
-        const state = i < currentIndex ? "done" : i === currentIndex ? "active" : "todo";
-        return (
-          <div key={step.key} className="flex items-center gap-1.5">
-            <div className="flex items-center gap-1.5">
+    <div className="relative overflow-hidden border-b border-slate-200/70 bg-linear-to-br from-slate-50 via-white to-blue-50/40 px-5 py-6">
+
+      {/* Background Glow */}
+      <div className="pointer-events-none absolute -left-24 -top-20 h-60 w-60 rounded-full bg-primary/10 blur-3xl" />
+      <div className="pointer-events-none absolute -right-20 bottom-0 h-48 w-48 rounded-full bg-sky-300/10 blur-3xl" />
+
+      {/* Progress Track */}
+      <div className="pointer-events-none absolute left-6 right-6 top-9.5 hidden sm:block">
+        <div className="relative h-1.25 rounded-full bg-slate-200">
+
+          {/* Progress */}
+          <div
+            className="relative h-full rounded-full bg-linear-to-r from-primary via-blue-500 to-primary transition-all duration-700 ease-out"
+            style={{ width: `${progressPct}%` }}
+          >
+            {/* Moving Dot */}
+            <span className="absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 translate-x-1/2 rounded-full border-4 border-white bg-primary shadow-lg shadow-primary/40" />
+          </div>
+        </div>
+      </div>
+
+      {/* Steps */}
+      <div className="relative flex justify-between">
+        {STEPS.map((step, i) => {
+          const state =
+            i < currentIndex
+              ? "done"
+              : i === currentIndex
+              ? "active"
+              : "todo";
+
+          return (
+            <div
+              key={step.key}
+              className="group flex flex-1 flex-col items-center"
+            >
+              {/* Circle */}
               <div
-                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold transition-colors ${
-                  state === "done"
-                    ? "bg-primary text-white"
-                    : state === "active"
-                    ? "bg-primary text-white"
-                    : "bg-slate-100 text-slate-400"
-                }`}
+                className={`
+                  relative flex h-12 w-12 items-center justify-center rounded-full
+                  text-sm font-bold transition-all duration-300
+
+                  ${
+                    state === "done"
+                      ? "bg-linear-to-br from-primary to-blue-600 text-white shadow-lg shadow-primary/30"
+                      : state === "active"
+                      ? "scale-110 bg-linear-to-br from-primary to-blue-500 text-white ring-8 ring-primary/10 shadow-xl shadow-primary/40"
+                      : "bg-white text-slate-400 ring-2 ring-slate-200"
+                  }
+
+                  group-hover:scale-105
+                `}
               >
-                {state === "done" ? <Check size={13} /> : i + 1}
+                {state === "done" ? (
+                  <Check
+                    size={18}
+                    strokeWidth={3}
+                    className="animate-in zoom-in duration-300"
+                  />
+                ) : (
+                  i + 1
+                )}
+
+                {/* Pulse */}
+                {state === "active" && (
+                  <span className="absolute inset-0 rounded-full border-2 border-primary animate-ping opacity-20" />
+                )}
               </div>
-              <div className="hidden sm:block">
-                <p className={`text-xs font-semibold ${state === "todo" ? "text-slate-400" : "text-slate-900"}`}>
+
+              {/* Labels */}
+              <div className="mt-3 hidden text-center sm:block">
+                <p
+                  className={`text-sm font-semibold transition-colors ${
+                    state === "todo"
+                      ? "text-slate-400"
+                      : "text-slate-900"
+                  }`}
+                >
                   {step.label}
                 </p>
-                <p className="text-[10px] text-slate-400">{step.sub}</p>
+
+                <p
+                  className={`mt-1 text-xs ${
+                    state === "active"
+                      ? "text-primary"
+                      : "text-slate-400"
+                  }`}
+                >
+                  {step.sub}
+                </p>
               </div>
             </div>
-            {i < STEPS.length - 1 && <ChevronRight size={14} className="mx-0.5 shrink-0 text-slate-300" />}
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
-
 /* ---------------------------------------------------------------------- */
 /*  Trip summary sidebar                                                   */
 /* ---------------------------------------------------------------------- */
@@ -167,7 +253,7 @@ function TripSummarySidebar({
   vehicle,
   distanceKm,
   minutes,
-
+  total,
 }: {
   trip: TripDetails;
   vehicle: Vehicle | null;
@@ -176,38 +262,56 @@ function TripSummarySidebar({
   total: number;
 }) {
   return (
-    <aside className="w-full shrink-0 rounded-xl border border-slate-100 bg-white p-4 shadow-sm lg:w-72">
-      <h3 className="text-sm font-bold text-slate-900">Trip Summary</h3>
-      <div className="mt-1 mb-3 h-0.5 w-8 bg-primary" />
+    <aside className="w-full shrink-0 self-start overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_2px_10px_rgba(15,23,42,0.06)] lg:sticky lg:top-4 lg:w-72">
+      <div className="relative overflow-hidden border-b border-slate-100 bg-linear-to-br from-primary/8 via-primary/2 to-white px-4 py-4">
+        <div className="pointer-events-none absolute -right-6 -top-8 h-20 w-20 rounded-full bg-primary/10 blur-2xl" />
+        <h3 className="relative flex items-center gap-1.5 text-sm font-extrabold tracking-tight text-slate-900">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary">
+            <Sparkles size={11} />
+          </span>
+          Trip Summary
+        </h3>
+      </div>
 
-      <div className="flex gap-3">
-        <div className="flex flex-col items-center pt-1">
-          <span className="h-2 w-2 rounded-full bg-emerald-500" />
-          <span className="my-0.5 h-5 w-px border-l border-dashed border-slate-300" />
-          <span className="h-2 w-2 rounded-full bg-red-500" />
+      <div className="px-4 pt-4">
+        <div className="flex gap-3">
+          <div className="flex flex-col items-center pt-1">
+            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500 ring-4 ring-emerald-50" />
+            <span className="my-1 h-6 w-px flex-1 border-l-2 border-dashed border-slate-200" />
+            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-red-500 ring-4 ring-red-50" />
+          </div>
+          <div className="flex-1 space-y-3">
+            <div>
+              <p className="text-sm font-semibold leading-tight text-slate-900">{trip.pickup || "Pickup location"}</p>
+              <p className="text-[11px] text-slate-400">Pickup location</p>
+            </div>
+            <div>
+              <p className="text-sm font-semibold leading-tight text-slate-900">{trip.drop || "Drop location"}</p>
+              <p className="text-[11px] text-slate-400">Drop location</p>
+            </div>
+          </div>
         </div>
-        <div className="flex-1 space-y-2.5">
-          <div>
-            <p className="text-sm font-semibold text-slate-900">{trip.pickup || "Pickup location"}</p>
-            <p className="text-[11px] text-slate-400">Pickup location</p>
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-slate-900">{trip.drop || "Drop location"}</p>
-            <p className="text-[11px] text-slate-400">Drop location</p>
-          </div>
+
+        <div className="mt-3 divide-y divide-slate-100 border-t border-slate-100">
+          <SummaryRow icon={Car} label="Vehicle" value={vehicle ? vehicle.name : "Not selected"} />
+          <SummaryRow icon={ArrowLeftRight} label="Trip Type" value={trip.tripOption} />
+          <SummaryRow icon={CalendarIcon} label="Date & Time" value={trip.travelDate ? `${formatDateLabel(trip.travelDate)}` : "Not selected"} />
+          <SummaryRow icon={Users} label="Passengers" value={trip.passengers} />
+          <SummaryRow icon={Briefcase} label="Luggage" value={trip.luggage} />
+          <SummaryRow icon={Navigation} label="Distance" value={distanceKm ? `${distanceKm} km` : "Not calculated"} />
+          <SummaryRow icon={Clock} label="Est. Time" value={minutes ? formatDuration(minutes) : "Not calculated"} />
+          {total > 0 && (
+            <div className="flex items-center justify-between py-3">
+              <span className="text-xs font-bold text-slate-600">Estimated Total</span>
+              <span className="bg-linear-to-br from-primary to-primary/70 bg-clip-text text-lg font-extrabold tabular-nums text-transparent">
+                {formatCurrency(total)}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="mt-3 divide-y divide-slate-100 border-t border-slate-100">
-        <SummaryRow icon={Car} label="Vehicle" value={vehicle ? vehicle.name : "Not selected"} />
-        <SummaryRow icon={ArrowLeftRight} label="Trip Type" value={trip.tripOption} />
-        <SummaryRow icon={CalendarIcon} label="Date & Time" value={trip.travelDate ? `${formatDateLabel(trip.travelDate)}` : "Not selected"} />
-        <SummaryRow icon={Users} label="Passengers" value={trip.passengers} />
-        <SummaryRow icon={Briefcase} label="Luggage" value={trip.luggage} />
-        <SummaryRow icon={Navigation} label="Distance" value={distanceKm ? `${distanceKm} km` : "Not calculated"} />
-        <SummaryRow icon={Clock} label="Est. Time" value={minutes ? formatDuration(minutes) : "Not calculated"} />
-      </div>
-      <div className="mt-3 flex items-center gap-2 rounded-lg bg-primary/5 px-3 py-2">
+      <div className="mx-4 mb-3.5 mt-3 flex items-center gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3 py-2.5 ring-1 ring-inset ring-primary/10">
         <ShieldCheck size={16} className="shrink-0 text-primary" />
         <div>
           <p className="text-xs font-semibold text-slate-800">100% Secure Booking</p>
@@ -215,19 +319,46 @@ function TripSummarySidebar({
         </div>
       </div>
 
-      <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3">
+      <div className="mx-4 mb-4 flex items-center justify-between border-t border-slate-100 pt-3.5">
         <div>
           <p className="text-xs font-semibold text-slate-800">Need Help?</p>
-          <a href={`tel:+${SUPPORT_PHONE}`} className="text-xs font-medium text-primary">
+          <a href={`tel:+${SUPPORT_PHONE}`} className="text-xs font-bold text-primary hover:underline">
             {SUPPORT_PHONE_DISPLAY}
           </a>
           <p className="text-[11px] text-slate-400">We're available 24/7</p>
         </div>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/5 text-primary">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-linear-to-br from-primary/15 to-primary/5 text-primary">
           <Headphones size={17} />
         </div>
       </div>
     </aside>
+  );
+}
+
+/* ---------------------------------------------------------------------- */
+/*  Primary CTA button (shared styling)                                    */
+/* ---------------------------------------------------------------------- */
+
+function PrimaryButton({
+  children,
+  onClick,
+  disabled,
+  className = "",
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+  disabled?: boolean;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={onClick}
+      className={`flex items-center justify-center gap-2 rounded-xl bg-linear-to-b from-primary to-primary/90 px-4 py-3 text-sm font-bold tracking-tight text-white shadow-[0_4px_14px_-2px] shadow-primary/35 transition-all duration-150 hover:brightness-[1.07] hover:shadow-[0_6px_18px_-2px] hover:shadow-primary/45 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none ${className}`}
+    >
+      {children}
+    </button>
   );
 }
 
@@ -264,12 +395,10 @@ function StepTripDetails({
   return (
     <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
       <div>
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-primary">Step 1 of 6</p>
-        <h2 className="mt-0.5 text-lg font-bold text-slate-900">Enter Trip Details</h2>
-        <p className="mt-0.5 text-xs text-slate-500">Please provide your pickup and drop locations</p>
+        <SectionEyebrow step={1} title="Enter Trip Details" sub="Please provide your pickup and drop locations" />
 
         {/* Pickup / Drop side by side with the live map preview */}
-        <div className="mt-3 grid gap-4 md:grid-cols-2">
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
           <div className="space-y-3">
             <LocationAutocomplete
               id="wizard-pickup"
@@ -302,18 +431,20 @@ function StepTripDetails({
             />
           </div>
 
-          <RouteMapPreview
-            pickupLabel={trip.pickup}
-            dropLabel={trip.drop}
-            pickupCoords={pickupCoords}
-            dropCoords={dropCoords}
-            onRouteComputed={onRouteComputed}
-          />
+          <div className="overflow-hidden rounded-xl border border-slate-100 shadow-[0_2px_10px_rgba(15,23,42,0.06)]">
+            <RouteMapPreview
+              pickupLabel={trip.pickup}
+              dropLabel={trip.drop}
+              pickupCoords={pickupCoords}
+              dropCoords={dropCoords}
+              onRouteComputed={onRouteComputed}
+            />
+          </div>
         </div>
 
-        <div className="mt-3 space-y-3">
+        <div className="mt-4 space-y-3.5">
           <div>
-            <span className="mb-1 block text-xs font-medium text-slate-700">Trip Type</span>
+            <span className="mb-1.5 block text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-500">Trip Type</span>
             <div className="flex gap-2">
               {config.tripOptions.map((option) => {
                 const active = trip.tripOption === option;
@@ -322,10 +453,10 @@ function StepTripDetails({
                     key={option}
                     type="button"
                     onClick={() => setTrip((p) => ({ ...p, tripOption: option }))}
-                    className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-colors ${
+                    className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-xs font-bold transition-all duration-150 ${
                       active
-                        ? "border-primary bg-primary/5 text-primary"
-                        : "border-slate-200 text-slate-600 hover:border-primary/40"
+                        ? "border-primary bg-linear-to-b from-primary to-primary/90 text-white shadow-sm shadow-primary/30"
+                        : "border-slate-200 bg-white text-slate-600 hover:border-primary/40 hover:bg-primary/5"
                     }`}
                   >
                     {option.toLowerCase().includes("round") || option.toLowerCase().includes("multi") ? (
@@ -348,7 +479,7 @@ function StepTripDetails({
                   id="wizard-passengers"
                   value={trip.passengers}
                   onChange={(e) => setTrip((p) => ({ ...p, passengers: e.target.value }))}
-                  className="w-full bg-transparent text-xs text-slate-800 outline-none"
+                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none"
                 >
                   {PASSENGER_OPTIONS.map((o) => (
                     <option key={o} value={o}>
@@ -365,7 +496,7 @@ function StepTripDetails({
                   id="wizard-luggage"
                   value={trip.luggage}
                   onChange={(e) => setTrip((p) => ({ ...p, luggage: e.target.value }))}
-                  className="w-full bg-transparent text-xs text-slate-800 outline-none"
+                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none"
                 >
                   {LUGGAGE_OPTIONS.map((o) => (
                     <option key={o} value={o}>
@@ -376,19 +507,12 @@ function StepTripDetails({
               </FieldShell>
             </div>
           </div>
-
-     
         </div>
 
-        <button
-          type="button"
-          disabled={!canContinue}
-          onClick={onNext}
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
-        >
+        <PrimaryButton disabled={!canContinue} onClick={onNext} className="mt-5 w-full">
           Continue to Choose Vehicle
           <ArrowRight size={15} />
-        </button>
+        </PrimaryButton>
       </div>
 
       <TripSummarySidebar trip={trip} vehicle={null} distanceKm={distanceKm} minutes={minutes} total={0} />
@@ -419,30 +543,31 @@ function StepVehicle({
   return (
     <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
       <div>
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-primary">Step 2 of 6</p>
-        <h2 className="mt-0.5 text-lg font-bold text-slate-900">Choose Your Vehicle</h2>
-        <p className="mt-0.5 text-xs text-slate-500">Select the vehicle that best suits your journey</p>
+        <SectionEyebrow step={2} title="Choose Your Vehicle" sub="Select the vehicle that best suits your journey" />
 
-        <div className="mt-3 flex flex-wrap items-center gap-3 rounded-xl border border-slate-100 px-3 py-2 text-xs text-slate-600">
-          <span className="flex items-center gap-1">
+        <div className="mt-4 flex flex-wrap items-center gap-4 rounded-xl border border-slate-100 bg-linear-to-r from-slate-50/80 to-white px-3.5 py-2.5 text-xs font-semibold text-slate-600">
+          <span className="flex items-center gap-1.5">
             <Navigation size={13} className="text-primary" /> {distanceKm} km
           </span>
-          <span className="flex items-center gap-1">
+          <span className="h-3 w-px bg-slate-200" />
+          <span className="flex items-center gap-1.5">
             <Clock size={13} className="text-primary" /> {formatDuration(minutes)}
           </span>
-          <span className="flex items-center gap-1">
+          <span className="h-3 w-px bg-slate-200" />
+          <span className="flex items-center gap-1.5">
             <ArrowLeftRight size={13} className="text-primary" /> {trip.tripOption}
           </span>
-          <span className="flex items-center gap-1">
+          <span className="h-3 w-px bg-slate-200" />
+          <span className="flex items-center gap-1.5">
             <Users size={13} className="text-primary" /> {trip.passengers}
           </span>
         </div>
 
-        <p className="mt-3 mb-2 text-xs font-semibold text-slate-800">
+        <p className="mt-4 mb-2.5 text-xs font-bold text-slate-800">
           Available Vehicles <span className="ml-1 font-normal text-slate-400">— all vehicles are sanitized and well maintained</span>
         </p>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 xl:grid-cols-4">
           {VEHICLES.map((v) => {
             const active = vehicle?.id === v.id;
             const total = Math.round(v.ratePerKm * distanceKm * 1.05);
@@ -451,52 +576,55 @@ function StepVehicle({
                 key={v.id}
                 type="button"
                 onClick={() => setVehicleId(v.id)}
-                className={`relative rounded-xl border p-3 text-left transition-colors ${
-                  active ? "border-primary bg-primary/5" : "border-slate-200 hover:border-primary/40"
+                className={`group relative rounded-2xl border p-3.5 text-left transition-all duration-200 ${
+                  active
+                    ? "border-primary bg-linear-to-b from-primary/6 to-transparent shadow-lg shadow-primary/15 ring-1 ring-primary/25"
+                    : "border-slate-200 bg-white hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg hover:shadow-slate-200/60"
                 }`}
               >
                 {active && (
-                  <span className="absolute right-2.5 top-2.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white">
-                    <Check size={12} />
+                  <span className="absolute right-3 top-3 flex 'h-5.5' 'w-5.5' h-5 w-5 items-center justify-center rounded-full bg-primary text-white shadow-sm shadow-primary/40">
+                    <Check size={12} strokeWidth={3} />
                   </span>
                 )}
-            <div className="flex h-32 items-center justify-center overflow-hidden rounded-lg bg-slate-50">
-  {v.image ? (
-    <img
-      src={v.image}
-      alt={v.name}
-      className="h-full w-full object-contain"
-    />
-  ) : (
-    <Car size={40} className="text-slate-300" />
-  )}
-</div>
-                <div className="mt-1 flex items-center gap-1.5">
-                  <p className="text-sm font-semibold text-slate-900">{v.name}</p>
+                <div className="flex h-32 items-center justify-center overflow-hidden rounded-xl bg-linear-to-b from-slate-50 to-slate-100/60">
+                  {v.image ? (
+                    <img
+                      src={v.image}
+                      alt={v.name}
+                      className="h-full w-full object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    <Car size={40} className="text-slate-300" />
+                  )}
+                </div>
+                <div className="mt-2.5 flex items-center gap-1.5">
+                  <p className="text-sm font-extrabold tracking-tight text-slate-900">{v.name}</p>
                   {v.badge && (
-                    <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[9px] font-semibold text-primary">
+                    <span className="inline-flex items-center gap-0.5 rounded-full bg-linear-to-r from-amber-400/20 to-amber-400/10 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-amber-700 ring-1 ring-inset ring-amber-400/30">
+                      <Crown size={9} className="text-amber-500" />
                       {v.badge}
                     </span>
                   )}
                 </div>
-                <div className="mt-1 flex flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-slate-500">
+                <div className="mt-1.5 flex flex-wrap gap-x-2.5 gap-y-0.5 text-[11px] text-slate-500">
                   <span className="flex items-center gap-1">
                     <Users size={11} /> {v.seats}
                   </span>
                   <span className="flex items-center gap-1">
                     <Briefcase size={11} /> {v.bags} Bags
                   </span>
-                  {v.ac && <span>AC</span>}
+                  {v.ac && <span className="font-semibold text-emerald-600">AC</span>}
                 </div>
-                <div className="mt-1.5 border-t border-dashed border-slate-200 pt-1.5">
-                  <p className="text-xs font-bold text-slate-900">
+                <div className="mt-2 border-t border-dashed border-slate-200 pt-2">
+                  <p className="text-sm font-extrabold tabular-nums text-slate-900">
                     ₹{v.ratePerKm.toFixed(2)} <span className="text-[10px] font-normal text-slate-400">/km</span>
                   </p>
                   <p className="text-[11px] text-slate-400">{distanceKm ? formatCurrency(total) : "—"} (Total est.)</p>
                 </div>
                 <div
-                  className={`mt-2 w-full rounded-md py-1.5 text-center text-[11px] font-semibold ${
-                    active ? "bg-primary text-white" : "border border-slate-200 text-slate-600"
+                  className={`mt-2.5 w-full rounded-lg py-1.5 text-center text-[11px] font-bold transition-colors ${
+                    active ? "bg-primary text-white shadow-sm shadow-primary/30" : "border border-slate-200 text-slate-600 group-hover:border-primary/30 group-hover:text-primary"
                   }`}
                 >
                   {active ? "Selected" : "Select"}
@@ -506,27 +634,22 @@ function StepVehicle({
           })}
         </div>
 
-        <div className="mt-3 flex items-start gap-2 rounded-lg bg-primary/5 px-3 py-2 text-xs text-slate-600">
+        <div className="mt-4 flex items-start gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3.5 py-2.5 text-xs text-slate-600 ring-1 ring-inset ring-primary/10">
           <ShieldCheck size={14} className="mt-0.5 shrink-0 text-primary" />
           All our vehicles are verified, insured &amp; sanitized for your safety and comfort.
         </div>
 
-        <div className="mt-4 flex gap-3">
+        <div className="mt-5 flex gap-3">
           <button
             type="button"
             onClick={onBack}
-            className="flex items-center gap-2 rounded-lg border border-slate-200 px-3.5 py-2.5 text-xs font-semibold text-slate-600 hover:border-slate-300"
+            className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-xs font-bold text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50"
           >
             <ChevronLeft size={14} /> Back to Trip Details
           </button>
-          <button
-            type="button"
-            disabled={!vehicle}
-            onClick={onNext}
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
-          >
+          <PrimaryButton disabled={!vehicle} onClick={onNext} className="flex-1">
             Continue to Date &amp; Time <ArrowRight size={15} />
-          </button>
+          </PrimaryButton>
         </div>
       </div>
 
@@ -614,61 +737,65 @@ function StepDateTime({
   return (
     <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
       <div>
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-primary">Step 3 of 6</p>
-        <h2 className="mt-0.5 text-lg font-bold text-slate-900">Select Date &amp; Time</h2>
-        <p className="mt-0.5 text-xs text-slate-500">Choose your preferred travel date and time</p>
+        <SectionEyebrow step={3} title="Select Date &amp; Time" sub="Choose your preferred travel date and time" />
 
-        <div className="mt-3 flex flex-wrap items-center gap-3 rounded-xl border border-slate-100 px-3 py-2 text-xs text-slate-600">
-          <span className="flex items-center gap-1">
+        <div className="mt-4 flex flex-wrap items-center gap-4 rounded-xl border border-slate-100 bg-linear-to-r from-slate-50/80 to-white px-3.5 py-2.5 text-xs font-semibold text-slate-600">
+          <span className="flex items-center gap-1.5">
             <Car size={13} className="text-primary" /> {vehicle?.name ?? "No vehicle selected"}
           </span>
-          <span className="flex items-center gap-1">
+          <span className="h-3 w-px bg-slate-200" />
+          <span className="flex items-center gap-1.5">
             <MapPin size={13} className="text-primary" /> {trip.pickup} → {trip.drop}
           </span>
-          <span className="flex items-center gap-1">
+          <span className="h-3 w-px bg-slate-200" />
+          <span className="flex items-center gap-1.5">
             <Navigation size={13} className="text-primary" /> {distanceKm} km
           </span>
         </div>
 
-        <div className="mt-3 grid gap-4 sm:grid-cols-2">
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <div>
             <Label>Travel Date *</Label>
-            <div className="rounded-xl border border-slate-200 p-3">
-              <div className="mb-2 flex items-center justify-between">
-                <button type="button" onClick={() => changeMonth(-1)} className="rounded-full p-1 hover:bg-slate-100">
+            <div className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
+              <div className="mb-2.5 flex items-center justify-between">
+                <button type="button" onClick={() => changeMonth(-1)} className="rounded-full p-1.5 text-slate-500 transition-colors hover:bg-primary/8 hover:text-primary">
                   <ChevronLeft size={16} />
                 </button>
-                <p className="text-xs font-semibold text-slate-800">{monthLabel}</p>
-                <button type="button" onClick={() => changeMonth(1)} className="rounded-full p-1 hover:bg-slate-100">
+                <p className="text-xs font-extrabold tracking-tight text-slate-800">{monthLabel}</p>
+                <button type="button" onClick={() => changeMonth(1)} className="rounded-full p-1.5 text-slate-500 transition-colors hover:bg-primary/8 hover:text-primary">
                   <ChevronRight size={16} />
                 </button>
               </div>
-              <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-medium text-slate-400">
+              <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400">
                 {WEEKDAY_LABELS.map((w) => (
                   <span key={w}>{w}</span>
                 ))}
               </div>
-              <div className="mt-1 grid grid-cols-7 gap-1">
+              <div className="mt-1.5 grid grid-cols-7 gap-1">
                 {calendarCells.map((cell, i) => {
                   const isPast = cell.inMonth && cell.iso < todayIso;
                   const isSelected = cell.inMonth && cell.iso === trip.travelDate;
+                  const isToday = cell.inMonth && cell.iso === todayIso;
                   return (
                     <button
                       key={i}
                       type="button"
                       disabled={!cell.inMonth || isPast}
                       onClick={() => setTrip((p) => ({ ...p, travelDate: cell.iso }))}
-                      className={`aspect-square rounded-md text-xs transition-colors ${
+                      className={`relative aspect-square rounded-lg text-xs font-medium transition-all duration-150 ${
                         !cell.inMonth
                           ? "text-transparent"
                           : isSelected
-                          ? "bg-primary font-semibold text-white"
+                          ? "scale-105 bg-linear-to-b from-primary to-primary/90 font-bold text-white shadow-sm shadow-primary/40"
                           : isPast
                           ? "cursor-not-allowed text-slate-300"
                           : "text-slate-700 hover:bg-primary/10"
                       }`}
                     >
                       {cell.day}
+                      {isToday && !isSelected && (
+                        <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary" />
+                      )}
                     </button>
                   );
                 })}
@@ -676,7 +803,7 @@ function StepDateTime({
               <button
                 type="button"
                 onClick={() => setTrip((p) => ({ ...p, travelDate: todayIso }))}
-                className="mt-2 flex items-center gap-1.5 text-[11px] font-medium text-primary"
+                className="mt-3 flex items-center gap-1.5 rounded-lg bg-primary/5 px-2.5 py-1.5 text-[11px] font-bold text-primary transition-colors hover:bg-primary/10"
               >
                 <CalendarIcon size={12} /> Today: {formatDateLabel(todayIso)}
               </button>
@@ -691,7 +818,7 @@ function StepDateTime({
                   id="wizard-time"
                   value={trip.travelTime}
                   onChange={(e) => setTrip((p) => ({ ...p, travelTime: e.target.value }))}
-                  className="w-full bg-transparent text-xs text-slate-800 outline-none"
+                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none"
                 >
                   {TIME_SLOTS.map((t) => (
                     <option key={t} value={t}>
@@ -710,7 +837,7 @@ function StepDateTime({
                   value={trip.pickupAddress}
                   onChange={(e) => setTrip((p) => ({ ...p, pickupAddress: e.target.value }))}
                   placeholder="Enter pickup address"
-                  className="w-full bg-transparent text-xs text-slate-800 outline-none placeholder:text-slate-400"
+                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:font-normal placeholder:text-slate-400"
                 />
               </FieldShell>
             </div>
@@ -723,7 +850,7 @@ function StepDateTime({
                   value={trip.landmark}
                   onChange={(e) => setTrip((p) => ({ ...p, landmark: e.target.value }))}
                   placeholder="Enter landmark or nearby place"
-                  className="w-full bg-transparent text-xs text-slate-800 outline-none placeholder:text-slate-400"
+                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:font-normal placeholder:text-slate-400"
                 />
               </FieldShell>
             </div>
@@ -736,33 +863,28 @@ function StepDateTime({
                 onChange={(e) => setTrip((p) => ({ ...p, instructions: e.target.value }))}
                 placeholder="Any special requests or instructions for the driver..."
                 rows={2}
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-xs text-slate-800 outline-none placeholder:text-slate-400 focus:border-primary"
+                className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-medium text-slate-800 shadow-[0_1px_2px_rgba(15,23,42,0.04)] outline-none transition-all placeholder:font-normal placeholder:text-slate-400 focus:border-primary focus:shadow-[0_0_0_3.5px_var(--tw-shadow-color)] focus:shadow-primary/12"
               />
             </div>
 
-            <div className="flex items-start gap-2 rounded-lg bg-primary/5 px-3 py-2 text-xs text-slate-600">
+            <div className="flex items-start gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3.5 py-2.5 text-xs text-slate-600 ring-1 ring-inset ring-primary/10">
               <Info size={14} className="mt-0.5 shrink-0 text-primary" />
               Note: Your driver will arrive 15 minutes before the scheduled pickup time.
             </div>
           </div>
         </div>
 
-        <div className="mt-4 flex gap-3">
+        <div className="mt-5 flex gap-3">
           <button
             type="button"
             onClick={onBack}
-            className="flex items-center gap-2 rounded-lg border border-slate-200 px-3.5 py-2.5 text-xs font-semibold text-slate-600 hover:border-slate-300"
+            className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-xs font-bold text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50"
           >
             <ChevronLeft size={14} /> Back to Choose Vehicle
           </button>
-          <button
-            type="button"
-            disabled={!canContinue}
-            onClick={onNext}
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
-          >
+          <PrimaryButton disabled={!canContinue} onClick={onNext} className="flex-1">
             Continue to Review <ArrowRight size={15} />
-          </button>
+          </PrimaryButton>
         </div>
       </div>
 
@@ -795,26 +917,27 @@ function StepReview({
   return (
     <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
       <div>
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-primary">Step 4 of 6</p>
-        <h2 className="mt-0.5 text-lg font-bold text-slate-900">Review Your Trip</h2>
-        <p className="mt-0.5 text-xs text-slate-500">Please review your trip details before proceeding</p>
+        <SectionEyebrow step={4} title="Review Your Trip" sub="Please review your trip details before proceeding" />
 
-        <div className="mt-3 grid gap-3 sm:grid-cols-3">
-          <div className="rounded-xl border border-slate-100 p-3">
-            <p className="flex items-center gap-1.5 text-xs font-semibold text-slate-800">
-              <MapPin size={13} className="text-primary" /> Trip Route
+        <div className="mt-4 grid gap-3.5 sm:grid-cols-3">
+          <div className="rounded-2xl border border-slate-100 bg-white p-3.5 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
+            <p className="flex items-center gap-2 text-xs font-bold text-slate-800">
+              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary">
+                <MapPin size={12} />
+              </span>
+              Trip Route
             </p>
-            <div className="mt-2 space-y-2 text-xs">
+            <div className="mt-3 space-y-2.5 text-xs">
               <div>
-                <p className="font-medium text-slate-900">{trip.pickup}</p>
+                <p className="font-semibold text-slate-900">{trip.pickup}</p>
                 <p className="text-[11px] text-slate-400">Pickup Location</p>
               </div>
               <div>
-                <p className="font-medium text-slate-900">{trip.drop}</p>
+                <p className="font-semibold text-slate-900">{trip.drop}</p>
                 <p className="text-[11px] text-slate-400">Drop Location</p>
               </div>
             </div>
-            <div className="mt-2 flex justify-between border-t border-slate-100 pt-2 text-[11px] text-slate-500">
+            <div className="mt-2.5 flex justify-between border-t border-slate-100 pt-2.5 text-[11px] font-semibold text-slate-500">
               <span className="flex items-center gap-1">
                 <Navigation size={11} /> {distanceKm} km
               </span>
@@ -824,90 +947,90 @@ function StepReview({
             </div>
           </div>
 
-          <div className="rounded-xl border border-slate-100 p-3">
-            <p className="flex items-center gap-1.5 text-xs font-semibold text-slate-800">
-              <Car size={13} className="text-primary" /> Selected Vehicle
+          <div className="rounded-2xl border border-slate-100 bg-white p-3.5 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
+            <p className="flex items-center gap-2 text-xs font-bold text-slate-800">
+              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary">
+                <Car size={12} />
+              </span>
+              Selected Vehicle
             </p>
-          <div className="mt-3 flex h-28 items-center justify-center">
-  {vehicle?.image ? (
-    <img
-      src={vehicle.image}
-      alt={vehicle.name}
-      className="h-full object-contain"
-    />
-  ) : (
-    <Car size={32} className="text-slate-300" />
-  )}
-</div>
-            <p className="mt-1 text-center text-sm font-semibold text-slate-900">{vehicle?.name}</p>
+            <div className="mt-2 flex h-28 items-center justify-center rounded-xl bg-linear-to-b from-slate-50 to-transparent">
+              {vehicle?.image ? (
+                <img
+                  src={vehicle.image}
+                  alt={vehicle.name}
+                  className="h-full object-contain"
+                />
+              ) : (
+                <Car size={32} className="text-slate-300" />
+              )}
+            </div>
+            <p className="mt-1 text-center text-sm font-extrabold tracking-tight text-slate-900">{vehicle?.name}</p>
             <p className="text-center text-[11px] text-slate-400">
               {vehicle?.seats} · {vehicle?.ac ? "AC" : "Non-AC"} · {vehicle?.bags} Bags
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-100 p-3">
-            <p className="flex items-center gap-1.5 text-xs font-semibold text-slate-800">
-              <CalendarIcon size={13} className="text-primary" /> Date &amp; Time
+          <div className="rounded-2xl border border-slate-100 bg-white p-3.5 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
+            <p className="flex items-center gap-2 text-xs font-bold text-slate-800">
+              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary">
+                <CalendarIcon size={12} />
+              </span>
+              Date &amp; Time
             </p>
-            <div className="mt-2 space-y-1.5 text-xs text-slate-600">
-              <p>
-                <span className="text-slate-400">Travel Date: </span>
-                {formatDateLabel(trip.travelDate)}
+            <div className="mt-3 space-y-1.5 text-xs text-slate-600">
+              <p className="flex justify-between">
+                <span className="text-slate-400">Travel Date</span>
+                <span className="font-semibold text-slate-800">{formatDateLabel(trip.travelDate)}</span>
               </p>
-              <p>
-                <span className="text-slate-400">Travel Time: </span>
-                {trip.travelTime}
+              <p className="flex justify-between">
+                <span className="text-slate-400">Travel Time</span>
+                <span className="font-semibold text-slate-800">{trip.travelTime}</span>
               </p>
-              <p>
-                <span className="text-slate-400">Trip Type: </span>
-                {trip.tripOption}
+              <p className="flex justify-between">
+                <span className="text-slate-400">Trip Type</span>
+                <span className="font-semibold text-slate-800">{trip.tripOption}</span>
               </p>
-              <p>
-                <span className="text-slate-400">Passengers: </span>
-                {trip.passengers}
+              <p className="flex justify-between">
+                <span className="text-slate-400">Passengers</span>
+                <span className="font-semibold text-slate-800">{trip.passengers}</span>
               </p>
-              <p>
-                <span className="text-slate-400">Luggage: </span>
-                {trip.luggage}
+              <p className="flex justify-between">
+                <span className="text-slate-400">Luggage</span>
+                <span className="font-semibold text-slate-800">{trip.luggage}</span>
               </p>
             </div>
           </div>
         </div>
 
-        <div className="mt-3 rounded-xl border border-slate-100 p-4">
-       
-       
-          <div className="mt-3 grid gap-2 sm:grid-cols-2">
-            <div className="rounded-lg bg-emerald-50 p-2.5 text-[11px] text-emerald-700">
-              <p className="mb-0.5 font-semibold">✓ Included in Fare</p>
+        <div className="mt-3.5 rounded-2xl border border-slate-100 bg-white p-4 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
+          <div className="grid gap-2.5 sm:grid-cols-2">
+            <div className="rounded-xl bg-emerald-50 p-3 text-[11px] text-emerald-700">
+              <p className="mb-0.5 font-bold">✓ Included in Fare</p>
               <p>Driver Charges · Fuel Charges · GST</p>
             </div>
-            <div className="rounded-lg bg-amber-50 p-2.5 text-[11px] text-amber-700">
-              <p className="mb-0.5 font-semibold">Extra Charges (If Applicable)</p>
+            <div className="rounded-xl bg-amber-50 p-3 text-[11px] text-amber-700">
+              <p className="mb-0.5 font-bold">Extra Charges (If Applicable)</p>
               <p>Toll Charges · Parking Charges · State Permit</p>
             </div>
           </div>
-          <div className="mt-3 flex items-center gap-2 rounded-lg bg-primary/5 px-3 py-2 text-xs text-slate-600">
+          <div className="mt-3 flex items-center gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3.5 py-2.5 text-xs text-slate-600 ring-1 ring-inset ring-primary/10">
             <ShieldCheck size={14} className="shrink-0 text-primary" />
             No hidden charges. What you see is what you pay.
           </div>
         </div>
 
-        <div className="mt-4 flex gap-3">
+        <div className="mt-5 flex gap-3">
           <button
             type="button"
             onClick={onBack}
-            className="flex items-center gap-2 rounded-lg border border-slate-200 px-3.5 py-2.5 text-xs font-semibold text-slate-600 hover:border-slate-300"
+            className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-xs font-bold text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50"
           >
             <ChevronLeft size={14} /> Back to Date &amp; Time
           </button>
-          <button
-            type="button"
-            onClick={onNext}
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white"
-          >
+          <PrimaryButton onClick={onNext} className="flex-1">
             Continue to Passenger Details <ArrowRight size={15} />
-          </button>
+          </PrimaryButton>
         </div>
       </div>
 
@@ -945,18 +1068,19 @@ function StepPassenger({
   const canContinue =
     passenger.fullName.trim().length > 0 && passenger.phone.trim().length >= 10 && !emailsMismatch;
 
-
-
   return (
     <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
       <div>
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-primary">Step 5 of 6</p>
-        <h2 className="mt-0.5 text-lg font-bold text-slate-900">Passenger Details</h2>
-        <p className="mt-0.5 text-xs text-slate-500">Please provide passenger and contact information</p>
+        <SectionEyebrow step={5} title="Passenger Details" sub="Please provide passenger and contact information" />
 
-        <div className="mt-3 rounded-xl border border-slate-100 p-4">
-          <p className="text-xs font-semibold text-slate-800">Contact Information</p>
-          <div className="mt-3 grid gap-3 sm:grid-cols-3">
+        <div className="mt-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
+          <p className="flex items-center gap-2 text-xs font-bold text-slate-800">
+            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary">
+              <User size={12} />
+            </span>
+            Contact Information
+          </p>
+          <div className="mt-3.5 grid gap-3.5 sm:grid-cols-3">
             <div>
               <Label htmlFor="p-name">Full Name *</Label>
               <FieldShell icon={User}>
@@ -965,7 +1089,7 @@ function StepPassenger({
                   value={passenger.fullName}
                   onChange={(e) => setPassenger((p) => ({ ...p, fullName: e.target.value }))}
                   placeholder="Enter full name"
-                  className="w-full bg-transparent text-xs text-slate-800 outline-none placeholder:text-slate-400"
+                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:font-normal placeholder:text-slate-400"
                 />
               </FieldShell>
             </div>
@@ -978,7 +1102,7 @@ function StepPassenger({
                   onChange={(e) => setPassenger((p) => ({ ...p, phone: e.target.value }))}
                   placeholder="Enter 10 digit mobile number"
                   inputMode="numeric"
-                  className="w-full bg-transparent text-xs text-slate-800 outline-none placeholder:text-slate-400"
+                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:font-normal placeholder:text-slate-400"
                 />
               </FieldShell>
             </div>
@@ -990,7 +1114,7 @@ function StepPassenger({
                   value={passenger.whatsapp}
                   onChange={(e) => setPassenger((p) => ({ ...p, whatsapp: e.target.value }))}
                   placeholder="Enter WhatsApp number"
-                  className="w-full bg-transparent text-xs text-slate-800 outline-none placeholder:text-slate-400"
+                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:font-normal placeholder:text-slate-400"
                 />
               </FieldShell>
             </div>
@@ -1003,39 +1127,29 @@ function StepPassenger({
                   value={passenger.email}
                   onChange={(e) => setPassenger((p) => ({ ...p, email: e.target.value }))}
                   placeholder="Enter email address"
-                  className="w-full bg-transparent text-xs text-slate-800 outline-none placeholder:text-slate-400"
+                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:font-normal placeholder:text-slate-400"
                 />
               </FieldShell>
             </div>
-      
           </div>
         </div>
 
-
-
-   
-
-        <div className="mt-3 flex items-center gap-2 rounded-lg bg-primary/5 px-3 py-2 text-xs text-slate-600">
+        <div className="mt-3.5 flex items-center gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3.5 py-2.5 text-xs text-slate-600 ring-1 ring-inset ring-primary/10">
           <ShieldCheck size={14} className="shrink-0 text-primary" />
           Your details are safe and secure. We never share your information with third parties.
         </div>
 
-        <div className="mt-4 flex gap-3">
+        <div className="mt-5 flex gap-3">
           <button
             type="button"
             onClick={onBack}
-            className="flex items-center gap-2 rounded-lg border border-slate-200 px-3.5 py-2.5 text-xs font-semibold text-slate-600 hover:border-slate-300"
+            className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-xs font-bold text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50"
           >
             <ChevronLeft size={14} /> Back to Review
           </button>
-          <button
-            type="button"
-            disabled={!canContinue}
-            onClick={onNext}
-            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
-          >
+          <PrimaryButton disabled={!canContinue} onClick={onNext} className="flex-1">
             Continue to Confirm Booking <ArrowRight size={15} />
-          </button>
+          </PrimaryButton>
         </div>
       </div>
 
@@ -1087,39 +1201,45 @@ function StepConfirm({
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px_300px]">
       <div>
-        <p className="text-[11px] font-semibold uppercase tracking-wide text-primary">Step 6 of 6</p>
-        <h2 className="mt-0.5 text-lg font-bold text-slate-900">
-          {confirmed ? "Booking Confirmed!" : "Confirm Your Booking"}
-        </h2>
-        <p className="mt-0.5 text-xs text-slate-500">
-          {confirmed
-            ? "Thank you for choosing BSH Taxi Services."
-            : "Please review your booking details and confirm to complete"}
-        </p>
+        <SectionEyebrow
+          step={6}
+          title={confirmed ? "Booking Confirmed!" : "Confirm Your Booking"}
+          sub={confirmed ? "Thank you for choosing BSH Taxi Services." : "Please review your booking details and confirm to complete"}
+        />
 
-        <div className="mt-3 rounded-xl border border-slate-100 p-5 text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
-            <Check size={32} className="text-emerald-500" />
+        <div className="relative mt-4 overflow-hidden rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-[0_4px_20px_rgba(15,23,42,0.06)] sm:p-7">
+          {confirmed && (
+            <>
+              <div className="pointer-events-none absolute -left-8 -top-10 h-32 w-32 rounded-full bg-emerald-200/25 blur-3xl" />
+              <div className="pointer-events-none absolute -right-10 -bottom-10 h-32 w-32 rounded-full bg-primary/10 blur-3xl" />
+            </>
+          )}
+          <div
+            className={`relative mx-auto flex h-16 w-16 items-center justify-center rounded-full transition-transform duration-300 ${
+              confirmed ? "scale-110 bg-emerald-50 ring-8 ring-emerald-50/60" : "bg-linear-to-br from-primary/12 to-primary/5 ring-8 ring-primary/4"
+            }`}
+          >
+            <Check size={32} className={confirmed ? "text-emerald-500" : "text-primary"} strokeWidth={2.5} />
           </div>
-          <h3 className="mt-3 text-base font-bold text-slate-900">{confirmed ? "Booking Confirmed!" : "Almost Done!"}</h3>
+          <h3 className="mt-3.5 text-lg font-extrabold tracking-tight text-slate-900">{confirmed ? "Booking Confirmed!" : "Almost Done!"}</h3>
           <p className="mt-1 text-xs text-slate-500">
             {confirmed
               ? "Your booking is confirmed and we're excited to serve you."
               : "Please confirm your booking to complete the reservation."}
           </p>
 
-          <div className="mx-auto mt-4 max-w-sm rounded-lg border border-slate-100 p-3 text-left">
-            <p className="text-[11px] text-slate-400">Booking ID</p>
-            <p className="text-sm font-bold text-primary">{bookingId}</p>
+          <div className="mx-auto mt-4 max-w-sm rounded-xl border border-slate-100 bg-linear-to-br from-slate-50/80 to-white p-3.5 text-left">
+            <p className="text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-400">Booking ID</p>
+            <p className="bg-linear-to-br from-primary to-primary/70 bg-clip-text text-base font-extrabold tracking-tight text-transparent">{bookingId}</p>
             <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-slate-500">
               <CalendarIcon size={12} /> {bookingDateLabel}
             </div>
           </div>
 
           {confirmed ? (
-            <div className="mt-4 grid grid-cols-1 gap-2.5 rounded-lg bg-emerald-50 p-3 text-left sm:grid-cols-3">
+            <div className="mt-4 grid grid-cols-1 gap-2.5 rounded-xl bg-emerald-50 p-3.5 text-left sm:grid-cols-3">
               <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
                   <MessageCircle size={14} />
                 </span>
                 <div>
@@ -1128,7 +1248,7 @@ function StepConfirm({
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
                   <Phone size={14} />
                 </span>
                 <div>
@@ -1137,7 +1257,7 @@ function StepConfirm({
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
                   <Mail size={14} />
                 </span>
                 <div>
@@ -1148,7 +1268,7 @@ function StepConfirm({
             </div>
           ) : (
             <div className="mt-4 space-y-2.5 text-left">
-              <div className="flex items-start gap-2 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-700">
+              <div className="flex items-start gap-2.5 rounded-xl bg-amber-50 px-3.5 py-2.5 text-xs text-amber-700">
                 <Info size={14} className="mt-0.5 shrink-0" />
                 Free Cancellation — cancel up to 12 hours before the scheduled pickup time for a full refund.
               </div>
@@ -1157,7 +1277,7 @@ function StepConfirm({
 
           <div className="mt-5 grid grid-cols-1 gap-2.5 text-left sm:grid-cols-3">
             <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500">
                 <Car size={14} />
               </span>
               <div>
@@ -1166,7 +1286,7 @@ function StepConfirm({
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500">
                 <Phone size={14} />
               </span>
               <div>
@@ -1175,7 +1295,7 @@ function StepConfirm({
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500">
                 <MapPin size={14} />
               </span>
               <div>
@@ -1187,24 +1307,24 @@ function StepConfirm({
 
           {confirmed ? (
             <div className="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-              <button className="flex items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-[11px] font-semibold text-white">
+              <button className="flex items-center justify-center gap-1.5 rounded-xl bg-linear-to-b from-primary to-primary/90 px-3 py-2.5 text-[11px] font-bold text-white shadow-sm shadow-primary/25 transition-all hover:brightness-105 active:scale-[0.98]">
                 <BookOpen size={13} /> Track Booking
               </button>
               <button
                 onClick={sendWhatsApp}
-                className="flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-[11px] font-semibold text-emerald-600"
+                className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 px-3 py-2.5 text-[11px] font-bold text-emerald-600 transition-colors hover:bg-emerald-50"
               >
                 <MessageCircle size={13} /> Share on WhatsApp
               </button>
               <a
                 href={`tel:+${SUPPORT_PHONE}`}
-                className="flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-[11px] font-semibold text-primary"
+                className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 px-3 py-2.5 text-[11px] font-bold text-primary transition-colors hover:bg-primary/5"
               >
                 <Phone size={13} /> Call Support
               </a>
               <button
                 onClick={onClose}
-                className="flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-[11px] font-semibold text-slate-600"
+                className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 px-3 py-2.5 text-[11px] font-bold text-slate-600 transition-colors hover:bg-slate-50"
               >
                 <Home size={13} /> Back to Home
               </button>
@@ -1215,25 +1335,25 @@ function StepConfirm({
                 <button
                   type="button"
                   onClick={onConfirm}
-                  className="flex items-center justify-center gap-1.5 rounded-lg bg-primary px-4 py-2.5 text-xs font-semibold text-white"
+                  className="flex items-center justify-center gap-1.5 rounded-xl bg-linear-to-b from-primary to-primary/90 px-4 py-3 text-xs font-bold text-white shadow-[0_4px_14px_-2px] shadow-primary/35 transition-all duration-150 hover:brightness-[1.07] hover:shadow-[0_6px_18px_-2px] hover:shadow-primary/45 active:scale-[0.98]"
                 >
                   <Lock size={14} /> Confirm Booking Now
                 </button>
                 <button
                   type="button"
                   onClick={sendWhatsApp}
-                  className="flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-4 py-2.5 text-xs font-semibold text-emerald-600"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 px-4 py-3 text-xs font-bold text-emerald-600 transition-colors hover:bg-emerald-50"
                 >
                   <MessageCircle size={14} /> Send Booking on WhatsApp
                 </button>
                 <a
                   href={`tel:+${SUPPORT_PHONE}`}
-                  className="flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 px-4 py-2.5 text-xs font-semibold text-primary"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 px-4 py-3 text-xs font-bold text-primary transition-colors hover:bg-primary/5"
                 >
                   <Phone size={14} /> Call to Confirm
                 </a>
               </div>
-              <p className="mt-2.5 text-[11px] text-slate-400">
+              <p className="mt-3 text-[11px] text-slate-400">
                 By confirming, you agree to our Terms &amp; Conditions and Privacy Policy.
               </p>
             </>
@@ -1244,7 +1364,7 @@ function StepConfirm({
           <button
             type="button"
             onClick={onBack}
-            className="mt-3 flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-700"
+            className="mt-3.5 flex items-center gap-2 text-xs font-bold text-slate-500 transition-colors hover:text-slate-700"
           >
             <ChevronLeft size={14} /> Back to Passenger Details
           </button>
@@ -1321,11 +1441,24 @@ export default function BookingWizard({ vehicleId }: BookingWizardProps) {
 
   return (
     <div className="w-full">
+      <style>{`
+        @keyframes bw-step-in {
+          from { opacity: 0; transform: translateY(6px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .bw-step-anim { animation: bw-step-in 0.32s cubic-bezier(0.16, 1, 0.3, 1); }
+        @media (prefers-reduced-motion: reduce) {
+          .bw-step-anim { animation: none; }
+        }
+      `}</style>
       <div className="w-full px-3 py-4 sm:px-5 lg:px-8">
-        <div className="rounded-xl bg-white shadow-sm">
+        <div className="relative overflow-hidden rounded-[1.35rem] bg-white shadow-[0_8px_30px_rgba(15,23,42,0.08)] ring-1 ring-slate-100">
+          {/* Subtle top accent line for a premium, considered finish */}
+          <div className="h-0.75 w-full bg-linear-to-r from-primary/40 via-primary to-primary/40" />
+
           <Stepper currentIndex={stepIndex} />
 
-          <div className="p-4 sm:p-5">
+          <div key={stepIndex} className="bw-step-anim p-4 sm:p-5">
             {stepIndex === 0 && (
               <StepTripDetails
                 trip={trip}
@@ -1402,8 +1535,6 @@ export default function BookingWizard({ vehicleId }: BookingWizardProps) {
             )}
           </div>
         </div>
-
-      
       </div>
     </div>
   );

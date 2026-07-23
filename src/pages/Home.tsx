@@ -74,11 +74,12 @@ export default function HomePage() {
       </Helmet>
 
       <Hero />
-
-    <section className="-mt-24 relative z-30 px-4 lg:px-8">
+          <section className="-mt-2 relative z-30 px-4 lg:px-8">
         <BookingWizard />
     </section>
-       <TrustBar />
+<TrustBar />
+
+       
       <Features />
       <TravelSections />
         <Review />

@@ -143,7 +143,7 @@ export function CTA() {
         </div>
 
         <div className="hidden shrink-0 lg:block">
-          <img src="/src/assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.jpg" alt="BSH Taxi Services car" className="h-auto w-64 object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.35)]" />
+          <img src="/src/assets/cars/Dzire-taxi-services-2-in-visakhapatnam-bshtaxiservices.png" alt="BSH Taxi Services car" className="h-auto w-64 object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.35)]" />
         </div>
       </div>
     </section>

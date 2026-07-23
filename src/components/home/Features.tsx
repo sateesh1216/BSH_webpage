@@ -1,27 +1,28 @@
 import { useMemo, useState } from "react";
-import { MapPin, X, ChevronDown, ArrowRight, Car, ImageOff, Sparkles } from "lucide-react";
-
+import { MapPin, X, ChevronDown, ArrowRight, Car, ImageOff, Sparkles,  ShieldCheck, } from "lucide-react";
+import arakuImg from "../../assets/Home Page/Araku-taxi-service-Packages-bshtaxiservices.png";
+import lambasingiImg from "../../assets/Home Page/lambasingi-taxi-service-Packages-bshtaxiservices.png";
+import simhachalamImg from "../../assets/Home Page/temples-taxi-service-Packages-bshtaxiservices.png";
+import Airport from "../../assets/Home Page/vizag-airport-taxi-services-bshtaxiservices.png"
+import RKbeach from "../../assets/Home Page/Rk Beach-taxi-service-Packages-bshtaxiservices.png"
+import Vanjangi from "../../assets/Home Page/vanajangi-taxi-services-bshtaxiservices.png"
 /**
  * BSH Taxi Services — "Explore Destinations" + "Estimate Your Fare"
  * -------------------------------------------------------------
- * This pass:
- *  - Section now spans the full viewport width (was capped at 1440px),
- *    with responsive side padding instead of a centered max-width shell.
- *  - Visual polish pass: soft gradient section background with subtle
- *    decorative blobs, deeper card shadows on hover, gradient overlay +
- *    distance chip on destination images, a gradient "Estimated Fare"
- *    panel with a subtle glow, refined focus/hover states, and a bit
- *    more breathing room throughout.
- *  - Fixed: FALLBACK_IMAGE is now actually used — if a destination image
- *    fails to load, it swaps to the fallback photo instead of just
- *    showing a broken-image icon.
- *  - Fixed: multi-line generic type argument on useState (which was
- *    tripping up the parser and cascading into a wall of TS errors) is
- *    now written on a single line.
+ * PRICING MODEL CHANGE:
+ *  - Fares are now STATIC, not calculated. Each destination defines a
+ *    fixed price per vehicle (see `prices` on each Destination below),
+ *    instead of deriving fare from distance × per-km rate.
+ *  - "Distance" is still shown as informational context, but no longer
+ *    feeds into the fare calculation.
+ *  - To add/change a fare: edit the `prices` object for that destination.
+ *    Every vehicle name used in `vehicles` should have an entry there;
+ *    if one is missing, the UI shows "--" for that combination.
  *
- * Functional behavior unchanged:
- *  - Clicking a destination card sets "To" and live-recalculates distance/fare.
- *  - Fare = distance × per-km rate, updates when destination or vehicle changes.
+ * Functional behavior unchanged otherwise:
+ *  - Clicking a destination card sets "To" and looks up the static fare
+ *    for the currently selected vehicle.
+ *  - Fare updates when destination or vehicle changes (static lookup).
  *  - From/To fields are clearable; booking is disabled until both are set
  *    and shows a pending → confirmed state.
  */
@@ -30,61 +31,93 @@ type Destination = {
   title: string;
   distanceKm: number;
   image: string;
+  /** Static fare per vehicle name, e.g. { "Swift Dzire": 2200, ... } */
+  prices: Record<string, number>;
 };
 
 type Vehicle = {
   name: string;
-  ratePerKm: number;
   seats: number;
 };
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1465447142348-e9952c393450?w=600&auto=format&fit=crop&q=60";
 
+const vehicles: Vehicle[] = [
+  { name: "Dzire", seats: 4 },
+  { name: "Maruti Ertiga", seats: 6 },
+  { name: "Innova Crysta", seats: 7 },
+  { name: "Tempo Traveller", seats: 17 },
+];
+
 const destinations: Destination[] = [
   {
     title: "Araku Valley",
     distanceKm: 120,
-    image:
-      "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=600&auto=format&fit=crop&q=60",
+    image: arakuImg,
+    prices: {
+      "Dzire": 5000,
+      "Maruti Ertiga": 7000,
+      "Innova Crysta": 8000,
+      "Tempo Traveller": 12000,
+    },
   },
   {
     title: "Lambasingi",
     distanceKm: 100,
-    image:
-      "https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=600&auto=format&fit=crop&q=60",
+    image: lambasingiImg,
+    prices: {
+      "Dzire": 5500,
+      "Maruti Ertiga": 7400,
+      "Innova Crysta": 8500,
+      "Tempo Traveller": 13000,
+    },
   },
   {
-    title: "Borra Caves",
+    title: "Vanjangi Hills",
     distanceKm: 90,
     image:
-      "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=600&auto=format&fit=crop&q=60",
+      Vanjangi,
+    prices: {
+       "Dzire": 5500,
+      "Maruti Ertiga": 7400,
+      "Innova Crysta": 8500,
+      "Tempo Traveller": 13000,
+    },
   },
   {
-    title: "Rushikonda Beach",
+    title: "Vizag Local Package",
     distanceKm: 15,
-    image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=60",
+    image: RKbeach,
+    prices: {
+       "Dzire": 3000,
+      "Maruti Ertiga": 3500,
+      "Innova Crysta": 4000,
+      "Tempo Traveller": 7000,
+    },
   },
   {
     title: "Simhachalam Temple",
     distanceKm: 16,
-    image:
-      "https://images.unsplash.com/photo-1548013146-72479768bada?w=600&auto=format&fit=crop&q=60",
+    image: simhachalamImg,
+    prices: {
+      "Dzire": 1500,
+      "Maruti Ertiga": 2000,
+      "Innova Crysta": 2500,
+      "Tempo Traveller": 5000,
+    },
   },
   {
     title: "Vizag Airport",
     distanceKm: 12,
-    image:
-      "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&auto=format&fit=crop&q=60",
+    image: Airport,
+    prices: {
+     "Dzire": 1500,
+      "Maruti Ertiga": 2000,
+      "Innova Crysta": 2500,
+      "Tempo Traveller": 5000,
+    },
   },
-];
-
-const vehicles: Vehicle[] = [
-  { name: "Swift Dzire", ratePerKm: 14, seats: 4 },
-  { name: "Maruti Ertiga", ratePerKm: 16, seats: 6 },
-  { name: "Toyota Innova", ratePerKm: 18, seats: 7 },
-  { name: "Tempo Traveller", ratePerKm: 22, seats: 12 },
 ];
 
 const ORIGIN = "Visakhapatnam";
@@ -127,15 +160,11 @@ export default function Features() {
     [vehicleName]
   );
 
-  const tripDistance = useMemo(() => {
-    if (!destination) return 0;
-    return Math.round(destination.distanceKm * 0.483);
-  }, [destination]);
-
+  // Static fare lookup — no distance × rate math anymore.
   const fare = useMemo(() => {
     if (!origin || !destination) return 0;
-    return tripDistance * vehicle.ratePerKm;
-  }, [origin, destination, tripDistance, vehicle]);
+    return destination.prices[vehicle.name] ?? 0;
+  }, [origin, destination, vehicle]);
 
   const canBook =
     Boolean(origin) && Boolean(destination) && bookingState !== "booking";
@@ -222,7 +251,7 @@ export default function Features() {
                       {/* Gradient overlay for legibility + polish */}
                       <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-slate-900/40 via-transparent to-transparent opacity-70" />
 
-                      {/* Distance chip */}
+                      {/* Distance chip (informational only, not used in fare calc) */}
                       <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 text-[10px] font-semibold text-slate-700 shadow-sm backdrop-blur-sm">
                         <MapPin size={10} className="text-blue-600" />
                         {d.distanceKm} KM
@@ -377,83 +406,104 @@ export default function Features() {
                 </label>
               </div>
 
-              {/* ---- Right column: distance / rate / fare / book ---- */}
-              <div className="flex flex-col justify-between space-y-4 sm:pl-6">
-                <div className="space-y-2 rounded-lg border border-slate-200 px-3 py-2.5">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-500">Distance</span>
-                    <span className="font-semibold text-slate-800">
-                      {tripDistance || "--"} KM
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-500">Rate</span>
-                    <span className="font-semibold text-slate-800">
-                      ₹{vehicle.ratePerKm}/KM
-                    </span>
-                  </div>
-                </div>
+              {/* ---- Right column: distance / fare / book ---- */}
+          <div className="flex flex-col space-y-5 sm:pl-6">
+  {/* Fare Card */}
+  <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-blue-600 via-blue-700 to-indigo-700 p-5 text-center shadow-xl shadow-blue-600/20">
+    {/* Background Decoration */}
+    <Sparkles
+      size={60}
+      className="absolute -right-3 -top-3 text-white/10"
+    />
 
-                <div className="relative overflow-hidden rounded-lg bg-linear-to-br from-blue-600 to-blue-700 px-4 py-3.5 text-center shadow-md shadow-blue-600/20">
-                  <Sparkles
-                    size={44}
-                    className="pointer-events-none absolute -right-2 -top-2 text-white/10"
-                  />
-                  <p className="text-xs font-medium text-blue-100">
-                    Estimated Fare
-                  </p>
-                  <p className="text-2xl font-bold text-white">
-                    {fare ? `₹${fare.toLocaleString("en-IN")}` : "--"}
-                  </p>
-                </div>
+    <div className="absolute -bottom-10 -left-10 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
+    <div className="absolute -right-8 bottom-0 h-20 w-20 rounded-full bg-white/10 blur-xl" />
 
-                <button
-                  type="button"
-                  disabled={!canBook}
-                  onClick={handleBook}
-                  className={`flex w-full items-center justify-center gap-2 rounded-lg py-3 text-sm font-semibold text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
-                    !origin || !destination
-                      ? "cursor-not-allowed bg-slate-300"
-                      : bookingState === "booked"
-                      ? "bg-emerald-600 hover:bg-emerald-600"
-                      : "bg-blue-600 shadow-md shadow-blue-600/25 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/30 active:scale-[0.99]"
-                  }`}
-                >
-                  {bookingState === "booking" && (
-                    <svg
-                      className="h-4 w-4 animate-spin text-white"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      />
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                      />
-                    </svg>
-                  )}
-                  {bookingState === "booking" ? (
-                    "Booking..."
-                  ) : bookingState === "booked" ? (
-                    "Ride Booked ✓"
-                  ) : !origin || !destination ? (
-                    "Select From & To"
-                  ) : (
-                    <>
-                      Book This Ride
-                      <ArrowRight size={14} />
-                    </>
-                  )}
-                </button>
-              </div>
+    <p className="text-xs font-semibold uppercase tracking-widest text-blue-100">
+      Fixed Fare
+    </p>
+
+    <h2 className="mt-2 text-4xl font-extrabold tracking-tight text-white">
+      {fare ? `₹${fare.toLocaleString("en-IN")}` : "--"}
+    </h2>
+
+    <p className="mt-1 text-xs text-blue-100">
+      No Hidden Charges
+    </p>
+  </div>
+
+  {/* Book Button */}
+  <button
+    type="button"
+    disabled={!canBook}
+    onClick={handleBook}
+    className={`group flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
+      !origin || !destination
+        ? "cursor-not-allowed bg-slate-300"
+        : bookingState === "booked"
+        ? "bg-emerald-600"
+        : "bg-linear-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-600/30 active:translate-y-0"
+    }`}
+  >
+    {bookingState === "booking" && (
+      <svg
+        className="h-4 w-4 animate-spin text-white"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+        />
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+        />
+      </svg>
+    )}
+
+    {bookingState === "booking" ? (
+      "Booking..."
+    ) : bookingState === "booked" ? (
+      "Ride Booked ✓"
+    ) : !origin || !destination ? (
+      "Select Pickup & Drop"
+    ) : (
+      <>
+        Book This Ride
+        <ArrowRight
+          size={16}
+          className="transition-transform duration-300 group-hover:translate-x-1"
+        />
+      </>
+    )}
+  </button>
+
+  {/* Secure Booking Card */}
+  <div className="rounded-2xl border border-blue-100 bg-linear-to-r from-slate-50 to-blue-50 p-4">
+    <div className="flex items-start gap-3">
+      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
+        <ShieldCheck className="h-5 w-5 text-blue-600" />
+      </div>
+
+      <div>
+        <h4 className="text-sm font-semibold text-slate-800">
+          100% Secure Booking
+        </h4>
+
+        <p className="mt-1 text-xs leading-relaxed text-slate-500">
+          Your information is encrypted and completely safe with BSH Taxi
+          Services.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
             </div>
           </div>
         </div>
