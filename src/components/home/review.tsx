@@ -74,7 +74,7 @@ export default function ReviewsStats() {
   const goTo = (index: number) => {
     setPage((index + totalPages) % totalPages);
   };
-
+//chaneges are happened 
   const visibleReviews = reviews.slice(
     page * REVIEWS_PER_PAGE,
     page * REVIEWS_PER_PAGE + REVIEWS_PER_PAGE
