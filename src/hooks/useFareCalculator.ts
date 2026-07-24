@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { vehicles } from "../data/vehicles";
+import { vehicles } from "../Data/Vehicles";
 
 export interface FareState {
   distanceKm: number;
@@ -36,6 +36,8 @@ export function useFareCalculator() {
      *   Drop:   RK Beach
      *   Google Maps distance: 14.5 KM
      *   Fare: 14.5 x rate (per km)
+     * changes are happen 
+     *
      * ------------------------------------------------------------------
      */
     const demoDistanceKm = 15;

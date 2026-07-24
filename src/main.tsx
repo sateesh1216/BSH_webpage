@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import "./index.css";
 import App from "./App";
-import { BookingProvider } from "./components/booking/BookingContext";
+import { BookingProvider } from "./Components/Booking/BookingContext";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <HelmetProvider>

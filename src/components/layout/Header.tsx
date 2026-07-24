@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Phone, Menu, X } from "lucide-react";
-import { navLinks } from "../../data/nav";
+import { navLinks } from "../../Data/Nav";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/Logo_bsh taxi services.png";
 

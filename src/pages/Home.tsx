@@ -1,13 +1,13 @@
 import { Helmet } from "react-helmet-async";
-import SEO from "../components/seo/SEO";
-import Hero from "../components/Home/Hero";
-import Features from "../components/Home/Features";
-import TravelSections from "../components/Home/TravelSections";
-import TrustBar from "../components/Home/TrustBar";
-import { CTA, ContactUs } from "../components/Home/CTA";
-import { BookingProvider } from "../components/booking/BookingContext";
-import Review from "../components/Home/Review";
-import BookingWizard from "../components/booking/BookingWizard";
+import SEO from "../Components/Seo/SEO";
+import Hero from "../Components/Home/Hero";
+import Features from "../Components/Home/Features";
+import TravelSections from "../Components/Home/TravelSections";
+import TrustBar from "../Components/Home/TrustBar";
+import { CTA, ContactUs } from "../Components/Home/CTA";
+import { BookingProvider } from "../Components/Booking/BookingContext";
+import Review from "../Components/Home/Review";
+import BookingWizard from "../Components/Booking/BookingWizard";
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "TaxiService",

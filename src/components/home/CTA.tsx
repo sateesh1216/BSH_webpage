@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import { Phone, MapPin, Mail, Navigation } from "lucide-react";
-import { useBooking } from "../booking/BookingContext";
+import { useBooking } from "../Booking/BookingContext";
 
 interface ContactDetail { id: string; icon: LucideIcon; label: string; primary: string; secondary: string; href?: string; }
 

@@ -1,13 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
-import Home from "./pages/Home";
-import About from "./pages/AboutPage";
-import ServicesPage from "./pages/ServicesPage";
-import FleetPage from "./pages/FleetPage";
-import DestinationsPage from "./pages/DestinationsPage";
-import ContactPage from "./pages/ContactPage";
-import DestinationDetail from "./pages/DestinationDetail"; 
+import Header from "./Components/Layout/Header";
+import Footer from "./Components/Layout/Footer";
+import Home from "./Pages/Home";
+import About from "./Pages/AboutPage";
+import ServicesPage from "./Pages/ServicesPage";
+import FleetPage from "./Pages/FleetPage";
+import DestinationsPage from "./Pages/DestinationsPage";
+import ContactPage from "./Pages/ContactPage";
+import DestinationDetail from "./Pages/DestinationDetail"; 
 export default function App() {
   return (
     <>

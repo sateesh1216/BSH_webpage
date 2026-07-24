@@ -19,7 +19,7 @@ import ertigaImg from "../../assets/cars/ertiga-taxi-services-in-visakhapatnam-b
 import innovaImg from "../../assets/cars/innova-crysta-in-vizag-bshtaxiservices.png";
 import tempoTravellerImg from "../../assets/cars/17-seater-tempo-traveller-bshtaxiservices.png";
 
-import { useBooking } from "../booking/BookingContext";
+import { useBooking } from "../Booking/BookingContext";
 
 /* DATA — unchanged from before */
 interface ServiceItem { icon: React.ElementType; title: string; description: string; }

@@ -1,8 +1,8 @@
-import DestinationsHero from "../components/Destinations/DestinationsHero";
-import DestinationsGrid from "../components/Destinations/DestinationsGrid";
-import WhyTravelWithUs from "../components/Destinations/WhyTravelWithUs";
-import OutstationRoutesTable from "../components/Destinations/OutstationRoutesTable";
-import { CTA } from "../components/Home/CTA";
+import DestinationsHero from "../Components/Destinations/DestinationsHero";
+import DestinationsGrid from "../Components/Destinations/DestinationsGrid";
+import WhyTravelWithUs from "../Components/Destinations/WhyTravelWithUs";
+import OutstationRoutesTable from "../Components/Destinations/OutstationRoutesTable";
+import { CTA } from "../Components/Home/CTA";
 
 export default function DestinationsPage() {
   return (

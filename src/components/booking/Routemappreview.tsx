@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Navigation, Clock, MapPin, AlertCircle, Plus, Minus, Maximize2, RefreshCw } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { formatDuration } from "../../data/Bookingconfig";
+import { formatDuration } from "../../Data/Bookingconfig";
 
 /**
  * NOTE ON DEPENDENCIES

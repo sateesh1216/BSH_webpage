@@ -15,7 +15,7 @@ import {
   Plane,
   CalendarCheck,
 } from "lucide-react";
-import { destinations } from "../data/destinationsData";
+import { destinations } from "../Data/DestinationsData";
 
 // Every category gets its own accent, drawn from the thing it's actually
 // known for — moss for the hills, wet stone for the caves, sea-teal for the

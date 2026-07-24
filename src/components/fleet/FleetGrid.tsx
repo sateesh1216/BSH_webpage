@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useBooking } from "../booking/BookingContext";
+import { useBooking } from "../Booking/BookingContext";
 import { Users, Snowflake, Briefcase, ArrowRight } from "lucide-react";
-import SectionHeading from "../ui/SectionHeading";
+import SectionHeading from "../Ui/SectionHeading";
 import FleetFilterTabs, { type FleetFilter } from "./FleetFilterTabs";
-import { vehicles } from "../../data/fleetData";
+import { vehicles } from "../../Data/FleetData";
 
 export default function FleetGrid() {
   const { openBooking } = useBooking();

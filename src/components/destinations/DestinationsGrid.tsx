@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { MapPin, ArrowRight } from "lucide-react";
-import SectionHeading from "../ui/SectionHeading";
-import { destinations } from "../../data/destinationsData";
+import SectionHeading from "../Ui/SectionHeading";
+import { destinations } from "../../Data/DestinationsData";
 
 export default function DestinationsGrid() {
   return (

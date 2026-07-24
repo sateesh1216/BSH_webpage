@@ -1,4 +1,4 @@
-import { contactInfoItems } from "../../data/contactInfoData";
+import { contactInfoItems } from "../../Data/ContactInfoData";
 
 export default function GetInTouchCard() {
   return (
