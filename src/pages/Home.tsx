@@ -5,7 +5,7 @@ import Features from "../components/home/Features";
 import TravelSections from "../components/home/TravelSections";
 import TrustBar from "../components/home/TrustBar";
 import { CTA, ContactUs } from "../components/home/CTA";
-import { BookingProvider } from "../components/Booking/BookingContext";
+import { BookingProvider } from "../components/booking/BookingContext";
 import Review from "../components/home/Review";
 import BookingWizard from "../components/booking/BookingWizard";
 const localBusinessSchema = {

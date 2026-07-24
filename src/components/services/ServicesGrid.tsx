@@ -1,8 +1,8 @@
 
 import { ArrowRight } from "lucide-react";
-import SectionHeading from "../Ui/SectionHeading";
-import { services } from "../../Data/ServicesData";
-import { useBooking } from "../Booking/BookingContext";
+import SectionHeading from "../ui/SectionHeading";
+import { services } from "../../data/servicesData";
+import { useBooking } from "../booking/BookingContext";
               const serviceToTab = {
   "local-taxi": "Local",
   "outstation-taxi": "Outstation",

@@ -1,5 +1,5 @@
 import { CalendarCheck, UserCog, CarFront, MapPin, ArrowRight, type LucideIcon } from "lucide-react";
-import SectionHeading from "../Ui/SectionHeading";
+import SectionHeading from "../ui/SectionHeading";
 
 type Step = {
   step: number;
