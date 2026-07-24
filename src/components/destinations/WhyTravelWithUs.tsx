@@ -1,5 +1,5 @@
 import { Car, UserCheck, Clock, ShieldCheck, Tag, type LucideIcon } from "lucide-react";
-import SectionHeading from "../Ui/SectionHeading";
+import SectionHeading from "../ui/SectionHeading";
 
 type Reason = {
   icon: LucideIcon;

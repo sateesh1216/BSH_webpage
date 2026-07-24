@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { MapPin, ArrowRight } from "lucide-react";
-import SectionHeading from "../Ui/SectionHeading";
-import { outstationRoutes } from "../../Data/OutstationRoutesData";
-import { useBooking } from "../Booking/BookingContext";
+import SectionHeading from "../ui/SectionHeading";
+import { outstationRoutes } from "../../data/outstationRoutesData";
+import { useBooking } from "../booking/BookingContext";
 export default function OutstationRoutesTable() {
   const { openBooking, setTripType, setDrop } = useBooking();
   return (

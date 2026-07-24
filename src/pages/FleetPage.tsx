@@ -1,7 +1,7 @@
-import FleetHero from "../Components/Fleet/FleetHero";
-import FleetGrid from "../Components/Fleet/FleetGrid";
-import TrustBar from "../Components/Home/TrustBar";
-import { CTA } from "../Components/Home/CTA";
+import FleetHero from "../components/fleet/FleetHero";
+import FleetGrid from "../components/fleet/FleetGrid";
+import TrustBar from "../components/home/TrustBar";
+import { CTA } from "../components/home/CTA";
 
 export default function FleetPage() {
   return (

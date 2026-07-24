@@ -15,7 +15,7 @@ import {
   Plane,
   CalendarCheck,
 } from "lucide-react";
-import { destinations } from "../Data/DestinationsData";
+import { destinations } from "../data/destinationsData";
 
 // Every category gets its own accent, drawn from the thing it's actually
 // known for — moss for the hills, wet stone for the caves, sea-teal for the
@@ -91,7 +91,7 @@ export default function DestinationDetail() {
   const { slug } = useParams<{ slug: string }>();
   const destination = destinations.find((d) => d.slug === slug);
 
-  if (!destination) return <Navigate to="/destinations" replace />;
+  if (!destination) return <Navigate to="/Destinations" replace />;
 
     const {
     name,
@@ -459,7 +459,7 @@ export default function DestinationDetail() {
 
           <div className="mt-16 text-center">
             <Link
-              to="/destinations"
+              to="/Destinations"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:gap-2.5"
             >
               <ArrowLeft size={16} />

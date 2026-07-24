@@ -1,13 +1,13 @@
 import { Helmet } from "react-helmet-async";
-import SEO from "../Components/Seo/SEO";
-import Hero from "../Components/Home/Hero";
-import Features from "../Components/Home/Features";
-import TravelSections from "../Components/Home/TravelSections";
-import TrustBar from "../Components/Home/TrustBar";
-import { CTA, ContactUs } from "../Components/Home/CTA";
-import { BookingProvider } from "../Components/Booking/BookingContext";
-import Review from "../Components/Home/Review";
-import BookingWizard from "../Components/Booking/BookingWizard";
+import SEO from "../components/seo/SEO";
+import Hero from "../components/home/Hero";
+import Features from "../components/home/Features";
+import TravelSections from "../components/home/TravelSections";
+import TrustBar from "../components/home/TrustBar";
+import { CTA, ContactUs } from "../components/home/CTA";
+import { BookingProvider } from "../components/Booking/BookingContext";
+import Review from "../components/home/Review";
+import BookingWizard from "../components/booking/BookingWizard";
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "TaxiService",
@@ -28,7 +28,7 @@ const localBusinessSchema = {
   priceRange: "₹₹",
 };
 
-export default function HomePage() {
+export default function homePage() {
   return (
     <BookingProvider>
       <SEO

@@ -1,4 +1,4 @@
-import { vehicleCategories, type VehicleCategory } from "../../Data/FleetData";
+import { vehicleCategories, type VehicleCategory } from "../../data/fleetData";
 
 export type FleetFilter = "All Vehicles" | VehicleCategory;
 

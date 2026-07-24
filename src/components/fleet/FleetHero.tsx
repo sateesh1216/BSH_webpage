@@ -1,6 +1,6 @@
 import { ShieldCheck, UserCheck, Sparkles, Headset, Car, Phone, BadgeCheck } from "lucide-react";
-import { useBooking } from "../Booking/BookingContext";
-import { vehicles } from "../../Data/FleetData";
+import { useBooking } from "../booking/BookingContext";
+import { vehicles } from "../../data/fleetData";
 import heroImage from "../../assets/cars/innova-crysta-in-vizag-bshtaxiservices.png";
 
 const highlights = [

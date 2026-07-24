@@ -7,9 +7,9 @@ import {
   type TabKey,
   type TripDetails,
   type Vehicle,
-} from "../../Data/Bookingconfig";
+} from "../../data/bookingConfig";
 
-export type { TabKey } from "../../Data/Bookingconfig";
+export type { TabKey } from "../../data/bookingConfig";
 
 type OpenBookingOptions = {
   /** Set when opened from a specific fleet card. Shown as a badge in the

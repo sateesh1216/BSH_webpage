@@ -1,8 +1,8 @@
-import ContactHero from "../Components/Contact/ContactHero";
-import GetInTouchCard from "../Components/Contact/GetInTouchCard";
-import ContactForm from "../Components/Contact/ContactForm";
-import FindUsMap from "../Components/Contact/FindUsMap";
-import ContactTrustStrip from "../Components/Contact/ContactTrustStrip";
+import ContactHero from "../components/contact/ContactHero";
+import GetInTouchCard from "../components/contact/GetInTouchCard";
+import ContactForm from "../components/contact/ContactForm";
+import FindUsMap from "../components/contact/FindUsMap";
+import ContactTrustStrip from "../components/contact/ContactTrustStrip";
 
 export default function ContactPage() {
   return (

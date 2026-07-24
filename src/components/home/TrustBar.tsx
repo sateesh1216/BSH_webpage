@@ -1,5 +1,5 @@
 import { ShieldCheck, UserCheck, Tag, Headset, type LucideIcon } from "lucide-react";
-import SectionHeading from "../Ui/SectionHeading"; // ← adjust path to match Features.tsx's import
+import SectionHeading from "../ui/SectionHeading"; // ← adjust path to match Features.tsx's import
 
 type TrustItem = {
   icon: LucideIcon;

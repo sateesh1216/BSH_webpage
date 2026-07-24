@@ -36,7 +36,7 @@ import type {
   TripDetails,
   PassengerDetails,
   Vehicle,
-} from "../../Data/Bookingconfig";
+} from "../../data/bookingConfig";
 
 import {
   SUPPORT_PHONE_DISPLAY,
@@ -53,7 +53,7 @@ import {
   formatCurrency,
   makeBookingId,
   buildWhatsAppMessage,
-} from "../../Data/Bookingconfig";
+} from "../../data/bookingConfig";
 
 interface BookingWizardProps {
   vehicleId?: string;

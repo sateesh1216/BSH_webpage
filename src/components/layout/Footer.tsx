@@ -5,7 +5,7 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import { MessageCircle } from "lucide-react";
-import { navLinks } from "../../Data/Nav";
+import { navLinks } from "../../data/nav";
 
 const quickLinks = navLinks.filter((link) =>
   ["Home", "Services", "Our Fleet", "Destinations", "About Us", "Contact Us"].includes(

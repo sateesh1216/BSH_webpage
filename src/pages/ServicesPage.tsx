@@ -1,10 +1,10 @@
-import ServicesHero from "../Components/Services/ServicesHero";
-import ServicesGrid from "../Components/Services/ServicesGrid";
-import HowItWorks from "../Components/Services/HowItWorks";
-import TrustBar from "../Components/Home/TrustBar";
-import { CTA } from "../Components/Home/CTA"; // adjust path to your CTA file
+import ServicesHero from "../components/services/ServicesHero";
+import ServicesGrid from "../components/services/ServicesGrid";
+import HowItWorks from "../components/services/HowItWorks";
+import TrustBar from "../components/home/TrustBar";
+import { CTA } from "../components/home/CTA"; // adjust path to your CTA file
 
-export default function ServicesPage() {
+export default function servicesPage() {
   return (
     <>
       <ServicesHero />

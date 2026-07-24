@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { vehicles } from "../Data/Vehicles";
+import { vehicles } from "../data/vehicles";
 
 export interface FareState {
   distanceKm: number;

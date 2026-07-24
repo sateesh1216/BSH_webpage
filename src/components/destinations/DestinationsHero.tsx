@@ -1,4 +1,4 @@
-import { useBooking } from "../Booking/BookingContext";
+import { useBooking } from "../booking/BookingContext";
 import { Compass, ShieldCheck, UserCheck, Tag, Phone } from "lucide-react";
 import heroImage from "../../assets/cars/innova-crysta-in-vizag-bshtaxiservices.png";
 
