@@ -6,7 +6,7 @@ import TravelSections from "../components/Home/TravelSections";
 import TrustBar from "../components/Home/TrustBar";
 import { CTA, ContactUs } from "../components/Home/CTA";
 import { BookingProvider } from "../components/booking/BookingContext";
-import Review from "../components/Home/review";
+import Review from "../components/Home/Review";
 import BookingWizard from "../components/booking/BookingWizard";
 const localBusinessSchema = {
   "@context": "https://schema.org",

@@ -6,7 +6,7 @@ import AboutStatsBar from "../components/About/AboutStatsBar";
 import WeServeYouBetter from "../components/About/WeServeYouBetter";
 // import Testimonials from "../components/about/Testimonials";
 import { CTA } from "../components/Home/CTA";
-import Review from "../components/Home/review";
+import Review from "../components/Home/Review";
 
 export default function AboutPage() {
   return (
