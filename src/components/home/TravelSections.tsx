@@ -14,7 +14,7 @@ import {
   Users,
 } from "lucide-react";
 
-import dzireImg from "../../assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.jpg";
+import dzireImg from "../../assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.png";
 import ertigaImg from "../../assets/cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.png";
 import innovaImg from "../../assets/cars/innova-crysta-in-vizag-bshtaxiservices.png";
 import tempoTravellerImg from "../../assets/cars/17-seater-tempo-traveller-bshtaxiservices.png";
@@ -35,10 +35,10 @@ const services: ServiceItem[] = [
 type VehicleType = "sedan" | "mpv" | "van";
 interface FleetItem { name: string; seats: number; rate: number; vehicleType: VehicleType; image?: string; }
 const fleet: FleetItem[] = [
-  { name: "Swift Dzire", seats: 4, rate: 13, vehicleType: "sedan", image: dzireImg },
-  { name: "Maruti Ertiga", seats: 6, rate: 16, vehicleType: "mpv", image: ertigaImg },
-  { name: "Toyota Innova", seats: 7, rate: 18, vehicleType: "mpv", image: innovaImg },
-  { name: "Tempo Traveller", seats: 12, rate: 22, vehicleType: "van", image: tempoTravellerImg },
+  { name: "Dzire", seats: 4, rate: 14, vehicleType: "sedan", image: dzireImg },
+  { name: "Maruti Ertiga", seats: 6, rate: 17, vehicleType: "mpv", image: ertigaImg },
+  { name: "Innova Crysta", seats: 7, rate: 20, vehicleType: "mpv", image: innovaImg },
+  { name: "Tempo Traveller", seats: 17, rate: 30, vehicleType: "van", image: tempoTravellerImg },
 ];
 
 interface StepItem { icon: React.ElementType; title: string; description: string; }

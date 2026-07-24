@@ -7,7 +7,7 @@
 /* ---------------------------------------------------------------------- */
 
 export type TabKey = "Outstation" | "Local" | "Airport" | "Tour";
-import dzireImg from "../assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.jpg";
+import dzireImg from "../assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.png";
 import ertigaImg from "../assets/cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.png";
 import innovaImg from "../assets/cars/innova-crysta-in-vizag-bshtaxiservices.png";
 import tempoImg from "../assets/cars/17-seater-tempo-traveller-bshtaxiservices.png";

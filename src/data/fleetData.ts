@@ -1,4 +1,4 @@
-import dzire from "../assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.jpg";
+import dzire from "../assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.png";
 import ertiga from "../assets/cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.png";
 import innova from "../assets/cars/innova-crysta-in-vizag-bshtaxiservices.png";
 import tempoTraveller from "../assets/cars/17-seater-tempo-traveller-bshtaxiservices.png";
@@ -20,35 +20,35 @@ export type Vehicle = {
 export const vehicles: Vehicle[] = [
   {
     slug: "maruti-swift-dzire",
-    name: "Maruti Swift Dzire",
+    name: "Dzire",
     category: "Sedan",
     image: dzire,
     seats: 4,
     hasAC: true,
     bags: 2,
-    pricePerKm: 13,
+    pricePerKm: 14,
     description: "Perfect for daily city rides and short trips.",
   },
   {
     slug: "maruti-ertiga",
-    name: "Maruti Ertiga",
+    name: "Ertiga",
     category: "MUV",
     image: ertiga,
     seats: 6,
     hasAC: true,
     bags: 3,
-    pricePerKm: 16,
+    pricePerKm: 17,
     description: "Ideal for family trips and long drives.",
   },
   {
     slug: "toyota-innova",
-    name: "Toyota Innova",
+    name: "Innova Crysta",
     category: "MUV",
     image: innova,
     seats: 7,
     hasAC: true,
     bags: 4,
-    pricePerKm: 18,
+    pricePerKm: 20,
     description: "Spacious, comfortable and perfect for outstation.",
   },
   {
@@ -67,10 +67,10 @@ export const vehicles: Vehicle[] = [
     name: "Tempo Traveller (12 Seater)",
     category: "Tempo Traveller",
     image: tempoTraveller,
-    seats: 12,
+    seats: 17,
     hasAC: true,
     bags: 8,
-    pricePerKm: 22,
+    pricePerKm: 30,
     description: "Best for group travel, tours and pilgrimages.",
   },
   {
@@ -81,7 +81,7 @@ export const vehicles: Vehicle[] = [
     seats: 7,
     hasAC: true,
     bags: 4,
-    pricePerKm: 28,
+    pricePerKm: 50,
     description: "Premium SUV for a luxury travel experience.",
   },
 ];
