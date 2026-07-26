@@ -1,22 +1,22 @@
 // Temporary fallback while you source the real destination photos above.
 // Once downloaded, swap these imports for the real files with matching names.
-import Aruku from "../assets/Destinations/arakut-taxi-services-bshtaxiservices.png";
+import Aruku from "../assets/Destinations/araku-taxi-services-bshtaxiservices.png";
 import lambasingi from "../assets/Destinations/Lambasingi-taxi-services-bshtaxiservices.png";
-import VizagLocal from "../assets/Destinations/Vizag Local-taxi-services-bshtaxiservices.png";
-import Simhachalam  from "../assets/Destinations/Simhachalam- Temple-taxi-services-bshtaxiservices.png";
-import Tirupati  from "../assets/Destinations/Tirupati-taxi-service-Packages-bshtaxiservices (2).png";
-import Annavaram  from "../assets/Destinations/Annavaram Temple -taxi-services-bshtaxiservices.png";
+import VizagLocal from "../assets/Destinations/Vizag_local-taxi-services-bshtaxiservices.png";
+import Simhachalam  from "../assets/Destinations/Simhachalam-Temple-taxi-services-bshtaxiservices.png";
+import Tirupati  from "../assets/Destinations/Tirupati-taxi-service-Packages-bshtaxiservices.png";
+import Annavaram  from "../assets/Destinations/Annavaram_Temple-taxi-services-bshtaxiservices.png";
 import vizagairport  from "../assets/Destinations/Airport-taxi-services-bshtaxiservices.png";
 import Vanjangi  from "../assets/Destinations/Vanjangi-taxi-services-bshtaxiservices.png";
-import Arasavalli  from "../assets/Destinations/Arasavalli Temple -taxi-services-bshtaxiservices.png";
-import Borracaves  from "../assets/Destinations/Araku/Borra Caves-taxi-services-bshtaxiservices.png";
-import Katikawaterfalls  from "../assets/Destinations/Araku/Katika Waterfalls-taxi-services-bshtaxiservices.png";
-import Galikondaviewpoint  from "../assets/Destinations/Araku/araku-Galikonda Viewpoint-taxi-services-bshtaxiservices.png";
-import Coffeeplantation  from "../assets/Destinations/Araku/araku-coffee plantation - wooden bridge-taxi-services-bshtaxiservices.png";
-import Coffeemuseum  from "../assets/Destinations/Araku/araku-Coffee Museum-taxi-services-bshtaxiservices.png";
-import Tribalmuseum  from "../assets/Destinations/Araku/araku-Tribal Museum-taxi-services-bshtaxiservices.png";
-import Padmapuramgardens  from "../assets/Destinations/Araku/Araku- Padmapuram Gardens-taxi-services-bshtaxiservices.png";
-import Damukuviewpoint  from "../assets/Destinations/Araku/araku-Damuku View Point-taxi-services-bshtaxiservices.png";
+import Arasavalli  from "../assets/Destinations/Arasavalli_Temple-taxi-services-bshtaxiservices.png";
+import Borracaves  from "../assets/Destinations/Araku/Borra_Caves-taxi-services-bshtaxiservices.png";
+import Katikawaterfalls  from "../assets/Destinations/Araku/Katika_Waterfalls-taxi-services-bshtaxiservices.png";
+import Galikondaviewpoint  from "../assets/Destinations/Araku/araku-Galikonda_Viewpoint-taxi-services-bshtaxiservices.png";
+import Coffeeplantation  from "../assets/Destinations/Araku/araku-coffee_plantation-wooden_bridge-taxi-services-bshtaxiservices.png";
+import Coffeemuseum  from "../assets/Destinations/Araku/araku-Coffee_Museum-taxi-services-bshtaxiservices.png";
+import Tribalmuseum  from "../assets/Destinations/Araku/Araku-Tribal_Museum-taxi-services-bshtaxiservices.png";
+import Padmapuramgardens  from "../assets/Destinations/Araku/Araku-Padmapuram_Gardens-taxi-services-bshtaxiservices.png";
+import Damukuviewpoint  from "../assets/Destinations/Araku/Araku-Damuku_View_Point-taxi-services-bshtaxiservices.png";
 
 // import Coffeehouse  from "../assets/Destinations/Araku/araku-coffee house-taxi-services-bshtaxiservices.png"; --- IGNORE ---
 export type DestinationPlace = {
