@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
-import heroBanner from "../../assets/Home page banners/bshtaxiservice-homepage-banner_3.png"; // Change to your actual image name
+import heroBanner from "../../assets/Home page banners/bshtaxiservice-homepage-banner_3.webp"; // Change to your actual image name
 // Hero-only presentation config (icon + hero image per tab). Trip-shape
 // config (tripOptions/dropLabel/dropPlaceholder) now lives in
 // BookingContext's TRIP_CONFIG, shared across every entry point.
