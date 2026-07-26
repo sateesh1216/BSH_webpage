@@ -1,8 +1,8 @@
 import { Clock, Users, Car } from "lucide-react";
 import About  from "../../assets/About/24-7-bshtaxiservices+91 8886803322.png";
 const heroStats = [
-  { icon: Clock, value: "10+", label: "Years Experience" },
-  { icon: Users, value: "20,000+", label: "Happy Customers" },
+  { icon: Clock, value: "5+", label: "Years Experience" },
+  { icon: Users, value: "10,000+", label: "Happy Customers" },
   { icon: Car, value: "50+", label: "Premium Vehicles" },
 ];
 

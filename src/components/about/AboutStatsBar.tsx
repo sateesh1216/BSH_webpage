@@ -1,11 +1,11 @@
 import { Users, UserRound, Car, ShieldCheck, IndianRupee, Clock } from "lucide-react";
 
 const stats = [
-  { icon: Users, value: "20,000+", label: "Happy Customers" },
+  { icon: Users, value: "10,000+", label: "Happy Customers" },
   { icon: UserRound, value: "150+", label: "Professional Drivers" },
   { icon: Car, value: "50+", label: "Premium Vehicles" },
-  { icon: ShieldCheck, value: "10+", label: "Years Experience" },
-  { icon: IndianRupee, value: "99%", label: "Customer Satisfaction" },
+  { icon: ShieldCheck, value: "5+", label: "Years Experience" },
+  { icon: IndianRupee, value: "99.9%", label: "Customer Satisfaction" },
   { icon: Clock, value: "24x7", label: "Support Available" },
 ];
 
