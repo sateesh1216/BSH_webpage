@@ -1,5 +1,5 @@
 import { CheckCircle2 } from "lucide-react";
-
+import Whyweare  from "../../assets/About/about-bshtaxiservices+91 8886803322.png";      
 const highlights = [
   "Licensed & Verified Drivers",
   "GPS Enabled Cabs",
@@ -14,7 +14,7 @@ export default function WhoWeAre() {
     <section className="mx-auto w-[92%] max-w-310 py-16">
       <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
         <img
-          src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1000&q=80"
+          src={Whyweare}
           alt="Driver assisting a customer with airport pickup"
           className="w-full rounded-2xl object-cover shadow-md"
         />

@@ -63,8 +63,8 @@ export const vehicles: Vehicle[] = [
     description: "Luxury and extra comfort for your long journeys.",
   },
   {
-    slug: "tempo-traveller-12-seater",
-    name: "Tempo Traveller (12 Seater)",
+    slug: "tempo-traveller-17-seater",
+    name: "Tempo Traveller (17 Seater)",
     category: "Tempo Traveller",
     image: tempoTraveller,
     seats: 17,

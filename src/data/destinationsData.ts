@@ -9,6 +9,16 @@ import Annavaram  from "../assets/Destinations/Annavaram Temple -taxi-services-b
 import vizagairport  from "../assets/Destinations/Airport-taxi-services-bshtaxiservices.png";
 import Vanjangi  from "../assets/Destinations/Vanjangi-taxi-services-bshtaxiservices.png";
 import Arasavalli  from "../assets/Destinations/Arasavalli Temple -taxi-services-bshtaxiservices.png";
+import Borracaves  from "../assets/Destinations/Araku/Borra Caves-taxi-services-bshtaxiservices.png";
+import Katikawaterfalls  from "../assets/Destinations/Araku/Katika Waterfalls-taxi-services-bshtaxiservices.png";
+import Galikondaviewpoint  from "../assets/Destinations/Araku/araku-Galikonda Viewpoint-taxi-services-bshtaxiservices.png";
+import Coffeeplantation  from "../assets/Destinations/Araku/araku-coffee plantation - wooden bridge-taxi-services-bshtaxiservices.png";
+import Coffeemuseum  from "../assets/Destinations/Araku/araku-Coffee Museum-taxi-services-bshtaxiservices.png";
+import Tribalmuseum  from "../assets/Destinations/Araku/araku-Tribal Museum-taxi-services-bshtaxiservices.png";
+import Padmapuramgardens  from "../assets/Destinations/Araku/Araku- Padmapuram Gardens-taxi-services-bshtaxiservices.png";
+import Damukuviewpoint  from "../assets/Destinations/Araku/araku-Damuku View Point-taxi-services-bshtaxiservices.png";
+
+// import Coffeehouse  from "../assets/Destinations/Araku/araku-coffee house-taxi-services-bshtaxiservices.png"; --- IGNORE ---
 export type DestinationPlace = {
   name: string;
   image: string;
@@ -88,7 +98,7 @@ export const destinations: Destination[] = [
       "araku valley sightseeing cab package",
     ],
     tagline: "Escape to Nature, Enjoy the Journey!",
-    costPerDay: 5500,
+    costPerDay: 5000,
     history:
       "Tucked into the Eastern Ghats near the Odisha border, Araku Valley has been home to indigenous Adivasi communities for centuries, long before it appeared on any tourist map. Surrounded by the Ananthagiri and Sunkarimetta reserve forests and ringed by the Raktakonda, Chitamogondi, Galikonda and Sunkarimetta hills, the valley sits at an average elevation of roughly 900–1,300 metres. Galikonda is the tallest hill in Andhra Pradesh, giving the valley some of its most dramatic viewpoints.\n\nModern tourism took off in the early 1960s when the South Central Railway carved out the Kirandul–Araku line, an engineering feat of dozens of tunnels and bridges through the Eastern Ghats that turned the journey itself into an attraction. Coffee arrived a little earlier: the Andhra Pradesh Forest Department introduced Arabica cultivation in the 1950s to give tribal farmers a sustainable livelihood, growing the beans in the shade of silver oak trees exactly as it's still done today. In 2007, tribal growers launched Araku Emerald, India's first organic coffee brand from indigenous farmers, which has since earned a GI tag and international recognition.\n\nBeyond coffee, Araku's culture is built around its tribal roots — the Dhimsa folk dance, weekly tribal shandies (markets) selling bamboo crafts and jewellery, and festivals like Itika Pongal keep that heritage very much alive.",
     highlights: [
@@ -114,53 +124,54 @@ export const destinations: Destination[] = [
       "During standby and ghat roads, the cabin A/C will be turned off to ensure safe driving power.",
     ],
     places: [
+         {
+        name: "Damuku View Point",
+        image: Damukuviewpoint,
+        description: "A quiet lookout over layered valleys, popular for photography.",
+      },
       {
         name: "Borra Caves",
-        image: lambasingi,
+        image: Borracaves,
         description:
           "Million-year-old limestone caves discovered in 1807, roughly 36 km from Araku — a detour well worth the drive.",
       },
       {
         name: "Katika Waterfalls",
-        image: lambasingi,
+        image: Katikawaterfalls,
         tag: "Only Car Parking",
         description: "A cascading forest waterfall, also known locally as Chaparai Falls.",
       },
       {
         name: "Galikonda Viewpoint",
-        image: lambasingi,
+        image: Galikondaviewpoint,
         description: "Perched atop Andhra Pradesh's highest hill, with sweeping valley and sunrise views.",
       },
       {
         name: "Coffee Plantation",
-        image: lambasingi,
+        image: Coffeeplantation,
         description: "Shade-grown Arabica estates on the Ananthagiri hills where pepper vines wind around silver oaks.",
       },
       {
         name: "Coffee Museum",
-        image: lambasingi,
+        image: Coffeemuseum,
         description: "Traces the journey of Araku coffee from bean to cup, with tastings and handcrafted chocolate.",
       },
       {
         name: "Tribal Museum",
-        image: lambasingi,
+        image: Tribalmuseum,
         description: "A window into the art, tools and traditions of the Eastern Ghats' indigenous communities.",
       },
       {
         name: "Padmapuram Gardens",
-        image: lambasingi,
+        image: Padmapuramgardens,
         description: "Terraced botanical gardens with tree-top huts and a toy train ride.",
       },
-      {
-        name: "Damuku View Point",
-        image: lambasingi,
-        description: "A quiet lookout over layered valleys, popular for photography.",
-      },
-      {
-        name: "Coffee House",
-        image: lambasingi,
-        description: "A cosy stop for a fresh cup of locally grown filter coffee before heading back.",
-      },
+   
+      // {
+      //   name: "Coffee House",
+      //   image: Coffeehouse,
+      //   description: "A cosy stop for a fresh cup of locally grown filter coffee before heading back.",
+      // },
     ],
   },
   {

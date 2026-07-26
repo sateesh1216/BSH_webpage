@@ -1,5 +1,5 @@
 import { Clock, Users, Car } from "lucide-react";
-
+import About  from "../../assets/About/24-7-bshtaxiservices+91 8886803322.png";
 const heroStats = [
   { icon: Clock, value: "10+", label: "Years Experience" },
   { icon: Users, value: "20,000+", label: "Happy Customers" },
@@ -49,7 +49,7 @@ export default function AboutHero() {
         <div className="relative">
           <div className="absolute -inset-6 -z-10 rounded-4xl bg-linear-to-br from-primary/10 to-transparent" />
           <img
-            src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=1200&q=80"
+            src={About}
             alt="BSH Taxi Services car on a coastal highway"
             className="w-full rounded-2xl object-cover shadow-lg"
           />
