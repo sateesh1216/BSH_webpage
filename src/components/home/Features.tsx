@@ -29,7 +29,7 @@ import Vanjangi from "../../assets/Home Page/vanajangi-taxi-services-bshtaxiserv
 
 type Destination = {
   title: string;
-  distanceKm: number;
+  // distanceKm: number;
   image: string;
   /** Static fare per vehicle name, e.g. { "Swift Dzire": 2200, ... } */
   prices: Record<string, number>;
@@ -53,7 +53,7 @@ const vehicles: Vehicle[] = [
 const destinations: Destination[] = [
   {
     title: "Araku Valley",
-    distanceKm: 120,
+    
     image: arakuImg,
     prices: {
       "Dzire": 5000,
@@ -64,7 +64,7 @@ const destinations: Destination[] = [
   },
   {
     title: "Lambasingi",
-    distanceKm: 100,
+    // distanceKm: 100,
     image: lambasingiImg,
     prices: {
       "Dzire": 5500,
@@ -75,7 +75,7 @@ const destinations: Destination[] = [
   },
   {
     title: "Vanjangi Hills",
-    distanceKm: 90,
+    // distanceKm: 90,
     image:
       Vanjangi,
     prices: {
@@ -87,7 +87,7 @@ const destinations: Destination[] = [
   },
   {
     title: "Vizag Local Package",
-    distanceKm: 15,
+    // distanceKm: 15,
     image: RKbeach,
     prices: {
        "Dzire": 3000,
@@ -98,7 +98,7 @@ const destinations: Destination[] = [
   },
   {
     title: "Simhachalam Temple",
-    distanceKm: 16,
+    // distanceKm: 16,
     image: simhachalamImg,
     prices: {
       "Dzire": 1500,
@@ -109,7 +109,7 @@ const destinations: Destination[] = [
   },
   {
     title: "Vizag Airport",
-    distanceKm: 12,
+    // distanceKm: 12,
     image: Airport,
     prices: {
      "Dzire": 1500,
@@ -252,10 +252,10 @@ export default function Features() {
                       <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-slate-900/40 via-transparent to-transparent opacity-70" />
 
                       {/* Distance chip (informational only, not used in fare calc) */}
-                      <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 text-[10px] font-semibold text-slate-700 shadow-sm backdrop-blur-sm">
+                      {/* <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 text-[10px] font-semibold text-slate-700 shadow-sm backdrop-blur-sm">
                         <MapPin size={10} className="text-blue-600" />
                         {d.distanceKm} KM
-                      </span>
+                      </span> */}
 
                       {isActive && (
                         <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-blue-600 text-white shadow ring-2 ring-white">

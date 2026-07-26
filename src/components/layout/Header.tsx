@@ -9,42 +9,32 @@ export default function Header() {
   const location = useLocation();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/85 backdrop-blur-md">
-      <div className="mx-auto flex min-h-19 w-[92%] max-w-310 items-center justify-between gap-6">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/30 bg-white/30 backdrop-blur-xl shadow-lg">
+      <div className="mx-auto flex h-20 w-[92%] max-w-7xl items-center justify-between">
         {/* Logo */}
-<Link to="/" className="group flex items-center gap-3">
+        <Link to="/" className="group flex items-center gap-3">
           <img
             src={logo}
             alt="BSH Taxi Services"
-            className="h-12 w-auto shrink-0 object-contain transition-transform duration-300 group-hover:scale-105"
+            className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
           />
+
           <span className="flex flex-col leading-none">
-            <span className="whitespace-nowrap text-xl font-extrabold tracking-tight sm:text-2xl">
-              <span className="text-slate-900">BSH</span>{" "}
-              <span className="bg-linear-to-r from-yellow-500 to-amber-500 bg-clip-text text-transparent">
+            <span className="text-xl font-extrabold tracking-tight sm:text-2xl">
+              <span className="text-black">BSH </span>
+              <span className="bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">
                 TAXI
               </span>
             </span>
-            <span className="mt-1 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-500">
-              Services
+
+            <span className="mt-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-700">
+              SERVICES
             </span>
           </span>
         </Link>
-           {/* <Link to="/" className="flex items-center gap-2.5">
-          <img
-            src={logo}
-            alt="BSH Taxi Services"
-            className="h-12 w-auto shrink-0 object-contain"
-          />
-          <span className="whitespace-nowrap text-sm font-extrabold leading-none tracking-tight">
-            <span className="text-black">BSH </span>
-            <span className="text-yellow-500">TAXI </span>
-            <span className="text-black">SERVICES</span>
-          </span>
-        </Link> */}
-          
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 text-sm font-semibold text-slate-600 lg:flex">
+
+        {/* Desktop Navigation */}
+        <nav className="hidden items-center gap-3 lg:flex">
           {navLinks.map((link) => {
             const active = location.pathname === link.href;
 
@@ -52,48 +42,59 @@ export default function Header() {
               <Link
                 key={link.label}
                 to={link.href}
-                className={`relative rounded-lg px-3.5 py-2 transition-colors ${
+                className={`group relative px-3 py-2 text-sm font-semibold transition-all duration-300 ${
                   active
-                    ? "text-primary"
-                    : "hover:bg-slate-50 hover:text-slate-900"
+                    ? "text-[#155EEF]"
+                    : "text-black hover:text-[#155EEF]"
                 }`}
               >
                 {link.label}
 
-                {active && (
-                  <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-primary" />
-                )}
+                <span
+                  className={`absolute left-0 bottom-0 h-[2px] w-full rounded-full bg-[#155EEF] transition-all duration-300 ${
+                    active
+                      ? "scale-x-100"
+                      : "scale-x-0 group-hover:scale-x-100"
+                  } origin-center`}
+                />
               </Link>
             );
           })}
         </nav>
 
-        {/* Call CTA */}
+        {/* Call Button */}
         <div className="hidden lg:flex">
           <a
             href="tel:+918886803322"
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-primary/30 transition-all hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/30"
+            className="inline-flex items-center gap-2 rounded-full bg-[#155EEF] px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#0F4FD8]"
           >
-            <Phone size={16} />
+            <Phone size={18} />
             +91 8886803322
           </a>
         </div>
 
-        {/* Mobile toggle */}
+        {/* Mobile Menu Button */}
         <button
           type="button"
-          className="grid h-10 w-10 place-items-center rounded-lg text-slate-700 transition-colors hover:bg-slate-100 lg:hidden"
+          onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((prev) => !prev)}
+          className="grid h-11 w-11 place-items-center rounded-full bg-white/50 backdrop-blur-md transition hover:bg-white/70 lg:hidden"
         >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          {menuOpen ? (
+            <X size={24} className="text-black" />
+          ) : (
+            <Menu size={24} className="text-black" />
+          )}
         </button>
       </div>
 
-      {/* Mobile nav */}
-      {menuOpen && (
-        <nav className="flex flex-col gap-1 border-t border-slate-200 bg-white px-[4%] py-4 lg:hidden">
+      {/* Mobile Navigation */}
+      <div
+        className={`overflow-hidden border-t border-white/20 bg-white/40 backdrop-blur-xl transition-all duration-300 lg:hidden ${
+          menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <nav className="flex flex-col gap-2 px-5 py-5">
           {navLinks.map((link) => {
             const active = location.pathname === link.href;
 
@@ -102,10 +103,10 @@ export default function Header() {
                 key={link.label}
                 to={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${
+                className={`rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-300 ${
                   active
-                    ? "bg-primary-light text-primary"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-primary"
+                    ? "bg-[#155EEF] text-white"
+                    : "text-black hover:bg-[#155EEF]/10 hover:text-[#155EEF]"
                 }`}
               >
                 {link.label}
@@ -115,13 +116,13 @@ export default function Header() {
 
           <a
             href="tel:+918886803322"
-            className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-primary/30"
+            className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-[#155EEF] px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#0F4FD8]"
           >
-            <Phone size={16} />
+            <Phone size={18} />
             +91 8886803322
           </a>
         </nav>
-      )}
+      </div>
     </header>
   );
 }

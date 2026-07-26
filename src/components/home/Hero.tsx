@@ -33,7 +33,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative isolate z-20 flex flex-col overflow-x-hidden bg-linear-to-b from-primary-light/70 via-primary-light/25 to-white"
+      className="relative isolate z-20 flex flex-col overflow-x-hidden bg-linear-to-b from-primary-light/70 via-primary-light/25 to-white px-4 pt-20 pb-7 sm:px-6 sm:pt-24 lg:pt-32 lg:pb-16"
     >
       {/* Soft ambient glow — adds depth without competing with the route line */}
       <div
@@ -130,7 +130,7 @@ export default function Hero() {
             <Star size={16} fill="currentColor" />
           </div>
           <div>
-            <p className="text-sm font-bold text-slate-800">4.8 / 5 Rating</p>
+            <p className="text-sm font-bold text-slate-800">5 / 5 Rating</p>
             <p className="text-xs text-slate-500">10,000+ happy riders</p>
           </div>
         </div>

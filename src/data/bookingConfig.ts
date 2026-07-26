@@ -85,8 +85,8 @@ export const LUGGAGE_OPTIONS = ["No Bags", "1 Bag", "2 Bags", "3+ Bags"];
 
 export const VEHICLES: Vehicle[] = [
   { id: "dzire", name: "Dzire", seats: "4 Seats", bags: 2, ac: true, ratePerKm: 14, badge: "Most Popular" , image: dzireImg,},
-  { id: "ertiga", name: "Ertiga", seats: "6 Seats", bags: 3, ac: true, ratePerKm: 16 , image: ertigaImg,},
-  { id: "innova", name: "Innova Crysta", seats: "6-7 Seats", bags: 4, ac: true, ratePerKm: 18, image: innovaImg, },
+  { id: "ertiga", name: "Ertiga", seats: "6 Seats", bags: 3, ac: true, ratePerKm: 17 , image: ertigaImg,},
+  { id: "innova", name: "Innova Crysta", seats: "6-7 Seats", bags: 4, ac: true, ratePerKm: 20, image: innovaImg, },
   { id: "tempo", name: "Tempo Traveller", seats: "12 Seats", bags: 8, ac: true, ratePerKm: 30 , image: tempoImg,},
 ];
 
