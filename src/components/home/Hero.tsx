@@ -1,7 +1,6 @@
 // import { useState } from "react";
 import {
   MapPin,
-
   ShieldCheck,
   IndianRupee,
   UserCheck,
@@ -10,7 +9,7 @@ import {
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
-
+import heroBanner from "../../assets/Home page banners/bshtaxiservice-homepage-banner_3.png"; // Change to your actual image name
 // Hero-only presentation config (icon + hero image per tab). Trip-shape
 // config (tripOptions/dropLabel/dropPlaceholder) now lives in
 // BookingContext's TRIP_CONFIG, shared across every entry point.
@@ -33,7 +32,10 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative isolate z-20 flex flex-col overflow-x-hidden bg-linear-to-b from-primary-light/70 via-primary-light/25 to-white px-4 pt-20 pb-7 sm:px-6 sm:pt-24 lg:pt-32 lg:pb-16"
+      className="relative isolate z-20 flex min-h-[560px] flex-col overflow-hidden bg-cover bg-center bg-no-repeat px-4 pt-16 pb-7 sm:min-h-[620px] sm:px-6 sm:pt-24 lg:min-h-[720px] lg:pt-32 lg:pb-16"
+      style={{
+        backgroundImage: `url(${heroBanner})`,
+      }}
     >
       {/* Soft ambient glow — adds depth without competing with the route line */}
       <div
@@ -90,10 +92,10 @@ export default function Hero() {
           Vizag's trusted cab service
         </span>
 
-        <h1 className="text-[2rem] font-extrabold leading-[1.12] tracking-tight text-slate-900 sm:text-4xl sm:leading-[1.08] md:text-5xl lg:text-[3.25rem] lg:leading-[1.05]">
-          Your Journey,{" "}
+      <h1 className="text-[1.75rem] font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-4xl sm:leading-[1.08] md:text-5xl lg:text-[3.25rem] lg:leading-[1.05]">
+          <span className="block">Your Journey,</span>
           <span
-            className="text-[#2997FF] font-normal"
+            className="mt-2 block text-[#2997FF] font-normal sm:mt-3 lg:mt-4"
             style={{ fontFamily: '"Lavishly Yours", cursive', fontWeight: 400 }}
           >
             Our Responsibility.
@@ -105,10 +107,8 @@ export default function Hero() {
           trips, and airport transfers across Andhra Pradesh.
         </p>
 
-
-
         {/* Trust badges — 4 inline items matching the design */}
-        <div className="mt-7 grid grid-cols-1 gap-x-6 gap-y-4 xs:grid-cols-2 sm:mt-8 sm:flex sm:flex-wrap sm:gap-x-8">
+        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-3 xs:grid-cols-2 sm:mt-8 sm:gap-y-4 sm:flex sm:flex-wrap sm:gap-x-8">
           {heroBadges.map(({ icon: Icon, title, description }) => (
             <div key={title} className="group flex items-center gap-3">
               <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-primary shadow-[0_1px_2px_rgba(16,24,40,0.06),0_0_0_1px_rgba(16,24,40,0.06)] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:shadow-[0_6px_16px_rgba(16,24,40,0.10),0_0_0_1px_rgba(245,158,11,0.25)] sm:h-10 sm:w-10">
