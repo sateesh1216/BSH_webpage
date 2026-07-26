@@ -169,8 +169,8 @@ export default function ServicesHero() {
               <Star size={20} fill="currentColor" strokeWidth={0} className="relative" />
             </span>
             <div>
-              <p className="text-sm font-bold text-slate-900">4.9 / 5 Rating</p>
-              <p className="text-xs text-slate-500">from 2,000+ happy riders</p>
+              <p className="text-sm font-bold text-slate-900">5 / 5 Rating</p>
+              <p className="text-xs text-slate-500">from 10,000+ happy riders</p>
             </div>
           </div>
         </div>
