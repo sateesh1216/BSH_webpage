@@ -163,16 +163,22 @@ export function makeBookingId() {
   return `BSH-${y}-${m}${d}${seq}`;
 }
 
-export function buildWhatsAppMessage(trip: TripDetails, vehicle: Vehicle | null, total: number) {
+// Single shared builder used by every "Send on WhatsApp" action in the
+// wizard (Passenger Details step + final Confirm step), so both places
+// always send the exact same message shape. Includes the passenger's
+// name & phone number, and intentionally leaves out the estimated fare.
+export function buildWhatsAppMessage(trip: TripDetails, vehicle: Vehicle | null, passenger: PassengerDetails) {
   const lines = [
     "Hi BSH Taxi Services, I'd like to book a ride:",
+    passenger.fullName ? `*Name:* ${passenger.fullName}` : null,
+    passenger.phone ? `*Phone:* ${passenger.phone}` : null,
     `*Trip:* ${trip.tripType} (${trip.tripOption})`,
     `*Pickup:* ${trip.pickup || "Not specified"}`,
     `*Drop:* ${trip.drop || "Not specified"}`,
     trip.travelDate ? `*Date:* ${trip.travelDate} at ${trip.travelTime}` : null,
     `*Passengers:* ${trip.passengers}`,
     vehicle ? `*Preferred Vehicle:* ${vehicle.name}` : null,
-    total ? `*Estimated Total:* ${formatCurrency(total)}` : null,
+    "Please confirm my booking.",
   ].filter(Boolean);
   return lines.join("\n");
 }

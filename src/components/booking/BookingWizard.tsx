@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Check,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   MapPin,
   Navigation,
   Car,
@@ -19,10 +20,9 @@ import {
   MessageCircle,
   Mail,
   User,
-  MapPinned,
   Headphones,
   Home,
-  Lock,
+  // Lock,
   BookOpen,
   Sparkles,
   Crown,
@@ -62,11 +62,11 @@ interface BookingWizardProps {
 // Simple lat/lon pair — mirrors the shape RouteMapPreview expects.
 type GeoPoint = { lat: number; lon: number };
 
+// Date & Time picker was merged into the Trip Details step, and the
+// standalone Review step was removed — the wizard now has 4 steps.
 const STEPS = [
-  { key: "trip", label: "Trip Details", sub: "Pickup & Drop" },
+  { key: "trip", label: "Trip Details", sub: "Pickup, Drop & Schedule" },
   { key: "vehicle", label: "Vehicle", sub: "Choose your ride" },
-  { key: "datetime", label: "Date & Time", sub: "When you want to travel" },
-  { key: "review", label: "Review", sub: "Review your trip" },
   { key: "passenger", label: "Passenger Details", sub: "Contact information" },
   { key: "confirm", label: "Confirm Booking", sub: "You're almost done!" },
 ] as const;
@@ -106,7 +106,7 @@ function SectionEyebrow({ step, title, sub }: { step: number; title: string; sub
       <div className="flex items-center gap-2">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-linear-to-r from-primary/10 to-primary/3 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.12em] text-primary ring-1 ring-inset ring-primary/15">
           <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-          Step {step} of 6
+          Step {step} of {STEPS.length}
         </span>
       </div>
       <h2 className="mt-2 text-[1.35rem] font-extrabold tracking-tight text-slate-900">{title}</h2>
@@ -253,7 +253,7 @@ function TripSummarySidebar({
   vehicle,
   distanceKm,
   minutes,
-  total,
+  // total,
 }: {
   trip: TripDetails;
   vehicle: Vehicle | null;
@@ -300,14 +300,14 @@ function TripSummarySidebar({
           <SummaryRow icon={Briefcase} label="Luggage" value={trip.luggage} />
           <SummaryRow icon={Navigation} label="Distance" value={distanceKm ? `${distanceKm} km` : "Not calculated"} />
           <SummaryRow icon={Clock} label="Est. Time" value={minutes ? formatDuration(minutes) : "Not calculated"} />
-          {total > 0 && (
+          {/* {total > 0 && (
             <div className="flex items-center justify-between py-3">
               <span className="text-xs font-bold text-slate-600">Estimated Total</span>
               <span className="bg-linear-to-br from-primary to-primary/70 bg-clip-text text-lg font-extrabold tabular-nums text-transparent">
                 {formatCurrency(total)}
               </span>
             </div>
-          )}
+          )} */}
         </div>
       </div>
 
@@ -320,13 +320,16 @@ function TripSummarySidebar({
       </div>
 
       <div className="mx-4 mb-4 flex items-center justify-between border-t border-slate-100 pt-3.5">
-        <div>
-          <p className="text-xs font-semibold text-slate-800">Need Help?</p>
-          <a href={`tel:+${SUPPORT_PHONE}`} className="text-xs font-bold text-primary hover:underline">
-            {SUPPORT_PHONE_DISPLAY}
-          </a>
-          <p className="text-[11px] text-slate-400">We're available 24/7</p>
-        </div>
+<div>
+  <p className="text-xs font-semibold text-slate-800">Need Help?</p>
+  <a
+    href={`tel:+${SUPPORT_PHONE}`}
+    className="inline-flex items-center gap-1.5 mt-1 px-3 py-1.5 rounded-full bg-primary text-white text-xs font-bold shadow-md shadow-primary/30 animate-pulse hover:shadow-lg transition-shadow"
+  >
+    📞 {SUPPORT_PHONE_DISPLAY}
+  </a>
+  <p className="text-[11px] text-slate-400 mt-1">We're available 24/7</p>
+</div>
         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-linear-to-br from-primary/15 to-primary/5 text-primary">
           <Headphones size={17} />
         </div>
@@ -363,7 +366,273 @@ function PrimaryButton({
 }
 
 /* ---------------------------------------------------------------------- */
-/*  Step 1 — Trip Details                                                  */
+/*  Date & time constants (used inside Step 1 — Trip Details)              */
+/* ---------------------------------------------------------------------- */
+
+const WEEKDAY_LABELS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+const TIME_SLOTS = Array.from({ length: 24 * 2 }, (_, i) => {
+  const totalMinutes = i * 30;
+  const h24 = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+  const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
+  const suffix = h24 < 12 ? "AM" : "PM";
+  return `${String(h12).padStart(2, "0")}:${String(m).padStart(2, "0")} ${suffix}`;
+});
+
+/* ---------------------------------------------------------------------- */
+/*  Click-to-open date picker — a compact trigger field that reveals a     */
+/*  calendar popover on click/tap, and closes on selection or outside tap  */
+/* ---------------------------------------------------------------------- */
+
+function DateTimePickerField({
+  id,
+  dateValue,
+  timeValue,
+  onDateChange,
+  onTimeChange,
+}: {
+  id: string;
+  dateValue: string;
+  timeValue: string;
+  onDateChange: (iso: string) => void;
+  onTimeChange: (time: string) => void;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const today = new Date();
+  const todayIso = today.toISOString().split("T")[0];
+  const selectedDate = dateValue ? new Date(`${dateValue}T00:00:00`) : today;
+
+  const [viewYear, setViewYear] = useState(selectedDate.getFullYear());
+  const [viewMonth, setViewMonth] = useState(selectedDate.getMonth());
+
+  const monthLabel = new Date(viewYear, viewMonth, 1).toLocaleDateString("en-IN", {
+    month: "long",
+    year: "numeric",
+  });
+
+  const calendarCells = useMemo(() => {
+    const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    const daysInPrevMonth = new Date(viewYear, viewMonth, 0).getDate();
+    const cells: { day: number; inMonth: boolean; iso: string }[] = [];
+    for (let i = firstDay - 1; i >= 0; i--) {
+      cells.push({ day: daysInPrevMonth - i, inMonth: false, iso: "" });
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const iso = `${viewYear}-${String(viewMonth + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+      cells.push({ day: d, inMonth: true, iso });
+    }
+    while (cells.length % 7 !== 0) {
+      cells.push({ day: cells.length, inMonth: false, iso: "" });
+    }
+    return cells;
+  }, [viewYear, viewMonth]);
+
+  function changeMonth(delta: number) {
+    let m = viewMonth + delta;
+    let y = viewYear;
+    if (m < 0) {
+      m = 11;
+      y -= 1;
+    } else if (m > 11) {
+      m = 0;
+      y += 1;
+    }
+    setViewMonth(m);
+    setViewYear(y);
+  }
+
+  function handleToggle() {
+    // Re-sync the visible month with whatever's currently selected each
+    // time the popover opens, so it never opens on a stale month.
+    const base = dateValue ? new Date(`${dateValue}T00:00:00`) : today;
+    setViewYear(base.getFullYear());
+    setViewMonth(base.getMonth());
+    setIsOpen((o) => !o);
+  }
+
+  // Selecting a date keeps the popover open so the time can be picked right
+  // after, in the same interaction — closing only happens via Done, Escape,
+  // or a tap outside.
+  function handleSelectDate(iso: string) {
+    onDateChange(iso);
+  }
+
+  function handleDone() {
+    setIsOpen(false);
+  }
+
+  useEffect(() => {
+    if (!isOpen) return;
+    function handleOutside(e: MouseEvent | TouchEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setIsOpen(false);
+    }
+    document.addEventListener("mousedown", handleOutside);
+    document.addEventListener("touchstart", handleOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleOutside);
+      document.removeEventListener("touchstart", handleOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isOpen]);
+
+  const triggerLabel = dateValue
+    ? `${formatDateLabel(dateValue)}${timeValue ? ` • ${timeValue}` : ""}`
+    : "Select travel date & time";
+
+  return (
+    <div ref={containerRef} className="relative">
+      <Label htmlFor={id}>Travel Date &amp; Time *</Label>
+      <button
+        type="button"
+        id={id}
+        onClick={handleToggle}
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
+        className={`group flex w-full items-center gap-2.5 rounded-xl border bg-white px-3 py-2.5 text-left shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-200 ${
+          isOpen ? "border-primary shadow-[0_0_0_3.5px_var(--tw-shadow-color)] shadow-primary/12" : "border-slate-200/80 hover:border-slate-300"
+        }`}
+      >
+        <span
+          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary transition-all duration-200 ${
+            isOpen ? "bg-primary text-white shadow-sm shadow-primary/40" : ""
+          }`}
+        >
+          <CalendarIcon size={13} className="shrink-0" />
+        </span>
+        <span className={`flex-1 truncate text-xs font-medium ${dateValue ? "text-slate-800" : "text-slate-400"}`}>
+          {triggerLabel}
+        </span>
+        <ChevronDown size={14} className={`shrink-0 text-slate-400 transition-transform duration-200 ${isOpen ? "rotate-180 text-primary" : ""}`} />
+      </button>
+
+      {isOpen && (
+        <div
+          role="dialog"
+          className="absolute left-0 top-full z-30 mt-2 w-[min(92vw,480px)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10 animate-in fade-in zoom-in-95 duration-150"
+        >
+          {/* Side-by-side: calendar on the left, time slots on the right */}
+          <div className="grid grid-cols-[1fr_150px] divide-x divide-slate-100">
+            {/* ---------------- Calendar (left) ---------------- */}
+            <div className="p-3.5">
+              <div className="mb-2.5 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => changeMonth(-1)}
+                  className="rounded-full p-1.5 text-slate-500 transition-colors hover:bg-primary/8 hover:text-primary"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                <p className="text-xs font-extrabold tracking-tight text-slate-800">{monthLabel}</p>
+                <button
+                  type="button"
+                  onClick={() => changeMonth(1)}
+                  className="rounded-full p-1.5 text-slate-500 transition-colors hover:bg-primary/8 hover:text-primary"
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold tracking-wide text-slate-400">
+                {WEEKDAY_LABELS.map((w) => (
+                  <span key={w}>{w}</span>
+                ))}
+              </div>
+
+              <div className="mt-1.5 grid grid-cols-7 gap-1">
+                {calendarCells.map((cell, i) => {
+                  const isPast = cell.inMonth && cell.iso < todayIso;
+                  const isSelected = cell.inMonth && cell.iso === dateValue;
+                  const isToday = cell.inMonth && cell.iso === todayIso;
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      disabled={!cell.inMonth || isPast}
+                      onClick={() => handleSelectDate(cell.iso)}
+                      className={`relative aspect-square rounded-lg text-xs font-semibold transition-all duration-150 ${
+                        !cell.inMonth
+                          ? "text-transparent"
+                          : isSelected
+                          ? "scale-105 bg-linear-to-b from-primary to-primary/90 font-bold text-white shadow-md shadow-primary/40 ring-2 ring-primary/20"
+                          : isPast
+                          ? "cursor-not-allowed text-slate-300"
+                          : isToday
+                          ? "text-primary ring-1 ring-inset ring-primary/30 hover:bg-primary/10"
+                          : "text-slate-700 hover:bg-primary/10"
+                      }`}
+                    >
+                      {cell.day}
+                      {isToday && !isSelected && (
+                        <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => handleSelectDate(todayIso)}
+                className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-lg bg-primary/5 px-2.5 py-1.5 text-[11px] font-bold text-primary transition-colors hover:bg-primary/10"
+              >
+                <CalendarIcon size={12} /> Today: {formatDateLabel(todayIso)}
+              </button>
+            </div>
+
+            {/* ---------------- Time slots (right) ---------------- */}
+            <div className="flex flex-col">
+              <p className="flex items-center gap-1.5 border-b border-slate-100 bg-slate-50/60 px-3 py-2.5 text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-500">
+                <Clock size={12} className="text-primary" /> Time
+              </p>
+              <div className="max-h-[260px] flex-1 overflow-y-auto px-1.5 py-1.5 [scrollbar-width:thin]">
+                {TIME_SLOTS.map((t) => {
+                  const isSelected = t === timeValue;
+                  return (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => onTimeChange(t)}
+                      className={`mb-1 flex w-full items-center justify-center rounded-lg px-2 py-1.5 text-xs font-semibold tabular-nums transition-all duration-150 ${
+                        isSelected
+                          ? "bg-linear-to-b from-primary to-primary/90 text-white shadow-sm shadow-primary/40"
+                          : "text-slate-600 hover:bg-primary/8 hover:text-primary"
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-slate-100 p-3">
+            <button
+              type="button"
+              onClick={handleDone}
+              disabled={!dateValue}
+              className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-linear-to-b from-primary to-primary/90 px-3 py-2.5 text-xs font-bold text-white shadow-sm shadow-primary/30 transition-all hover:brightness-105 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
+            >
+              <Check size={13} /> Done
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------------------- */
+/*  Step 1 — Trip Details (now also includes Date & Time)                  */
 /* ---------------------------------------------------------------------- */
 
 function StepTripDetails({
@@ -390,12 +659,16 @@ function StepTripDetails({
   onNext: () => void;
 }) {
   const config = TRIP_CONFIG[trip.tripType];
-  const canContinue = trip.pickup.trim().length > 0 && trip.drop.trim().length > 0;
+
+  const canContinue =
+    trip.pickup.trim().length > 0 &&
+    trip.drop.trim().length > 0 &&
+    trip.travelDate.trim().length > 0;
 
   return (
     <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
       <div>
-        <SectionEyebrow step={1} title="Enter Trip Details" sub="Please provide your pickup and drop locations" />
+        <SectionEyebrow step={1} title="Enter Trip Details" sub="Please provide your pickup, drop location & preferred schedule" />
 
         {/* Pickup / Drop side by side with the live map preview */}
         <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -429,6 +702,16 @@ function StepTripDetails({
               icon={MapPin}
               popularPlaces={POPULAR_DROP_PLACES}
             />
+
+            {/* Travel date & time now sits right here, filling the space
+                below the location fields instead of a separate section */}
+            <DateTimePickerField
+              id="wizard-date"
+              dateValue={trip.travelDate}
+              timeValue={trip.travelTime}
+              onDateChange={(iso) => setTrip((p) => ({ ...p, travelDate: iso }))}
+              onTimeChange={(t) => setTrip((p) => ({ ...p, travelTime: t }))}
+            />
           </div>
 
           <div className="overflow-hidden rounded-xl border border-slate-100 shadow-[0_2px_10px_rgba(15,23,42,0.06)]">
@@ -442,71 +725,77 @@ function StepTripDetails({
           </div>
         </div>
 
-        <div className="mt-4 space-y-3.5">
-          <div>
-            <span className="mb-1.5 block text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-500">Trip Type</span>
-            <div className="flex gap-2">
-              {config.tripOptions.map((option) => {
-                const active = trip.tripOption === option;
-                return (
-                  <button
-                    key={option}
-                    type="button"
-                    onClick={() => setTrip((p) => ({ ...p, tripOption: option }))}
-                    className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-xs font-bold transition-all duration-150 ${
-                      active
-                        ? "border-primary bg-linear-to-b from-primary to-primary/90 text-white shadow-sm shadow-primary/30"
-                        : "border-slate-200 bg-white text-slate-600 hover:border-primary/40 hover:bg-primary/5"
-                    }`}
-                  >
-                    {option.toLowerCase().includes("round") || option.toLowerCase().includes("multi") ? (
-                      <Repeat2 size={13} />
-                    ) : (
-                      <ArrowRight size={13} />
-                    )}
-                    {option}
-                  </button>
-                );
-              })}
-            </div>
+        {/* Trip type */}
+        <div className="mt-4">
+          <span className="mb-1.5 block text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-500">Trip Type</span>
+          <div className="flex flex-wrap gap-2 sm:flex-nowrap">
+            {config.tripOptions.map((option) => {
+              const active = trip.tripOption === option;
+              return (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => setTrip((p) => ({ ...p, tripOption: option }))}
+                  className={`flex flex-1 basis-[calc(50%-0.25rem)] items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-xs font-bold transition-all duration-150 sm:basis-auto ${
+                    active
+                      ? "border-primary bg-linear-to-b from-primary to-primary/90 text-white shadow-sm shadow-primary/30"
+                      : "border-slate-200 bg-white text-slate-600 hover:border-primary/40 hover:bg-primary/5"
+                  }`}
+                >
+                  {option.toLowerCase().includes("round") || option.toLowerCase().includes("multi") ? (
+                    <Repeat2 size={13} />
+                  ) : (
+                    <ArrowRight size={13} />
+                  )}
+                  {option}
+                </button>
+              );
+            })}
           </div>
+        </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <Label htmlFor="wizard-passengers">Passengers</Label>
-              <FieldShell icon={Users}>
-                <select
-                  id="wizard-passengers"
-                  value={trip.passengers}
-                  onChange={(e) => setTrip((p) => ({ ...p, passengers: e.target.value }))}
-                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none"
-                >
-                  {PASSENGER_OPTIONS.map((o) => (
-                    <option key={o} value={o}>
-                      {o}
-                    </option>
-                  ))}
-                </select>
-              </FieldShell>
-            </div>
-            <div>
-              <Label htmlFor="wizard-luggage">Luggage (Optional)</Label>
-              <FieldShell icon={Briefcase}>
-                <select
-                  id="wizard-luggage"
-                  value={trip.luggage}
-                  onChange={(e) => setTrip((p) => ({ ...p, luggage: e.target.value }))}
-                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none"
-                >
-                  {LUGGAGE_OPTIONS.map((o) => (
-                    <option key={o} value={o}>
-                      {o}
-                    </option>
-                  ))}
-                </select>
-              </FieldShell>
-            </div>
+        {/* Passengers / Luggage */}
+        <div className="mt-3.5 grid grid-cols-2 gap-3">
+          <div>
+            <Label htmlFor="wizard-passengers">Passengers</Label>
+            <FieldShell icon={Users}>
+              <select
+                id="wizard-passengers"
+                value={trip.passengers}
+                onChange={(e) => setTrip((p) => ({ ...p, passengers: e.target.value }))}
+                className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none"
+              >
+                {PASSENGER_OPTIONS.map((o) => (
+                  <option key={o} value={o}>
+                    {o}
+                  </option>
+                ))}
+              </select>
+            </FieldShell>
           </div>
+          <div>
+            <Label htmlFor="wizard-luggage">Luggage (Optional)</Label>
+            <FieldShell icon={Briefcase}>
+              <select
+                id="wizard-luggage"
+                value={trip.luggage}
+                onChange={(e) => setTrip((p) => ({ ...p, luggage: e.target.value }))}
+                className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none"
+              >
+                {LUGGAGE_OPTIONS.map((o) => (
+                  <option key={o} value={o}>
+                    {o}
+                  </option>
+                ))}
+              </select>
+            </FieldShell>
+          </div>
+        </div>
+
+
+        <div className="mt-3.5 flex items-start gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3.5 py-2.5 text-xs text-slate-600 ring-1 ring-inset ring-primary/10">
+          <Info size={14} className="mt-0.5 shrink-0 text-primary" />
+          Note: Your driver will arrive 15 minutes before the scheduled pickup time.
         </div>
 
         <PrimaryButton disabled={!canContinue} onClick={onNext} className="mt-5 w-full">
@@ -648,396 +937,19 @@ function StepVehicle({
             <ChevronLeft size={14} /> Back to Trip Details
           </button>
           <PrimaryButton disabled={!vehicle} onClick={onNext} className="flex-1">
-            Continue to Date &amp; Time <ArrowRight size={15} />
-          </PrimaryButton>
-        </div>
-      </div>
-
-      <TripSummarySidebar trip={trip} vehicle={vehicle} distanceKm={distanceKm} minutes={minutes} total={0} />
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------------- */
-/*  Step 3 — Date & Time                                                   */
-/* ---------------------------------------------------------------------- */
-
-const WEEKDAY_LABELS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-const TIME_SLOTS = Array.from({ length: 24 * 2 }, (_, i) => {
-  const totalMinutes = i * 30;
-  const h24 = Math.floor(totalMinutes / 60);
-  const m = totalMinutes % 60;
-  const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
-  const suffix = h24 < 12 ? "AM" : "PM";
-  return `${String(h12).padStart(2, "0")}:${String(m).padStart(2, "0")} ${suffix}`;
-});
-
-function StepDateTime({
-  trip,
-  setTrip,
-  vehicle,
-  distanceKm,
-  minutes,
-  onBack,
-  onNext,
-}: {
-  trip: TripDetails;
-  setTrip: (updater: (prev: TripDetails) => TripDetails) => void;
-  vehicle: Vehicle | null;
-  distanceKm: number;
-  minutes: number;
-  onBack: () => void;
-  onNext: () => void;
-}) {
-  const today = new Date();
-  const [viewYear, setViewYear] = useState(today.getFullYear());
-  const [viewMonth, setViewMonth] = useState(today.getMonth());
-
-  const monthLabel = new Date(viewYear, viewMonth, 1).toLocaleDateString("en-IN", {
-    month: "long",
-    year: "numeric",
-  });
-
-  const calendarCells = useMemo(() => {
-    const firstDay = new Date(viewYear, viewMonth, 1).getDay();
-    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
-    const daysInPrevMonth = new Date(viewYear, viewMonth, 0).getDate();
-    const cells: { day: number; inMonth: boolean; iso: string }[] = [];
-    for (let i = firstDay - 1; i >= 0; i--) {
-      cells.push({ day: daysInPrevMonth - i, inMonth: false, iso: "" });
-    }
-    for (let d = 1; d <= daysInMonth; d++) {
-      const iso = `${viewYear}-${String(viewMonth + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-      cells.push({ day: d, inMonth: true, iso });
-    }
-    while (cells.length % 7 !== 0) {
-      cells.push({ day: cells.length, inMonth: false, iso: "" });
-    }
-    return cells;
-  }, [viewYear, viewMonth]);
-
-  const todayIso = today.toISOString().split("T")[0];
-
-  function changeMonth(delta: number) {
-    let m = viewMonth + delta;
-    let y = viewYear;
-    if (m < 0) {
-      m = 11;
-      y -= 1;
-    } else if (m > 11) {
-      m = 0;
-      y += 1;
-    }
-    setViewMonth(m);
-    setViewYear(y);
-  }
-
-  const canContinue = trip.travelDate.trim().length > 0 && trip.pickupAddress.trim().length > 0;
-
-  return (
-    <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
-      <div>
-        <SectionEyebrow step={3} title="Select Date &amp; Time" sub="Choose your preferred travel date and time" />
-
-        <div className="mt-4 flex flex-wrap items-center gap-4 rounded-xl border border-slate-100 bg-linear-to-r from-slate-50/80 to-white px-3.5 py-2.5 text-xs font-semibold text-slate-600">
-          <span className="flex items-center gap-1.5">
-            <Car size={13} className="text-primary" /> {vehicle?.name ?? "No vehicle selected"}
-          </span>
-          <span className="h-3 w-px bg-slate-200" />
-          <span className="flex items-center gap-1.5">
-            <MapPin size={13} className="text-primary" /> {trip.pickup} → {trip.drop}
-          </span>
-          <span className="h-3 w-px bg-slate-200" />
-          <span className="flex items-center gap-1.5">
-            <Navigation size={13} className="text-primary" /> {distanceKm} km
-          </span>
-        </div>
-
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">
-          <div>
-            <Label>Travel Date *</Label>
-            <div className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
-              <div className="mb-2.5 flex items-center justify-between">
-                <button type="button" onClick={() => changeMonth(-1)} className="rounded-full p-1.5 text-slate-500 transition-colors hover:bg-primary/8 hover:text-primary">
-                  <ChevronLeft size={16} />
-                </button>
-                <p className="text-xs font-extrabold tracking-tight text-slate-800">{monthLabel}</p>
-                <button type="button" onClick={() => changeMonth(1)} className="rounded-full p-1.5 text-slate-500 transition-colors hover:bg-primary/8 hover:text-primary">
-                  <ChevronRight size={16} />
-                </button>
-              </div>
-              <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400">
-                {WEEKDAY_LABELS.map((w) => (
-                  <span key={w}>{w}</span>
-                ))}
-              </div>
-              <div className="mt-1.5 grid grid-cols-7 gap-1">
-                {calendarCells.map((cell, i) => {
-                  const isPast = cell.inMonth && cell.iso < todayIso;
-                  const isSelected = cell.inMonth && cell.iso === trip.travelDate;
-                  const isToday = cell.inMonth && cell.iso === todayIso;
-                  return (
-                    <button
-                      key={i}
-                      type="button"
-                      disabled={!cell.inMonth || isPast}
-                      onClick={() => setTrip((p) => ({ ...p, travelDate: cell.iso }))}
-                      className={`relative aspect-square rounded-lg text-xs font-medium transition-all duration-150 ${
-                        !cell.inMonth
-                          ? "text-transparent"
-                          : isSelected
-                          ? "scale-105 bg-linear-to-b from-primary to-primary/90 font-bold text-white shadow-sm shadow-primary/40"
-                          : isPast
-                          ? "cursor-not-allowed text-slate-300"
-                          : "text-slate-700 hover:bg-primary/10"
-                      }`}
-                    >
-                      {cell.day}
-                      {isToday && !isSelected && (
-                        <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary" />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-              <button
-                type="button"
-                onClick={() => setTrip((p) => ({ ...p, travelDate: todayIso }))}
-                className="mt-3 flex items-center gap-1.5 rounded-lg bg-primary/5 px-2.5 py-1.5 text-[11px] font-bold text-primary transition-colors hover:bg-primary/10"
-              >
-                <CalendarIcon size={12} /> Today: {formatDateLabel(todayIso)}
-              </button>
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            <div>
-              <Label htmlFor="wizard-time">Travel Time *</Label>
-              <FieldShell icon={Clock}>
-                <select
-                  id="wizard-time"
-                  value={trip.travelTime}
-                  onChange={(e) => setTrip((p) => ({ ...p, travelTime: e.target.value }))}
-                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none"
-                >
-                  {TIME_SLOTS.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
-              </FieldShell>
-            </div>
-
-            <div>
-              <Label htmlFor="wizard-pickup-address">Pickup Address *</Label>
-              <FieldShell icon={MapPin}>
-                <input
-                  id="wizard-pickup-address"
-                  value={trip.pickupAddress}
-                  onChange={(e) => setTrip((p) => ({ ...p, pickupAddress: e.target.value }))}
-                  placeholder="Enter pickup address"
-                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:font-normal placeholder:text-slate-400"
-                />
-              </FieldShell>
-            </div>
-
-            <div>
-              <Label htmlFor="wizard-landmark">Landmark / Nearby Place (Optional)</Label>
-              <FieldShell icon={MapPinned}>
-                <input
-                  id="wizard-landmark"
-                  value={trip.landmark}
-                  onChange={(e) => setTrip((p) => ({ ...p, landmark: e.target.value }))}
-                  placeholder="Enter landmark or nearby place"
-                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:font-normal placeholder:text-slate-400"
-                />
-              </FieldShell>
-            </div>
-
-            <div>
-              <Label htmlFor="wizard-instructions">Special Instructions (Optional)</Label>
-              <textarea
-                id="wizard-instructions"
-                value={trip.instructions}
-                onChange={(e) => setTrip((p) => ({ ...p, instructions: e.target.value }))}
-                placeholder="Any special requests or instructions for the driver..."
-                rows={2}
-                className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-medium text-slate-800 shadow-[0_1px_2px_rgba(15,23,42,0.04)] outline-none transition-all placeholder:font-normal placeholder:text-slate-400 focus:border-primary focus:shadow-[0_0_0_3.5px_var(--tw-shadow-color)] focus:shadow-primary/12"
-              />
-            </div>
-
-            <div className="flex items-start gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3.5 py-2.5 text-xs text-slate-600 ring-1 ring-inset ring-primary/10">
-              <Info size={14} className="mt-0.5 shrink-0 text-primary" />
-              Note: Your driver will arrive 15 minutes before the scheduled pickup time.
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-5 flex gap-3">
-          <button
-            type="button"
-            onClick={onBack}
-            className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-xs font-bold text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50"
-          >
-            <ChevronLeft size={14} /> Back to Choose Vehicle
-          </button>
-          <PrimaryButton disabled={!canContinue} onClick={onNext} className="flex-1">
-            Continue to Review <ArrowRight size={15} />
-          </PrimaryButton>
-        </div>
-      </div>
-
-      <TripSummarySidebar trip={trip} vehicle={vehicle} distanceKm={distanceKm} minutes={minutes} total={0} />
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------------- */
-/*  Step 4 — Review                                                        */
-/* ---------------------------------------------------------------------- */
-
-function StepReview({
-  trip,
-  vehicle,
-  distanceKm,
-  minutes,
-  pricing,
-  onBack,
-  onNext,
-}: {
-  trip: TripDetails;
-  vehicle: Vehicle | null;
-  distanceKm: number;
-  minutes: number;
-  pricing: { base: number; gst: number; total: number };
-  onBack: () => void;
-  onNext: () => void;
-}) {
-  return (
-    <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
-      <div>
-        <SectionEyebrow step={4} title="Review Your Trip" sub="Please review your trip details before proceeding" />
-
-        <div className="mt-4 grid gap-3.5 sm:grid-cols-3">
-          <div className="rounded-2xl border border-slate-100 bg-white p-3.5 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
-            <p className="flex items-center gap-2 text-xs font-bold text-slate-800">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary">
-                <MapPin size={12} />
-              </span>
-              Trip Route
-            </p>
-            <div className="mt-3 space-y-2.5 text-xs">
-              <div>
-                <p className="font-semibold text-slate-900">{trip.pickup}</p>
-                <p className="text-[11px] text-slate-400">Pickup Location</p>
-              </div>
-              <div>
-                <p className="font-semibold text-slate-900">{trip.drop}</p>
-                <p className="text-[11px] text-slate-400">Drop Location</p>
-              </div>
-            </div>
-            <div className="mt-2.5 flex justify-between border-t border-slate-100 pt-2.5 text-[11px] font-semibold text-slate-500">
-              <span className="flex items-center gap-1">
-                <Navigation size={11} /> {distanceKm} km
-              </span>
-              <span className="flex items-center gap-1">
-                <Clock size={11} /> {formatDuration(minutes)}
-              </span>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-slate-100 bg-white p-3.5 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
-            <p className="flex items-center gap-2 text-xs font-bold text-slate-800">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary">
-                <Car size={12} />
-              </span>
-              Selected Vehicle
-            </p>
-            <div className="mt-2 flex h-28 items-center justify-center rounded-xl bg-linear-to-b from-slate-50 to-transparent">
-              {vehicle?.image ? (
-                <img
-                  src={vehicle.image}
-                  alt={vehicle.name}
-                  className="h-full object-contain"
-                />
-              ) : (
-                <Car size={32} className="text-slate-300" />
-              )}
-            </div>
-            <p className="mt-1 text-center text-sm font-extrabold tracking-tight text-slate-900">{vehicle?.name}</p>
-            <p className="text-center text-[11px] text-slate-400">
-              {vehicle?.seats} · {vehicle?.ac ? "AC" : "Non-AC"} · {vehicle?.bags} Bags
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-100 bg-white p-3.5 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
-            <p className="flex items-center gap-2 text-xs font-bold text-slate-800">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary">
-                <CalendarIcon size={12} />
-              </span>
-              Date &amp; Time
-            </p>
-            <div className="mt-3 space-y-1.5 text-xs text-slate-600">
-              <p className="flex justify-between">
-                <span className="text-slate-400">Travel Date</span>
-                <span className="font-semibold text-slate-800">{formatDateLabel(trip.travelDate)}</span>
-              </p>
-              <p className="flex justify-between">
-                <span className="text-slate-400">Travel Time</span>
-                <span className="font-semibold text-slate-800">{trip.travelTime}</span>
-              </p>
-              <p className="flex justify-between">
-                <span className="text-slate-400">Trip Type</span>
-                <span className="font-semibold text-slate-800">{trip.tripOption}</span>
-              </p>
-              <p className="flex justify-between">
-                <span className="text-slate-400">Passengers</span>
-                <span className="font-semibold text-slate-800">{trip.passengers}</span>
-              </p>
-              <p className="flex justify-between">
-                <span className="text-slate-400">Luggage</span>
-                <span className="font-semibold text-slate-800">{trip.luggage}</span>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-3.5 rounded-2xl border border-slate-100 bg-white p-4 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
-          <div className="grid gap-2.5 sm:grid-cols-2">
-            <div className="rounded-xl bg-emerald-50 p-3 text-[11px] text-emerald-700">
-              <p className="mb-0.5 font-bold">✓ Included in Fare</p>
-              <p>Driver Charges · Fuel Charges · GST</p>
-            </div>
-            <div className="rounded-xl bg-amber-50 p-3 text-[11px] text-amber-700">
-              <p className="mb-0.5 font-bold">Extra Charges (If Applicable)</p>
-              <p>Toll Charges · Parking Charges · State Permit</p>
-            </div>
-          </div>
-          <div className="mt-3 flex items-center gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3.5 py-2.5 text-xs text-slate-600 ring-1 ring-inset ring-primary/10">
-            <ShieldCheck size={14} className="shrink-0 text-primary" />
-            No hidden charges. What you see is what you pay.
-          </div>
-        </div>
-
-        <div className="mt-5 flex gap-3">
-          <button
-            type="button"
-            onClick={onBack}
-            className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-xs font-bold text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50"
-          >
-            <ChevronLeft size={14} /> Back to Date &amp; Time
-          </button>
-          <PrimaryButton onClick={onNext} className="flex-1">
             Continue to Passenger Details <ArrowRight size={15} />
           </PrimaryButton>
         </div>
       </div>
 
-      <TripSummarySidebar trip={trip} vehicle={vehicle} distanceKm={distanceKm} minutes={minutes} total={pricing.total} />
+      <TripSummarySidebar trip={trip} vehicle={vehicle} distanceKm={distanceKm} minutes={minutes} total={0} />
     </div>
   );
 }
+
+/* ---------------------------------------------------------------------- */
+/*  Step 3 — Passenger Details (now includes a WhatsApp contact action)    */
+/* ---------------------------------------------------------------------- */
 
 function StepPassenger({
   trip,
@@ -1065,13 +977,22 @@ function StepPassenger({
     passenger.confirmEmail.trim().length > 0 &&
     passenger.email !== passenger.confirmEmail;
 
-  const canContinue =
-    passenger.fullName.trim().length > 0 && passenger.phone.trim().length >= 10 && !emailsMismatch;
+  const hasNameAndPhone = passenger.fullName.trim().length > 0 && passenger.phone.trim().length >= 10;
+
+  const canContinue = hasNameAndPhone && !emailsMismatch;
+
+  // Uses the same shared bookingConfig builder as the Confirm step, so
+  // both "Send on WhatsApp" actions in the wizard produce one consistent
+  // message (with the passenger's name & phone, no fare total).
+  function sendWhatsAppContact() {
+    const message = encodeURIComponent(buildWhatsAppMessage(trip, vehicle, passenger));
+    window.open(`https://wa.me/${SUPPORT_PHONE}?text=${message}`, "_blank", "noopener,noreferrer");
+  }
 
   return (
     <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
       <div>
-        <SectionEyebrow step={5} title="Passenger Details" sub="Please provide passenger and contact information" />
+        <SectionEyebrow step={3} title="Passenger Details" sub="Please provide passenger and contact information" />
 
         <div className="mt-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
           <p className="flex items-center gap-2 text-xs font-bold text-slate-800">
@@ -1132,6 +1053,31 @@ function StepPassenger({
               </FieldShell>
             </div>
           </div>
+
+          {/* WhatsApp contact action — becomes available once name & phone are filled in */}
+          <div className="mt-3.5 flex flex-col gap-2 rounded-xl border border-dashed border-emerald-200 bg-emerald-50/60 px-3.5 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                <MessageCircle size={15} />
+              </span>
+              <div>
+                <p className="text-xs font-semibold text-slate-800">Prefer WhatsApp?</p>
+                <p className="text-[11px] text-slate-500">
+                  {hasNameAndPhone
+                    ? "Send your name, number & trip details straight to our team."
+                    : "Enter your name and phone number to send via WhatsApp."}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              disabled={!hasNameAndPhone}
+              onClick={sendWhatsAppContact}
+              className="flex items-center justify-center gap-1.5 rounded-lg bg-emerald-500 px-3.5 py-2 text-[11px] font-bold text-white shadow-sm shadow-emerald-500/30 transition-all hover:brightness-105 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
+            >
+              <MessageCircle size={13} /> Message on WhatsApp
+            </button>
+          </div>
         </div>
 
         <div className="mt-3.5 flex items-center gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3.5 py-2.5 text-xs text-slate-600 ring-1 ring-inset ring-primary/10">
@@ -1145,7 +1091,7 @@ function StepPassenger({
             onClick={onBack}
             className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-xs font-bold text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50"
           >
-            <ChevronLeft size={14} /> Back to Review
+            <ChevronLeft size={14} /> Back to Choose Vehicle
           </button>
           <PrimaryButton disabled={!canContinue} onClick={onNext} className="flex-1">
             Continue to Confirm Booking <ArrowRight size={15} />
@@ -1159,23 +1105,25 @@ function StepPassenger({
 }
 
 /* ---------------------------------------------------------------------- */
-/*  Step 6 — Confirm booking                                                */
+/*  Step 4 — Confirm booking                                                */
 /* ---------------------------------------------------------------------- */
 
 function StepConfirm({
   trip,
   vehicle,
+  passenger,
   distanceKm,
   minutes,
   pricing,
   bookingId,
   confirmed,
-  onConfirm,
+  // onConfirm,
   onBack,
   onClose,
 }: {
   trip: TripDetails;
   vehicle: Vehicle | null;
+  passenger: PassengerDetails;
   distanceKm: number;
   minutes: number;
   pricing: { base: number; gst: number; total: number };
@@ -1193,8 +1141,10 @@ function StepConfirm({
     minute: "2-digit",
   });
 
+  // Same shared bookingConfig builder used in the Passenger Details step —
+  // one WhatsApp message shape everywhere in the wizard.
   function sendWhatsApp() {
-    const message = encodeURIComponent(buildWhatsAppMessage(trip, vehicle, pricing.total));
+    const message = encodeURIComponent(buildWhatsAppMessage(trip, vehicle, passenger));
     window.open(`https://wa.me/${SUPPORT_PHONE}?text=${message}`, "_blank", "noopener,noreferrer");
   }
 
@@ -1202,7 +1152,7 @@ function StepConfirm({
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px_300px]">
       <div>
         <SectionEyebrow
-          step={6}
+          step={4}
           title={confirmed ? "Booking Confirmed!" : "Confirm Your Booking"}
           sub={confirmed ? "Thank you for choosing BSH Taxi Services." : "Please review your booking details and confirm to complete"}
         />
@@ -1332,13 +1282,13 @@ function StepConfirm({
           ) : (
             <>
               <div className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-                <button
+                {/* <button
                   type="button"
                   onClick={onConfirm}
                   className="flex items-center justify-center gap-1.5 rounded-xl bg-linear-to-b from-primary to-primary/90 px-4 py-3 text-xs font-bold text-white shadow-[0_4px_14px_-2px] shadow-primary/35 transition-all duration-150 hover:brightness-[1.07] hover:shadow-[0_6px_18px_-2px] hover:shadow-primary/45 active:scale-[0.98]"
                 >
                   <Lock size={14} /> Confirm Booking Now
-                </button>
+                </button> */}
                 <button
                   type="button"
                   onClick={sendWhatsApp}
@@ -1485,28 +1435,6 @@ export default function BookingWizard({ vehicleId }: BookingWizardProps) {
               />
             )}
             {stepIndex === 2 && (
-              <StepDateTime
-                trip={trip}
-                setTrip={setTrip}
-                vehicle={vehicle}
-                distanceKm={distanceKm}
-                minutes={minutes}
-                onBack={() => goTo(1)}
-                onNext={() => goTo(3)}
-              />
-            )}
-            {stepIndex === 3 && (
-              <StepReview
-                trip={trip}
-                vehicle={vehicle}
-                distanceKm={distanceKm}
-                minutes={minutes}
-                pricing={pricing}
-                onBack={() => goTo(2)}
-                onNext={() => goTo(4)}
-              />
-            )}
-            {stepIndex === 4 && (
               <StepPassenger
                 trip={trip}
                 vehicle={vehicle}
@@ -1515,21 +1443,22 @@ export default function BookingWizard({ vehicleId }: BookingWizardProps) {
                 pricing={pricing}
                 passenger={passenger}
                 setPassenger={setPassenger}
-                onBack={() => goTo(3)}
-                onNext={() => goTo(5)}
+                onBack={() => goTo(1)}
+                onNext={() => goTo(3)}
               />
             )}
-            {stepIndex === 5 && (
+            {stepIndex === 3 && (
               <StepConfirm
                 trip={trip}
                 vehicle={vehicle}
+                passenger={passenger}
                 distanceKm={distanceKm}
                 minutes={minutes}
                 pricing={pricing}
                 bookingId={bookingId}
                 confirmed={confirmed}
                 onConfirm={handleConfirm}
-                onBack={() => goTo(4)}
+                onBack={() => goTo(2)}
                 onClose={handleClose}
               />
             )}
