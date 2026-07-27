@@ -11,7 +11,7 @@ export default function FloatingContactButtons() {
         @keyframes pulseRing {
           0% {
             transform: scale(1);
-            opacity: .6;
+            opacity: .55;
           }
           80% {
             transform: scale(1.6);
@@ -23,12 +23,12 @@ export default function FloatingContactButtons() {
           }
         }
 
-        @keyframes floatButton {
+        @keyframes floating {
           0%,100%{
             transform:translateY(0);
           }
           50%{
-            transform:translateY(-6px);
+            transform:translateY(-5px);
           }
         }
 
@@ -39,38 +39,70 @@ export default function FloatingContactButtons() {
           animation:pulseRing 1.8s infinite;
         }
 
-        .floating-btn{
-          animation:floatButton 2.5s ease-in-out infinite;
+        .floating{
+          animation:floating 2.5s ease-in-out infinite;
         }
       `}</style>
 
-      {/* LEFT CALL BUTTON */}
+      {/* ================= MOBILE ================= */}
+      <div className="fixed bottom-5 right-4 z-[9999] flex flex-col gap-3 md:hidden">
+        {/* Call */}
+        <a href={`tel:${phoneNumber}`} aria-label="Call Now">
+          <div className="relative floating">
+            <span className="pulse-ring bg-blue-600"></span>
+
+            <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-xl">
+              <Phone size={20} strokeWidth={2.5} />
+            </div>
+          </div>
+        </a>
+
+        {/* WhatsApp */}
+        <a
+          href={`https://wa.me/${whatsappNumber}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp"
+        >
+          <div className="relative floating">
+            <span className="pulse-ring bg-[#25D366]"></span>
+
+            <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl">
+              <FaWhatsapp size={24} />
+            </div>
+          </div>
+        </a>
+      </div>
+
+      {/* ================= DESKTOP ================= */}
+
+      {/* Left Call */}
       <a
         href={`tel:${phoneNumber}`}
+        className="fixed left-6 bottom-6 z-[9999] hidden md:block"
         aria-label="Call Now"
-        className="fixed left-5 bottom-6 z-[9999]"
       >
-        <div className="relative floating-btn">
+        <div className="relative floating">
           <span className="pulse-ring bg-blue-600"></span>
 
-          <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-white shadow-[0_10px_30px_rgba(37,99,235,.45)] transition hover:scale-110">
+          <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-white shadow-[0_12px_35px_rgba(37,99,235,.45)] transition duration-300 hover:scale-110">
             <Phone size={30} strokeWidth={2.5} />
           </div>
         </div>
       </a>
 
-      {/* RIGHT WHATSAPP BUTTON */}
+      {/* Right WhatsApp */}
       <a
         href={`https://wa.me/${whatsappNumber}`}
         target="_blank"
         rel="noopener noreferrer"
+        className="fixed right-6 bottom-6 z-[9999] hidden md:block"
         aria-label="WhatsApp"
-        className="fixed right-5 bottom-6 z-[9999]"
       >
-        <div className="relative floating-btn">
+        <div className="relative floating">
           <span className="pulse-ring bg-[#25D366]"></span>
 
-          <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_rgba(37,211,102,.45)] transition hover:scale-110">
+          <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_12px_35px_rgba(37,211,102,.45)] transition duration-300 hover:scale-110">
             <FaWhatsapp size={34} />
           </div>
         </div>
