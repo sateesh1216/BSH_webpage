@@ -489,7 +489,7 @@ function DateTimePickerField({
     : "Select travel date & time";
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className="relative z-30">
       <Label htmlFor={id}>Travel Date &amp; Time *</Label>
       <button
         type="button"
@@ -517,7 +517,7 @@ function DateTimePickerField({
       {isOpen && (
         <div
           role="dialog"
-          className="absolute left-0 top-full z-30 mt-2 w-[min(92vw,480px)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10 animate-in fade-in zoom-in-95 duration-150"
+          className="absolute left-0 top-full z-[100] mt-2 w-[min(92vw,480px)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10 animate-in fade-in zoom-in-95 duration-150"
         >
           {/* Side-by-side: calendar on the left, time slots on the right */}
           <div className="grid grid-cols-[1fr_150px] divide-x divide-slate-100">
@@ -672,7 +672,10 @@ function StepTripDetails({
 
         {/* Pickup / Drop side by side with the live map preview */}
         <div className="mt-4 grid gap-4 md:grid-cols-2">
-          <div className="space-y-3">
+          {/* relative z-10 keeps this whole column (and the date/time
+              popover it renders) above the map preview in stacking order,
+              which matters most on mobile where the two stack vertically */}
+          <div className="relative z-10 space-y-3">
             <LocationAutocomplete
               id="wizard-pickup"
               label="Pickup Location"
@@ -714,7 +717,11 @@ function StepTripDetails({
             />
           </div>
 
-          <div className="overflow-hidden rounded-xl border border-slate-100 shadow-[0_2px_10px_rgba(15,23,42,0.06)]">
+          {/* relative isolate z-0: creates a fresh stacking context so any
+              high z-index values the map library sets internally (tile
+              panes, zoom controls, markers) are capped inside this box and
+              can never paint above the date/time popover next to it */}
+          <div className="relative isolate z-0 overflow-hidden rounded-xl border border-slate-100 shadow-[0_2px_10px_rgba(15,23,42,0.06)]">
             <RouteMapPreview
               pickupLabel={trip.pickup}
               dropLabel={trip.drop}
