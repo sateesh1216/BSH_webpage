@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import { MapPin, X, ChevronDown, ArrowRight, Car, ImageOff, Sparkles,  ShieldCheck, } from "lucide-react";
-import arakuImg from "../../assets/Home Page/Araku-taxi-service-Packages-bshtaxiservices.png";
-import lambasingiImg from "../../assets/Home Page/lambasingi-taxi-service-Packages-bshtaxiservices.png";
-import simhachalamImg from "../../assets/Home Page/temples-taxi-service-Packages-bshtaxiservices.png";
-import Airport from "../../assets/Home Page/vizag-airport-taxi-services-bshtaxiservices.png"
-import RKbeach from "../../assets/Home Page/Rk Beach-taxi-service-Packages-bshtaxiservices.png"
-import Vanjangi from "../../assets/Home Page/vanajangi-taxi-services-bshtaxiservices.png"
+import arakuImg from "../../assets/Home Page/Araku-taxi-service-Packages-bshtaxiservices.webp";
+import lambasingiImg from "../../assets/Home Page/lambasingi-taxi-service-Packages-bshtaxiservices.webp";
+import simhachalamImg from "../../assets/Home Page/temples-taxi-service-Packages-bshtaxiservices.webp";
+import Airport from "../../assets/Home Page/vizag-airport-taxi-services-bshtaxiservices.webp"
+import RKbeach from "../../assets/Home Page/Rk Beach-taxi-service-Packages-bshtaxiservices.webp"
+import Vanjangi from "../../assets/Home Page/vanajangi-taxi-services-bshtaxiservices.webp"
 import { useBooking } from "../booking/BookingContext";
 /**
  * BSH Taxi Services — "Explore Destinations" + "Estimate Your Fare"
