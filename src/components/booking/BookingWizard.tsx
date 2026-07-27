@@ -802,7 +802,7 @@ function StepTripDetails({
 
         <div className="mt-3.5 flex items-start gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3.5 py-2.5 text-xs text-slate-600 ring-1 ring-inset ring-primary/10">
           <Info size={14} className="mt-0.5 shrink-0 text-primary" />
-          Note: Your driver will arrive 15 minutes before the scheduled pickup time.
+          Note: Our driver will arrive 15 minutes before the scheduled pickup time.
         </div>
 
         <PrimaryButton disabled={!canContinue} onClick={onNext} className="mt-5 w-full">
