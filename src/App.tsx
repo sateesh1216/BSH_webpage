@@ -9,6 +9,7 @@ import DestinationsPage from "./pages/DestinationsPage";
 import ContactPage from "./pages/ContactPage";
 import DestinationDetail from "./pages/DestinationDetail"; 
 import ScrollToTop from "./components/ScrollToTop";
+import FloatingContactButtons from "./components/home/FloatingContactButtons";
 export default function App() {
   return (
     <>
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/destinations/:slug" element={<DestinationDetail />} />
       </Routes>
        <Footer />
+        <FloatingContactButtons />
     </>
    
   );
