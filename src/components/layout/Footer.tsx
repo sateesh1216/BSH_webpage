@@ -32,10 +32,10 @@ const destinationLinks = [
 ];
 
 const socialLinks = [
-  { icon: FaFacebookF, label: "Facebook", href: "#" },
-  { icon: FaInstagram, label: "Instagram", href: "#" },
+  { icon: FaFacebookF, label: "Facebook", href: "https://www.facebook.com/bshtaxiservices" },
+  { icon: FaInstagram, label: "Instagram", href: "https://www.instagram.com/bshtaxiservices/" },
   { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/918886803322" },
-  { icon: FaYoutube, label: "YouTube", href: "#" },
+  { icon: FaYoutube, label: "YouTube", href: "https://www.youtube.com/@bshtaxiservices4129" },
 ];
 
 export default function Footer() {
