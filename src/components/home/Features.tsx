@@ -4,7 +4,7 @@ import arakuImg from "../../assets/Home Page/Araku-taxi-service-Packages-bshtaxi
 import lambasingiImg from "../../assets/Home Page/lambasingi-taxi-service-Packages-bshtaxiservices.webp";
 import simhachalamImg from "../../assets/Home Page/temples-taxi-service-Packages-bshtaxiservices.webp";
 import Airport from "../../assets/Home Page/vizag-airport-taxi-services-bshtaxiservices.webp"
-import RKbeach from "../../assets/Home Page/Rk Beach-taxi-service-Packages-bshtaxiservices.webp"
+import RKbeach from "../../assets/Home Page/Rkbeach-taxi-service-Packages-bshtaxiservices.webp"
 import Vanjangi from "../../assets/Home Page/vanajangi-taxi-services-bshtaxiservices.webp"
 import { useBooking } from "../booking/BookingContext";
 /**
