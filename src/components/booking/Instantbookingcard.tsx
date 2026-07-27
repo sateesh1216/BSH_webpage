@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   MapPin,
   Calendar as CalendarIcon,
+  Clock,
   User,
   Phone,
   MessageCircle,
@@ -43,7 +44,7 @@ const INPUT_TEXT = "text-base sm:text-xs";
  * A short, single-screen booking form used inside <BookingModal>.
  * Deliberately NOT the multi-step <BookingWizard> — just the fields
  * needed to get a booking request moving: pickup, drop, vehicle, date,
- * name, phone. Submitting opens WhatsApp with all the details
+ * time, name, phone. Submitting opens WhatsApp with all the details
  * pre-filled so the BSH team can confirm directly.
  *
  * Mobile notes:
@@ -67,6 +68,7 @@ export default function InstantBookingCard({
     () => VEHICLES.find((v) => v.name.toLowerCase() === vehicleName?.toLowerCase())?.id
   );
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [sent, setSent] = useState(false);
@@ -74,11 +76,21 @@ export default function InstantBookingCard({
   const todayIso = new Date().toISOString().split("T")[0];
   const selectedVehicle = VEHICLES.find((v) => v.id === selectedVehicleId) ?? null;
 
+  // Format "14:30" -> "2:30 PM" for a friendlier WhatsApp message.
+  function formatTime12h(t: string) {
+    const [hStr, mStr] = t.split(":");
+    const h = Number(hStr);
+    const period = h >= 12 ? "PM" : "AM";
+    const h12 = h % 12 === 0 ? 12 : h % 12;
+    return `${h12}:${mStr} ${period}`;
+  }
+
   const canSubmit =
     pickup.trim().length > 0 &&
     drop.trim().length > 0 &&
     !!selectedVehicleId &&
     date.trim().length > 0 &&
+    time.trim().length > 0 &&
     name.trim().length > 0 &&
     phone.trim().length >= 10;
 
@@ -94,6 +106,7 @@ export default function InstantBookingCard({
       `*Pickup:* ${pickup}`,
       `*Drop:* ${drop}`,
       `*Date:* ${date}`,
+      `*Time:* ${formatTime12h(time)}`,
       selectedVehicle ? `*Preferred Vehicle:* ${selectedVehicle.name}` : null,
       "Please confirm my booking.",
     ].filter(Boolean);
@@ -161,7 +174,7 @@ export default function InstantBookingCard({
                   key={v.id}
                   type="button"
                   onClick={() => setSelectedVehicleId(v.id)}
-                  className={`relative flex min-h-[52px] items-center gap-2 rounded-xl border px-2.5 py-2.5 text-left transition-all duration-150 active:scale-[0.98] ${
+                  className={`relative flex min-h-13 items-center gap-2 rounded-xl border px-2.5 py-2.5 text-left transition-all duration-150 active:scale-[0.98] ${
                     active
                       ? "border-primary bg-primary/6 ring-1 ring-primary/25"
                       : "border-slate-200 bg-white hover:border-primary/40"
@@ -187,25 +200,48 @@ export default function InstantBookingCard({
           </div>
         </div>
 
-        <div>
-          <label
-            htmlFor="instant-date"
-            className="mb-1.5 flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-500"
-          >
-            Travel Date *
-          </label>
-          <div className="flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-white px-3 py-3 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-200 focus-within:border-primary sm:py-2.5">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary">
-              <CalendarIcon size={13} />
-            </span>
-            <input
-              id="instant-date"
-              type="date"
-              min={todayIso}
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className={`w-full bg-transparent font-medium text-slate-800 outline-none ${INPUT_TEXT}`}
-            />
+        <div className="grid gap-3.5 sm:grid-cols-2">
+          <div>
+            <label
+              htmlFor="instant-date"
+              className="mb-1.5 flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-500"
+            >
+              Travel Date *
+            </label>
+            <div className="flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-white px-3 py-3 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-200 focus-within:border-primary sm:py-2.5">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary">
+                <CalendarIcon size={13} />
+              </span>
+              <input
+                id="instant-date"
+                type="date"
+                min={todayIso}
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className={`w-full bg-transparent font-medium text-slate-800 outline-none ${INPUT_TEXT}`}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="instant-time"
+              className="mb-1.5 flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-500"
+            >
+              Travel Time *
+            </label>
+            <div className="flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-white px-3 py-3 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-200 focus-within:border-primary sm:py-2.5">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary">
+                <Clock size={13} />
+              </span>
+              <input
+                id="instant-time"
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                className={`w-full bg-transparent font-medium text-slate-800 outline-none ${INPUT_TEXT}`}
+              />
+            </div>
           </div>
         </div>
 

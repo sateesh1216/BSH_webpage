@@ -16,7 +16,7 @@ import {
   CalendarCheck,
 } from "lucide-react";
 import { destinations } from "../data/destinationsData";
-
+import { useBooking } from "../components/booking/BookingContext";
 // Every category gets its own accent, drawn from the thing it's actually
 // known for — moss for the hills, wet stone for the caves, sea-teal for the
 // coast, sandalwood-rust for the temple, and instrument-panel blue for transit.
@@ -90,7 +90,7 @@ const CATEGORY_THEME: Record<
 export default function DestinationDetail() {
   const { slug } = useParams<{ slug: string }>();
   const destination = destinations.find((d) => d.slug === slug);
-
+const { openBooking } = useBooking();
   if (!destination) return <Navigate to="/Destinations" replace />;
 
     const {
@@ -189,13 +189,13 @@ export default function DestinationDetail() {
       {theme.label}
     </div>
 
-    <Link
-      to={`/book/${slug}`}
-      className={`book-btn hidden items-center gap-2 rounded-full ${theme.accent} px-5 py-2.5 text-sm font-bold text-white shadow-lg sm:inline-flex`}
-    >
-      <CalendarCheck size={16} />
-      Book Now
-    </Link>
+    <button
+  onClick={() => openBooking({ resetTrip: true, drop: name })}
+  className={`book-btn hidden items-center gap-2 rounded-full ${theme.accent} px-5 py-2.5 text-sm font-bold text-white shadow-lg sm:inline-flex`}
+>
+  <CalendarCheck size={16} />
+  Book Now
+</button>
   </div>
 
   {/* Hero Title */}
@@ -447,13 +447,13 @@ export default function DestinationDetail() {
                   Lock in your trip and we'll handle the rest.
                 </p>
               </div>
-              <Link
-                to={`/book/${slug}`}
-                className="book-btn inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-slate-900 shadow-md"
-              >
-                <CalendarCheck size={18} />
-                Book Now
-              </Link>
+          <button
+  onClick={() => openBooking({ resetTrip: true, drop: name })}
+  className={`book-btn hidden items-center gap-2 rounded-full ${theme.accent} px-5 py-2.5 text-sm font-bold text-white shadow-lg sm:inline-flex`}
+>
+  <CalendarCheck size={16} />
+  Book Now
+</button>
             </div>
           </div>
 
@@ -485,13 +485,13 @@ export default function DestinationDetail() {
                 <p className="font-display text-sm font-semibold text-slate-900">{name}</p>
               )}
             </div>
-            <Link
-              to={`/book/${slug}`}
-              className={`book-btn inline-flex items-center gap-2 rounded-full ${theme.accent} px-5 py-2.5 text-sm font-bold text-white shadow-md`}
-            >
-              <CalendarCheck size={16} />
-              Book Now
-            </Link>
+        <button
+  onClick={() => openBooking({ resetTrip: true, drop: name })}
+  className={`book-btn hidden items-center gap-2 rounded-full ${theme.accent} px-5 py-2.5 text-sm font-bold text-white shadow-lg sm:inline-flex`}
+>
+  <CalendarCheck size={16} />
+  Book Now
+</button>
           </div>
         </div>
       </div>

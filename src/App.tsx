@@ -8,10 +8,11 @@ import FleetPage from "./pages/FleetPage";
 import DestinationsPage from "./pages/DestinationsPage";
 import ContactPage from "./pages/ContactPage";
 import DestinationDetail from "./pages/DestinationDetail"; 
+import ScrollToTop from "./components/ScrollToTop";
 export default function App() {
   return (
     <>
-
+<ScrollToTop />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
