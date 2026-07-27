@@ -1,6 +1,6 @@
 import { useBooking } from "../booking/BookingContext";
 import { Compass, ShieldCheck, UserCheck, Tag, Phone } from "lucide-react";
-import heroImage from "../../assets/cars/innova-crysta-in-vizag-bshtaxiservices.png";
+import heroImage from "../../assets/cars/innova-crysta-in-vizag-bshtaxiservices.webp";
 
 const highlights = [
   { icon: Compass, label: "Best Tourist Spots" },

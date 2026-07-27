@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Phone, Menu, X } from "lucide-react";
 import { navLinks } from "../../data/nav";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../assets/Logo_bsh taxi services.png";
+import logo from "../../assets/Logo_bsh taxi services.webp";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);

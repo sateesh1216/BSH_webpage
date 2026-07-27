@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ChevronRight, ShieldCheck, Star, PhoneCall, Users, Clock, MapPinned } from "lucide-react";
-import heroImage from "../../assets/Our Services car img's/our services-banner-bshtaxiservices.png";
+import heroImage from "../../assets/Our Services car img's/our services-banner-bshtaxiservices.webp";
 import { useBooking } from "../booking/BookingContext";
 
 export default function ServicesHero() {

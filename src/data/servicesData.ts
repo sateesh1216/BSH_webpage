@@ -1,11 +1,11 @@
 import { Car, Route, Plane, Compass, Briefcase, Heart, type LucideIcon } from "lucide-react";
 
-import Local from "../assets/Our Services car img's/vizag-local-taxi-services-bshtaxiservices.png";
-import outstation from "../assets/Our Services car img's/outstation-bshtaxiservices.png";
-import airport from "../assets/Our Services car img's/vizag-airport-taxi-services-bshtaxiservices.png";
-import tour from "../assets/Our Services car img's/Tour Packages-bshtaxiservices.png";
-import Wedding from "../assets/Our Services car img's/Wedding-Car-Rentals-bshtaxiservices.png";
-import corporate from "../assets/Our Services car img's/Corporate- taxi-services-bshtaxiservices.png";
+import Local from "../assets/Our Services car img's/vizag-local-taxi-services-bshtaxiservices.webp";
+import outstation from "../assets/Our Services car img's/outstation-bshtaxiservices.webp";
+import airport from "../assets/Our Services car img's/vizag-airport-taxi-services-bshtaxiservices.webp";
+import tour from "../assets/Our Services car img's/Tourpackages-bshtaxiservices.webp";
+import Wedding from "../assets/Our Services car img's/Wedding-Car-Rentals-bshtaxiservices.webp";
+import corporate from "../assets/Our Services car img's/Corporate- taxi-services-bshtaxiservices.webp";
 export type Service = {
   slug: string;
   icon: LucideIcon;

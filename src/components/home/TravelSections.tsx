@@ -14,10 +14,10 @@ import {
   Users,
 } from "lucide-react";
 
-import dzireImg from "../../assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.png";
-import ertigaImg from "../../assets/cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.png";
-import innovaImg from "../../assets/cars/innova-crysta-in-vizag-bshtaxiservices.png";
-import tempoTravellerImg from "../../assets/cars/17-seater-tempo-traveller-bshtaxiservices.png";
+import dzireImg from "../../assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
+import ertigaImg from "../../assets/cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
+import innovaImg from "../../assets/cars/innova-crysta-in-vizag-bshtaxiservices.webp";
+import tempoTravellerImg from "../../assets/cars/17-seater-tempo-traveller-bshtaxiservices.webp";
 
 import { useBooking } from "../booking/BookingContext";
 

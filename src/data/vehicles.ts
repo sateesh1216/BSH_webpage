@@ -4,8 +4,8 @@ export interface VehicleOption {
 }
 
 export const vehicles: VehicleOption[] = [
-  { label: "Dzire / Sedan", value: 13 },
-  { label: "Ertiga / SUV", value: 16 },
-  { label: "Innova / MPV", value: 18 },
-  { label: "Tempo Traveller", value: 22 },
+  { label: "Dzire / Sedan", value: 14 },
+  { label: "Ertiga / SUV", value: 17 },
+  { label: "Innova / MPV", value: 20 },
+  { label: "Tempo Traveller", value: 30 },
 ];

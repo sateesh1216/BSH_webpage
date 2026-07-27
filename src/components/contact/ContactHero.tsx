@@ -1,5 +1,5 @@
 import { Headset, Timer } from "lucide-react";
-import heroImage from "../../assets/cars/innova-crysta-in-vizag-bshtaxiservices.png";
+import heroImage from "../../assets/cars/innova-crysta-in-vizag-bshtaxiservices.webp";
 
 export default function ContactHero() {
   return (
