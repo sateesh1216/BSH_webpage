@@ -1,5 +1,6 @@
 // Temporary fallback while you source the real destination photos above.
 // Once downloaded, swap these imports for the real files with matching names.
+
 import Aruku from "../assets/Destinations/araku-taxi-services-bshtaxiservices.webp";
 import lambasingi from "../assets/Destinations/Lambasingi-taxi-services-bshtaxiservices.webp";
 import VizagLocal from "../assets/Destinations/Vizag_local-taxi-services-bshtaxiservices.webp";
@@ -17,6 +18,7 @@ import Coffeemuseum  from "../assets/Destinations/Araku/araku-Coffee_Museum-taxi
 import Tribalmuseum  from "../assets/Destinations/Araku/Araku-Tribal_Museum-taxi-services-bshtaxiservices.webp";
 import Padmapuramgardens  from "../assets/Destinations/Araku/Araku-Padmapuram_Gardens-taxi-services-bshtaxiservices.webp";
 import Damukuviewpoint  from "../assets/Destinations/Araku/Araku-Damuku_View_Point-taxi-services-bshtaxiservices.webp";
+
 
 // import Coffeehouse  from "../assets/Destinations/Araku/araku-coffee house-taxi-services-bshtaxiservices.png"; --- IGNORE ---
 export type DestinationPlace = {

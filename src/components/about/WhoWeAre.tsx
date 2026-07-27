@@ -1,5 +1,7 @@
 import { CheckCircle2 } from "lucide-react";
+
 import Whyweare  from "../../assets/About/about-bshtaxiservices+91 8886803322.webp";      
+
 const highlights = [
   "Licensed & Verified Drivers",
   "GPS Enabled Cabs",
