@@ -5,7 +5,6 @@ import Features from "../components/home/Features";
 import TravelSections from "../components/home/TravelSections";
 import TrustBar from "../components/home/TrustBar";
 import { CTA, ContactUs } from "../components/home/CTA";
-import { BookingProvider } from "../components/booking/BookingContext";
 import Review from "../components/home/Review";
 import BookingWizard from "../components/booking/BookingWizard";
 import FloatingContactButtons from "../components/home/FloatingContactButtons";
@@ -35,7 +34,7 @@ const localBusinessSchema = {
 
 export default function HomePage() {
   return (
-    <BookingProvider>
+    <>
       <SEO
         title="Best Taxi Service in Visakhapatnam"
         description="BSH Taxi Services offers safe, reliable and affordable taxi booking in Visakhapatnam — local rides, outstation trips, airport transfers, corporate travel and wedding car rentals. Book now, available 24/7."
@@ -141,6 +140,6 @@ export default function HomePage() {
 
       {/* Floating Call & WhatsApp Buttons */}
       <FloatingContactButtons />
-    </BookingProvider>
+    </>
   );
 }

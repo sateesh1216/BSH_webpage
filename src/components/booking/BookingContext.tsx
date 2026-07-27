@@ -15,6 +15,10 @@ type OpenBookingOptions = {
   /** Set when opened from a specific fleet card. Shown as a badge in the
    *  modal and used to pre-select the matching vehicle on the Vehicle step. */
   vehicleName?: string;
+  /** Pre-fill the pickup field (e.g. from the fare estimator's "From"). */
+  pickup?: string;
+  /** Pre-fill the drop field (e.g. from the fare estimator's selected destination). */
+  drop?: string;
   /** Reset trip fields back to defaults before opening. Used by entry
    *  points (fleet cards, the CTA button) that aren't continuing from an
    *  already-filled-in search widget. */
@@ -95,12 +99,19 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     if (options?.resetTrip) {
       setTrip(makeDefaultTrip());
     }
+
+    // Pre-fill pickup/drop when the caller supplies them (e.g. the fare
+    // estimator's "From"/destination), applied after the reset above so
+    // they always win.
+    if (options?.pickup !== undefined) {
+      setTrip((prev) => ({ ...prev, pickup: options.pickup! }));
+    }
+    if (options?.drop !== undefined) {
+      setTrip((prev) => ({ ...prev, drop: options.drop! }));
+    }
+
     setVehicleName(options?.vehicleName);
 
-    // This is the fix for the fleet-card flow: previously `vehicleName`
-    // (e.g. "Innova Crysta") was stored but never translated into the
-    // `vehicleId` the wizard's Vehicle step actually keys off of, so the
-    // "Book this vehicle" cards never actually preselected anything.
     if (options?.vehicleName) {
       const match = VEHICLES.find(
         (v) => v.name.toLowerCase() === options.vehicleName!.toLowerCase()
@@ -136,10 +147,5 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     closeBooking,
   };
 
-  return (
-    <BookingContext.Provider value={value}>
-      {children}
-     
-    </BookingContext.Provider>
-  );
+  return <BookingContext.Provider value={value}>{children}</BookingContext.Provider>;
 }

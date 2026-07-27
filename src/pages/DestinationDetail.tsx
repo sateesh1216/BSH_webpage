@@ -350,15 +350,15 @@ export default function DestinationDetail() {
             <div className="mx-auto mt-14 grid max-w-5xl gap-8 sm:grid-cols-2">
               {costPerDay && (
                 <div className="flex flex-col items-center justify-center rounded-3xl bg-emerald-900 px-8 py-10 text-center text-white shadow-lg ring-1 ring-black/10">
-                  <p className="flex items-center gap-1 text-sm font-semibold uppercase tracking-widest text-emerald-200">
-                    <IndianRupee size={16} /> Cost
-                  </p>
-                  <p className="mt-3 text-5xl font-black text-yellow-400">
-                    ₹{costPerDay.toLocaleString("en-IN")}/-
-                  </p>
-                  <p className="mt-2 text-sm font-semibold uppercase tracking-widest text-emerald-200">
-                    Per Day
-                  </p>
+                 <p className="flex items-center gap-1 text-sm font-semibold uppercase tracking-widest text-emerald-200">
+  <IndianRupee size={16} /> Starting From
+</p>
+<p className="mt-3 text-5xl font-black text-yellow-400">
+  ₹{costPerDay.toLocaleString("en-IN")}/-
+</p>
+<p className="mt-2 text-sm font-semibold uppercase tracking-widest text-emerald-200">
+  Per Day Onwards
+</p>
                 </div>
               )}
 
@@ -474,12 +474,12 @@ export default function DestinationDetail() {
             <div>
               {costPerDay ? (
                 <>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
-                    From
-                  </p>
-                  <p className="font-mono-route text-base font-bold text-slate-900">
-                    ₹{costPerDay.toLocaleString("en-IN")}/day
-                  </p>
+                 <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+  Starting From
+</p>
+<p className="font-mono-route text-base font-bold text-slate-900">
+  ₹{costPerDay.toLocaleString("en-IN")}/day onwards
+</p>
                 </>
               ) : (
                 <p className="font-display text-sm font-semibold text-slate-900">{name}</p>
