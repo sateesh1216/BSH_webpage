@@ -37,28 +37,7 @@ const highlights = [
   },
 ];
 
-const stats = [
-  {
-    icon: Car,
-    value: `${vehicles.length}+`,
-    label: "Vehicle Types",
-  },
-  {
-    icon: MapPinned,
-    value: "20+",
-    label: "Cities Covered",
-  },
-  {
-    icon: Clock,
-    value: "24/7",
-    label: "Available",
-  },
-  {
-    icon: Star,
-    value: "5.0",
-    label: "Customer Rating",
-  },
-];
+
 
 export default function FleetHero() {
   const { openBooking } = useBooking();
