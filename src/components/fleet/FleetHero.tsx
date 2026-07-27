@@ -3,16 +3,14 @@ import {
   UserCheck,
   Sparkles,
   Headset,
-  Car,
+
   Phone,
   BadgeCheck,
-  Clock,
-  MapPinned,
-  Star,
+
 } from "lucide-react";
 
 import { useBooking } from "../booking/BookingContext";
-import { vehicles } from "../../data/fleetData";
+
 
 const highlights = [
   {
@@ -43,7 +41,7 @@ export default function FleetHero() {
   const { openBooking } = useBooking();
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-sky-50">
+    <section className="relative overflow-hidden bg-linear-to-br from-blue-50 via-white to-sky-50">
       <style>{`
         @keyframes fadeUp{
           from{
@@ -104,7 +102,7 @@ export default function FleetHero() {
         {/* Heading */}
         <h1 className="fade-2 mx-auto mt-6 max-w-5xl text-center text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
           Choose the Perfect Vehicle
-          <span className="block bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+          <span className="block bg-linear-to-r from-primary to-blue-600 bg-clip-text text-transparent">
             For Every Journey
           </span>
         </h1>
@@ -182,7 +180,7 @@ export default function FleetHero() {
         </div> */}
 
         {/* Bottom Premium Banner */}
-        {/* <div className="fade-4 mt-12 overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-blue-600 to-sky-600 px-8 py-6 text-white shadow-2xl">
+        {/* <div className="fade-4 mt-12 overflow-hidden rounded-3xl bg-linear-to-r from-primary via-blue-600 to-sky-600 px-8 py-6 text-white shadow-2xl">
 
           <div className="flex flex-col items-center justify-between gap-8 lg:flex-row">
 
