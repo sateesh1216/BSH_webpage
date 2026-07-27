@@ -3,9 +3,10 @@ import { MapPin, X, ChevronDown, ArrowRight, Car, ImageOff, Sparkles,  ShieldChe
 import arakuImg from "../../assets/Home Page/Araku-taxi-service-Packages-bshtaxiservices.webp";
 import lambasingiImg from "../../assets/Home Page/lambasingi-taxi-service-Packages-bshtaxiservices.webp";
 import simhachalamImg from "../../assets/Home Page/temples-taxi-service-Packages-bshtaxiservices.webp";
-import Airport from "../../assets/Home Page/vizag-airport-taxi-services-bshtaxiservices.webp";
-import RKbeach from "../../assets/Home Page/Rkbeach-taxi-service-Packages-bshtaxiservices.webp"
+import Airport from "../../assets/Home Page/vizag-airport-taxi-services-bshtaxiservices.webp"
+import RKbeach from "../../assets/Home Page/Rk Beach-taxi-service-Packages-bshtaxiservices.webp"
 import Vanjangi from "../../assets/Home Page/vanajangi-taxi-services-bshtaxiservices.webp"
+import { useBooking } from "../booking/BookingContext";
 /**
  * BSH Taxi Services — "Explore Destinations" + "Estimate Your Fare"
  * -------------------------------------------------------------
@@ -19,12 +20,13 @@ import Vanjangi from "../../assets/Home Page/vanajangi-taxi-services-bshtaxiserv
  *    Every vehicle name used in `vehicles` should have an entry there;
  *    if one is missing, the UI shows "--" for that combination.
  *
- * Functional behavior unchanged otherwise:
- *  - Clicking a destination card sets "To" and looks up the static fare
- *    for the currently selected vehicle.
- *  - Fare updates when destination or vehicle changes (static lookup).
- *  - From/To fields are clearable; booking is disabled until both are set
- *    and shows a pending → confirmed state.
+ * BOOKING BEHAVIOR:
+ *  - "Book This Ride" no longer simulates a fake local booking. It opens
+ *    the shared <InstantBookingCard> modal (via BookingContext), with
+ *    the currently selected origin, destination, and vehicle pre-filled.
+ *  - Functional behavior otherwise unchanged: clicking a destination card
+ *    sets "To" and looks up the static fare for the selected vehicle;
+ *    fare updates when destination or vehicle changes.
  */
 
 type Destination = {
@@ -144,14 +146,12 @@ function SectionHeading({
 }
 
 export default function Features() {
+  const { openBooking } = useBooking();
   const [vehicleName, setVehicleName] = useState(vehicles[0].name);
   const [destination, setDestination] = useState<Destination | null>(
     destinations[0]
   );
   const [origin, setOrigin] = useState<string | null>(ORIGIN);
-  const [bookingState, setBookingState] = useState<
-    "idle" | "booking" | "booked"
-  >("idle");
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
   const [fallbackFailedImages, setFallbackFailedImages] = useState<Record<string, boolean>>({});
 
@@ -166,18 +166,22 @@ export default function Features() {
     return destination.prices[vehicle.name] ?? 0;
   }, [origin, destination, vehicle]);
 
-  const canBook =
-    Boolean(origin) && Boolean(destination) && bookingState !== "booking";
+  const canBook = Boolean(origin) && Boolean(destination);
 
   function handleSelectDestination(d: Destination) {
     setDestination(d);
-    setBookingState("idle");
   }
 
+  // Opens the shared InstantBookingCard modal (pickup, drop, vehicle,
+  // date, name, phone) with the estimator's current selections pre-filled.
   function handleBook() {
-    if (!canBook) return;
-    setBookingState("booking");
-    window.setTimeout(() => setBookingState("booked"), 900);
+    if (!canBook || !destination) return;
+    openBooking({
+      vehicleName: vehicle.name,
+      pickup: origin ?? ORIGIN,
+      drop: destination.title,
+      resetTrip: true,
+    });
   }
 
   return (
@@ -432,46 +436,18 @@ export default function Features() {
     </p>
   </div>
 
-  {/* Book Button */}
+  {/* Book Button — opens the InstantBookingCard modal, pre-filled */}
   <button
     type="button"
     disabled={!canBook}
     onClick={handleBook}
     className={`group flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
-      !origin || !destination
+      !canBook
         ? "cursor-not-allowed bg-slate-300"
-        : bookingState === "booked"
-        ? "bg-emerald-600"
         : "bg-linear-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-600/30 active:translate-y-0"
     }`}
   >
-    {bookingState === "booking" && (
-      <svg
-        className="h-4 w-4 animate-spin text-white"
-        viewBox="0 0 24 24"
-        fill="none"
-      >
-        <circle
-          className="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          strokeWidth="4"
-        />
-        <path
-          className="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-        />
-      </svg>
-    )}
-
-    {bookingState === "booking" ? (
-      "Booking..."
-    ) : bookingState === "booked" ? (
-      "Ride Booked ✓"
-    ) : !origin || !destination ? (
+    {!canBook ? (
       "Select Pickup & Drop"
     ) : (
       <>

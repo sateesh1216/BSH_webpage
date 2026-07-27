@@ -60,7 +60,8 @@ export type Destination = {
     | "Beach"
     | "Temple"
     | "Transit"
-    | "Heritage & Buddhist Site";
+    | "Heritage & Buddhist Site"
+    | "Pilgrimage";
 
   history?: string;
   highlights?: string[];
@@ -176,21 +177,21 @@ export const destinations: Destination[] = [
       // },
     ],
   },
-  {
+{
     slug: "lambasingi",
     name: "Lambasingi",
     image: lambasingi, // replace with "../assets/destinations/lambasingi.jpg"
     distanceFromVizag: "100 KM from Vizag",
+    distanceKm: 100,
+    driveTime: "3 hrs",
+    sources: ["AP Tourism", "Wikipedia", "Trawell"],
     category: "Hill Station",
     description:
       "Known as the \"Kashmir of Andhra Pradesh\" for its misty weather and natural beauty.",
     seoTitle: "Vizag to Lambasingi Taxi | Kashmir of Andhra Pradesh | BSH Taxi Services",
     seoDescription:
       "Reliable taxi service from Visakhapatnam to Lambasingi, the Kashmir of Andhra Pradesh. Affordable weekend trip & sightseeing cab packages, booked online 24/7.",
-
-distanceKm: 100,
-driveTime: "3 hrs",
-      keywords: [
+    keywords: [
       "vizag to lambasingi taxi",
       "lambasingi cab service from vizag",
       "kashmir of andhra pradesh taxi booking",
@@ -201,9 +202,13 @@ driveTime: "3 hrs",
       "lambasingi sunrise view point taxi",
       "outstation cab vizag to lambasingi",
       "lambasingi tour package taxi price",
+      "innova crysta taxi vizag to lambasingi",
+      "lambasingi strawberry farm taxi package",
     ],
+    tagline: "Where South India Feels Like the Himalayas!",
+    costPerDay: 5500,
     history:
-      "Locally known as \"Korra Bayalu\", Lambasingi is a small hamlet in the Chintapalle mandal of the Alluri Sitharama Raju district, perched at around 1,000 metres in the Eastern Ghats. What makes it famous is something almost unheard of in a tropical state: on winter mornings, temperatures here can fall close to, and occasionally below, freezing point — the only place in South India known to see frost-like conditions and, rarely, snowfall.\n\nFor years Lambasingi stayed a quiet farming village, its slopes given over to coffee, pepper, strawberries, dragon fruit and other orchard crops. Word of its unusual winter chill spread mostly by travellers' accounts, and the village has only recently grown into an organised weekend getaway, still refreshingly free of the crowds and commercial sprawl found at bigger hill stations.",
+      "Locally known as \"Korra Bayalu\" — meaning that anyone left out in the open overnight would freeze stiff by morning — Lambasingi is a small hamlet in the Chintapalle mandal of the Alluri Sitharama Raju district, perched at around 1,000–1,025 metres in the Eastern Ghats. What makes it famous is something almost unheard of in a tropical state: on winter mornings, temperatures here can fall close to, and occasionally below, freezing point, making it the only place in South India known to see frost-like conditions and, rarely, snowfall.\n\nFor years Lambasingi stayed a quiet farming village, its slopes given over to coffee, pepper, strawberries, dragon fruit and other orchard crops grown in the cool micro-climate. Word of its unusual winter chill spread mostly by travellers' accounts, and the village has only recently grown into an organised weekend getaway, still refreshingly free of the crowds and commercial sprawl found at bigger hill stations. Nearby attractions like Thajangi Reservoir and Kothapalli Waterfalls have since turned the region into a fuller weekend circuit rather than just a sunrise stopover.",
     highlights: [
       "The only place in South India with near-freezing winters",
       "Coffee, pepper, strawberry & dragon fruit farms",
@@ -211,34 +216,77 @@ driveTime: "3 hrs",
       "Spectacular fog-laced sunrise viewpoints",
     ],
     quickFacts: [
-      { label: "Altitude", value: "~1,000 m" },
+      { label: "Altitude", value: "~1,000-1,025 m" },
       { label: "Best Time", value: "Nov – Jan" },
       { label: "Mandal", value: "Chintapalle" },
       { label: "Known For", value: "Freezing Winter Mornings" },
     ],
     bestTimeToVisit:
-      "November to January is peak season, when early-morning temperatures can drop near 0°C and thick fog blankets the village.",
+      "November to January is peak season, when early-morning temperatures can drop near 0°C between 4 AM and 9 AM and thick fog blankets the village.",
     howToReach:
-      "Around a 3-hour drive from Visakhapatnam via Narsipatnam, or roughly 70 km on from Araku Valley if you're combining both in one trip.",
+      "Around a 3-hour drive from Visakhapatnam via Narsipatnam, or roughly 90–100 km on from Araku Valley if you're combining both in one trip.",
     funFact:
-      "On the coldest winter nights, anything left out in the open can be covered in frost by morning — a rare sight anywhere in coastal Andhra Pradesh.",
+      "On the coldest winter nights, anything left out in the open can be covered in frost by morning — a rare sight anywhere in coastal Andhra Pradesh, and the reason locals call it 'Korra Bayalu'.",
+    importantNotes: [
+      "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
+      "During standby and ghat roads, the cabin A/C will be turned off to ensure safe driving power.",
+      "Early morning sunrise-viewing trips may require starting from Vizag before dawn to catch the frosty hours.",
+    ],
+    // places: [
+    //   {
+    //     name: "Lambasingi View Point",
+    //     image: Lambasingiviewpoint,
+    //     description: "The main sunrise spot, offering misty valley views and the coldest morning temperatures in the village.",
+    //   },
+    //   {
+    //     name: "Thajangi Reservoir",
+    //     image: Thajangireservoir,
+    //     description: "A scenic reservoir about 6 km away on the Narsipatnam–Paderu road, framed by hills and popular for boating.",
+    //   },
+    //   {
+    //     name: "Kothapalli Waterfalls",
+    //     image: Kothapalliwaterfalls,
+    //     tag: "Only Car Parking",
+    //     description: "A cascading forest waterfall over the Gostani River, roughly 37 km from Lambasingi, discovered by locals in 2012.",
+    //   },
+    //   {
+    //     name: "Strawberry & Dragon Fruit Farms",
+    //     image: Strawberryfarms,
+    //     description: "Cool-climate orchard farms growing strawberries, dragon fruit, coffee and pepper across the hillsides.",
+    //   },
+    //   {
+    //     name: "Susan Garden",
+    //     image: Susangarden,
+    //     description: "A colourful flower garden nicknamed the 'Amber Coloured Garden', best visited at sunset.",
+    //   },
+    //   {
+    //     name: "Yerravaram Waterfalls",
+    //     image: Yerravaramwaterfalls,
+    //     description: "A year-round cascade tucked in a quiet valley near Narsipatnam, popular with hill-climbers.",
+    //   },
+    //   {
+    //     name: "Paddy Fields & Buddha Statue",
+    //     image: Paddyfieldsbuddha,
+    //     description: "Terraced paddy fields dotted with carved Buddha statues, a quietly scenic and lesser-known stop.",
+    //   },
+    // ],
   },
 
-  {
-    slug: "Vizag-Local",
+{
+    slug: "vizag-local",
     name: "Vizag Local",
     image: VizagLocal, // replace with "../assets/destinations/rushikonda-beach.jpg"
     distanceFromVizag: "15 KM from Vizag",
+    distanceKm: 12,
+    driveTime: "25 mins",
+    sources: ["AP Tourism", "Wikipedia"],
     category: "Beach",
     description:
       "A beautiful beach with golden sand, clear water and peaceful vibes.",
     seoTitle: "Rushikonda Beach Taxi in Vizag | Local Cab Service | BSH Taxi Services",
     seoDescription:
       "Book a local taxi to Rushikonda Beach in Visakhapatnam. Quick, comfortable rides to Vizag's most popular Blue Flag beach, available 24/7 at affordable fares.",
-
-distanceKm: 12,
-driveTime: "25 mins",
-      keywords: [
+    keywords: [
       "vizag rushikonda beach taxi",
       "local taxi to rushikonda beach",
       "visakhapatnam beach cab service",
@@ -249,9 +297,13 @@ driveTime: "25 mins",
       "cab booking near rushikonda beach",
       "best taxi service vizag beaches",
       "rushikonda beach resort taxi drop",
+      "vizag local full day taxi package",
+      "vizag one day sightseeing cab",
     ],
+    tagline: "Discover the City by the Bay, One Stop at a Time!",
+    costPerDay: 2500,
     history:
-      "\"Rushikonda\" translates to \"Hill of the Sage\" in Telugu, tied to local legend that holds this stretch of coast was once a site where sages performed penance. For most of its history it was a quiet fishing shoreline; recognition as a tourist spot only began building in the 1980s, and the real transformation came in the early 2000s when the Andhra Pradesh Tourism Development Corporation invested in resorts, water-sports infrastructure and restaurants along the shore.\n\nToday Rushikonda is one of only a handful of Indian beaches to hold the international Blue Flag certification, recognising its clean sands and high environmental and safety standards. It has grown into the region's main hub for water sports and adventure tourism, while still keeping the hillside backdrop and comparatively uncrowded feel that first drew visitors in.",
+      "\"Rushikonda\" translates to \"Hill of the Sage\" in Telugu, tied to local legend that holds this stretch of coast was once a site where sages performed penance. For most of its history it was a quiet fishing shoreline; recognition as a tourist spot only began building in the 1980s, and the real transformation came in the early 2000s when the Andhra Pradesh Tourism Development Corporation invested in resorts, water-sports infrastructure and restaurants along the shore.\n\nToday Rushikonda is one of only a handful of Indian beaches to hold the international Blue Flag certification, recognising its clean sands and high environmental and safety standards. It has grown into the region's main hub for water sports and adventure tourism, while still keeping the hillside backdrop and comparatively uncrowded feel that first drew visitors in.\n\nBeyond Rushikonda, Vizag's local circuit has grown around the city's port heritage and hilltop views — from the INS Kursura Submarine Museum, decommissioned in 2001 after decades of active service, to the hilltop statues of Shiva and Parvati at Kailasagiri, which has become the city's most recognisable skyline landmark.",
     highlights: [
       "Blue Flag certified — one of only a few beaches in India",
       "Vizag's main hub for water sports and adventure tourism",
@@ -268,22 +320,70 @@ driveTime: "25 mins",
     howToReach: "Just a 20–25 minute drive from central Vizag along the coastal road.",
     funFact:
       "Rushikonda is one of the very few beaches in India to hold Blue Flag certification — the same international eco-standard used to rate beaches across Europe.",
+    importantNotes: [
+      "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
+      "Museum and park entry tickets (Submarine Museum, Kailasagiri ropeway, etc.) are payable separately at each location.",
+      "Itinerary order may be adjusted slightly depending on traffic and opening hours.",
+    ],
+    // places: [
+    //   {
+    //     name: "Rushikonda Beach",
+    //     image: Rushikondabeach,
+    //     description: "Vizag's Blue Flag-certified beach, known for golden sands and water sports like surfing and jet-skiing.",
+    //   },
+    //   {
+    //     name: "Kailasagiri Park",
+    //     image: Kailasagiripark,
+    //     description: "A 100-acre hilltop park with 40-ft Shiva-Parvati statues, ropeway rides and panoramic bay views.",
+    //   },
+    //   {
+    //     name: "RK Beach (Ramakrishna Beach)",
+    //     image: Rkbeach,
+    //     description: "A popular city beach and promenade lined with parks, food stalls and the Submarine Museum.",
+    //   },
+    //   {
+    //     name: "Submarine Museum",
+    //     image: Submarinemuseum,
+    //     tag: "Only Car Parking",
+    //     description: "The decommissioned INS Kursura, converted into Asia's only shore-based submarine museum in 2001.",
+    //   },
+    //   {
+    //     name: "Visakha Museum",
+    //     image: Visakhamuseum,
+    //     description: "Housed in a 150-year-old Dutch bungalow on RK Beach Road, showcasing the region's colonial and maritime history.",
+    //   },
+    //   {
+    //     name: "Tenneti Park",
+    //     image: Tennetipark,
+    //     description: "A coastal eco-park at the foot of the Kailasagiri ropeway, popular for its cliffside pathways and sea views.",
+    //   },
+    //   {
+    //     name: "Simhachalam Temple",
+    //     image: Simhachalamtemple,
+    //     description: "An ancient hilltop temple dedicated to Lord Narasimha, one of Vizag's most revered pilgrimage sites.",
+    //   },
+    //   {
+    //     name: "Kali Mata Temple",
+    //     image: Kalimatatemple,
+    //     description: "A well-known temple near RK Beach, often combined with a beach-side evening visit.",
+    //   },
+    // ],
   },
-  {
+{
     slug: "simhachalam-temple",
     name: "Simhachalam Temple",
     image: Simhachalam, // replace with "../assets/destinations/simhachalam-temple.jpg"
     distanceFromVizag: "16 KM from Vizag",
+    distanceKm: 12,
+    driveTime: "25 mins",
+    sources: ["AP Tourism", "Wikipedia"],
     category: "Temple",
     description:
       "Famous Lord Varaha Lakshmi Narasimha Swamy Temple with rich history.",
     seoTitle: "Simhachalam Temple Taxi Booking in Vizag | BSH Taxi Services",
     seoDescription:
       "Book a taxi to Simhachalam Temple from anywhere in Visakhapatnam. Comfortable local cabs for temple darshan visits, available all day at affordable rates.",
-
-distanceKm: 12,
-driveTime: "25 mins",
-      keywords: [
+    keywords: [
       "vizag to simhachalam temple taxi",
       "simhachalam temple cab booking",
       "visakhapatnam temple taxi service",
@@ -294,7 +394,11 @@ driveTime: "25 mins",
       "simhachalam pilgrimage taxi service",
       "one day temple tour taxi vizag",
       "best cab service simhachalam vizag",
+      "simhachalam temple drop taxi vizag",
+      "chandanotsavam simhachalam taxi booking",
     ],
+    tagline: "A Sacred Hilltop Where Faith Meets History!",
+    costPerDay: 1800,
     history:
       "Simhachalam — literally \"Lion's Hill\" — is one of 32 Narasimha temples in Andhra Pradesh and one of the state's most important Vaishnavite pilgrimage sites. According to temple legend, Lord Vishnu appeared here in a unique combined form, Varaha-Narasimha (part boar, part lion), to protect his devotee Prahlada from his father, the demon king Hiranyakashipu. To this day the deity is kept covered year-round in sandalwood paste, resembling a lingam, and is revealed in its true form only once a year during the Chandanotsavam festival on Akshaya Tritiya.\n\nInscriptions on the temple walls date back to 1098 CE, from the reign of the Chola king Kulottunga I, making its documented history nearly a thousand years old. It was later expanded and patronised by the Eastern Ganga dynasty, the Chalukyas, and the Vijayanagara Empire — Krishnadevaraya himself is said to have donated gold and a victory pillar that still stands on the grounds. Architecturally, the temple resembles a fortress, with three enclosing courtyards, five gateways, and a blend of Kalinga, Chalukya and Chola styles culminating in a five-tiered rajagopuram.",
     highlights: [
@@ -314,54 +418,143 @@ driveTime: "25 mins",
     howToReach: "A short 30–40 minute drive from Vizag city, with the temple sitting partway up Simhachalam Hill.",
     funFact:
       "The main idol is smeared in sandalwood paste 364 days of the year — devotees see the deity's actual form for only a few hours, once annually.",
-  },
-  {
-    slug: "Tirupati",
-    name: "Tirupati",
-    image: Tirupati, // replace with "../assets/destinations/kailasagiri.jpg"
-    distanceFromVizag: "15 KM from Vizag",
-    distanceKm: 15,
-    driveTime: "25 mins",
-    sources: ["VMRDA", "Incredible India"],
-    category: "Hill Station",
-    description:
-      "A hilltop park overlooking the city and the Bay of Bengal, famous for its giant Shiva-Parvati statues and cable car ride.",
-    seoTitle: "Kailasagiri Taxi Service in Vizag | Local Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book a local taxi to Kailasagiri hill park in Visakhapatnam. Comfortable rides to Vizag's most-visited viewpoint and ropeway, available all day, affordable fares.",
-    keywords: [
-      "vizag kailasagiri taxi",
-      "local taxi to kailasagiri",
-      "visakhapatnam hill park cab service",
-      "kailasagiri sightseeing taxi package",
-      "kailasagiri ropeway taxi booking",
-      "vizag to kailasagiri taxi fare",
-      "kailasagiri rushikonda combo taxi",
-      "vizag city tour taxi package",
-      "best taxi service kailasagiri vizag",
-      "one day sightseeing taxi vizag",
+    importantNotes: [
+      "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
+      "Mobile phones, cameras and bags are not allowed inside the sanctum and must be deposited at the cloakroom.",
+      "Special/VIP darshan tickets are payable separately at the temple counter and are not included in the taxi fare.",
     ],
+    // places: [
+    //   {
+    //     name: "Main Sanctum (Garbhagriha)",
+    //     image: Simhachalamsanctum,
+    //     description: "Home to the sandalwood-coated Varaha Narasimha idol, revealed in its true form only once a year.",
+    //   },
+    //   {
+    //     name: "Kalyana Mandapam",
+    //     image: Kalyanamandapam,
+    //     description: "An intricately carved pillared hall used for temple rituals and ceremonial functions.",
+    //   },
+    //   {
+    //     name: "Krishnadevaraya's Victory Pillar",
+    //     image: Victorypillar,
+    //     description: "A stone pillar said to have been gifted by the Vijayanagara emperor Krishnadevaraya.",
+    //   },
+    //   {
+    //     name: "Temple Tank (Pushkarini)",
+    //     image: Templetank,
+    //     description: "A sacred stepped water tank within the temple complex, used for ritual bathing.",
+    //   },
+    //   {
+    //     name: "Simhachalam View Point",
+    //     image: Simhachalamviewpoint,
+    //     description: "A scenic hilltop stop along the ghat road offering panoramic views of the surrounding Eastern Ghats and city.",
+    //   },
+    //   {
+    //     name: "Rajagopuram (Five-Tiered Gateway)",
+    //     image: Rajagopuram,
+    //     description: "The temple's towering entrance gopuram, showcasing a blend of Kalinga, Chalukya and Chola architectural styles.",
+    //   },
+    // ],
+  },
+{
+    slug: "tirupati",
+    name: "Tirupati",
+    image: Tirupati, // replace with "../assets/destinations/tirupati-temple.jpg"
+    distanceFromVizag: "780 KM from Vizag",
+    distanceKm: 780,
+    driveTime: "12-13 hrs",
+    sources: ["TTD", "Incredible India", "Wikipedia"],
+    category: "Temple",
+    description:
+      "Home to the world-famous Sri Venkateswara Temple, one of the richest and most visited pilgrimage sites on earth.",
+    seoTitle: "Vizag to Tirupati Taxi | Outstation Cab & Tour Package | BSH Taxi Services",
+    seoDescription:
+      "Book Vizag to Tirupati taxi with BSH Taxi Services. Comfortable outstation cabs for Tirumala darshan trips, round-trip & multi-day packages, available 24/7.",
+    keywords: [
+      "vizag to tirupati taxi",
+      "vizag to tirupati outstation cab",
+      "visakhapatnam to tirupati taxi fare",
+      "tirumala darshan taxi package",
+      "vizag tirupati round trip taxi",
+      "tirupati balaji taxi booking vizag",
+      "innova crysta taxi vizag to tirupati",
+      "vizag to tirumala temple cab service",
+      "tirupati pilgrimage taxi package price",
+      "one way taxi vizag to tirupati",
+      "vizag tirupati multi day tour package",
+      "best taxi service tirupati from vizag",
+    ],
+    tagline: "A Sacred Journey to the Seven Hills!",
+    costPerDay: 7000,
     history:
-      "Developed by the Visakhapatnam Urban Development Authority (now VMRDA) as a public hilltop park, Kailasagiri sits at around 1,300 feet and takes its name from its role as a symbolic abode of Lord Shiva — Mount Kailasa. Sprawled over roughly 380 acres, it has grown from a simple viewpoint into one of the city's most-visited attractions, anchored by 40-foot statues of Shiva and Parvati that are visible from several points across Vizag. Andhra Pradesh's first-ever ropeway was built here to ferry visitors up the hillside, and the park has since added a toy train, a floral clock, a children's play area, and a plastic-free policy to protect the greenery.",
+      "Tirupati's Sri Venkateswara Temple, perched on the seventh peak of the Tirumala hills (the Seshachalam range, said to symbolise the seven hoods of the serpent Adishesha), is dedicated to Lord Venkateswara — a form of Vishnu believed to save devotees from the trials of Kali Yuga, earning the temple the title \"Kaliyuga Vaikuntha.\" Its earliest roots stretch back to around 300 CE under a Thondaman king, with a mention even appearing in the Tamil Sangam epic Silappathikaram, dated to roughly the 2nd century CE.\n\nOver the following centuries the temple was steadily expanded and endowed by the Pallavas, Cholas, Pandyas and, most significantly, the Vijayanagara Empire, whose emperors — including Krishnadevaraya — funded much of its gold-plated architecture and towering gopurams. A recorded endowment by the Pallava queen Samavai dates to 966 CE. Today it is managed by the Tirumala Tirupati Devasthanams (TTD) and draws an estimated 50,000-plus pilgrims a day through its Vaikuntam Queue Complex, making it one of the most visited religious sites in the world.",
     highlights: [
-      "40-foot Shiva-Parvati statues visible across the city",
-      "Andhra Pradesh's first cable car / ropeway",
-      "Toy train loop and floral clock inside the park",
-      "Popular paragliding and photography spot",
+      "One of the world's richest and most-visited temples",
+      "History tracing back to c. 300 CE, expanded by Pallavas, Cholas & Vijayanagara rulers",
+      "Perched at 853 m atop the seven hills of Tirumala",
+      "Managed by the Tirumala Tirupati Devasthanams (TTD)",
     ],
     quickFacts: [
-      { label: "Altitude", value: "~1,300 ft" },
-      { label: "Area", value: "~380 acres" },
-      { label: "Ropeway Length", value: "375 m" },
-      { label: "Best Time", value: "Oct – Feb" },
+      { label: "Deity", value: "Lord Venkateswara" },
+      { label: "Elevation", value: "~853 m" },
+      { label: "Oldest Reference", value: "c. 300 CE" },
+      { label: "Key Festival", value: "Brahmotsavam" },
     ],
-    bestTimeToVisit: "Early morning or just before sunset, when the light over the bay is softest and the crowds thinner.",
+    bestTimeToVisit:
+      "September to February, when the weather is cooler; the annual Brahmotsavam festival (September/October) is the most significant time to visit, though crowds peak then.",
     howToReach:
-      "About 20–25 minutes from central Vizag by road; you can drive straight to the hilltop or park at the base and take the ropeway up.",
+      "A long outstation drive of roughly 12-13 hours from Vizag; most travellers split the journey overnight or fly into Tirupati Airport and use a local cab for the temple visit and darshan queue.",
     funFact:
-      "The ropeway was Andhra Pradesh's first cable car system, and the hill is officially declared a plastic-free zone to preserve it.",
+      "The temple's hundis (donation boxes) alone collect crores of rupees a day, making it one of the wealthiest religious institutions in the world — funding hospitals, universities and free meals (Annaprasadam) for pilgrims.",
+    importantNotes: [
+      "This is a long outstation trip; the above pricing is typically structured as a multi-day round-trip package (driver batta/night halt charges may apply).",
+      "Darshan tickets (Special Entry / Sarva Darshan) must be booked separately via TTD and are not included in the taxi fare.",
+      "Personal vehicles are not allowed all the way to the temple doorstep; local shuttle/battery vehicles operate within the Tirumala complex.",
+    ],
+    // places: [
+    //   {
+    //     name: "Sri Venkateswara Temple (Main Sanctum)",
+    //     image: Venkateswaratemple,
+    //     description: "The gold-plated sanctum atop Tirumala hill, home to the deity Lord Venkateswara, visited by over 50,000 pilgrims daily.",
+    //   },
+    //   {
+    //     name: "Vaikuntam Queue Complex",
+    //     image: Vaikuntamqueue,
+    //     description: "A series of interconnected halls that guide devotees through the darshan queue toward the main shrine.",
+    //   },
+    //   {
+    //     name: "Sri Padmavathi Temple, Tiruchanoor",
+    //     image: Padmavathitemple,
+    //     description: "Dedicated to Goddess Padmavathi, consort of Lord Venkateswara; devotees traditionally visit here before Tirumala.",
+    //   },
+    //   {
+    //     name: "Silathoranam",
+    //     image: Silathoranam,
+    //     description: "A rare natural rock arch formed within the Tirumala hills, reachable via a short trek.",
+    //   },
+    //   {
+    //     name: "Sri Govindaraja Swamy Temple",
+    //     image: Govindarajatemple,
+    //     description: "A 12th-century temple in Tirupati town with a 50-foot gopuram, dedicated to a reclining form of Vishnu.",
+    //   },
+    //   {
+    //     name: "Talakona Waterfall",
+    //     image: Talakonawaterfall,
+    //     description: "Andhra Pradesh's highest waterfall, tucked inside the Sri Venkateswara Wildlife Sanctuary near Tirupati.",
+    //   },
+    //   {
+    //     name: "Chandragiri Fort",
+    //     image: Chandragirifort,
+    //     description: "A centuries-old Vijayanagara-era fort and palace complex a short drive from Tirupati town.",
+    //   },
+    //   {
+    //     name: "Sri Venkateswara Dhyana Vignan Mandiram",
+    //     image: Dhyanamandiram,
+    //     description: "An open-air meditation centre and museum, opened in 1980, showcasing religious artifacts and offering a quiet retreat.",
+    //   },
+    // ],
   },
-    {
+{
     slug: "annavaram-temple",
     name: "Annavaram (Sri Satyanarayana Swamy Temple)",
     image: Annavaram, // replace with "../assets/destinations/annavaram-temple.jpg"
@@ -386,9 +579,13 @@ driveTime: "25 mins",
       "outstation cab vizag to annavaram",
       "best taxi service annavaram vizag",
       "annavaram round trip taxi booking",
+      "annavaram bojjannakonda combo taxi",
+      "innova crysta taxi vizag to annavaram",
     ],
+    tagline: "Where Every Wish Finds Its Boon!",
+    costPerDay: 4000,
     history:
-      "Annavaram's temple traces back to 1891, when a modest shed was first built on Ratnagiri hill to house the deity's idol, discovered by a local landholder guided, as legend has it, by a dream. The shrine grew through community support into a full temple, was substantially rebuilt in stone during 1933–34, and renovated again in 2011–12. The name itself reflects the belief the temple embodies — \"Anna\" (what is desired) and \"varam\" (boon) — the idea that Sri Satyanarayana grants devotees whatever they ask for. It has since become the second most-visited pilgrimage site in Andhra Pradesh after Tirupati, especially for the Satyanarayana Swamy Vratham, a ritual performed here for family prosperity.",
+      "Annavaram's temple traces back to 1891, when a modest shed was first built on Ratnagiri hill to house the deity's idol, discovered by a local landholder guided, as legend has it, by a dream. The shrine grew through community support into a full temple, was substantially rebuilt in stone during 1933–34, and renovated again in 2011–12. The name itself reflects the belief the temple embodies — \"Anna\" (what is desired) and \"varam\" (boon) — the idea that Sri Satyanarayana grants devotees whatever they ask for. It has since become the second most-visited pilgrimage site in Andhra Pradesh after Tirupati, especially for the Satyanarayana Swamy Vratham, a ritual performed here for family prosperity.\n\nThe Pampa River encircles the base of Ratnagiri hill, and local legend holds that Krishnadevaraya of Vijayanagara once used secret underground passages in these hills during his Kalinga campaign — passages later said to have been used again by the revolutionary Alluri Sitarama Raju against the British.",
     highlights: [
       "Second most-visited pilgrimage site in Andhra Pradesh",
       "Home to the famous Satyanarayana Swamy Vratham ritual",
@@ -404,146 +601,259 @@ driveTime: "25 mins",
     bestTimeToVisit:
       "October to February for cooler travel weather; the Kalyana Mahotsavam in April/May is the temple's biggest festival.",
     howToReach:
-      "Roughly a 2.5-hour drive south from Vizag via NH16, or by train — Annavaram railway station is on the main Chennai–Howrah line, just 3 km from the temple.",
+      "Roughly a 2.5-hour drive south from Vizag via NH16, or by train — Annavaram railway station is on the main Chennai–Howrah line, just 2 km from the temple.",
     funFact:
       "The temple's daily Annadanam feeds thousands of pilgrims for free, one of the largest such programs in coastal Andhra Pradesh.",
-  },
-  {
-    slug: "Arasavalli",
-    name: "Arasavalli(Sri Sri Sri Suryanarayana Swamy Vari Devasthanam)",
-    image: Arasavalli, // replace with "../assets/destinations/bheemili-beach.jpg"
-    distanceFromVizag: "25 KM from Vizag",
-    distanceKm: 25,
-    driveTime: "45 mins",
-    sources: ["Yovizag", "Go2India"],
-    category: "Beach",
-    description:
-      "A quiet colonial-era beach town at the mouth of the Gosthani river, known for its Dutch cemetery, lighthouse, and calmer shoreline.",
-    seoTitle: "Vizag to Bheemili Beach Taxi | Coastal Road Trip | BSH Taxi Services",
-    seoDescription:
-      "Book a taxi from Visakhapatnam to Bheemili Beach along the scenic coastal road. Comfortable cabs to explore Bheemunipatnam's beach and Dutch heritage sites.",
-    keywords: [
-      "vizag to bheemili beach taxi",
-      "bheemunipatnam cab booking online",
-      "visakhapatnam coastal road taxi",
-      "bheemili beach day trip taxi",
-      "bheemili beach taxi fare from vizag",
-      "vizag coastal drive taxi package",
-      "bheemili dutch cemetery taxi tour",
-      "thotlakonda bheemili combo taxi",
-      "best taxi service bheemili vizag",
-      "one day trip taxi bheemunipatnam",
+    importantNotes: [
+      "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
+      "Special/VIP darshan and Vratham booking slots must be arranged separately at the temple counter or via the Devasthanam website.",
+      "The final stretch up Ratnagiri hill is via steps, ghat road, or ropeway — private vehicles do not go all the way to the sanctum.",
     ],
+    // places: [
+    //   {
+    //     name: "Sri Satyanarayana Swamy Temple",
+    //     image: Satyanarayanatemple,
+    //     description: "The main Dravidian-style shrine atop Ratnagiri hill, home to the 13-ft Trimurthi idol and the famed Satyanarayana Vratham.",
+    //   },
+    //   {
+    //     name: "Ratnagiri Hill & Ghat Steps",
+    //     image: Ratnagirihill,
+    //     description: "About 460 stone steps (or a ghat road) climb roughly 300 ft to the temple, with scenic sunrise and sunset viewpoints along the way.",
+    //   },
+    //   {
+    //     name: "Pampa River & Pampa Sarovara",
+    //     image: Pampariver,
+    //     description: "The river encircling the base of Ratnagiri hill, with a barrage and boating facility used for ritual bathing before darshan.",
+    //   },
+    //   {
+    //     name: "Vaikunta Narayana Dwaram",
+    //     image: Vaikuntadwaram,
+    //     description: "A key gateway within the temple complex, tied to the belief that the deity grants devotees whatever they earnestly desire.",
+    //   },
+    //   {
+    //     name: "Bojjannakonda",
+    //     image: Bojjannakonda,
+    //     tag: "Only Car Parking",
+    //     description: "A nearby Buddhist archaeological site with rock-cut caves, stupas and ancient sculptures.",
+    //   },
+    //   {
+    //     name: "Thalupulamma Talli Temple",
+    //     image: Thalupulammatemple,
+    //     description: "A temple roughly 15 km away between Annavaram and Tuni, popular with travellers seeking protection for new vehicles.",
+    //   },
+    // ],
+  },
+{
+    slug: "arasavalli-temple",
+    name: "Arasavalli (Sri Suryanarayana Swamy Vari Devasthanam)",
+    image: Arasavalli, // replace with "../assets/destinations/arasavalli-temple.jpg"
+    distanceFromVizag: "113 KM from Vizag",
+    distanceKm: 113,
+    driveTime: "2.5-3 hrs",
+    sources: ["Wikipedia", "Srikakulam District Govt.", "Go2India"],
+    category: "Temple",
+    description:
+      "One of only two ancient Sun temples in India, dedicated to Lord Suryanarayana Swamy, in Arasavalli near Srikakulam.",
+    seoTitle: "Vizag to Arasavalli Sun Temple Taxi | Srikakulam Pilgrimage Cab | BSH Taxi",
+    seoDescription:
+      "Book an outstation taxi from Visakhapatnam to Arasavalli Suryanarayana Swamy Temple, Srikakulam. Comfortable one-way and round-trip pilgrimage cabs, 24/7 booking.",
+    keywords: [
+      "vizag to arasavalli taxi",
+      "arasavalli temple cab booking",
+      "visakhapatnam to arasavalli taxi fare",
+      "arasavalli sun temple taxi package",
+      "srikakulam temple taxi from vizag",
+      "vizag to srikakulam one day trip taxi",
+      "arasavalli suryanarayana swamy taxi",
+      "outstation cab vizag to arasavalli",
+      "ratha saptami arasavalli taxi booking",
+      "best taxi service arasavalli vizag",
+    ],
+    tagline: "Where the Sun Himself Chose to Dwell!",
+    costPerDay: 4500,
     history:
-      "Bheemunipatnam, shortened locally to Bheemili, is one of India's oldest municipalities, formally established in 1861. Its history stretches back to the 17th century, when it was a key Dutch East India Company trading post on the Coromandel Coast — the settlement's name appears in colonial records under dozens of spellings, from Bimlipatam to Bimelepatnam. The town still holds a 17th-century Dutch cemetery with around 52 pyramid-shaped tombs, several inscribed in Dutch, along with the ruins of a Dutch fort and colonial-era churches. A lighthouse built in 1868, when Bheemili's port handled cargo bound for Chennai and Kolkata under British rule, still stands on the shore today.",
+      "The Sri Suryanarayana Swamy Temple at Arasavalli — originally called Harshavalli, meaning \"abode of joy\" — is one of only two ancient temples in India dedicated to the Sun God, the other being Konark, which was left unfinished. Inscriptions credit its construction to King Devendra Varma of the Eastern Ganga (Kalinga) dynasty in the 7th century CE, built in the Kalinga/Odisha architectural style. Temple legend holds that the deity Indra, after being struck by Nandi for trying to force his way in on Lord Shiva, was told in a dream that installing an idol of the Sun God here would heal him — and so Sage Kashyapa is said to have consecrated the Surya idol at this very spot, making the Sun of \"Kasyapasa Gotra.\"\n\nThe temple's five gateways were deliberately aligned so that, during Rathasapthami in the month of Magha, the sun's rays fall directly on the deity's feet at sunrise — an architectural feat still observed by devotees today. Located just a kilometre from Srikakulam town, the temple remains one of the most visited pilgrimage sites in North Coastal Andhra Pradesh, drawing devotees who believe prayers here can heal ailments of the eyes and skin.",
     highlights: [
-      "One of India's oldest municipalities (est. 1861)",
-      "17th-century Dutch cemetery with ~52 tombs",
-      "Working 1868 lighthouse and old Dutch fort ruins",
-      "Calmer, safer waters than Vizag's city beaches",
+      "One of only two ancient Sun temples in India",
+      "7th-century Kalinga-style architecture",
+      "Sunlight aligns with the deity's feet during Rathasapthami",
+      "Just 1 km from Srikakulam town centre",
     ],
     quickFacts: [
-      { label: "Founded", value: "17th century (Dutch)" },
-      { label: "Municipality Since", value: "1861" },
-      { label: "Lighthouse Built", value: "1868" },
-      { label: "River", value: "Gosthani" },
+      { label: "Deity", value: "Surya (Suryanarayana Swamy)" },
+      { label: "Built", value: "7th century CE" },
+      { label: "Dynasty", value: "Eastern Ganga (Kalinga)" },
+      { label: "Key Festival", value: "Rathasapthami" },
     ],
     bestTimeToVisit:
-      "Mornings for the old town and cemetery, late afternoon for the beach and sunset over the river mouth.",
+      "October to February for pleasant travel weather; Rathasapthami (Jan/Feb) is the most significant day, when sunrise light aligns with the deity.",
     howToReach:
-      "A scenic 40–50 minute drive north from Vizag along the coastal road, passing Rushikonda and Thotlakonda on the way.",
+      "About a 2.5–3 hour drive north from Vizag along NH16 through Srikakulam town; the nearest railway station is Amadalavalasa, roughly 16 km away.",
     funFact:
-      "Some of the Dutch cemetery's gravestones record the actual cause of death of the settler buried beneath — a detail rarely seen on colonial-era graves in India.",
+      "The temple's five gateways were positioned with such precision that sunrise rays travel straight through them to touch the deity's feet — centuries before modern instruments existed to plan it.",
+    importantNotes: [
+      "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
+      "Vehicles must be parked a short distance from the temple; the final approach is on foot through a narrow walkway.",
+      "Special entry darshan is available for a small additional fee, payable directly at the temple counter.",
+    ],
+    // places: [
+    //   {
+    //     name: "Sri Suryanarayana Swamy Sanctum",
+    //     image: Suryanarayanasanctum,
+    //     description: "The 7th-century main shrine where sunrise rays are said to fall directly on the deity's feet during Rathasapthami.",
+    //   },
+    //   {
+    //     name: "Five Temple Gateways",
+    //     image: Templegateways,
+    //     description: "The precisely aligned entrances built to channel sunlight to the sanctum, a hallmark of the temple's Kalinga architecture.",
+    //   },
+    //   {
+    //     name: "Sri Sathya Sai Dhyana Mandir",
+    //     image: Dhyanamandir,
+    //     description: "A meditation centre located directly opposite the temple, popular with pilgrims for quiet reflection before or after darshan.",
+    //   },
+    //   {
+    //     name: "Nagavali River",
+    //     image: Nagavaliriver,
+    //     description: "The river associated with the temple's founding legend, said to have been channelled here by Balarama in the Dwapara Yuga.",
+    //   },
+    //   {
+    //     name: "Srikakulam Town",
+    //     image: Srikakulamtown,
+    //     description: "The district headquarters just 1 km away, known for traditional brass crafts and temple bell-making.",
+    //   },
+    // ],
   },
-  {
-    slug: "Vanjangi-Hills",
+{
+    slug: "vanjangi-hills",
     name: "Vanjangi Hills",
-    image: Vanjangi, // replace with "../assets/destinations/thotlakonda.jpg"
-    distanceFromVizag: "15 KM from Vizag",
-    distanceKm: 15,
-    driveTime: "30 mins",
-    sources: ["AP State Archaeology Dept.", "Wanderlog"],
-    category: "Heritage & Buddhist Site",
+    image: Vanjangi, // replace with "../assets/destinations/vanjangi-sunrise.jpg"
+    distanceFromVizag: "100-120 KM from Vizag",
+    distanceKm: 110,
+    driveTime: "3-4 hrs",
+    sources: ["Outlook Traveller", "Yovizag"],
+    category: "Hill Station",
     description:
-      "A 2,000-year-old hilltop Buddhist monastery overlooking the Bay of Bengal, with excavated stupas, viharas and rock-cut water tanks.",
-    seoTitle: "Thotlakonda Taxi Service from Vizag | Buddhist Heritage Tour | BSH Taxi",
+      "An offbeat sunrise viewpoint in the Eastern Ghats near Paderu, famous for its 'Sea of Clouds' (Megha Samudram) views.",
+    seoTitle: "Vizag to Vanjangi Hills Taxi | Sea of Clouds Sunrise Trip | BSH Taxi Services",
     seoDescription:
-      "Book a taxi to Thotlakonda Buddhist Complex from Visakhapatnam. Comfortable cabs to this ancient hilltop monastery overlooking the Bay of Bengal, 24/7 booking.",
+      "Book a Vizag to Vanjangi taxi with BSH Taxi Services for the famous Sea of Clouds sunrise. Night-drive & early morning cab packages, AC cabs, 24/7 booking.",
     keywords: [
-      "vizag to thotlakonda taxi",
-      "thotlakonda buddhist complex cab",
-      "visakhapatnam heritage site taxi",
-      "thotlakonda bavikonda taxi tour",
-      "thotlakonda taxi fare from vizag",
-      "vizag heritage sightseeing taxi package",
-      "thotlakonda bheemili combo taxi",
-      "buddhist circuit taxi vizag",
-      "best taxi service thotlakonda vizag",
-      "coastal heritage tour taxi vizag",
+      "vizag to vanjangi taxi",
+      "vanjangi sea of clouds taxi package",
+      "vanjangi sunrise trip taxi vizag",
+      "visakhapatnam to vanjangi taxi fare",
+      "vanjangi hills night taxi booking",
+      "vanjangi araku combo taxi package",
+      "paderu vanjangi taxi service",
+      "vanjangi trek taxi drop vizag",
+      "megha samudram taxi vizag",
+      "best taxi service vanjangi vizag",
+      "innova crysta taxi vizag to vanjangi",
+      "vanjangi hills outstation cab",
     ],
+    tagline: "Where Sunrise Rises Above a Sea of Clouds!",
+    costPerDay: 5500,
     history:
-      "Thotlakonda takes its name from the Telugu for \"hill of stone wells,\" a reference to the rock-cut cisterns carved into its bedrock to store water for resident monks. The site was rediscovered by the Indian Navy during an aerial survey in the 1970s while scouting locations for a naval base, and excavated by the Andhra Pradesh State Archaeology Department through the 1980s and early '90s. What emerged was a 120-acre Hinayana Buddhist monastic complex dating to roughly the 3rd century BCE–2nd century CE, thought to have housed upward of 100 monks and served as a rest stop for maritime traders along the Bay of Bengal. Excavations turned up Satavahana-era coins, Roman silver coins, terracotta tiles, carved stupa models and Buddha footprint reliefs, pointing to trade links stretching as far as the Roman Empire.",
+      "Vanjangi (also spelled Vanajangi) is a small tribal hamlet in the Alluri Sitharama Raju district's Eastern Ghats, near Paderu, sitting at roughly 3,400 feet above sea level. For most of its history it was simply a quiet forest village — its rise to fame is remarkably recent. Around 2019–2020, trekkers and nature photographers began sharing images of its winter sunrise, where thick banks of cloud settle in the valley below and the sun breaks over them like a rising tide, earning the spot the nickname \"Megha Samudram\" (Ocean of Clouds).\n\nWord spread rapidly on social media, and Vanjangi went from an unknown hamlet to one of Andhra Pradesh's most talked-about sunrise destinations within a single tourist season — following in the footsteps of nearby Lambasingi, which had earned its own reputation as the state's coldest hill spot only a few years earlier. Unlike more developed viewpoints, Vanjangi remains genuinely remote: there's no direct road to the summit, and reaching it still requires a forest trek in the dark, which is part of what keeps the experience feeling undiscovered.",
     highlights: [
-      "2,000+ year old monastic complex atop a coastal hill",
-      "Excavated stupas, viharas, and a communal dining hall",
-      "Roman and Satavahana-era coins found on site",
-      "Sweeping, uncrowded views of the Bay of Bengal",
+      "Famous 'Sea of Clouds' (Megha Samudram) sunrise phenomenon",
+      "One of Andhra Pradesh's most recently discovered viewpoints",
+      "Genuinely offbeat — reachable only by a pre-dawn forest trek",
+      "Set among coffee plantations and dense Eastern Ghats forest",
     ],
     quickFacts: [
-      { label: "Era", value: "3rd c. BCE – 2nd c. CE" },
-      { label: "Discovered", value: "1970s (Indian Navy survey)" },
-      { label: "Area", value: "~120 acres" },
-      { label: "Nearby Sites", value: "Bavikonda, Pavuralakonda" },
+      { label: "Altitude", value: "~3,400 ft (1,050 m)" },
+      { label: "Best Time", value: "Nov – Feb" },
+      { label: "Final Trek", value: "4-5 km on foot" },
+      { label: "Nearest Town", value: "Paderu (~6 km)" },
     ],
-    bestTimeToVisit: "Early morning or late afternoon, avoiding the midday sun since there's little shade on the open hilltop.",
+    bestTimeToVisit:
+      "November to February, when winter humidity reliably forms the dense cloud bed; the window to catch it is roughly 5:30–6:15 AM before the sun burns it off.",
     howToReach:
-      "About 30 minutes from Vizag along the Bheemili coastal road, roughly 6 km past Rushikonda Beach.",
+      "A 3-4 hour drive from Vizag via Vaddadi Madugula–Paderu–Dumbriguda road, followed by a 4-5 km trek on foot from Paderu since no motorable road reaches the summit. Most visitors start from Vizag around 2 AM or overnight in Araku/Paderu.",
     funFact:
-      "No record of royal patronage has ever been found for Thotlakonda — it appears to have thrived purely on the support of local traders and pilgrims.",
+      "Vanjangi has no direct road, no streetlights, and almost no accommodation — visitors either drive through the night from Vizag or camp near Paderu, making the sunrise feel far more earned than at most viewpoints.",
+    importantNotes: [
+      "This is a pre-dawn trip: pickup from Vizag is typically around 1-2 AM to reach the trek start point before sunrise.",
+      "The final 4-5 km stretch to the viewpoint is a forest trek on foot — the taxi cannot go beyond Paderu/the trek starting point.",
+      "Cloud views are weather-dependent and most reliable in winter (Nov-Feb); monsoon and summer months rarely produce the cloud bed.",
+    ],
+    // places: [
+    //   {
+    //     name: "Vanjangi Sunrise Viewpoint",
+    //     image: Vanjangiviewpoint,
+    //     description: "The hilltop summit where the famous 'Sea of Clouds' unfolds at sunrise, with the sun rising through a valley blanketed in fog.",
+    //   },
+    //   {
+    //     name: "Paderu Town",
+    //     image: Paderutown,
+    //     description: "The last motorable point before the trek begins, and the main hub for guides, jeeps and basic supplies.",
+    //   },
+    //   {
+    //     name: "Forest Trekking Trail",
+    //     image: Foresttrail,
+    //     description: "A 4-5 km trail through dense Eastern Ghats forest connecting Paderu to the Vanjangi summit.",
+    //   },
+    //   {
+    //     name: "Coffee Plantations",
+    //     image: Vanjangicoffeeplantations,
+    //     description: "Shade-grown coffee estates surrounding the village, similar to those found in nearby Araku Valley.",
+    //   },
+    // ],
   },
 
-  {
-    slug: "vizag-airport",
-    name: "Vizag Airport",
-    image: vizagairport, // replace with "../assets/destinations/vizag-airport.jpg"
-    distanceFromVizag: "12 KM from Vizag",
-    category: "Transit",
-    description: "Regular flights across major cities. We provide 24/7 airport transfers.",
-    seoTitle: "Vizag Airport Taxi Service | 24/7 Airport Transfers | BSH Taxi Services",
-    seoDescription:
-      "Book reliable airport taxi service in Visakhapatnam. Punctual pickup and drop to Vizag Airport (VTZ), available 24/7 with professional drivers, fixed fares.",
+{
+  slug: "vizag-airport",
+  name: "Vizag Airport",
+  image: vizagairport, // replace with "../assets/destinations/vizag-airport.jpg"
+  distanceFromVizag: "12 KM from Vizag",
+  distanceKm: 12,
+  driveTime: "25 mins",
+  sources: ["AAI", "Wikipedia"],
+  category: "Transit",
+  description: "Regular flights across major cities. We provide 24/7 airport transfers.",
+  seoTitle: "Vizag Airport Taxi Service | 24/7 Airport Transfers | BSH Taxi Services",
+  seoDescription:
+    "Book reliable airport taxi service in Visakhapatnam. Punctual pickup and drop to Vizag Airport (VTZ), available 24/7 with professional drivers, fixed fares.",
+  keywords: [
+    "vizag airport taxi",
+    "visakhapatnam airport transfer taxi",
+    "airport taxi booking vizag",
+    "vizag airport pickup drop taxi",
+    "24/7 airport cab service visakhapatnam",
+    "vtz airport taxi fare",
+    "vizag airport taxi online booking",
+    "cheap airport cab visakhapatnam",
+    "vizag airport to city taxi",
+    "prepaid taxi vizag airport",
+  ],
+  tagline: "Land, Relax, We'll Handle the Ride!",
+  costPerDay: 1500,
+  history:
+    "Visakhapatnam Airport (IATA: VTZ) operates as a civil enclave inside INS Dega, an Indian Navy air station, reflecting the city's long-standing role as home to the Eastern Naval Command. Civilian flights began modestly in 1981 with a single daily service on a short 1,800-metre runway.\n\nThe real transformation came in the 2000s: a new 10,500-foot runway capable of handling wide-body aircraft was inaugurated in June 2007, night-landing capability followed soon after, and a modern integrated terminal with aerobridges opened in March 2009. These upgrades earned the airport international status, with direct flights launched to Dubai, Singapore and Kuala Lumpur. It has run 24-hour operations since 2014 and even added a 2-megawatt solar power plant in 2016 to lower its carbon footprint — reflecting Visakhapatnam's growth into a major industrial, IT and port city.",
+  highlights: [
+    "Civil enclave within the Indian Navy's INS Dega airbase",
+    "International flights to Dubai, Singapore & Kuala Lumpur",
+    "24-hour operations since 2014",
+    "Powered in part by a 2 MW solar plant since 2016",
+  ],
+  quickFacts: [
+    { label: "IATA Code", value: "VTZ" },
+    { label: "Civilian Ops Since", value: "1981" },
+    { label: "Runway", value: "10,500 ft (since 2007)" },
+    { label: "Status", value: "International, 24×7" },
+  ],
+  bestTimeToVisit:
+    "Not applicable — the airport runs 24×7 year-round, so we're available for pickups and drops any time, any day.",
+  howToReach:
+    "Around 12 km from the city centre, roughly a 25–30 minute drive depending on traffic — we track your flight status for pickups so you're never left waiting.",
+  funFact:
+    "Vizag Airport shares its runway with the Indian Navy's INS Dega — one of only a handful of airports in India where civilian and naval aviation operate side by side.",
+  importantNotes: [
+    "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
+    "We track your flight status in real time, so pickup timing adjusts automatically for delays or early arrivals.",
+  ],
 
-distanceKm: 12,
-driveTime: "25 mins",
-      keywords: [
-      "vizag airport taxi",
-      "visakhapatnam airport transfer taxi",
-      "airport taxi booking vizag",
-      "vizag airport pickup drop taxi",
-      "24/7 airport cab service visakhapatnam",
-      "vtz airport taxi fare",
-      "vizag airport taxi online booking",
-      "cheap airport cab visakhapatnam",
-      "vizag airport to city taxi",
-      "prepaid taxi vizag airport",
-    ],
-    history:
-      "Visakhapatnam Airport (IATA: VTZ) operates as a civil enclave inside INS Dega, an Indian Navy air station, reflecting the city's long-standing role as home to the Eastern Naval Command. Civilian flights began modestly in 1981 with a single daily service on a short 1,800-metre runway.\n\nThe real transformation came in the 2000s: a new 10,500-foot runway capable of handling wide-body aircraft was inaugurated in June 2007, night-landing capability followed soon after, and a modern integrated terminal with aerobridges opened in March 2009. These upgrades earned the airport international status, with direct flights launched to Dubai, Singapore and Kuala Lumpur. It has run 24-hour operations since 2014 and even added a 2-megawatt solar power plant in 2016 to lower its carbon footprint — reflecting Visakhapatnam's growth into a major industrial, IT and port city.",
-    highlights: [
-      "Civil enclave within the Indian Navy's INS Dega airbase",
-      "International flights to Dubai, Singapore & Kuala Lumpur",
-      "24-hour operations since 2014",
-      "Powered in part by a 2 MW solar plant since 2016",
-    ],
-    quickFacts: [
-      { label: "IATA Code", value: "VTZ" },
-      { label: "Civilian Ops Since", value: "1981" },
-      { label: "Runway", value: "10,500 ft (since 2007)" },
-      { label: "Status", value: "International, 24×7" },
-    ],
-    howToReach:
-      "Around 12 km from the city centre, roughly a 25–30 minute drive depending on traffic — we track your flight status for pickups so you're never left waiting.",
-    funFact:
-      "Vizag Airport shares its runway with the Indian Navy's INS Dega — one of only a handful of airports in India where civilian and naval aviation operate side by side.",
-  },
+},
 ];

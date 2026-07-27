@@ -155,26 +155,26 @@ function FleetCard({ item, onBookNow }: { item: FleetItem; onBookNow: (name: str
           <Users size={13} className="text-primary" />
           <span>{item.seats} Seater</span>
         </div>
-<button
-  type="button"
-  onClick={() => onBookNow(item.name)}
-  className="mt-3 inline-flex items-center justify-center gap-1.5 rounded-xl
-             bg-[linear-gradient(135deg,#EFF5FF,#DCEAFF)]
-             py-2.5 text-sm font-bold text-primary
-             ring-1 ring-[#C9DCFF]
-             shadow-sm transition-all duration-300
-             hover:bg-none hover:bg-primary
-             hover:text-white
-             hover:ring-primary
-             hover:-translate-y-0.5
-             hover:shadow-lg hover:shadow-primary/25"
->
-  Book Now
-  <ArrowRight
-    size={14}
-    className="transition-transform duration-300 group-hover:translate-x-1"
-  />
-</button>
+        <button
+          type="button"
+          onClick={() => onBookNow(item.name)}
+          className="mt-3 inline-flex items-center justify-center gap-1.5 rounded-xl
+                     bg-[linear-gradient(135deg,#EFF5FF,#DCEAFF)]
+                     py-2.5 text-sm font-bold text-primary
+                     ring-1 ring-[#C9DCFF]
+                     shadow-sm transition-all duration-300
+                     hover:bg-none hover:bg-primary
+                     hover:text-white
+                     hover:ring-primary
+                     hover:-translate-y-0.5
+                     hover:shadow-lg hover:shadow-primary/25"
+        >
+          Book Now
+          <ArrowRight
+            size={14}
+            className="transition-transform duration-300 group-hover:translate-x-1"
+          />
+        </button>
       </div>
     </article>
   );
@@ -232,12 +232,15 @@ function FleetAndHowItWorks({ onBookNow }: { onBookNow: (name: string) => void }
 }
 
 export default function TravelSections() {
-  const { openBooking } = useBooking();
-
-  function handleBookNow(name: string) {
-    openBooking({ vehicleName: name, resetTrip: true });
-  }
-
+const { openBooking } = useBooking();
+console.log("TravelSections Context");
+function handleBookNow(name: string) {
+  console.log("Book Now Clicked:", name);
+  openBooking({
+    vehicleName: name,
+    resetTrip: true,
+  });
+}
   return (
     <>
       <Services />
