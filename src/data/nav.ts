@@ -37,47 +37,47 @@ export const navLinks: NavLink[] = [
 
       {
         label: "Vizag Local Sightseeing",
-        href: "/destinations/vizag-local?type=local",
+        href: "/destinations/vizag-local?type=taxi-services-in-vizag",
       },
 
       {
         label: "Simhachalam Temple",
-        href: "/destinations/simhachalam-temple?type=local",
+        href: "/destinations/simhachalam-temple?type=taxi-in-vizag",
       },
 
       {
         label: "Vizag Airport",
-        href: "/destinations/vizag-airport?type=local",
+        href: "/destinations/vizag-airport?type=airport-taxi",
       },
 
       {
         label: "Araku Valley",
-        href: "/destinations/araku-valley?type=package",
+        href: "/destinations/araku-valley?type=vizag-to-araku-taxi",
       },
 
       {
         label: "Lambasingi",
-        href: "/destinations/lambasingi?type=package",
+        href: "/destinations/lambasingi?type=vizag-to-lambasingi-taxi-services",
       },
 
       {
         label: "Vanjangi Hills",
-        href: "/destinations/vanjangi-hills?type=package",
+        href: "/destinations/vanjangi-hills?type=vizag-to-vanjangi-hills-taxi-services",
       },
 
       {
         label: "Annavaram Temple",
-        href: "/destinations/annavaram-temple?type=package",
+        href: "/destinations/annavaram-temple?type=annavaram-temple-taxi-services",
       },
 
       {
         label: "Arasavalli Temple",
-        href: "/destinations/arasavalli-temple?type=package",
+        href: "/destinations/arasavalli-temple?type=arasavalli-temple-taxi-services",
       },
 
       {
         label: "Tirupati",
-        href: "/destinations/tirupati?type=Outstation",
+        href: "/destinations/tirupati?type=outstation-taxi-services",
       },
 
       // {

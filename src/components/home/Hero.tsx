@@ -101,8 +101,8 @@ export default function Hero() {
           <span className="block">Your Journey,</span>
           <span
             className="mt-2 block text-[#2997FF] font-normal sm:mt-3 lg:mt-4"
-            style={{ fontFamily: '"Lavishly Yours", cursive', fontWeight: 400 }}
-          >
+                  style={{ fontFamily: '"Rouge Script", cursive', fontStyle: 'bold', fontWeight: 400 }}
+                      >
             Our Responsibility.
           </span>
         </h1>
