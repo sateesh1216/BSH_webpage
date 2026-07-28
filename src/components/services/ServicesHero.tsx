@@ -1,6 +1,5 @@
 
 import {
-  ChevronRight,
   ShieldCheck,
   PhoneCall,
   Users,
@@ -61,24 +60,6 @@ export default function ServicesHero() {
 
       <div className="relative mt-8 z-10 mx-auto max-w-7xl px-6 py-20 lg:px-10">
 
-        {/* Breadcrumb */}
-        {/* <nav
-          className="fade-1 mb-6 flex items-center justify-center gap-2 text-sm text-slate-500"
-          aria-label="Breadcrumb"
-        >
-          <Link
-            to="/"
-            className="font-medium text-primary hover:underline"
-          >
-            Home
-          </Link>
-
-          <ChevronRight size={14} />
-
-          <span className="font-semibold text-slate-700">
-            Services
-          </span>
-        </nav> */}
 
         {/* Badge */}
         <div className="fade-1 flex justify-center">
