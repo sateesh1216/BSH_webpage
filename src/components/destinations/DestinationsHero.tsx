@@ -26,7 +26,7 @@ export default function DestinationsHero() {
       <div className="relative mt-8 mx-auto flex max-w-6xl flex-col items-center px-6 text-center">
         {/* Badge */}
         <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          <Compass size={14} />
+          <Compass size={30} />
           Destinations
         </span>
 
