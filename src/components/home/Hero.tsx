@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
-import heroBanner from "../../assets/Home page banners/bshtaxiservice-homepage-banner_3.webp"; // Change to your actual image name
+// import heroBanner from "../../assets/Home page banners/bshtaxiservice-homepage-banner_3.webp"; // Change to your actual image name
 // Hero-only presentation config (icon + hero image per tab). Trip-shape
 // config (tripOptions/dropLabel/dropPlaceholder) now lives in
 // BookingContext's TRIP_CONFIG, shared across every entry point.
@@ -35,13 +35,13 @@ export default function Hero() {
   className="relative isolate z-20 flex min-h-140 flex-col overflow-hidden px-4 pt-16 pb-7 sm:min-h-155 sm:px-6 sm:pt-24 lg:min-h-180 lg:pt-32 lg:pb-16"
 >
   {/* LCP image as real <img> tag — browser discovers & preloads it early */}
-  <img
-    src={heroBanner}
-    alt=""
-    fetchPriority="high"
-    decoding="async"
-    className="absolute inset-0 -z-10 h-full w-full object-cover"
-  />
+ <img
+  src="/bshtaxiservice-homepage-banner_3.webp"
+  alt=""
+  fetchPriority="high"
+  decoding="async"
+  className="absolute inset-0 -z-10 h-full w-full object-cover"
+/>
       {/* Soft ambient glow — adds depth without competing with the route line */}
       <div
         aria-hidden="true"
