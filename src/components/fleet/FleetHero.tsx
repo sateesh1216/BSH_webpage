@@ -41,7 +41,7 @@ export default function FleetHero() {
   const { openBooking } = useBooking();
 
   return (
-    <section className="relative overflow-hidden bg-linear-to-br from-blue-50 via-white to-sky-50">
+    <section className="relative mt-8 overflow-hidden bg-linear-to-br from-blue-50 via-white to-sky-50">
       <style>{`
         @keyframes fadeUp{
           from{
@@ -89,7 +89,7 @@ export default function FleetHero() {
       <div className="absolute right-0 top-24 h-96 w-96 rounded-full bg-sky-200/30 blur-3xl" />
       <div className="absolute bottom-0 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/5 blur-3xl" />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10">
+      <div className="relative mt-8 mx-auto max-w-7xl px-6 py-20 lg:px-10">
 
         {/* Badge */}
         <div className="fade-1 flex justify-center">

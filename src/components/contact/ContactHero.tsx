@@ -1,54 +1,68 @@
 import { Headset, Timer } from "lucide-react";
-import heroImage from "../../assets/cars/innova-crysta-in-vizag-bshtaxiservices.webp";
 
 export default function ContactHero() {
   return (
-    <section className="relative overflow-hidden bg-linear-to-b from-blue-50/80 via-blue-50/30 to-white">
-      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+    <section className="relative mt-8 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-20">
+      {/* Background Blur */}
+      <div className="absolute -top-24 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-blue-500/10 blur-[120px]" />
+      <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-indigo-500/10 blur-[100px]" />
 
-      <div className="relative mx-auto grid w-full max-w-[80em] grid-cols-1 items-center gap-10 px-6 py-14 sm:px-10 lg:grid-cols-2 lg:px-16 lg:py-20">
-        <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-primary">Contact Us</span>
+      <div className="relative mt-8 mx-auto flex max-w-5xl flex-col items-center px-6 text-center">
 
-          <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
-            We're Here to{" "}
-            <span className="text-primary">Help You!</span>
-          </h1>
+        {/* Small Heading */}
+        <span className="rounded-full bg-blue-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+          Contact Us
+        </span>
 
-          <p className="mt-4 max-w-lg text-base leading-relaxed text-slate-600">
-            Have questions or need assistance? Our team is available 24/7 to help you with your
-            travel needs.
-          </p>
+        {/* Main Heading */}
+        <h1 className="mt-6 text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
+          We're Here to{" "}
+          <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            Help You!
+          </span>
+        </h1>
 
-          <div className="mt-8 flex flex-wrap gap-8">
-            <div className="flex items-center gap-3">
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
-                <Headset size={20} strokeWidth={2} />
-              </span>
-              <div>
-                <p className="text-sm font-bold text-slate-900">24/7 Customer Support</p>
-                <p className="text-xs text-slate-500">We're always here for you</p>
-              </div>
+        {/* Description */}
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+          Have questions or need assistance? Our friendly support team is
+          available <span className="font-semibold text-slate-900">24/7</span>{" "}
+          to help you with bookings, travel plans, and any queries.
+        </p>
+
+        {/* Feature Cards */}
+        <div className="mt-14 grid w-full max-w-3xl gap-6 sm:grid-cols-2">
+
+          {/* Card 1 */}
+          <div className="group rounded-3xl border border-white/60 bg-white/80 p-7 shadow-lg backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary transition group-hover:scale-110">
+              <Headset size={30} />
             </div>
 
-            <div className="flex items-center gap-3">
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
-                <Timer size={20} strokeWidth={2} />
-              </span>
-              <div>
-                <p className="text-sm font-bold text-slate-900">Quick Response</p>
-                <p className="text-xs text-slate-500">We'll get back to you ASAP</p>
-              </div>
-            </div>
+            <h3 className="mt-5 text-xl font-bold text-slate-900">
+              24/7 Customer Support
+            </h3>
+
+            <p className="mt-2 text-sm leading-6 text-slate-500">
+              Our support team is always available to assist you anytime,
+              anywhere.
+            </p>
           </div>
-        </div>
 
-        <div className="relative overflow-hidden rounded-3xl">
-          <img
-            src={heroImage}
-            alt="BSH Taxi Services contact"
-            className="h-full w-full object-cover"
-          />
+          {/* Card 2 */}
+          <div className="group rounded-3xl border border-white/60 bg-white/80 p-7 shadow-lg backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary transition group-hover:scale-110">
+              <Timer size={30} />
+            </div>
+
+            <h3 className="mt-5 text-xl font-bold text-slate-900">
+              Quick Response
+            </h3>
+
+            <p className="mt-2 text-sm leading-6 text-slate-500">
+              We respond quickly so your travel plans never have to wait.
+            </p>
+          </div>
+
         </div>
       </div>
     </section>

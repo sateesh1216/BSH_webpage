@@ -14,7 +14,7 @@ export default function ServicesHero() {
   const { openBooking } = useBooking();
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-sky-50">
+    <section className="relative mt-8 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-sky-50">
       <style>{`
         @keyframes fadeUp {
           from {
@@ -59,10 +59,10 @@ export default function ServicesHero() {
       <div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-sky-200/30 blur-3xl" />
       <div className="absolute left-1/2 bottom-0 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/5 blur-3xl" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 py-20 lg:px-10">
+      <div className="relative mt-8 z-10 mx-auto max-w-7xl px-6 py-20 lg:px-10">
 
         {/* Breadcrumb */}
-        <nav
+        {/* <nav
           className="fade-1 mb-6 flex items-center justify-center gap-2 text-sm text-slate-500"
           aria-label="Breadcrumb"
         >
@@ -78,7 +78,7 @@ export default function ServicesHero() {
           <span className="font-semibold text-slate-700">
             Services
           </span>
-        </nav>
+        </nav> */}
 
         {/* Badge */}
         <div className="fade-1 flex justify-center">
