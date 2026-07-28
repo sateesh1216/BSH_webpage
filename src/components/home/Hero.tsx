@@ -30,13 +30,18 @@ const heroBadges: HeroBadge[] = [
 
 export default function Hero() {
   return (
-    <section
-      id="home"
-      className="relative isolate z-20 flex min-h-140 flex-col overflow-hidden bg-cover bg-center bg-no-repeat px-4 pt-16 pb-7 sm:min-h-155 sm:px-6 sm:pt-24 lg:min-h-180 lg:pt-32 lg:pb-16"
-      style={{
-        backgroundImage: `url(${heroBanner})`,
-      }}
-    >
+<section
+  id="home"
+  className="relative isolate z-20 flex min-h-140 flex-col overflow-hidden px-4 pt-16 pb-7 sm:min-h-155 sm:px-6 sm:pt-24 lg:min-h-180 lg:pt-32 lg:pb-16"
+>
+  {/* LCP image as real <img> tag — browser discovers & preloads it early */}
+  <img
+    src={heroBanner}
+    alt=""
+    fetchPriority="high"
+    decoding="async"
+    className="absolute inset-0 -z-10 h-full w-full object-cover"
+  />
       {/* Soft ambient glow — adds depth without competing with the route line */}
       <div
         aria-hidden="true"
