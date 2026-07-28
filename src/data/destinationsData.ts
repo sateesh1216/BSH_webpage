@@ -112,14 +112,14 @@ export const destinations: Destination[] = [
     ],
     quickFacts: [
       { label: "Altitude", value: "900–1,300 m" },
-      { label: "Best Time", value: "Oct – Mar" },
+      { label: "Best Time", value: "Aug – Mar" },
       { label: "District", value: "Alluri Sitharama Raju" },
       { label: "Known For", value: "Coffee & Tribal Culture" },
     ],
     bestTimeToVisit:
-      "October to March, when the hills stay cool and misty and the coffee plantations are at their most fragrant.",
+      "August to March is the best time to visit Araku Valley from Vizag. During these months, the cool climate, mist-covered hills, lush coffee plantations, and scenic landscapes make Araku one of the top tourist destinations in Andhra Pradesh.",
     howToReach:
-      "About a 3-hour scenic drive from Vizag through ghat roads, or take the famous Vizag–Araku passenger train that winds through the Eastern Ghats and past Borra Caves.",
+      "Araku Valley is easily accessible from Visakhapatnam (Vizag) by road or rail. Book your Vizag to Araku Valley taxi with BSH Taxi Services for a comfortable journey through the Eastern Ghats, scenic ghat roads, lush coffee plantations, and the famous Borra Caves. Travelers can also enjoy the iconic Vizag–Araku passenger train, one of the most scenic railway routes in Andhra Pradesh.",
     funFact:
       "Araku's coffee story began with the British in the early 1900s, but it was tribal cooperatives who turned it into a globally recognised, organic, GI-tagged brand.",
     importantNotes: [
@@ -130,44 +130,44 @@ export const destinations: Destination[] = [
          {
         name: "Damuku View Point",
         image: Damukuviewpoint,
-        description: "A quiet lookout over layered valleys, popular for photography.",
+        description: "Damuku View Point is one of the best viewpoints in Araku Valley, offering breathtaking panoramic views of lush green valleys and rolling hills. A perfect destination near Vizag for photography, nature lovers, and scenic sightseeing.",
       },
       {
         name: "Borra Caves",
         image: Borracaves,
         description:
-          "Million-year-old limestone caves discovered in 1807, roughly 36 km from Araku — a detour well worth the drive.",
+          "Borra Caves is one of the most famous tourist attractions near Araku Valley, known for its million-year-old limestone formations, stunning stalactites, and stalagmites. A must-visit destination on your Vizag to Araku trip with BSH Taxi Services.",
       },
       {
         name: "Katika Waterfalls",
         image: Katikawaterfalls,
         tag: "Only Car Parking",
-        description: "A cascading forest waterfall, also known locally as Chaparai Falls.",
+        description: "Katiki Waterfalls, located near Borra Caves in Araku Valley, is a beautiful natural waterfall surrounded by lush forests. This scenic attraction is perfect for adventure lovers and nature enthusiasts visiting from Vizag.",
       },
       {
         name: "Galikonda Viewpoint",
         image: Galikondaviewpoint,
-        description: "Perched atop Andhra Pradesh's highest hill, with sweeping valley and sunrise views.",
+        description: "Galikonda Viewpoint, one of the highest viewpoints in Andhra Pradesh, offers spectacular sunrise views, mist-covered mountains, and breathtaking landscapes. It's a must-visit attraction on your Vizag to Araku Valley tour.",
       },
       {
         name: "Coffee Plantation",
         image: Coffeeplantation,
-        description: "Shade-grown Arabica estates on the Ananthagiri hills where pepper vines wind around silver oaks.",
+        description: "Explore the famous Araku Valley Coffee Plantations, known for their premium organic Arabica coffee and picturesque green landscapes. A visit to these plantations offers an authentic experience of Andhra Pradesh's coffee culture near Vizag.",
       },
       {
         name: "Coffee Museum",
         image: Coffeemuseum,
-        description: "Traces the journey of Araku coffee from bean to cup, with tastings and handcrafted chocolate.",
+        description: "Visit the Araku Coffee Museum and experience the story of India's famous Araku Coffee. Enjoy coffee tastings, handcrafted chocolates, and explore the rich coffee culture of Araku Valley with BSH Taxi Services from Vizag.",
       },
       {
         name: "Tribal Museum",
         image: Tribalmuseum,
-        description: "A window into the art, tools and traditions of the Eastern Ghats' indigenous communities.",
+        description: "Explore the Araku Tribal Museum, one of the best cultural attractions in Araku Valley, showcasing tribal traditions, handicrafts, art, and the unique heritage of the Eastern Ghats in Andhra Pradesh.",
       },
       {
         name: "Padmapuram Gardens",
         image: Padmapuramgardens,
-        description: "Terraced botanical gardens with tree-top huts and a toy train ride.",
+        description: "Discover the beauty of Padmapuram Gardens in Araku Valley, featuring lush botanical gardens, tree-top cottages, colorful flowers, and a toy train. A must-visit tourist destination near Vizag for families and nature lovers.",
       },
    
       // {
@@ -222,11 +222,11 @@ export const destinations: Destination[] = [
       { label: "Known For", value: "Freezing Winter Mornings" },
     ],
     bestTimeToVisit:
-      "November to January is peak season, when early-morning temperatures can drop near 0°C between 4 AM and 9 AM and thick fog blankets the village.",
+      "November to January is the best time to visit Lambasingi from Vizag, when the weather is at its coolest with misty mornings, dense fog, and temperatures that can drop close to 0°C. This is the perfect season to experience the natural beauty of the\"Kashmir of Andhra Pradesh.\"",
     howToReach:
-      "Around a 3-hour drive from Visakhapatnam via Narsipatnam, or roughly 90–100 km on from Araku Valley if you're combining both in one trip.",
+      "Lambasingi is located about 100 KM from Visakhapatnam (Vizag) and is easily accessible by road. Book your Vizag to Lambasingi taxi with BSH Taxi Services for a safe and comfortable journey through the scenic Eastern Ghats, lush forests, and winding hill roads.",
     funFact:
-      "On the coldest winter nights, anything left out in the open can be covered in frost by morning — a rare sight anywhere in coastal Andhra Pradesh, and the reason locals call it 'Korra Bayalu'.",
+      "Lambasingi, popularly known as the\"Kashmir of Andhra Pradesh,\"is one of the coldest places in the state. During winter, the village is covered with mist and occasional frost, making it one of the most unique tourist destinations near Vizag for nature lovers and adventure seekers.",
     importantNotes: [
       "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
       "During standby and ghat roads, the cabin A/C will be turned off to ensure safe driving power.",
