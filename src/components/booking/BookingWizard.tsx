@@ -216,27 +216,27 @@ function Stepper({ currentIndex }: { currentIndex: number }) {
               </div>
 
               {/* Labels */}
-              <div className="mt-3 hidden text-center sm:block">
-                <p
-                  className={`text-sm font-semibold transition-colors ${
-                    state === "todo"
-                      ? "text-slate-400"
-                      : "text-slate-900"
-                  }`}
-                >
-                  {step.label}
-                </p>
+              <div className="mt-2 text-center">
+  <p
+    className={`text-[10px] font-semibold leading-tight sm:text-sm ${
+      state === "todo"
+        ? "text-slate-400"
+        : "text-slate-900"
+    }`}
+  >
+    {step.label}
+  </p>
 
-                <p
-                  className={`mt-1 text-xs ${
-                    state === "active"
-                      ? "text-primary"
-                      : "text-slate-400"
-                  }`}
-                >
-                  {step.sub}
-                </p>
-              </div>
+  <p
+    className={`mt-1 hidden text-[10px] sm:block ${
+      state === "active"
+        ? "text-primary"
+        : "text-slate-400"
+    }`}
+  >
+    {step.sub}
+  </p>
+</div>
             </div>
           );
         })}
