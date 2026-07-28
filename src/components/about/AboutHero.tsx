@@ -10,7 +10,7 @@ const heroStats = [
 
 export default function AboutHero() {
   return (
-    <section className="relative overflow-hidden bg-linear-to-b from-primary-light/40 to-white">
+    <section className="relative mt-18 overflow-hidden bg-linear-to-b from-primary-light/40 to-white">
       <div className="mx-auto grid w-[92%] max-w-310 items-center gap-10 py-16 lg:grid-cols-2 lg:gap-8">
         <div>
           <span className="text-xs font-bold uppercase tracking-widest text-primary">
