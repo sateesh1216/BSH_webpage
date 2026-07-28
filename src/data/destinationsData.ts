@@ -76,13 +76,13 @@ export const destinations: Destination[] = [
     slug: "araku-valley",
     name: "Araku Valley",
     image: Aruku, // replace with "../assets/destinations/araku-valley.jpg"
-    distanceFromVizag: "120 KM from Vizag",
-    distanceKm: 120,
-    driveTime: "3 hrs",
+    distanceFromVizag: "250 KM from vizag to araku round trip",
+    distanceKm: 250,
+    driveTime: "10 hrs",
     sources: ["AP Tourism", "Wikipedia"],
     category: "Hill Station",
     description:
-      "A scenic hill station famous for its coffee plantations, valleys and waterfalls.",
+      "A beautiful hill station in Andhra Pradesh, famous for its lush coffee plantations, breathtaking valleys, misty hills, and stunning waterfalls.",
     seoTitle: "Vizag to Araku Valley Taxi | One Day Trip Package | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Araku Valley taxi with BSH Taxi Services. Affordable one-way, round-trip & one-day tour packages covering Borra Caves. AC cabs, 24/7 booking.",
@@ -181,13 +181,13 @@ export const destinations: Destination[] = [
     slug: "lambasingi",
     name: "Lambasingi",
     image: lambasingi, // replace with "../assets/destinations/lambasingi.jpg"
-    distanceFromVizag: "100 KM from Vizag",
-    distanceKm: 100,
-    driveTime: "3 hrs",
+    distanceFromVizag: "350 KM from vizag to lambasingi round trip",
+    distanceKm: 350,
+    driveTime: "10 hrs",
     sources: ["AP Tourism", "Wikipedia", "Trawell"],
     category: "Hill Station",
     description:
-      "Known as the \"Kashmir of Andhra Pradesh\" for its misty weather and natural beauty.",
+      "Lambasingi, known as the \"Kashmir of Andhra Pradesh,\" is famous for its cool climate, misty mornings, lush greenery, and breathtaking landscapes. It's one of the top weekend getaway destinations near Visakhapatnam (Vizag).",
     seoTitle: "Vizag to Lambasingi Taxi | Kashmir of Andhra Pradesh | BSH Taxi Services",
     seoDescription:
       "Reliable taxi service from Visakhapatnam to Lambasingi, the Kashmir of Andhra Pradesh. Affordable weekend trip & sightseeing cab packages, booked online 24/7.",
@@ -274,15 +274,15 @@ export const destinations: Destination[] = [
 
 {
     slug: "vizag-local",
-    name: "Vizag Local",
+    name: "Vizag Local Sightseeing",
     image: VizagLocal, // replace with "../assets/destinations/rushikonda-beach.jpg"
-    distanceFromVizag: "15 KM from Vizag",
-    distanceKm: 12,
-    driveTime: "25 mins",
+    distanceFromVizag: "10-Hour Local Sightseeing Package in Vizag",
+    distanceKm: 100,
+    driveTime: "10 hrs",
     sources: ["AP Tourism", "Wikipedia"],
     category: "Beach",
     description:
-      "A beautiful beach with golden sand, clear water and peaceful vibes.",
+      "Explore the best of Visakhapatnam (Vizag) with BSH Taxi Services. Our 10-hour local sightseeing package covers popular attractions like RK Beach, Kailasagiri, Rushikonda Beach, INS Kurusura Submarine Museum, Tenneti Park, and Simhachalam Temple. Enjoy safe, comfortable, and affordable taxi services with professional drivers. Call +91 8886803322 to book your Vizag local tour.",
     seoTitle: "Rushikonda Beach Taxi in Vizag | Local Cab Service | BSH Taxi Services",
     seoDescription:
       "Book a local taxi to Rushikonda Beach in Visakhapatnam. Quick, comfortable rides to Vizag's most popular Blue Flag beach, available 24/7 at affordable fares.",
@@ -301,7 +301,7 @@ export const destinations: Destination[] = [
       "vizag one day sightseeing cab",
     ],
     tagline: "Discover the City by the Bay, One Stop at a Time!",
-    costPerDay: 2500,
+    costPerDay: 3000,
     history:
       "\"Rushikonda\" translates to \"Hill of the Sage\" in Telugu, tied to local legend that holds this stretch of coast was once a site where sages performed penance. For most of its history it was a quiet fishing shoreline; recognition as a tourist spot only began building in the 1980s, and the real transformation came in the early 2000s when the Andhra Pradesh Tourism Development Corporation invested in resorts, water-sports infrastructure and restaurants along the shore.\n\nToday Rushikonda is one of only a handful of Indian beaches to hold the international Blue Flag certification, recognising its clean sands and high environmental and safety standards. It has grown into the region's main hub for water sports and adventure tourism, while still keeping the hillside backdrop and comparatively uncrowded feel that first drew visitors in.\n\nBeyond Rushikonda, Vizag's local circuit has grown around the city's port heritage and hilltop views — from the INS Kursura Submarine Museum, decommissioned in 2001 after decades of active service, to the hilltop statues of Shiva and Parvati at Kailasagiri, which has become the city's most recognisable skyline landmark.",
     highlights: [
@@ -373,13 +373,13 @@ export const destinations: Destination[] = [
     slug: "simhachalam-temple",
     name: "Simhachalam Temple",
     image: Simhachalam, // replace with "../assets/destinations/simhachalam-temple.jpg"
-    distanceFromVizag: "16 KM from Vizag",
-    distanceKm: 12,
+    distanceFromVizag: "20 KM from Vizag",
+    distanceKm: 20,
     driveTime: "25 mins",
     sources: ["AP Tourism", "Wikipedia"],
     category: "Temple",
     description:
-      "Famous Lord Varaha Lakshmi Narasimha Swamy Temple with rich history.",
+      "One of the most famous temples in Visakhapatnam, dedicated to Lord Varaha Lakshmi Narasimha Swamy, known for its rich history, stunning architecture, and spiritual significance.",
     seoTitle: "Simhachalam Temple Taxi Booking in Vizag | BSH Taxi Services",
     seoDescription:
       "Book a taxi to Simhachalam Temple from anywhere in Visakhapatnam. Comfortable local cabs for temple darshan visits, available all day at affordable rates.",
@@ -460,13 +460,13 @@ export const destinations: Destination[] = [
     slug: "tirupati",
     name: "Tirupati",
     image: Tirupati, // replace with "../assets/destinations/tirupati-temple.jpg"
-    distanceFromVizag: "780 KM from Vizag",
+    distanceFromVizag: "780 KM Round Trip from Vizag",
     distanceKm: 780,
     driveTime: "12-13 hrs",
     sources: ["TTD", "Incredible India", "Wikipedia"],
     category: "Temple",
     description:
-      "Home to the world-famous Sri Venkateswara Temple, one of the richest and most visited pilgrimage sites on earth.",
+      "Visit the world-renowned Sri Venkateswara Swamy Temple in Tirupati with BSH Taxi Services. Enjoy a safe, comfortable, and hassle-free pilgrimage from Vizag.",
     seoTitle: "Vizag to Tirupati Taxi | Outstation Cab & Tour Package | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Tirupati taxi with BSH Taxi Services. Comfortable outstation cabs for Tirumala darshan trips, round-trip & multi-day packages, available 24/7.",
@@ -485,7 +485,7 @@ export const destinations: Destination[] = [
       "best taxi service tirupati from vizag",
     ],
     tagline: "A Sacred Journey to the Seven Hills!",
-    costPerDay: 7000,
+    costPerDay: 23000,
     history:
       "Tirupati's Sri Venkateswara Temple, perched on the seventh peak of the Tirumala hills (the Seshachalam range, said to symbolise the seven hoods of the serpent Adishesha), is dedicated to Lord Venkateswara — a form of Vishnu believed to save devotees from the trials of Kali Yuga, earning the temple the title \"Kaliyuga Vaikuntha.\" Its earliest roots stretch back to around 300 CE under a Thondaman king, with a mention even appearing in the Tamil Sangam epic Silappathikaram, dated to roughly the 2nd century CE.\n\nOver the following centuries the temple was steadily expanded and endowed by the Pallavas, Cholas, Pandyas and, most significantly, the Vijayanagara Empire, whose emperors — including Krishnadevaraya — funded much of its gold-plated architecture and towering gopurams. A recorded endowment by the Pallava queen Samavai dates to 966 CE. Today it is managed by the Tirumala Tirupati Devasthanams (TTD) and draws an estimated 50,000-plus pilgrims a day through its Vaikuntam Queue Complex, making it one of the most visited religious sites in the world.",
     highlights: [
@@ -558,13 +558,13 @@ export const destinations: Destination[] = [
     slug: "annavaram-temple",
     name: "Annavaram (Sri Satyanarayana Swamy Temple)",
     image: Annavaram, // replace with "../assets/destinations/annavaram-temple.jpg"
-    distanceFromVizag: "110 KM from Vizag",
+    distanceFromVizag: "250 KM Round Trip from Vizag",
     distanceKm: 110,
-    driveTime: "2.5 hrs",
+    driveTime: "2.5 to 3hrs",
     sources: ["Trawell", "Wikipedia"],
     category: "Temple",
     description:
-      "One of Andhra Pradesh's most visited pilgrimage sites after Tirupati, dedicated to Sri Veera Venkata Satyanarayana Swamy atop Ratnagiri hill.",
+      "Travel from Vizag to the sacred Annavaram Temple, dedicated to Sri Veera Venkata Satyanarayana Swamy, for a peaceful and memorable spiritual journey.",
     seoTitle: "Vizag to Annavaram Temple Taxi | Pilgrimage Cab Booking | BSH Taxi",
     seoDescription:
       "Book an outstation taxi from Visakhapatnam to Annavaram Satyanarayana Swamy Temple. Comfortable one-way and round-trip pilgrimage cabs, 24/7 booking.",
@@ -583,7 +583,7 @@ export const destinations: Destination[] = [
       "innova crysta taxi vizag to annavaram",
     ],
     tagline: "Where Every Wish Finds Its Boon!",
-    costPerDay: 4000,
+    costPerDay: 5000,
     history:
       "Annavaram's temple traces back to 1891, when a modest shed was first built on Ratnagiri hill to house the deity's idol, discovered by a local landholder guided, as legend has it, by a dream. The shrine grew through community support into a full temple, was substantially rebuilt in stone during 1933–34, and renovated again in 2011–12. The name itself reflects the belief the temple embodies — \"Anna\" (what is desired) and \"varam\" (boon) — the idea that Sri Satyanarayana grants devotees whatever they ask for. It has since become the second most-visited pilgrimage site in Andhra Pradesh after Tirupati, especially for the Satyanarayana Swamy Vratham, a ritual performed here for family prosperity.\n\nThe Pampa River encircles the base of Ratnagiri hill, and local legend holds that Krishnadevaraya of Vijayanagara once used secret underground passages in these hills during his Kalinga campaign — passages later said to have been used again by the revolutionary Alluri Sitarama Raju against the British.",
     highlights: [
@@ -647,13 +647,13 @@ export const destinations: Destination[] = [
     slug: "arasavalli-temple",
     name: "Arasavalli (Sri Suryanarayana Swamy Vari Devasthanam)",
     image: Arasavalli, // replace with "../assets/destinations/arasavalli-temple.jpg"
-    distanceFromVizag: "113 KM from Vizag",
-    distanceKm: 113,
+    distanceFromVizag: "226 KM Round Trip from Vizag",
+    distanceKm: 226,
     driveTime: "2.5-3 hrs",
     sources: ["Wikipedia", "Srikakulam District Govt.", "Go2India"],
     category: "Temple",
     description:
-      "One of only two ancient Sun temples in India, dedicated to Lord Suryanarayana Swamy, in Arasavalli near Srikakulam.",
+      "Travel from Vizag to the sacred Arasavalli Sri Suryanarayana Swamy Temple with BSH Taxi Services. Experience one of India's oldest Sun Temples, renowned for its spiritual significance and divine atmosphere.",
     seoTitle: "Vizag to Arasavalli Sun Temple Taxi | Srikakulam Pilgrimage Cab | BSH Taxi",
     seoDescription:
       "Book an outstation taxi from Visakhapatnam to Arasavalli Suryanarayana Swamy Temple, Srikakulam. Comfortable one-way and round-trip pilgrimage cabs, 24/7 booking.",
@@ -670,7 +670,7 @@ export const destinations: Destination[] = [
       "best taxi service arasavalli vizag",
     ],
     tagline: "Where the Sun Himself Chose to Dwell!",
-    costPerDay: 4500,
+    costPerDay: 5000,
     history:
       "The Sri Suryanarayana Swamy Temple at Arasavalli — originally called Harshavalli, meaning \"abode of joy\" — is one of only two ancient temples in India dedicated to the Sun God, the other being Konark, which was left unfinished. Inscriptions credit its construction to King Devendra Varma of the Eastern Ganga (Kalinga) dynasty in the 7th century CE, built in the Kalinga/Odisha architectural style. Temple legend holds that the deity Indra, after being struck by Nandi for trying to force his way in on Lord Shiva, was told in a dream that installing an idol of the Sun God here would heal him — and so Sage Kashyapa is said to have consecrated the Surya idol at this very spot, making the Sun of \"Kasyapasa Gotra.\"\n\nThe temple's five gateways were deliberately aligned so that, during Rathasapthami in the month of Magha, the sun's rays fall directly on the deity's feet at sunrise — an architectural feat still observed by devotees today. Located just a kilometre from Srikakulam town, the temple remains one of the most visited pilgrimage sites in North Coastal Andhra Pradesh, drawing devotees who believe prayers here can heal ailments of the eyes and skin.",
     highlights: [
@@ -728,13 +728,13 @@ export const destinations: Destination[] = [
     slug: "vanjangi-hills",
     name: "Vanjangi Hills",
     image: Vanjangi, // replace with "../assets/destinations/vanjangi-sunrise.jpg"
-    distanceFromVizag: "100-120 KM from Vizag",
-    distanceKm: 110,
-    driveTime: "3-4 hrs",
+    distanceFromVizag: "220 KM Round Trip from Vizag",
+    distanceKm: 220,
+    driveTime: "10-12 hrs",
     sources: ["Outlook Traveller", "Yovizag"],
     category: "Hill Station",
     description:
-      "An offbeat sunrise viewpoint in the Eastern Ghats near Paderu, famous for its 'Sea of Clouds' (Megha Samudram) views.",
+      "Book your trip with BSH Taxi Services and witness the magical sunrise at Vanjangi Hills, famous for its Sea of Clouds, misty mountains, and breathtaking natural beauty near Visakhapatnam.",
     seoTitle: "Vizag to Vanjangi Hills Taxi | Sea of Clouds Sunrise Trip | BSH Taxi Services",
     seoDescription:
       "Book a Vizag to Vanjangi taxi with BSH Taxi Services for the famous Sea of Clouds sunrise. Night-drive & early morning cab packages, AC cabs, 24/7 booking.",
@@ -807,12 +807,12 @@ export const destinations: Destination[] = [
   slug: "vizag-airport",
   name: "Vizag Airport",
   image: vizagairport, // replace with "../assets/destinations/vizag-airport.jpg"
-  distanceFromVizag: "12 KM from Vizag",
-  distanceKm: 12,
+  distanceFromVizag: "20 KM from Vizag City Center",
+  distanceKm: 20,
   driveTime: "25 mins",
   sources: ["AAI", "Wikipedia"],
   category: "Transit",
-  description: "Regular flights across major cities. We provide 24/7 airport transfers.",
+  description: "Choose BSH Taxi Services for 24/7 airport pickup and drop services at Visakhapatnam International Airport. Enjoy punctual, comfortable, and affordable taxi services for business and leisure travel.",
   seoTitle: "Vizag Airport Taxi Service | 24/7 Airport Transfers | BSH Taxi Services",
   seoDescription:
     "Book reliable airport taxi service in Visakhapatnam. Punctual pickup and drop to Vizag Airport (VTZ), available 24/7 with professional drivers, fixed fares.",

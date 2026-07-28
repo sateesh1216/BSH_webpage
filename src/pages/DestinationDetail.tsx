@@ -169,7 +169,7 @@ const { openBooking } = useBooking();
       <div className="font-body bg-[#F6F1E4] text-[#1B1B16]">
        {/* Hero */}
 {/* Hero */}
-<section className="relative h-150 w-full sm:h-135">
+<section className="relative h-[85vh] min-h-[700px] w-full lg:h-screen">
   {/* Background image */}
   <div className="absolute inset-0 overflow-hidden">
     <img

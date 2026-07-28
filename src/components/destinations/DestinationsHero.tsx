@@ -32,7 +32,7 @@ export default function DestinationsHero() {
 
         {/* Heading */}
         <h1 className="mt-6 text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
-          Explore Amazing{" "}
+          Discover Amazing{" "}
           <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             Destinations
           </span>
@@ -40,9 +40,11 @@ export default function DestinationsHero() {
 
         {/* Description */}
         <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
-          Discover the most beautiful destinations across Andhra Pradesh with
-          BSH Taxi Services. Enjoy safe, comfortable, and memorable journeys
-          with professional drivers and affordable pricing.
+          BSH Taxi Services is a <b>trusted taxi service in Vizag,</b> 
+          offering safe and affordable cab services across Visakhapatnam. 
+          <b>From airport transfers and local sightseeing to outstation trips,</b> 
+          our experienced drivers ensure a comfortable travel experience. 
+          <i> Call +91 8886803322</i> to book your ride today.
         </p>
 
         {/* Highlight Cards */}
