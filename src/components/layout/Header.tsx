@@ -189,104 +189,111 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile Navigation */}
-      <nav className="hidden flex-col gap-1.5 px-5 py-5 lg:hidden">
-  {navLinks.map((link, i) => {
-    const active = location.pathname === link.href;
+      
+{/* Mobile Navigation */}
+<nav
+  className={`overflow-hidden transition-all duration-300 lg:hidden ${
+    menuOpen
+      ? "max-h-[700px] opacity-100"
+      : "max-h-0 opacity-0 pointer-events-none"
+  }`}
+>
+  <div className="flex flex-col gap-1.5 px-5 py-5">
+    {navLinks.map((link, i) => {
+      const active = location.pathname === link.href;
 
-    // Dropdown Item
-    if (link.children) {
+      // Dropdown Item
+      if (link.children) {
+        return (
+          <div
+            key={link.label}
+            style={{
+              transitionDelay: menuOpen ? `${i * 40}ms` : "0ms",
+            }}
+            className={`transition-all duration-300 ${
+              menuOpen
+                ? "translate-x-0 opacity-100"
+                : "-translate-x-3 opacity-0"
+            }`}
+          >
+            <button
+              type="button"
+              onClick={() =>
+                setOpenDropdown(
+                  openDropdown === link.label ? null : link.label
+                )
+              }
+              className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-[#155EEF]/10 hover:text-[#155EEF]"
+            >
+              {link.label}
+
+              <ChevronDown
+                size={18}
+                className={`transition-transform duration-300 ${
+                  openDropdown === link.label ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            <div
+              className={`overflow-hidden transition-all duration-300 ${
+                openDropdown === link.label
+                  ? "max-h-96 opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <div className="ml-3 mt-2 space-y-1 border-l border-slate-200 pl-3">
+                {link.children.map((child) => (
+                  <Link
+                    key={child.label}
+                    to={child.href}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setOpenDropdown(null);
+                    }}
+                    className="block rounded-lg px-3 py-2 text-sm text-slate-600 transition hover:bg-[#155EEF] hover:text-white"
+                  >
+                    {child.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // Normal Menu Item
       return (
-        <div
+        <Link
           key={link.label}
+          to={link.href}
+          onClick={() => setMenuOpen(false)}
           style={{
             transitionDelay: menuOpen ? `${i * 40}ms` : "0ms",
           }}
-          className={`transition-all duration-300 ${
+          className={`rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-300 ${
             menuOpen
               ? "translate-x-0 opacity-100"
               : "-translate-x-3 opacity-0"
+          } ${
+            active
+              ? "bg-[#155EEF] text-white shadow-md shadow-blue-600/20"
+              : "text-slate-800 hover:bg-[#155EEF]/10 hover:text-[#155EEF]"
           }`}
         >
-          <button
-            type="button"
-            onClick={() =>
-              setOpenDropdown(
-                openDropdown === link.label ? null : link.label
-              )
-            }
-            className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 hover:bg-[#155EEF]/10 hover:text-[#155EEF]"
-          >
-            {link.label}
-
-            <ChevronDown
-              size={18}
-              className={`transition-transform duration-300 ${
-                openDropdown === link.label
-                  ? "rotate-180"
-                  : ""
-              }`}
-            />
-          </button>
-
-          <div
-            className={`overflow-hidden transition-all duration-300 ${
-              openDropdown === link.label
-                ? "max-h-96"
-                : "max-h-0"
-            }`}
-          >
-            <div className="ml-3 mt-2 space-y-1 border-l border-slate-200 pl-3">
-              {link.children.map((child) => (
-                <Link
-                  key={child.label}
-                  to={child.href}
-                  onClick={() => {
-                    setMenuOpen(false);
-                    setOpenDropdown(null);
-                  }}
-                  className="block rounded-lg px-3 py-2 text-sm text-slate-600 transition hover:bg-[#155EEF] hover:text-white"
-                >
-                  {child.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
+          {link.label}
+        </Link>
       );
-    }
+    })}
 
-    // Normal Menu Item
-    return (
-      <Link
-        key={link.label}
-        to={link.href}
-        onClick={() => setMenuOpen(false)}
-        style={{
-          transitionDelay: menuOpen ? `${i * 40}ms` : "0ms",
-        }}
-        className={`rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-300 ${
-          menuOpen
-            ? "translate-x-0 opacity-100"
-            : "-translate-x-3 opacity-0"
-        } ${
-          active
-            ? "bg-[#155EEF] text-white shadow-md shadow-blue-600/20"
-            : "text-slate-800 hover:bg-[#155EEF]/10 hover:text-[#155EEF]"
-        }`}
-      >
-        {link.label}
-      </Link>
-    );
-  })}
-
-  <a
-    href="tel:+918886803322"
-    className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-[#155EEF] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:bg-[#0F4FD8]"
-  >
-    <Phone size={18} />
-    +91 8886803322
-  </a>
+    <a
+      href="tel:+918886803322"
+      className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-[#155EEF] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-[#0F4FD8]"
+    >
+      <Phone size={18} />
+      +91 8886803322
+    </a>
+  </div>
 </nav>
       </header>
     </>
