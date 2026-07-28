@@ -195,7 +195,7 @@ export default function Features() {
           {/* ---------------- Destinations ---------------- */}
           <div className="flex flex-col rounded-2xl border border-slate-100 bg-white/90 p-6 shadow-[0_2px_20px_-4px_rgba(15,23,42,0.06)] backdrop-blur-sm transition-shadow duration-300 hover:shadow-[0_8px_30px_-6px_rgba(15,23,42,0.1)] sm:p-7">
             <div className="mb-6 flex items-center justify-between">
-              <SectionHeading>Explore Amazing Destinations</SectionHeading>
+              <SectionHeading>Discover Amazing Destinations</SectionHeading>
               <a
                 href="/destinations"
                 className="group inline-flex items-center gap-1 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700"

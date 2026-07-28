@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Phone, Menu, X } from "lucide-react";
+import { Phone, Menu, X, ChevronDown, } from "lucide-react";
 import { navLinks } from "../../data/nav";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/Logo_bsh taxi services.webp";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
@@ -71,33 +72,79 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-1 rounded-full border border-white/40 bg-white/30 p-1.5 shadow-inner lg:flex">
 
-          {navLinks.map((link) => {
-            const active = location.pathname === link.href;
+  {navLinks.map((link) => {
 
-            return (
+    const active = location.pathname === link.href;
+
+    if (link.children) {
+      return (
+        <div
+          key={link.label}
+          className="relative"
+          onMouseEnter={() => setOpenDropdown(link.label)}
+          onMouseLeave={() => setOpenDropdown(null)}
+        >
+          <button
+            className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold text-slate-700 transition hover:text-[#155EEF]"
+          >
+            {link.label}
+
+            <ChevronDown
+              size={16}
+              className={`transition ${
+                openDropdown === link.label
+                  ? "rotate-180"
+                  : ""
+              }`}
+            />
+          </button>
+
+          <div
+            className={`absolute left-0 top-full mt-3 w-64 rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl transition-all duration-300 ${
+              openDropdown === link.label
+                ? "visible translate-y-0 opacity-100"
+                : "invisible -translate-y-2 opacity-0"
+            }`}
+          >
+            {link.children.map((item) => (
               <Link
-                key={link.label}
-                to={link.href}
-                className={`group relative rounded-full px-4 py-2 text-sm font-semibold outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#155EEF]/50 ${
-                  active
-                    ? "text-[#155EEF]"
-                    : "text-slate-700 hover:text-[#155EEF]"
-                }`}
+                key={item.label}
+                to={item.href}
+                className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-[#155EEF] hover:text-white"
               >
-                <span className="relative z-10">{link.label}</span>
-
-                {/* Pill background for active/hover state */}
-                <span
-                  className={`absolute inset-0 rounded-full transition-all duration-300 ${
-                    active
-                      ? "scale-100 bg-white opacity-100 shadow-sm"
-                      : "scale-90 bg-white/70 opacity-0 group-hover:scale-100 group-hover:opacity-100"
-                  }`}
-                />
+                {item.label}
               </Link>
-            );
-          })}
-        </nav>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <Link
+        key={link.label}
+        to={link.href}
+        className={`group relative rounded-full px-4 py-2 text-sm font-semibold transition ${
+          active
+            ? "text-[#155EEF]"
+            : "text-slate-700 hover:text-[#155EEF]"
+        }`}
+      >
+        <span className="relative z-10">
+          {link.label}
+        </span>
+
+        <span
+          className={`absolute inset-0 rounded-full transition ${
+            active
+              ? "scale-100 bg-white opacity-100 shadow-sm"
+              : "scale-90 bg-white/70 opacity-0 group-hover:scale-100 group-hover:opacity-100"
+          }`}
+        />
+      </Link>
+    );
+  })}
+</nav>
 
         {/* Call Button */}
         <div className="hidden lg:flex">
@@ -143,43 +190,104 @@ export default function Header() {
       </div>
 
       {/* Mobile Navigation */}
-      <div
-        className={`overflow-hidden border-t border-white/20 bg-white/60 backdrop-blur-2xl transition-all duration-500 ease-in-out lg:hidden ${
-          menuOpen ? "max-h-[28rem] opacity-100" : "max-h-0 opacity-0"
+      <nav className="hidden flex-col gap-1.5 px-5 py-5 lg:hidden">
+  {navLinks.map((link, i) => {
+    const active = location.pathname === link.href;
+
+    // Dropdown Item
+    if (link.children) {
+      return (
+        <div
+          key={link.label}
+          style={{
+            transitionDelay: menuOpen ? `${i * 40}ms` : "0ms",
+          }}
+          className={`transition-all duration-300 ${
+            menuOpen
+              ? "translate-x-0 opacity-100"
+              : "-translate-x-3 opacity-0"
+          }`}
+        >
+          <button
+            type="button"
+            onClick={() =>
+              setOpenDropdown(
+                openDropdown === link.label ? null : link.label
+              )
+            }
+            className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 hover:bg-[#155EEF]/10 hover:text-[#155EEF]"
+          >
+            {link.label}
+
+            <ChevronDown
+              size={18}
+              className={`transition-transform duration-300 ${
+                openDropdown === link.label
+                  ? "rotate-180"
+                  : ""
+              }`}
+            />
+          </button>
+
+          <div
+            className={`overflow-hidden transition-all duration-300 ${
+              openDropdown === link.label
+                ? "max-h-96"
+                : "max-h-0"
+            }`}
+          >
+            <div className="ml-3 mt-2 space-y-1 border-l border-slate-200 pl-3">
+              {link.children.map((child) => (
+                <Link
+                  key={child.label}
+                  to={child.href}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    setOpenDropdown(null);
+                  }}
+                  className="block rounded-lg px-3 py-2 text-sm text-slate-600 transition hover:bg-[#155EEF] hover:text-white"
+                >
+                  {child.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Normal Menu Item
+    return (
+      <Link
+        key={link.label}
+        to={link.href}
+        onClick={() => setMenuOpen(false)}
+        style={{
+          transitionDelay: menuOpen ? `${i * 40}ms` : "0ms",
+        }}
+        className={`rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-300 ${
+          menuOpen
+            ? "translate-x-0 opacity-100"
+            : "-translate-x-3 opacity-0"
+        } ${
+          active
+            ? "bg-[#155EEF] text-white shadow-md shadow-blue-600/20"
+            : "text-slate-800 hover:bg-[#155EEF]/10 hover:text-[#155EEF]"
         }`}
       >
-        <nav className="flex flex-col gap-1.5 px-5 py-5">
-          {navLinks.map((link, i) => {
-            const active = location.pathname === link.href;
+        {link.label}
+      </Link>
+    );
+  })}
 
-            return (
-              <Link
-                key={link.label}
-                to={link.href}
-                onClick={() => setMenuOpen(false)}
-                style={{ transitionDelay: menuOpen ? `${i * 40}ms` : "0ms" }}
-                className={`rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-300 ${
-                  menuOpen ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"
-                } ${
-                  active
-                    ? "bg-[#155EEF] text-white shadow-md shadow-blue-600/20"
-                    : "text-slate-800 hover:bg-[#155EEF]/10 hover:text-[#155EEF]"
-                }`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
-
-          <a
-            href="tel:+918886803322"
-            className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-[#155EEF] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:bg-[#0F4FD8] active:scale-95"
-          >
-            <Phone size={18} />
-            +91 8886803322
-          </a>
-        </nav>
-      </div>
+  <a
+    href="tel:+918886803322"
+    className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-[#155EEF] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:bg-[#0F4FD8]"
+  >
+    <Phone size={18} />
+    +91 8886803322
+  </a>
+</nav>
       </header>
     </>
   );

@@ -67,6 +67,7 @@ export type Destination = {
   highlights?: string[];
   quickFacts?: QuickFact[];
   bestTimeToVisit?: string;
+  VIZAGLOCALTAXIPACKAGE?: string;
   howToReach?: string;
   funFact?: string;
 };
@@ -123,7 +124,7 @@ export const destinations: Destination[] = [
     funFact:
       "Araku's coffee story began with the British in the early 1900s, but it was tribal cooperatives who turned it into a globally recognised, organic, GI-tagged brand.",
     importantNotes: [
-      "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
+      "The above prices do not include tolls, entry fees, parking fees and driver food.",
       "During standby and ghat roads, the cabin A/C will be turned off to ensure safe driving power.",
     ],
     places: [
@@ -228,7 +229,7 @@ export const destinations: Destination[] = [
     funFact:
       "Lambasingi, popularly known as the\"Kashmir of Andhra Pradesh,\"is one of the coldest places in the state. During winter, the village is covered with mist and occasional frost, making it one of the most unique tourist destinations near Vizag for nature lovers and adventure seekers.",
     importantNotes: [
-      "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
+      "The above prices do not include tolls, entry fees, parking fees and driver food.",
       "During standby and ghat roads, the cabin A/C will be turned off to ensure safe driving power.",
       "Early morning sunrise-viewing trips may require starting from Vizag before dawn to catch the frosty hours.",
     ],
@@ -312,17 +313,16 @@ export const destinations: Destination[] = [
     ],
     quickFacts: [
       { label: "Certification", value: "Blue Flag" },
-      { label: "Best Time", value: "Oct – Feb" },
+      { label: "Best Time", value: "Aug – Feb" },
       { label: "Activities", value: "Surfing, Kayaking, Jet-Ski" },
-      { label: "Distance", value: "8 km from city centre" },
+      { label: "Distance", value: "10-Hour Local Sightseeing Package in Vizag" },
     ],
-    bestTimeToVisit: "October to February, for pleasant weather and calmer seas ideal for water sports.",
-    howToReach: "Just a 20–25 minute drive from central Vizag along the coastal road.",
+    bestTimeToVisit: "October to March is the ideal time to visit Rushikonda Beach in Vizag, when the pleasant weather and calm sea create the perfect setting for beach walks, water sports, and family vacations.",
+    howToReach: "Rushikonda Beach is just 12 KM from Visakhapatnam City Center. Travel comfortably with BSH Taxi Services for quick and reliable taxi services to one of the most popular beaches in Vizag.",
     funFact:
-      "Rushikonda is one of the very few beaches in India to hold Blue Flag certification — the same international eco-standard used to rate beaches across Europe.",
+      "Rushikonda Beach is a prestigious Blue Flag certified beach in Andhra Pradesh, renowned for its crystal-clear waters, golden sands, eco-friendly facilities, and world-class beach management, making it a must-visit destination in Visakhapatnam (Vizag).",
     importantNotes: [
-      "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
-      "Museum and park entry tickets (Submarine Museum, Kailasagiri ropeway, etc.) are payable separately at each location.",
+      "The above prices do not include tolls, entry fees, parking fees and driver food.",
       "Itinerary order may be adjusted slightly depending on traffic and opening hours.",
     ],
     // places: [
@@ -414,12 +414,12 @@ export const destinations: Destination[] = [
       { label: "Key Festival", value: "Chandanotsavam" },
     ],
     bestTimeToVisit:
-      "Year-round, though the Chandanotsavam festival (Akshaya Tritiya, usually April–May) is the most significant time to visit when the deity's true form is revealed.",
-    howToReach: "A short 30–40 minute drive from Vizag city, with the temple sitting partway up Simhachalam Hill.",
+      "Visit Simhachalam Temple throughout the year, with April and May being the most auspicious months during the Chandanotsavam Festival, when thousands of devotees gather for the sacred Nijarupa Darshanam.",
+    howToReach: "Simhachalam Temple is just 16 KM from Vizag. Travel comfortably with BSH Taxi Services, offering reliable taxi services from Visakhapatnam for temple visits, local sightseeing, and pilgrimage tours.",
     funFact:
-      "The main idol is smeared in sandalwood paste 364 days of the year — devotees see the deity's actual form for only a few hours, once annually.",
+      "Simhachalam Temple is one of the most famous pilgrimage destinations in Andhra Pradesh, dedicated to Lord Varaha Lakshmi Narasimha Swamy. The deity is covered with sandalwood paste for 364 days, revealing the original idol only once a year during the Chandanotsavam Festival, making it a unique spiritual experience for devotees.",
     importantNotes: [
-      "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
+      "The above prices do not include tolls, entry fees, parking fees and driver food.",
       "Mobile phones, cameras and bags are not allowed inside the sanctum and must be deposited at the cloakroom.",
       "Special/VIP darshan tickets are payable separately at the temple counter and are not included in the taxi fare.",
     ],
@@ -501,11 +501,11 @@ export const destinations: Destination[] = [
       { label: "Key Festival", value: "Brahmotsavam" },
     ],
     bestTimeToVisit:
-      "September to February, when the weather is cooler; the annual Brahmotsavam festival (September/October) is the most significant time to visit, though crowds peak then.",
+      "Visit Tirupati between September and February for pleasant weather and smooth temple visits. Experience the grand Srivari Brahmotsavam Festival, one of the most important religious events in Andhra Pradesh",
     howToReach:
-      "A long outstation drive of roughly 12-13 hours from Vizag; most travellers split the journey overnight or fly into Tirupati Airport and use a local cab for the temple visit and darshan queue.",
+      "Travel from Vizag to Tirupati with BSH Taxi Services. Our reliable taxi service offers a comfortable and convenient journey to the sacred Sri Venkateswara Swamy Temple, one of India's most visited pilgrimage destinations.",
     funFact:
-      "The temple's hundis (donation boxes) alone collect crores of rupees a day, making it one of the wealthiest religious institutions in the world — funding hospitals, universities and free meals (Annaprasadam) for pilgrims.",
+      "Tirupati Sri Venkateswara Swamy Temple welcomes millions of devotees every year and is one of the world's most revered Hindu pilgrimage sites. The temple is renowned for its spiritual significance, free Annaprasadam, and centuries-old traditions, making it a must-visit destination in Andhra Pradesh.",
     importantNotes: [
       "This is a long outstation trip; the above pricing is typically structured as a multi-day round-trip package (driver batta/night halt charges may apply).",
       "Darshan tickets (Special Entry / Sarva Darshan) must be booked separately via TTD and are not included in the taxi fare.",
@@ -599,11 +599,11 @@ export const destinations: Destination[] = [
       { label: "Rank", value: "2nd busiest shrine in AP" },
     ],
     bestTimeToVisit:
-      "October to February for cooler travel weather; the Kalyana Mahotsavam in April/May is the temple's biggest festival.",
+      "Visit Annavaram Temple between October and February to enjoy pleasant weather and a peaceful spiritual experience. The annual Kalyanotsavam Festival is one of the temple's most important celebrations, attracting devotees from across India.",
     howToReach:
-      "Roughly a 2.5-hour drive south from Vizag via NH16, or by train — Annavaram railway station is on the main Chennai–Howrah line, just 2 km from the temple.",
+      "Travel from Vizag to Annavaram with BSH Taxi Services. Located about 110 KM from Visakhapatnam, the temple is well connected by NH16 and railway, making it one of the most convenient pilgrimage destinations in Andhra Pradesh.",
     funFact:
-      "The temple's daily Annadanam feeds thousands of pilgrims for free, one of the largest such programs in coastal Andhra Pradesh.",
+      "Annavaram Sri Veera Venkata Satyanarayana Swamy Temple is famous for its sacred Satyanarayana Vratham, daily Annadanam service, and serene location atop Ratnagiri Hill. It is one of the most important Hindu pilgrimage sites near Vizag, attracting thousands of devotees throughout the year.",
     importantNotes: [
       "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
       "Special/VIP darshan and Vratham booking slots must be arranged separately at the temple counter or via the Devasthanam website.",
@@ -686,11 +686,11 @@ export const destinations: Destination[] = [
       { label: "Key Festival", value: "Rathasapthami" },
     ],
     bestTimeToVisit:
-      "October to February for pleasant travel weather; Rathasapthami (Jan/Feb) is the most significant day, when sunrise light aligns with the deity.",
+      "Visit Arasavalli Sri Suryanarayana Swamy Temple between October and February for pleasant weather and a peaceful pilgrimage. The Ratha Saptami Festival is the temple's most celebrated event, attracting thousands of devotees from Vizag and across India.",
     howToReach:
-      "About a 2.5–3 hour drive north from Vizag along NH16 through Srikakulam town; the nearest railway station is Amadalavalasa, roughly 16 km away.",
+      "Travel from Vizag to Arasavalli Temple with BSH Taxi Services. Located approximately 113 KM from Visakhapatnam, the temple is well connected by NH16, making it one of the most popular pilgrimage destinations in Andhra Pradesh.",
     funFact:
-      "The temple's five gateways were positioned with such precision that sunrise rays travel straight through them to touch the deity's feet — centuries before modern instruments existed to plan it.",
+      "Arasavalli Sri Suryanarayana Swamy Temple is one of India's most ancient Sun Temples and a major spiritual attraction in Andhra Pradesh. Its remarkable architectural design allows the first rays of the rising sun to illuminate the deity during Ratha Saptami, making it a must-visit destination for devotees and tourists alike.",
     importantNotes: [
       "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
       "Vehicles must be parked a short distance from the temple; the final approach is on foot through a narrow walkway.",
@@ -769,11 +769,11 @@ export const destinations: Destination[] = [
       { label: "Nearest Town", value: "Paderu (~6 km)" },
     ],
     bestTimeToVisit:
-      "November to February, when winter humidity reliably forms the dense cloud bed; the window to catch it is roughly 5:30–6:15 AM before the sun burns it off.",
+      "Visit Vanjangi Hills between November and February to witness the spectacular Sea of Clouds, cool weather, and breathtaking sunrise views. It is one of the top tourist destinations near Vizag during the winter season.",
     howToReach:
-      "A 3-4 hour drive from Vizag via Vaddadi Madugula–Paderu–Dumbriguda road, followed by a 4-5 km trek on foot from Paderu since no motorable road reaches the summit. Most visitors start from Vizag around 2 AM or overnight in Araku/Paderu.",
+      "Travel from Vizag to Vanjangi Hills with BSH Taxi Services. Located approximately 110 KM from Visakhapatnam, the scenic route passes through Paderu and the beautiful Eastern Ghats, followed by a short trek to the viewpoint.",
     funFact:
-      "Vanjangi has no direct road, no streetlights, and almost no accommodation — visitors either drive through the night from Vizag or camp near Paderu, making the sunrise feel far more earned than at most viewpoints.",
+      "Vanjangi Hills is renowned for its magical Sea of Clouds (Megha Samudram) and stunning sunrise views, making it one of the most popular weekend getaway destinations near Vizag and a must-visit attraction in Andhra Pradesh.",
     importantNotes: [
       "This is a pre-dawn trip: pickup from Vizag is typically around 1-2 AM to reach the trek start point before sunrise.",
       "The final 4-5 km stretch to the viewpoint is a forest trek on foot — the taxi cannot go beyond Paderu/the trek starting point.",
@@ -845,13 +845,13 @@ export const destinations: Destination[] = [
     { label: "Status", value: "International, 24×7" },
   ],
   bestTimeToVisit:
-    "Not applicable — the airport runs 24×7 year-round, so we're available for pickups and drops any time, any day.",
+    "Vizag Airport operates 24/7, making it the perfect gateway to Visakhapatnam in every season. BSH Taxi Services provides round-the-clock airport pickup and drop services for a smooth and hassle-free travel experience.",
   howToReach:
-    "Around 12 km from the city centre, roughly a 25–30 minute drive depending on traffic — we track your flight status for pickups so you're never left waiting.",
+    "Visakhapatnam International Airport is just 12 KM from Vizag City Center. Book your Vizag Airport taxi with BSH Taxi Services for punctual, comfortable, and affordable airport transfers to hotels, railway stations, tourist attractions, and nearby destinations.",
   funFact:
-    "Vizag Airport shares its runway with the Indian Navy's INS Dega — one of only a handful of airports in India where civilian and naval aviation operate side by side.",
+    "Visakhapatnam International Airport (Vizag Airport) is one of India's unique dual-use airports, sharing its runway with the Indian Navy's INS Dega. It serves as the primary gateway to Visakhapatnam, making travel to beaches, tourist attractions, and business destinations quick and convenient.",
   importantNotes: [
-    "The above prices do not include tolls, entry fees, or parking fees (excluding driver food).",
+    "The above prices do not include tolls, entry fees, parking fees and driver food.",
     "We track your flight status in real time, so pickup timing adjusts automatically for delays or early arrivals.",
   ],
 
