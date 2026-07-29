@@ -120,7 +120,7 @@ export function CTA() {
           <CTAIconBadge />
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Need a Taxi?</h2>
-            <p className="mt-1 max-w-md text-sm text-[#D6E4FF] sm:text-base">Call us now for the best taxi services in Visakhapatnam and beyond.</p>
+            <p className="mt-1 max-w-md text-sm text-[#D6E4FF] sm:text-base">Call us now for the <b>best taxi services in Vizag</b> and beyond.</p>
           </div>
         </div>
 
@@ -142,9 +142,9 @@ export function CTA() {
           </button>
         </div>
 
-        {/* <div className="hidden shrink-0 lg:block">
-          <img src="/src/assets/cars/Homepage_Dzire-taxi-services-2-in-visakhapatnam-bshtaxiservices.png" alt="BSH Taxi Services car" className="h-auto w-64 object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.35)]" />
-        </div> */}
+        <div className="hidden shrink-0 lg:block">
+          <img src="/src/assets/cars/Homepage_Dzire-taxi-services-2-in-visakhapatnam-bshtaxiservices.webp" alt="BSH Taxi Services car" className="h-auto w-64 object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.35)]" />
+        </div>
       </div>
     </section>
   );
