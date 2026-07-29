@@ -86,9 +86,9 @@ export default function Header() {
             the header. */}
         <div ref={shellRef} className="mx-auto w-[92%] max-w-7xl">
           {/* Main row: logo + nav + call button. */}
-          <div className="grid h-16 grid-cols-[240px_1fr_240px] items-center">
+          <div className="flex h-16 items-center">
             {/* Logo */}
-            <div className="flex justify-start">
+            <div className="flex shrink-0 items-center justify-start">
   <Link to="/" className="group flex items-center gap-3">
               <div className="relative">
                 <div className="absolute inset-0 rounded-full bg-amber-400/0 blur-lg transition-all duration-500 group-hover:bg-amber-400/40" />
@@ -116,7 +116,7 @@ export default function Header() {
 </div>
             {/* Desktop Navigation — centers the pill in the remaining space
                 between the logo and the call button. */}
-            <div className="hidden items-center justify-center lg:flex">
+            <div className="hidden min-w-0 flex-1 items-center justify-center lg:flex">
               <nav
                 ref={navPillRef}
                 className="flex shrink-0 items-center gap-0.5 rounded-full border border-white/50 bg-white/40 p-1.5 shadow-[inset_0_1px_2px_rgba(255,255,255,0.6),inset_0_-1px_3px_rgba(15,23,42,0.06)] xl:gap-1"
@@ -191,7 +191,7 @@ export default function Header() {
             </div>
 
             {/* Call Button */}
-                <div className="hidden justify-end lg:flex">
+                <div className="hidden shrink-0 items-center justify-end lg:flex">
             <a
               href="tel:+918886803322"
               aria-label="Call +91 8886803322"
