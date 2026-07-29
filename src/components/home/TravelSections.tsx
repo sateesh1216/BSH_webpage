@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { Link } from "react-router-dom";  
 import {
   Car,
   Plane,
@@ -21,16 +22,66 @@ import tempoTravellerImg from "../../assets/cars/17-seater-tempo-traveller-bshta
 
 import { useBooking } from "../booking/BookingContext";
 
+interface ServiceItem {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  path: string;
+}
+
+
+
 /* DATA — unchanged from before */
-interface ServiceItem { icon: React.ElementType; title: string; description: string; }
+// interface ServiceItem { icon: React.ElementType; title: string; description: string; }
+// const services: ServiceItem[] = [
+//   { icon: Car, title: "Local Taxi", description: "Comfortable rides within the city" },
+//   { icon: Plane, title: "Airport Transfer", description: "On-time airport pickup & drop" },
+//   { icon: MapPinned, title: "Outstation Taxi", description: "One way / Round trip to any city" },
+//   { icon: Building2, title: "Corporate Travel", description: "Reliable travel for your business" },
+//   { icon: HeartHandshake, title: "Wedding Cars", description: "Make your special day extra special" },
+//   { icon: Map, title: "Tour Packages", description: "Custom packages for amazing trips" },
+// ];
+
 const services: ServiceItem[] = [
-  { icon: Car, title: "Local Taxi", description: "Comfortable rides within the city" },
-  { icon: Plane, title: "Airport Transfer", description: "On-time airport pickup & drop" },
-  { icon: MapPinned, title: "Outstation Taxi", description: "One way / Round trip to any city" },
-  { icon: Building2, title: "Corporate Travel", description: "Reliable travel for your business" },
-  { icon: HeartHandshake, title: "Wedding Cars", description: "Make your special day extra special" },
-  { icon: Map, title: "Tour Packages", description: "Custom packages for amazing trips" },
+  {
+    icon: Car,
+    title: "Local Taxi",
+    description: "Comfortable rides within the city",
+    path: "/destinations/vizag-local?type=taxi-services-in-vizag",
+  },
+  {
+    icon: Plane,
+    title: "Airport Transfer",
+    description: "On-time airport pickup & drop",
+    path: "/destinations/vizag-airport?type=airport-transfer",
+  },
+  {
+    icon: MapPinned,
+    title: "Outstation Taxi",
+    description: "One Way & Round Trip Taxi Services",
+    path: "/destinations",
+  },
+  {
+    icon: Building2,
+    title: "Corporate Travel",
+    description: "Professional travel solutions for businesses",
+    path: "/services",
+  },
+  {
+    icon: HeartHandshake,
+    title: "Wedding Cars",
+    description: "Luxury wedding car rentals",
+    path: "/services",
+  },
+  {
+    icon: Map,
+    title: "Tour Packages",
+    description: "Customized holiday & sightseeing packages",
+    path: "/destinations",
+  },
 ];
+
+
 
 type VehicleType = "sedan" | "mpv" | "van";
 interface FleetItem { name: string; seats: number; rate: number; vehicleType: VehicleType; image?: string; }
@@ -66,22 +117,30 @@ function Services() {
         <Eyebrow label="Our Services" />
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
           {services.map((service) => {
-            const Icon = service.icon;
-            return (
-              <article
-                key={service.title}
-                className="group flex h-full flex-col items-start gap-4 rounded-2xl bg-white p-5 shadow-[0_1px_2px_rgba(16,24,40,0.04)] ring-1 ring-slate-100 transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_16px_36px_rgba(16,24,40,0.10)] hover:ring-primary/15"
-              >
-                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-linear-to-br from-primary/10 to-blue-50 text-primary transition-all duration-200 group-hover:bg-primary group-hover:text-white group-hover:shadow-md group-hover:shadow-primary/25">
-                  <Icon size={20} strokeWidth={2} />
-                </div>
-                <div>
-                  <h3 className="text-[15px] font-extrabold leading-tight text-slate-900">{service.title}</h3>
-                  <p className="mt-1.5 text-[13px] leading-relaxed text-slate-500">{service.description}</p>
-                </div>
-              </article>
-            );
-          })}
+  const Icon = service.icon;
+
+  return (
+    <Link
+      key={service.title}
+      to={service.path}
+      className="group flex h-full flex-col items-start gap-4 rounded-2xl bg-white p-5 shadow-[0_1px_2px_rgba(16,24,40,0.04)] ring-1 ring-slate-100 transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_16px_36px_rgba(16,24,40,0.10)] hover:ring-primary/15"
+    >
+      <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-linear-to-br from-primary/10 to-blue-50 text-primary transition-all duration-200 group-hover:bg-primary group-hover:text-white group-hover:shadow-md group-hover:shadow-primary/25">
+        <Icon size={20} strokeWidth={2} />
+      </div>
+
+      <div>
+        <h3 className="text-[15px] font-extrabold leading-tight text-slate-900">
+          {service.title}
+        </h3>
+
+        <p className="mt-1.5 text-[13px] leading-relaxed text-slate-500">
+          {service.description}
+        </p>
+      </div>
+    </Link>
+  );
+})}
         </div>
       </div>
     </section>
@@ -138,7 +197,10 @@ const vehicleIllustrations: Record<VehicleType, React.ComponentType> = {
 function FleetCard({ item, onBookNow }: { item: FleetItem; onBookNow: (name: string) => void }) {
   const Illustration = vehicleIllustrations[item.vehicleType];
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.04)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_45px_rgba(16,24,40,0.12)] hover:ring-primary/15">
+    <Link
+      to={item.path}
+      className="group flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.04)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_45px_rgba(16,24,40,0.12)] hover:ring-primary/15"
+    >
       <div className="relative h-56 w-full overflow-hidden bg-slate-50 sm:h-64">
         {item.image ? (
           <img src={item.image} alt={item.name} className="h-full w-full object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-110" />
@@ -176,7 +238,7 @@ function FleetCard({ item, onBookNow }: { item: FleetItem; onBookNow: (name: str
           />
         </button>
       </div>
-    </article>
+    </Link>
   );
 }
 

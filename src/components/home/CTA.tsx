@@ -142,9 +142,9 @@ export function CTA() {
           </button>
         </div>
 
-        <div className="hidden shrink-0 lg:block">
+        {/* <div className="hidden shrink-0 lg:block">
           <img src="/src/assets/cars/Homepage_Dzire-taxi-services-2-in-visakhapatnam-bshtaxiservices.webp" alt="BSH Taxi Services car" className="h-auto w-64 object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.35)]" />
-        </div>
+        </div> */}
       </div>
     </section>
   );
