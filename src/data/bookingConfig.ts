@@ -90,6 +90,8 @@ export const VEHICLES: Vehicle[] = [
   { id: "tempo", name: "Tempo Traveller", seats: "17 Seats", bags: 8, ac: true, ratePerKm: 30 , image: tempoImg,},
 ];
 
+export type VehicleId = (typeof VEHICLES)[number]["id"];
+
 export function makeDefaultTrip(): TripDetails {
   return {
     tripType: "Outstation",

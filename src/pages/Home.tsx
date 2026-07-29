@@ -7,6 +7,7 @@ import TrustBar from "../components/home/TrustBar";
 import { CTA, ContactUs } from "../components/home/CTA";
 import Review from "../components/home/Review";
 import BookingWizard from "../components/booking/BookingWizard";
+import MobileSearchBar from "../components/home/MobileSearchBar";
 import FloatingContactButtons from "../components/home/FloatingContactButtons";
 
 const localBusinessSchema = {
@@ -122,7 +123,16 @@ export default function HomePage() {
 
       <Hero />
 
-      <section className="-mt-2 relative z-30 px-4 lg:px-8">
+      {/* Quick search bar — default destinations + WhatsApp booking.
+          Shown on every screen size, at the top of the page. */}
+      <section className="relative z-30 -mt-6 px-4 sm:-mt-8 md:-mt-10 md:px-6 lg:px-8">
+        <div className="mx-auto w-full md:max-w-3xl">
+          <MobileSearchBar />
+        </div>
+      </section>
+
+      {/* Desktop / tablet: full multi-step booking wizard, further down the page */}
+      <section className="relative z-20 hidden px-4 pt-6 md:block lg:px-8">
         <BookingWizard />
       </section>
 

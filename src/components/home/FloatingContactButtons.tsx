@@ -44,35 +44,9 @@ export default function FloatingContactButtons() {
         }
       `}</style>
 
-      {/* ================= MOBILE ================= */}
-      <div className="fixed bottom-5 right-4 z-[9999] flex flex-col gap-3 md:hidden">
-        {/* Call */}
-        <a href={`tel:${phoneNumber}`} aria-label="Call Now">
-          <div className="relative floating">
-            <span className="pulse-ring bg-blue-600"></span>
-
-            <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-xl">
-              <Phone size={20} strokeWidth={2.5} />
-            </div>
-          </div>
-        </a>
-
-        {/* WhatsApp */}
-        <a
-          href={`https://wa.me/${whatsappNumber}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="WhatsApp"
-        >
-          <div className="relative floating">
-            <span className="pulse-ring bg-[#25D366]"></span>
-
-            <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl">
-              <FaWhatsapp size={24} />
-            </div>
-          </div>
-        </a>
-      </div>
+      {/* Mobile Call/WhatsApp now live in the bottom tab bar (MobileBottomNav),
+          so no separate floating buttons are rendered on mobile here —
+          avoids stacking two sets of the same buttons on small screens. */}
 
       {/* ================= DESKTOP ================= */}
 
