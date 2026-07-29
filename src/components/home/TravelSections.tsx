@@ -84,12 +84,47 @@ const services: ServiceItem[] = [
 
 
 type VehicleType = "sedan" | "mpv" | "van";
-interface FleetItem { name: string; seats: number; rate: number; vehicleType: VehicleType; image?: string; }
+interface FleetItem {
+  name: string;
+  seats: number;
+  rate: number;
+  vehicleType: VehicleType;
+  image?: string;
+  path: string;
+}
 const fleet: FleetItem[] = [
-  { name: "Dzire", seats: 4, rate: 14, vehicleType: "sedan", image: dzireImg },
-  { name: "Maruti Ertiga", seats: 6, rate: 17, vehicleType: "mpv", image: ertigaImg },
-  { name: "Innova Crysta", seats: 7, rate: 20, vehicleType: "mpv", image: innovaImg },
-  { name: "Tempo Traveller", seats: 17, rate: 30, vehicleType: "van", image: tempoTravellerImg },
+  {
+    name: "Dzire",
+    seats: 4,
+    rate: 14,
+    vehicleType: "sedan",
+    image: dzireImg,
+    path: "#",
+  },
+  {
+    name: "Maruti Ertiga",
+    seats: 6,
+    rate: 17,
+    vehicleType: "mpv",
+    image: ertigaImg,
+    path: "#",
+  },
+  {
+    name: "Innova Crysta",
+    seats: 7,
+    rate: 20,
+    vehicleType: "mpv",
+    image: innovaImg,
+    path: "#",
+  },
+  {
+    name: "Tempo Traveller",
+    seats: 17,
+    rate: 30,
+    vehicleType: "van",
+    image: tempoTravellerImg,
+    path: "#",
+  },
 ];
 
 interface StepItem { icon: React.ElementType; title: string; description: string; }
