@@ -118,7 +118,7 @@ const { openBooking } = useBooking();
   "Hill Station";
 
   const theme = CATEGORY_THEME[category];
-  const CategoryIcon = theme.Icon;
+  // const CategoryIcon = theme.Icon;
   // Fill level of the route marker's odometer bar: closer destinations read
   // "fuller" on a 0–130km scale, since nothing we serve sits further than that.
 
@@ -180,23 +180,7 @@ const { openBooking } = useBooking();
     <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-black/10" />
   </div>
 
-  {/* Top Bar */}
-  <div className="absolute inset-x-0 top-0 z-10 flex items-start justify-between px-6 pt-6 sm:px-10 sm:pt-8 lg:px-16">
-    <div
-      className={`inline-flex items-center gap-2 rounded-full ${theme.accent} px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white shadow-sm`}
-    >
-      <CategoryIcon size={14} />
-      {theme.label}
-    </div>
 
-    <button
-  onClick={() => openBooking({ resetTrip: true, drop: name })}
-  className={`book-btn hidden items-center gap-2 rounded-full ${theme.accent} px-5 py-2.5 text-sm font-bold text-white shadow-lg sm:inline-flex`}
->
-  <CalendarCheck size={16} />
-  Book Now
-</button>
-  </div>
 
   {/* Hero Title */}
   <div className="absolute inset-0 z-10 flex flex-col justify-end px-6 pb-16 sm:px-10 lg:px-16">
