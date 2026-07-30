@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import { useState } from "react";
 import { Phone, MapPin, Mail, Navigation } from "lucide-react";
 import { useBooking } from "../booking/BookingContext";
 
@@ -78,7 +79,43 @@ function ContactInfoCard({ detail, index }: { detail: ContactDetail; index: numb
   return <div className={cardClass}>{content}</div>;
 }
 
+/**
+ * MapEmbed
+ * --------
+ * Google's "output=embed" iframe looks lightweight from our side (just a
+ * <iframe src="...">), but internally Google loads its full Maps JS
+ * bundle (places.js, main.js, init_embed.js, controls.js, etc. — ~400 KiB
+ * uncompressed) the moment the iframe mounts. Native `loading="lazy"`
+ * isn't reliable enough to stop this on a long homepage, since Lighthouse
+ * (and some browsers) still treat a below-the-fold iframe as "close
+ * enough" to preload.
+ *
+ * Fix: show a static, zero-JS placeholder card first. Only mount the
+ * real iframe — and therefore only trigger Google's Maps JS download —
+ * once the user actually clicks it. Most homepage visitors never click
+ * the embedded map (they use "Open in Maps" or just read the address),
+ * so this removes ~223 KiB of unused JS for the common case.
+ */
 function MapEmbed({ title, embedUrl, linkUrl }: { title: string; embedUrl: string; linkUrl: string }) {
+  const [loadMap, setLoadMap] = useState(false);
+
+  if (!loadMap) {
+    return (
+      <button
+        type="button"
+        onClick={() => setLoadMap(true)}
+        className="group relative flex h-80 w-full flex-col items-center justify-center gap-2 rounded-2xl border border-[#E3ECFF] bg-linear-to-br from-[#EAF1FF] to-[#F4F8FF] text-[#1554B8] shadow-lg shadow-[#1554B8]/10 transition-colors hover:from-[#E3ECFF] hover:to-[#EAF1FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1554B8] lg:h-full"
+        aria-label={`Load map for ${title}`}
+      >
+        <span className="grid h-14 w-14 place-items-center rounded-full bg-white shadow-md shadow-[#1554B8]/15 transition-transform duration-200 group-hover:scale-105">
+          <MapPin size={26} />
+        </span>
+        <span className="text-sm font-semibold">Tap to load map</span>
+        <span className="text-xs text-[#57647B]">Kancharapalem, Visakhapatnam</span>
+      </button>
+    );
+  }
+
   return (
     <div className="relative overflow-hidden rounded-2xl border border-[#E3ECFF] shadow-lg shadow-[#1554B8]/10">
       <iframe title={title} src={embedUrl} className="h-80 w-full border-0 grayscale-15% lg:h-full" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />

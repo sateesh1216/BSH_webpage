@@ -5,24 +5,7 @@ import { X } from "lucide-react";
 import { useBooking } from "./BookingContext";
 import InstantBookingCard from "./Instantbookingcard";
 
-/**
- * BookingModal
- * ------------
- * Thin modal shell around <InstantBookingCard>. Mount this once near the
- * root of the app (alongside <BookingProvider>) — it portals to
- * document.body and shows/hides itself based on `isOpen`, so nothing
- * else needs to render it conditionally.
- *
- * NOTE: This is intentionally the short, single-screen booking form
- * (pickup, drop, vehicle, date, name, phone) — NOT the multi-step
- * <BookingWizard>. The full wizard still lives inline on the home page
- * hero section and is untouched by this modal.
- *
- * Mobile: on small screens this behaves like a bottom sheet — anchored
- * to the bottom of the viewport with only the top corners rounded —
- * instead of a centered card, which is easier to reach with a thumb and
- * feels more native on phones. It switches to a centered card at `sm`.
- */
+
 export default function BookingModal() {
   const { isOpen, closeBooking, vehicleName, trip } = useBooking();
 
@@ -49,7 +32,7 @@ export default function BookingModal() {
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[9999] flex items-end justify-center sm:items-center sm:p-6">
+    <div className="fixed inset-0 z-9999 flex items-end justify-center sm:items-center sm:p-6">
       {/* Backdrop */}
       <button
         type="button"

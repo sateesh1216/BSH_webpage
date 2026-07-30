@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, lazy,Suspense} from "react";
 import {
   Check,
   ChevronLeft,
@@ -31,7 +31,7 @@ import LocationAutocomplete, {
   POPULAR_PICKUP_PLACES,
   POPULAR_DROP_PLACES,
 } from "./LocationAutocomplete";
-import RouteMapPreview from "./Routemappreview";
+const RouteMapPreview = lazy(() => import("./Routemappreview"));
 import type {
   TripDetails,
   PassengerDetails,
@@ -216,27 +216,27 @@ function Stepper({ currentIndex }: { currentIndex: number }) {
               </div>
 
               {/* Labels */}
-              <div className="mt-2 text-center">
-  <p
-    className={`text-[10px] font-semibold leading-tight sm:text-sm ${
-      state === "todo"
-        ? "text-slate-400"
-        : "text-slate-900"
-    }`}
-  >
-    {step.label}
-  </p>
+              <div className="mt-3 hidden text-center sm:block">
+                <p
+                  className={`text-sm font-semibold transition-colors ${
+                    state === "todo"
+                      ? "text-slate-400"
+                      : "text-slate-900"
+                  }`}
+                >
+                  {step.label}
+                </p>
 
-  <p
-    className={`mt-1 hidden text-[10px] sm:block ${
-      state === "active"
-        ? "text-primary"
-        : "text-slate-400"
-    }`}
-  >
-    {step.sub}
-  </p>
-</div>
+                <p
+                  className={`mt-1 text-xs ${
+                    state === "active"
+                      ? "text-primary"
+                      : "text-slate-400"
+                  }`}
+                >
+                  {step.sub}
+                </p>
+              </div>
             </div>
           );
         })}
@@ -517,7 +517,7 @@ function DateTimePickerField({
       {isOpen && (
         <div
           role="dialog"
-          className="absolute left-0 top-full z-[100] mt-2 w-[min(92vw,480px)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10 animate-in fade-in zoom-in-95 duration-150"
+          className="absolute left-0 top-full z-100 mt-2 w-[min(92vw,480px)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10 animate-in fade-in zoom-in-95 duration-150"
         >
           {/* Side-by-side: calendar on the left, time slots on the right */}
           <div className="grid grid-cols-[1fr_150px] divide-x divide-slate-100">
@@ -593,7 +593,7 @@ function DateTimePickerField({
               <p className="flex items-center gap-1.5 border-b border-slate-100 bg-slate-50/60 px-3 py-2.5 text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-500">
                 <Clock size={12} className="text-primary" /> Time
               </p>
-              <div className="max-h-[260px] flex-1 overflow-y-auto px-1.5 py-1.5 [scrollbar-width:thin]">
+              <div className="max-h-65 flex-1 overflow-y-auto px-1.5 py-1.5 scrollbar-thin">
                 {TIME_SLOTS.map((t) => {
                   const isSelected = t === timeValue;
                   return (
@@ -722,14 +722,29 @@ function StepTripDetails({
               panes, zoom controls, markers) are capped inside this box and
               can never paint above the date/time popover next to it */}
           <div className="relative isolate z-0 overflow-hidden rounded-xl border border-slate-100 shadow-[0_2px_10px_rgba(15,23,42,0.06)]">
-            <RouteMapPreview
-              pickupLabel={trip.pickup}
-              dropLabel={trip.drop}
-              pickupCoords={pickupCoords}
-              dropCoords={dropCoords}
-              onRouteComputed={onRouteComputed}
-            />
-          </div>
+  {trip.pickup.trim().length >= 3 && trip.drop.trim().length >= 3 ? (
+    <Suspense
+      fallback={
+        <div className="flex h-56 w-full items-center justify-center bg-slate-50 text-xs text-slate-400 md:h-full md:min-h-60">
+          Loading map…
+        </div>
+      }
+    >
+      <RouteMapPreview
+        pickupLabel={trip.pickup}
+        dropLabel={trip.drop}
+        pickupCoords={pickupCoords}
+        dropCoords={dropCoords}
+        onRouteComputed={onRouteComputed}
+      />
+    </Suspense>
+  ) : (
+    <div className="flex h-56 w-full flex-col items-center justify-center gap-1.5 bg-slate-50 text-slate-400 md:h-full md:min-h-60">
+      <MapPin size={22} />
+      <p className="text-xs">Enter pickup &amp; drop to preview the route</p>
+    </div>
+  )}
+</div>
         </div>
 
         {/* Trip type */}
