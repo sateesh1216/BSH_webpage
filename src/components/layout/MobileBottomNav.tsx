@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 import { useState } from "react";
-import { Home as HomeIcon, Compass, LayoutGrid, Phone, User, Search } from "lucide-react";
+import { Home as HomeIcon, Phone, User, Search } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import ProfileSheet from "./ProfileSheet";
@@ -18,8 +18,6 @@ type NavItem =
 
 const items: NavItem[] = [
   { key: "home", label: "Home", icon: HomeIcon, to: "/", kind: "link" },
-  { key: "destinations", label: "Discover", icon: Compass, to: "/destinations", kind: "link" },
-  { key: "services", label: "Services", icon: LayoutGrid, to: "/services", kind: "link" },
   {
     key: "whatsapp",
     label: "WhatsApp",
@@ -48,7 +46,7 @@ export default function MobileBottomNav() {
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         aria-label="Quick actions"
       >
-        <div className="mx-auto grid max-w-md grid-cols-7">
+        <div className="mx-auto grid max-w-md grid-cols-5">
           {items.map((item) => {
             const Icon = item.icon;
             const isWhatsapp = item.key === "whatsapp";
