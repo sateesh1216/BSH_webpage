@@ -64,7 +64,7 @@ export default function ServicesHero() {
         {/* Badge */}
         <div className="fade-1 flex justify-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-primary ring-1 ring-primary/20">
-            <ShieldCheck size={35} />
+            <ShieldCheck size={30} />
             Trusted Taxi Service in Vizag
           </span>
         </div>

@@ -7,7 +7,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import FloatingContactButtons from "./components/home/FloatingContactButtons";
 
 import Home from "./pages/Home";
-
+import ServiceDetails from "./pages/ServiceDetails";
 const About = lazy(() => import("./pages/AboutPage"));
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
 const FleetPage = lazy(() => import("./pages/FleetPage"));
@@ -31,6 +31,7 @@ export default function App() {
             <Route path="/destinations" element={<DestinationsPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/destinations/:slug" element={<DestinationDetail />} />
+            <Route path="/services/:slug" element={<ServiceDetails />} />
           </Routes>
         </Suspense>
         <Footer />

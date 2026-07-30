@@ -94,7 +94,7 @@ export default function FleetHero() {
         {/* Badge */}
         <div className="fade-1 flex justify-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-primary ring-1 ring-primary/20">
-            <BadgeCheck size={35} />
+            <BadgeCheck size={30} />
             Premium Fleet & Transparent Pricing
           </span>
         </div>
