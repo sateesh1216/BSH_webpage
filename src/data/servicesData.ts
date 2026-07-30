@@ -18,7 +18,7 @@ export const services: Service[] = [
   {
     slug: "local-taxi",
     icon: Car,
-    title: "Local Taxi Service in Visakhapatnam (Vizag)",
+    title: "Vizag Local Tour Packages",
     description:
       "Book reliable local taxi services in Visakhapatnam (Vizag) with BSH Taxi Services. We provide comfortable cabs for city travel, shopping, business meetings, sightseeing, railway station transfers, and daily commuting at affordable prices.",
     image: Local,

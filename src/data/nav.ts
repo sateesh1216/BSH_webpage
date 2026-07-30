@@ -18,6 +18,53 @@ export const navLinks: NavLink[] = [
   {
     label: "Services",
     href: "/services?type=taxi-services-in-vizag",
+
+    children: [
+      {
+        label: "All Services",
+        href: "/services?type=taxi-services-in-vizag",
+      },
+      {
+        label: "Local Taxi Services",
+        href: "/services/local-taxi?type=local-taxi-services",
+      },
+
+      {
+        label: "Outstation Taxi",
+        href: "/services/outstation-taxi?type=outstation-taxi-services",
+      },
+
+      {
+        label: "Airport Transfers",
+        href: "/services/airport-transfer?type=airport-taxi",
+      },
+
+      
+      {
+        label: "Tour Packages",
+        href: "/services/tour-packages?type=tour-packages",
+      },
+      
+      {
+        label: "Corporate Taxi",
+        href: "/services/corporate-travel?type=corporate-cab-services",
+      },
+
+      {
+        label: "Wedding Car Rentals",
+        href: "/services/wedding-car-rentals?type=wedding-car-rentals",
+      },
+      // {
+      //   label: "One Way Taxi",
+      //   href: "/services/one-way-taxi?type=one-way-taxi",
+      // },
+
+      // {
+      //   label: "Round Trip Taxi",
+      //   href: "/services/round-trip-taxi?type=round-trip-taxi",
+      // },
+
+    ],
   },
 
   {
@@ -79,16 +126,6 @@ export const navLinks: NavLink[] = [
         label: "Tirupati",
         href: "/destinations/tirupati?type=outstation-taxi-services",
       },
-
-      // {
-      //   label: "Arasavalli Temple",
-      //   href: "/destinations/arasavalli-temple?type=package",
-      // },
-
-      // {
-      //   label: "Hyderabad",
-      //   href: "/destinations/hyderabad?type=Outstation",
-      // },
     ],
   },
 
