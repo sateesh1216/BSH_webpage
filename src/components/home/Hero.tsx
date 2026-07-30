@@ -100,7 +100,7 @@ export default function Hero() {
 
      <h1 className="text-[1.75rem] font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-4xl sm:leading-[1.08] md:text-5xl lg:text-[3.25rem] lg:leading-[1.05]">
   <span className="block">
-    Best Taxi Service in <span className="text-[#2997FF]">Visakhapatnam </span> (Vizag)
+    Best Taxi Service in <span className="text-[#2997FF]">Vizag</span>
   </span>
 
   <span
