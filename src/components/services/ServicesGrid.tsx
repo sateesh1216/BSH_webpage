@@ -47,7 +47,7 @@ export default function ServicesGrid() {
                 <span
                   className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-3 text-sm font-semibold text-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl"
                 >
-                  Explore Details
+                  Book Taxi
                 </span>
               </div>
             </div>

@@ -18,25 +18,25 @@ export const services: Service[] = [
   {
     slug: "local-taxi",
     icon: Car,
-    title: "Local Taxi Service",
+    title: "Local Taxi Service in Visakhapatnam (Vizag)",
     description:
-      "Comfortable and convenient rides within Visakhapatnam city. Ideal for daily travel, shopping, business meetings and more.",
+      "Book reliable local taxi services in Visakhapatnam (Vizag) with BSH Taxi Services. We provide comfortable cabs for city travel, shopping, business meetings, sightseeing, railway station transfers, and daily commuting at affordable prices.",
     image: Local,
   },
   {
     slug: "outstation-taxi",
     icon: Route,
-    title: "Outstation Taxi Service",
+    title: "Outstation Taxi Service from Vizag",
     description:
-      "One-way or round-trip outstation rides to all major destinations. Enjoy a safe and relaxing journey with our expert drivers.",
+      "Travel safely with our outstation taxi service from Visakhapatnam (Vizag). We offer one-way and round-trip cab services to Araku, Hyderabad, Vijayawada, Tirupati, Kakinada, Srikakulam, and many other destinations across Andhra Pradesh.",
     image: outstation,
   },
   {
     slug: "airport-transfer",
     icon: Plane,
-    title: "Airport Transfer",
+    title: "Visakhapatnam Airport Taxi Service",
     description:
-      "Punctual airport pickup and drop services 24/7. We ensure you reach on time, every time.",
+      "Book 24/7 airport taxi services in Visakhapatnam (Vizag) for airport pickup and drop. Our professional drivers ensure safe, punctual, and affordable transfers to and from Visakhapatnam Airport.",
     image: airport,
   },
   {
@@ -44,23 +44,23 @@ export const services: Service[] = [
     icon: Compass,
     title: "Tour Packages",
     description:
-      "Customizable tour packages to explore Andhra Pradesh's most beautiful tourist destinations with comfort.",
+      "Explore the best Visakhapatnam tour packages with BSH Taxi Services. Book comfortable cabs for Araku Valley, Borra Caves, Lambasingi, Simhachalam, and other popular tourist destinations with experienced drivers.",
     image: tour,
   },
   {
     slug: "corporate-travel",
     icon: Briefcase,
-    title: "Corporate Travel",
+    title: "Corporate Taxi Services",
     description:
-      "Reliable and professional travel solutions for businesses. Perfect for employee transport, meetings and events.",
+      "BSH Taxi Services provides reliable corporate taxi services in Visakhapatnam for business meetings, airport transfers, employee transportation, and corporate events with professional drivers and premium vehicles.",
     image: corporate,
   },
   {
     slug: "wedding-car-rentals",
     icon: Heart,
-    title: "Wedding Car Rentals",
+    title: "Wedding Car Rental in Visakhapatnam",
     description:
-      "Make your special day even more memorable with our premium cars and professional drivers.",
+      "Book luxury wedding car rentals in Visakhapatnam (Vizag) for weddings, receptions, engagements, and special occasions. Choose from premium cars with professional chauffeurs for a memorable experience.",
     image: Wedding,
   },
 ];
