@@ -11,7 +11,7 @@ export default function BookingModal() {
 
   // Close on Escape.
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return; 
     function handleKey(event: KeyboardEvent) {
       if (event.key === "Escape") closeBooking();
     }
