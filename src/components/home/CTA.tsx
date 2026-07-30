@@ -120,25 +120,27 @@ export function CTA() {
           <CTAIconBadge />
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Need a Taxi?</h2>
-            <p className="mt-1 max-w-md text-sm text-[#D6E4FF] sm:text-base">Call us now for the <b>best taxi services in Vizag</b> and beyond.</p>
+            <p className="mt-1 max-w-md text-sm text-[#D6E4FF] sm:text-base">
+  Book your airport taxi, local cab, or outstation taxi in Visakhapatnam (Vizag).
+  Call BSH Taxi Services for 24/7 reliable taxi booking at affordable prices.
+</p>
           </div>
         </div>
 
         <div className="flex shrink-0 items-center gap-3">
-          <button
-            type="button"
-            onClick={() => { window.location.href = "tel:+918886803322"; }}
-            className="flex items-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-bold text-[#1554B8] shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg sm:text-base"
-          >
-            <Phone size={18} />
-            +91 8886803322
-          </button>
+        <a
+          href="tel:+918886803322"
+          className="flex items-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-bold text-[#1554B8] shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg sm:text-base"
+        >
+          <Phone size={18} />
+          +91 8886803322
+        </a>
           <button
             type="button"
             onClick={() => openBooking({ resetTrip: true })}
             className="rounded-lg border-2 border-white/80 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white hover:text-[#1554B8] sm:text-base"
           >
-            Book Now
+            Book Taxi Now
           </button>
         </div>
 
@@ -156,7 +158,7 @@ export function ContactUs() {
       <RouteStyles />
       <header className="mb-12 text-center">
         <span className="inline-block rounded-full bg-[#E3ECFF] px-4 py-1 text-xs font-semibold uppercase tracking-widest text-[#1554B8]">Get In Touch</span>
-        <h2 id="contact-heading" className="mt-3 text-2xl font-extrabold tracking-tight text-[#0A1F3D] sm:text-3xl">Contact Us</h2>
+        <h2 id="contact-heading" className="mt-3 text-2xl font-extrabold tracking-tight text-[#0A1F3D] sm:text-3xl">Contact BSH Taxi Services in Vizag</h2>
         <div className="mt-4 flex justify-center"><RouteDivider /></div>
       </header>
 

@@ -35,13 +35,14 @@ export default function Hero() {
   className="relative isolate z-20 flex min-h-140 flex-col overflow-hidden px-4 pt-16 pb-7 sm:min-h-155 sm:px-6 sm:pt-24 lg:min-h-180 lg:pt-32 lg:pb-16"
 >
   {/* LCP image as real <img> tag — browser discovers & preloads it early */}
- <img
+<img
   src="/bshtaxiservice-homepage-banner_3.webp"
-  alt=""
+  alt="BSH Taxi Services - Best Taxi Service in Visakhapatnam with Airport and Outstation Cabs"
   fetchPriority="high"
   decoding="async"
-  className="absolute inset-0 -z-10 h-full w-full object-cover"
+  className="absolute inset-0 -z-10 h-full w-full object-cover" 
 />
+
       {/* Soft ambient glow — adds depth without competing with the route line */}
       <div
         aria-hidden="true"
@@ -94,23 +95,30 @@ export default function Hero() {
       <div className="relative z-10 mx-auto flex w-full max-w-155 flex-col justify-center px-4 py-8 xs:px-6 sm:py-10 lg:mx-0 lg:max-w-none lg:py-14 lg:pl-[6%] lg:pr-8">
         <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full border border-primary/20 bg-primary/8 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary-hover sm:mb-5 sm:px-3.5 sm:text-xs">
           <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-          Vizag's trusted cab service
+          Your Journey, Our Responsibility.
         </span>
 
-      <h1 className="text-[1.75rem] font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-4xl sm:leading-[1.08] md:text-5xl lg:text-[3.25rem] lg:leading-[1.05]">
-          <span className="block">Your Journey,</span>
-          <span
-            className="mt-2 block text-[#2997FF] font-normal sm:mt-3 lg:mt-4"
-                  style={{ fontFamily: '"Rouge Script", cursive', fontStyle: 'bold', fontWeight: 400 }}
-                      >
-            Our Responsibility.
-          </span>
-        </h1>
+     <h1 className="text-[1.75rem] font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-4xl sm:leading-[1.08] md:text-5xl lg:text-[3.25rem] lg:leading-[1.05]">
+  <span className="block">
+    Best Taxi Service in <span className="text-[#2997FF]">Visakhapatnam </span> (Vizag)
+  </span>
+
+  <span
+    className="mt-2 block text-base sm:text-lg lg:text-xl text-[#2997FF] font-normal"
+    style={{
+      fontFamily: '"Rouge Script", cursive',
+      fontWeight: 400,
+    }}
+  >
+    Airport Taxi | Local Cab | Outstation Cabs
+  </span>
+</h1>
 
         <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-500 sm:mt-5 sm:max-w-lg sm:text-base lg:text-base">
-          Safe, reliable and affordable taxi service in Visakhapatnam — local rides, outstation
-          trips, and airport transfers across Andhra Pradesh.
-        </p>
+BSH Taxi Services provides reliable taxi services in Visakhapatnam (Vizag), 
+including airport taxi, local cab service, outstation cabs, one-way taxi, round trips, 
+and corporate travel. Our professional drivers and well-maintained vehicles are available 24/7 across Andhra Pradesh.
+</p>
 
         {/* Trust badges — 4 inline items matching the design */}
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-3 xs:grid-cols-2 sm:mt-8 sm:gap-y-4 sm:flex sm:flex-wrap sm:gap-x-8">
