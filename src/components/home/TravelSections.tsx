@@ -1,5 +1,5 @@
-import { Fragment } from "react";
-import { Link } from "react-router-dom";  
+import { Fragment, type ReactNode } from "react";
+import { Link } from "react-router-dom";
 import {
   Car,
   Plane,
@@ -25,63 +25,79 @@ import { useBooking } from "../booking/BookingContext";
 interface ServiceItem {
   icon: React.ElementType;
   title: string;
-  description: string;
+  description: ReactNode; // was `string` — JSX (<p>/<b>) needs ReactNode, not string
   path: string;
 }
 
-
-
-/* DATA — unchanged from before */
-// interface ServiceItem { icon: React.ElementType; title: string; description: string; }
-// const services: ServiceItem[] = [
-//   { icon: Car, title: "Local Taxi", description: "Comfortable rides within the city" },
-//   { icon: Plane, title: "Airport Transfer", description: "On-time airport pickup & drop" },
-//   { icon: MapPinned, title: "Outstation Taxi", description: "One way / Round trip to any city" },
-//   { icon: Building2, title: "Corporate Travel", description: "Reliable travel for your business" },
-//   { icon: HeartHandshake, title: "Wedding Cars", description: "Make your special day extra special" },
-//   { icon: Map, title: "Tour Packages", description: "Custom packages for amazing trips" },
-// ];
-
+/* DATA — SEO keywords wrapped in <b> for emphasis */
 const services: ServiceItem[] = [
   {
     icon: Car,
-    title: "Local Taxi",
-    description: "Comfortable rides within the city",
+    title: "Local Taxi Service in Vizag",
+    description: (
+      <p>
+        24/7 <b>local taxi service in Visakhapatnam</b> for city rides,
+        shopping, office travel, railway station and hospital visits.
+      </p>
+    ),
     path: "/destinations/vizag-local?type=taxi-services-in-vizag",
   },
   {
     icon: Plane,
-    title: "Airport Transfer",
-    description: "On-time airport pickup & drop",
+    title: "Airport Taxi Service",
+    description: (
+      <p>
+        Reliable <b>Vizag Airport taxi</b> with on-time pickup & drop, flight
+        tracking and affordable fares.
+      </p>
+    ),
     path: "/destinations/vizag-airport?type=airport-transfer",
   },
   {
     icon: MapPinned,
-    title: "Outstation Taxi",
-    description: "One Way & Round Trip Taxi Services",
+    title: "Outstation Taxi Service",
+    description: (
+      <p>
+        One-way & round-trip <b>outstation taxi</b> from{" "}
+        <b>Vizag to Araku</b>, Tirupati, Vijayawada, Hyderabad and more.
+      </p>
+    ),
     path: "/destinations",
   },
   {
     icon: Building2,
-    title: "Corporate Travel",
-    description: "Professional travel solutions for businesses",
+    title: "Corporate Taxi Service",
+    description: (
+      <p>
+        Professional <b>corporate cab service</b> for employee transport,
+        client pickups and business travel.
+      </p>
+    ),
     path: "/services",
   },
   {
     icon: HeartHandshake,
-    title: "Wedding Cars",
-    description: "Luxury wedding car rentals",
+    title: "Wedding Car Rental",
+    description: (
+      <p>
+        Luxury wedding <b>car rental in Vizag</b> with professional
+        chauffeurs for weddings and special events.
+      </p>
+    ),
     path: "/services",
   },
   {
     icon: Map,
-    title: "Tour Packages",
-    description: "Customized holiday & sightseeing packages",
+    title: "Vizag Tour Packages",
+    description: (
+      <p>
+        Affordable <b>Vizag sightseeing</b> and Andhra Pradesh{" "}
+        <b>tour packages including Araku, Lambasingi and Borra Caves</b>.
+      </p>
+    ),
     path: "/destinations",
   },
 ];
-
-
 
 type VehicleType = "sedan" | "mpv" | "van";
 interface FleetItem {
@@ -127,7 +143,11 @@ const fleet: FleetItem[] = [
   },
 ];
 
-interface StepItem { icon: React.ElementType; title: string; description: string; }
+interface StepItem {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+}
 const steps: StepItem[] = [
   { icon: CalendarCheck, title: "Book Online", description: "Enter your trip details and book your ride" },
   { icon: UserCheck, title: "Driver Assigned", description: "We assign the best driver." },
@@ -152,30 +172,30 @@ function Services() {
         <Eyebrow label="Our Services" />
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
           {services.map((service) => {
-  const Icon = service.icon;
+            const Icon = service.icon;
 
-  return (
-    <Link
-      key={service.title}
-      to={service.path}
-      className="group flex h-full flex-col items-start gap-4 rounded-2xl bg-white p-5 shadow-[0_1px_2px_rgba(16,24,40,0.04)] ring-1 ring-slate-100 transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_16px_36px_rgba(16,24,40,0.10)] hover:ring-primary/15"
-    >
-      <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-linear-to-br from-primary/10 to-blue-50 text-primary transition-all duration-200 group-hover:bg-primary group-hover:text-white group-hover:shadow-md group-hover:shadow-primary/25">
-        <Icon size={20} strokeWidth={2} />
-      </div>
+            return (
+              <Link
+                key={service.title}
+                to={service.path}
+                className="group flex h-full flex-col items-start gap-4 rounded-2xl bg-white p-5 shadow-[0_1px_2px_rgba(16,24,40,0.04)] ring-1 ring-slate-100 transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_16px_36px_rgba(16,24,40,0.10)] hover:ring-primary/15"
+              >
+                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-linear-to-br from-primary/10 to-blue-50 text-primary transition-all duration-200 group-hover:bg-primary group-hover:text-white group-hover:shadow-md group-hover:shadow-primary/25">
+                  <Icon size={20} strokeWidth={2} />
+                </div>
 
-      <div>
-        <h3 className="text-[15px] font-extrabold leading-tight text-slate-900">
-          {service.title}
-        </h3>
+                <div>
+                  <h3 className="text-[15px] font-extrabold leading-tight text-slate-900">
+                    {service.title}
+                  </h3>
 
-        <p className="mt-1.5 text-[13px] leading-relaxed text-slate-500">
-          {service.description}
-        </p>
-      </div>
-    </Link>
-  );
-})}
+                  <div className="mt-1.5 text-[13px] leading-relaxed text-slate-500">
+                    {service.description}
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -329,15 +349,15 @@ function FleetAndHowItWorks({ onBookNow }: { onBookNow: (name: string) => void }
 }
 
 export default function TravelSections() {
-const { openBooking } = useBooking();
-console.log("TravelSections Context");
-function handleBookNow(name: string) {
-  console.log("Book Now Clicked:", name);
-  openBooking({
-    vehicleName: name,
-    resetTrip: true,
-  });
-}
+  const { openBooking } = useBooking();
+
+  function handleBookNow(name: string) {
+    openBooking({
+      vehicleName: name,
+      resetTrip: true,
+    });
+  }
+
   return (
     <>
       <Services />
