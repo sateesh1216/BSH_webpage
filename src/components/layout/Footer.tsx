@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 import {
   FaFacebookF,
   FaInstagram,
@@ -24,22 +24,27 @@ const quickLinks = navLinks.filter((link) =>
 );
 
 // Each service gets its own icon + accent color so the list scans instantly
+// `slug` must match the `slug` used in ../../data/servicesData.ts so these
+// links route to the correct /services/:slug detail page.
 const serviceLinks = [
-  { label: "Outstation Taxi", icon: FaRoute, color: "text-sky-400" },
-  { label: "Local Taxi", icon: FaCity, color: "text-emerald-400" },
-  { label: "Airport Transfer", icon: FaPlaneDeparture, color: "text-amber-400" },
-  { label: "Corporate Travel", icon: FaBuilding, color: "text-violet-400" },
-  { label: "Tour Packages", icon: FaSuitcaseRolling, color: "text-rose-400" },
-  { label: "Wedding Cars", icon: FaRing, color: "text-pink-400" },
+  { label: "Outstation Taxi", slug: "outstation-taxi", icon: FaRoute, color: "text-sky-400" },
+  { label: "Local Taxi", slug: "local-taxi", icon: FaCity, color: "text-emerald-400" },
+  { label: "Airport Transfer", slug: "airport-transfer", icon: FaPlaneDeparture, color: "text-amber-400" },
+  { label: "Corporate Travel", slug: "corporate-travel", icon: FaBuilding, color: "text-violet-400" },
+  { label: "Tour Packages", slug: "tour-packages", icon: FaSuitcaseRolling, color: "text-rose-400" },
+  { label: "Wedding Cars", slug: "wedding-car-rentals", icon: FaRing, color: "text-pink-400" },
 ];
 
+// `slug` must match the `slug` used in ../../data/servicesData.ts (destinations
+// array) so these links route to the correct /destinations/:slug detail page.
+// "And More" routes to the full destinations listing instead of a single slug.
 const destinationLinks = [
-  { label: "Araku Valley", color: "text-emerald-400" },
-  { label: "Lambasingi", color: "text-sky-400" },
-  { label: "Tirupati", color: "text-amber-400" },
-  { label: "Puri", color: "text-violet-400" },
-  { label: "Hyderabad", color: "text-rose-400" },
-  { label: "And More", color: "text-slate-400" },
+  { label: "Araku Valley", slug: "araku-valley", color: "text-emerald-400" },
+  { label: "Lambasingi", slug: "lambasingi", color: "text-sky-400" },
+  { label: "Tirupati", slug: "tirupati", color: "text-amber-400" },
+  { label: "Simhachalam Temple", slug: "simhachalam-temple", color: "text-violet-400" },
+  { label: "Vanjangi Hills", slug: "vanjangi-hills", color: "text-rose-400" },
+  { label: "And More", slug: null, color: "text-slate-400" },
 ];
 
 const socialLinks = [
@@ -75,7 +80,7 @@ const structuredData = {
 };
 
 export default function Footer() {
- 
+
   return (
     <footer id="contact" className="bg-[#0B1220] text-slate-300">
       <script
@@ -161,28 +166,36 @@ export default function Footer() {
             </div>
           </nav>
 
-          {/* Our Services — icon + color per item */}
+          {/* Our Services — icon + color per item, routes to /services/:slug */}
           <nav aria-label="Our services">
             <h3 className="mb-4 text-sm font-semibold text-white">Our Services</h3>
             <div className="flex flex-col gap-3 text-sm">
-              {serviceLinks.map(({ label, icon: Icon, color }) => (
-                <a key={label} href="#services" className="group flex w-fit items-center gap-2.5 text-slate-400 transition-colors hover:text-white">
+              {serviceLinks.map(({ label, slug, icon: Icon, color }) => (
+                <Link
+                  key={slug}
+                  to={`/services/${slug}`}
+                  className="group flex w-fit items-center gap-2.5 text-slate-400 transition-colors hover:text-white"
+                >
                   <Icon size={13} className={`${color} transition-transform group-hover:scale-110`} />
                   {label}
-                </a>
+                </Link>
               ))}
             </div>
           </nav>
 
-          {/* Destinations — color-coded dots */}
+          {/* Destinations — color-coded dots, routes to /destinations/:slug */}
           <nav aria-label="Popular destinations">
             <h3 className="mb-4 text-sm font-semibold text-white">Destinations</h3>
             <div className="flex flex-col gap-3 text-sm">
-              {destinationLinks.map(({ label, color }) => (
-                <a key={label} href="#destinations" className="group flex w-fit items-center gap-2.5 text-slate-400 transition-colors hover:text-white">
+              {destinationLinks.map(({ label, slug, color }) => (
+                <Link
+                  key={label}
+                  to={slug ? `/destinations/${slug}` : "/destinations"}
+                  className="group flex w-fit items-center gap-2.5 text-slate-400 transition-colors hover:text-white"
+                >
                   <span className={`h-1.5 w-1.5 rounded-full bg-current ${color} transition-transform group-hover:scale-150`} />
                   {label}
-                </a>
+                </Link>
               ))}
             </div>
           </nav>

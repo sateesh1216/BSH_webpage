@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   PhoneCall,
@@ -242,59 +243,138 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
 };
 
 /* ------------------------------------------------------------------ */
-/*  Shared car fleet shown on every service detail page                */
-/*  TODO: replace the `icon` with your actual car photos if you'd      */
-/*  rather show images — swap <Icon /> below for an <img src={} />     */
+/*  Price-card tabs: One Way / Round Trip / Hourly / Package          */
+/*  and the fleet + fares shown under each tab                        */
+/*  TODO: swap the numbers below for your real, current fares         */
 /* ------------------------------------------------------------------ */
 
-type CarOption = {
+const tripTypeTabs = ["Package", "One Way", "Round Trip", "Hourly"] as const;
+type TripTypeTab = (typeof tripTypeTabs)[number];
+
+type FareInfo = {
+  rate: string; // headline price
+  unit: string; // what the rate is per
+  note: string; // small print under the rate
+};
+
+type CarPriceOption = {
   name: string;
   category: string;
   seats: number;
   luggage: number;
-  bestFor: string;
-  features: string[];
   icon: typeof Car;
+  fares: Record<TripTypeTab, FareInfo>;
+  /** Tailwind classes used to give each car its own icon-badge color story */
+  theme: {
+    gradient: string; // badge background
+    glow: string; // soft blurred glow behind the badge
+    iconColor: string;
+    ring: string;
+    shadow: string; // colored drop-shadow matching the gradient
+  };
 };
 
-const carFleet: CarOption[] = [
+const carFleet: CarPriceOption[] = [
   {
-    name: "Hatchback",
-    category: "Economy",
+    name: "Dzire",
+    category: "Sedan",
     seats: 4,
     luggage: 2,
-    bestFor: "Solo & couple city rides",
-    features: ["AC", "Music System", "Clean Interiors"],
     icon: Car,
+    theme: {
+      gradient: "from-blue-500 to-sky-400",
+      glow: "bg-blue-400/40",
+      iconColor: "text-white",
+      ring: "ring-blue-200",
+      shadow: "shadow-blue-500/30",
+    },
+    fares: {
+      "One Way": { rate: "₹13", unit: "/km", note: "Min 130 km/day" },
+      "Round Trip": { rate: "₹11", unit: "/km", note: "Min 250 km/day" },
+      Hourly: { rate: "₹250", unit: "/hr", note: "40 km included" },
+      Package: { rate: "₹1,800", unit: "/8hr-80km", note: "Extra km ₹13" },
+    },
   },
   {
-    name: "Sedan",
-    category: "Comfort",
-    seats: 4,
-    luggage: 3,
-    bestFor: "Families & business trips",
-    features: ["AC", "Extra Legroom", "Charging Ports"],
-    icon: Car,
-  },
-  {
-    name: "SUV",
-    category: "Premium",
+    name: "Ertiga",
+    category: "MUV",
     seats: 6,
-    luggage: 4,
-    bestFor: "Group & outstation travel",
-    features: ["AC", "3-Row Seating", "Ample Boot Space"],
+    luggage: 3,
     icon: Car,
+    theme: {
+      gradient: "from-teal-500 to-emerald-400",
+      glow: "bg-teal-400/40",
+      iconColor: "text-white",
+      ring: "ring-teal-200",
+      shadow: "shadow-teal-500/30",
+    },
+    fares: {
+      "One Way": { rate: "₹16", unit: "/km", note: "Min 130 km/day" },
+      "Round Trip": { rate: "₹14", unit: "/km", note: "Min 250 km/day" },
+      Hourly: { rate: "₹300", unit: "/hr", note: "40 km included" },
+      Package: { rate: "₹2,200", unit: "/8hr-80km", note: "Extra km ₹16" },
+    },
   },
   {
-    name: "Innova / Crysta",
-    category: "Premium+",
+    name: "Innova Crysta",
+    category: "Premium SUV",
     seats: 7,
-    luggage: 5,
-    bestFor: "Long trips & tour packages",
-    features: ["AC", "Pushback Seats", "Extra Comfort"],
+    luggage: 4,
     icon: Car,
+    theme: {
+      gradient: "from-violet-500 to-purple-400",
+      glow: "bg-violet-400/40",
+      iconColor: "text-white",
+      ring: "ring-violet-200",
+      shadow: "shadow-violet-500/30",
+    },
+    fares: {
+      "One Way": { rate: "₹19", unit: "/km", note: "Min 130 km/day" },
+      "Round Trip": { rate: "₹17", unit: "/km", note: "Min 250 km/day" },
+      Hourly: { rate: "₹380", unit: "/hr", note: "40 km included" },
+      Package: { rate: "₹2,800", unit: "/8hr-80km", note: "Extra km ₹19" },
+    },
+  },
+  {
+    name: "Tempo Traveller",
+    category: "Group Travel",
+    seats: 17,
+    luggage: 10,
+    icon: Car,
+    theme: {
+      gradient: "from-orange-500 to-amber-400",
+      glow: "bg-orange-400/40",
+      iconColor: "text-white",
+      ring: "ring-orange-200",
+      shadow: "shadow-orange-500/30",
+    },
+    fares: {
+      "One Way": { rate: "₹28", unit: "/km", note: "Min 250 km/day" },
+      "Round Trip": { rate: "₹25", unit: "/km", note: "Min 300 km/day" },
+      Hourly: { rate: "₹650", unit: "/hr", note: "40 km included" },
+      Package: { rate: "₹4,500", unit: "/8hr-80km", note: "Extra km ₹28" },
+    },
   },
 ];
+
+/* WhatsApp business number — keep in sync with the call number below */
+const WHATSAPP_NUMBER = "918886803322";
+
+/* Simple inline WhatsApp glyph so we don't need an extra icon package */
+function WhatsAppIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+      <path d="M12.004 2C6.486 2 2.01 6.477 2.01 11.996c0 2.115.664 4.078 1.796 5.688L2 22l4.443-1.767a9.94 9.94 0 0 0 5.561 1.674h.004c5.518 0 9.994-4.477 9.994-9.996C21.998 6.477 17.522 2 12.004 2zm0 18.16h-.003a8.13 8.13 0 0 1-4.156-1.14l-.298-.176-3.098 1.233.83-3.05-.194-.313a8.13 8.13 0 0 1-1.246-4.318c0-4.5 3.67-8.16 8.166-8.16 2.18 0 4.229.852 5.77 2.394a8.1 8.1 0 0 1 2.393 5.775c0 4.5-3.67 8.16-8.164 8.16z" />
+    </svg>
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /*  Maps a service slug to the trip type used by the BookingContext   */
@@ -313,6 +393,7 @@ const serviceToTab = {
 export default function ServiceDetails() {
   const { slug } = useParams<{ slug: string }>();
   const { openBooking, setTripType } = useBooking();
+  const [activeTab, setActiveTab] = useState<TripTypeTab>("Package");
 
   const service = services.find((s) => s.slug === slug);
   const details = slug ? serviceDetailsContent[slug] : undefined;
@@ -321,6 +402,13 @@ export default function ServiceDetails() {
     const tab = slug ? serviceToTab[slug as keyof typeof serviceToTab] : undefined;
     if (tab) setTripType(tab);
     openBooking({ resetTrip: !tab });
+  };
+
+  const getWhatsAppLink = (carName: string) => {
+    const message = `Hi BSH Taxi Services, I'd like to book a ${carName} for a ${activeTab} trip${
+      title ? ` (${title})` : ""
+    }. Please share availability and fare.`;
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   };
 
   // Fallback for an unknown / missing slug
@@ -402,6 +490,16 @@ export default function ServiceDetails() {
                   <PhoneCall size={20} />
                   Call Now
                 </a>
+
+                <a
+                  href={getWhatsAppLink("a car")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 rounded-xl border-2 border-green-200 bg-green-50 px-8 py-4 font-bold text-green-700 transition hover:border-green-500 hover:bg-green-500 hover:text-white"
+                >
+                  <WhatsAppIcon size={20} />
+                  WhatsApp
+                </a>
               </div>
             </div>
 
@@ -432,65 +530,101 @@ export default function ServiceDetails() {
       </section>
 
       {/* ---------------------------------------------------------- */}
-      {/* Available cars                                              */}
+      {/* Price cards — One Way / Round Trip / Hourly / Package       */}
       {/* ---------------------------------------------------------- */}
       <section className="w-full bg-slate-50/60 px-6 py-20 sm:px-10 lg:px-16">
-        <SectionHeading eyebrow="Choose Your Ride" />
-        <p className="-mt-8 mb-14 text-center text-base text-slate-500">
-          Pick the car that suits your {title.toLowerCase()} best.
+        <SectionHeading eyebrow="Transparent Pricing" />
+        <p className="-mt-8 mb-10 text-center text-base text-slate-500">
+          Pick a trip type and see the fare for every car in our {title.toLowerCase()} fleet.
         </p>
 
-        <div className="mx-auto grid max-w-[80em] grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {carFleet.map((car) => (
-            <article
-              key={car.name}
-              className="group flex flex-col rounded-3xl bg-white p-6 shadow-[0_1px_2px_rgba(16,24,40,0.04)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_48px_rgba(16,24,40,0.12)] hover:ring-primary/15"
+        {/* Tabs */}
+        <div className="mx-auto mb-12 flex max-w-2xl flex-wrap items-center justify-center gap-3">
+          {tripTypeTabs.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`rounded-full px-6 py-2.5 text-sm font-bold transition-all duration-200 ${
+                activeTab === tab
+                  ? "bg-primary text-white shadow-lg shadow-primary/20"
+                  : "border-2 border-slate-200 bg-white text-slate-600 hover:border-primary/40 hover:text-primary"
+              }`}
             >
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110">
-                <car.icon size={30} />
-              </div>
-
-              <h3 className="mt-5 text-center text-lg font-bold text-slate-900">
-                {car.name}
-              </h3>
-              <p className="text-center text-xs font-bold uppercase tracking-wide text-primary/70">
-                {car.category}
-              </p>
-
-              <div className="mt-4 flex items-center justify-center gap-4 text-xs text-slate-500">
-                <span className="flex items-center gap-1">
-                  <Users size={14} /> {car.seats} seats
-                </span>
-                <span className="flex items-center gap-1">
-                  <Briefcase size={14} /> {car.luggage} bags
-                </span>
-              </div>
-
-              <p className="mt-3 text-center text-sm text-slate-500">
-                {car.bestFor}
-              </p>
-
-              <ul className="mt-4 space-y-1.5 border-t border-slate-100 pt-4">
-                {car.features.map((f) => (
-                  <li
-                    key={f}
-                    className="flex items-center gap-2 text-xs text-slate-600"
-                  >
-                    <CheckCircle2 size={14} className="shrink-0 text-primary" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                onClick={handleBookNow}
-                className="mt-6 inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary/10 py-3 text-sm font-bold text-primary transition hover:bg-primary hover:text-white"
-              >
-                Book Now
-                <ArrowRight size={15} />
-              </button>
-            </article>
+              {tab}
+            </button>
           ))}
+        </div>
+
+        {/* Price cards */}
+        <div className="mx-auto grid max-w-[80em] grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {carFleet.map((car) => {
+            const fare = car.fares[activeTab];
+            return (
+              <article
+                key={car.name}
+                className="group flex flex-col rounded-3xl bg-white p-6 shadow-[0_1px_2px_rgba(16,24,40,0.04)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_48px_rgba(16,24,40,0.12)] hover:ring-primary/15"
+              >
+                <div className="relative mx-auto h-20 w-20">
+                  {/* seat-count chip */}
+               
+                  <div
+                    className={`flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br ${car.theme.gradient} shadow-md transition-transform duration-300 group-hover:-translate-y-1`}
+                  >
+                    <car.icon size={32} className={car.theme.iconColor} strokeWidth={2} />
+                  </div>
+                </div>
+
+                <h3 className="mt-5 text-center text-lg font-bold text-slate-900">
+                  {car.name}
+                </h3>
+                <p className="text-center text-xs font-bold uppercase tracking-wide text-primary/70">
+                  {car.category}
+                </p>
+
+                <div className="mt-4 flex items-center justify-center gap-4 text-xs text-slate-500">
+                  <span className="flex items-center gap-1">
+                    <Users size={14} /> {car.seats} seats
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Briefcase size={14} /> {car.luggage} bags
+                  </span>
+                </div>
+
+                {/* Fare for the selected tab */}
+                <div className="mt-5 rounded-2xl border border-slate-100 bg-slate-50 px-4 py-4 text-center">
+                  <p className="text-2xl font-extrabold text-slate-900">
+                    {fare.rate}
+                    <span className="text-sm font-semibold text-slate-500">
+                      {fare.unit}
+                    </span>
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-slate-500">
+                    {fare.note}
+                  </p>
+                </div>
+
+                <div className="mt-5 flex flex-col gap-2">
+                  <button
+                    onClick={handleBookNow}
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary/10 py-3 text-sm font-bold text-primary transition hover:bg-primary hover:text-white"
+                  >
+                    Book Now
+                    <ArrowRight size={15} />
+                  </button>
+
+                  <a
+                    href={getWhatsAppLink(car.name)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-green-50 py-3 text-sm font-bold text-green-700 transition hover:bg-green-500 hover:text-white"
+                  >
+                    <WhatsAppIcon size={16} />
+                    WhatsApp
+                  </a>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
 
@@ -525,6 +659,16 @@ export default function ServiceDetails() {
             >
               <PhoneCall size={20} />
               +91 8886803322
+            </a>
+
+            <a
+              href={getWhatsAppLink("a car")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-xl border-2 border-green-200 bg-green-50 px-8 py-4 font-bold text-green-700 transition hover:border-green-500 hover:bg-green-500 hover:text-white"
+            >
+              <WhatsAppIcon size={20} />
+              Chat on WhatsApp
             </a>
           </div>
         </div>
