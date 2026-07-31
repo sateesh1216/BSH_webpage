@@ -96,8 +96,17 @@ export default function Footer() {
               <span className="text-white">BSH </span>
               <span className="text-primary">TAXI SERVICES</span>
             </div>
-           <p className="max-w-xs text-sm leading-relaxed text-slate-400">
-  BSH Taxi Services is a trusted <strong>taxi service in Vizag</strong> offering local taxi services, airport taxi, outstation cabs, corporate travel, wedding car rentals, and tour packages at affordable prices.
+<p className="max-w-xs text-sm leading-relaxed text-slate-400">
+  BSH Taxi Services is a trusted{" "}
+  <a
+    href="https://bshtaxiservices.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:underline"
+  >
+    <strong>taxi service in Vizag</strong>
+  </a>{" "}
+  offering local taxi services, airport taxi, outstation cabs, corporate travel, wedding car rentals, and tour packages at affordable prices.
 </p>
             <address
               itemScope
