@@ -29,7 +29,19 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
     tagline: "Book the Best Taxi in Vizag",
     longDescription: (
       <p>
-        Looking for a <strong>taxi in Vizag</strong>? BSH Taxi Services provides the{" "}
+        Looking for a 
+        {" "}
+  <a
+    href="https://www.bshtaxiservices.com/destinations/vizag-local?type=taxi-services-in-vizag"
+    target="_blank"
+    rel="noopener noreferrer"
+	  title="Vizag Local Taxi Service in Vizag - BSH Taxi Services" 
+	  aria-label="Vizag Local Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <strong>taxi in Vizag</strong>?
+  </a>{" "} 
+         BSH Taxi Services provides the{" "}
         <i>best taxi service in Visakhapatnam (Vizag)</i> with affordable
         fares and 24/7 availability. Book a local taxi in Vizag for office
         commutes, airport transfers, railway station pickups, shopping
@@ -60,8 +72,20 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
         best <strong>outstation taxi service in Vizag</strong> for one-way drops,
         round trips, and multi-day travel across Andhra Pradesh and
         nearby states. Whether you're traveling for business, family
-        vacations, temple visits, or sightseeing, our outstation taxi in
-        Vizag ensures a safe, comfortable, and affordable journey. We
+        vacations, temple visits, or sightseeing, 
+              {" "}
+  <a
+    href="https://bshtaxiservices.com/destinations/tirupati?type=outstation-taxi-services"
+    target="_blank"
+    rel="noopener noreferrer"
+	  title="Outstation Taxi Service in Vizag - BSH Taxi Services" 
+	  aria-label="Outstation Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <i>our outstation taxi in
+        Vizag</i>
+  </a>{" "} 
+         ensures a safe, comfortable, and affordable journey. We
         provide reliable one-way taxi and outstation cab services with
         experienced highway drivers, well-maintained vehicles,
         transparent pricing, and 24/7 customer support.{" "}
@@ -90,7 +114,20 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
     longDescription: (
       <p>
         Need a reliable <strong>airport taxi in Vizag</strong>? BSH Taxi Services
-        provides safe, affordable, and 24/7 airport transfer services to
+        provides safe, affordable, and 24/7 
+         {" "}
+  <a
+    href="https://bshtaxiservices.com/destinations/vizag-airport?type=airport-taxi"
+    target="_blank"
+    rel="noopener noreferrer"
+	  title="Airport Taxi Service in Vizag - BSH Taxi Services" 
+	  aria-label="Airport Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <i>airport transfer services</i>
+  </a>{" "} 
+
+         to
         and from Visakhapatnam International Airport. Whether you're
         catching an early morning flight or arriving late at night, our
         professional drivers ensure on-time pickups and drop-offs with

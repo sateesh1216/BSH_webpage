@@ -116,7 +116,18 @@ export default function Hero() {
 
         <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-500 sm:mt-5 sm:max-w-lg sm:text-base lg:text-base">
 BSH Taxi Services provides reliable taxi services in Visakhapatnam (Vizag), 
-including <strong>airport taxi, local cab service, outstation cabs, one-way taxi, round trips, 
+including <strong>airport taxi, 
+  {" "}
+  <a
+    href="https://www.bshtaxiservices.com/services/local-taxi?type=local-taxi-services"
+    target="_blank"
+    rel="noopener noreferrer"
+	  title="Local Taxi Service in Vizag | BSH Taxi Services"
+    aria-label="Local Taxi Service in Vizag"
+    className="hover:underline"
+  >
+    <strong>local cab service,</strong>
+  </a>{" "} outstation cabs, one-way taxi, round trips, 
 and corporate travel.</strong> Our professional drivers and well-maintained vehicles are available 24/7 across Andhra Pradesh.
 </p>
 

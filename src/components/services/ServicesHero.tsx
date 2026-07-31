@@ -87,7 +87,18 @@ export default function ServicesHero() {
       <strong> wedding car rentals</strong>, and
       <strong> Vizag tour packages</strong> at affordable prices.
       We also offer <strong>Vizag local sightseeing cabs</strong>,
-      <strong> Vizag to Araku Valley taxi service</strong>, and comfortable
+      {" "}
+  <a
+    href="https://www.bshtaxiservices.com/destinations/araku-valley?type=vizag-to-araku-taxi"
+    target="_blank"
+    rel="noopener noreferrer"
+	  title="Best Taxi Service in Vizag - BSH Taxi Services" 
+	  aria-label="Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <strong> Vizag to Araku Valley taxi service,</strong>
+  </a>{" "} 
+       and comfortable
       transportation across Andhra Pradesh with professional drivers,
       clean vehicles, transparent pricing, and 24/7 customer support.
     </p>
