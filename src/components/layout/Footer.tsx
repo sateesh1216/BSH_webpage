@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+
 import {
   FaFacebookF,
   FaInstagram,
@@ -75,17 +75,7 @@ const structuredData = {
 };
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-
-  function handleSubscribe(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!email.trim()) return;
-    setSubscribed(true);
-    setEmail("");
-    setTimeout(() => setSubscribed(false), 2500);
-  }
-
+ 
   return (
     <footer id="contact" className="bg-[#0B1220] text-slate-300">
       <script
@@ -106,11 +96,9 @@ export default function Footer() {
               <span className="text-white">BSH </span>
               <span className="text-primary">TAXI SERVICES</span>
             </div>
-            <p className="max-w-xs text-sm leading-relaxed text-slate-400">
-              Safe, reliable and affordable taxi services across Visakhapatnam
-              and Andhra Pradesh.
-            </p>
-
+           <p className="max-w-xs text-sm leading-relaxed text-slate-400">
+  BSH Taxi Services is a trusted <strong>taxi service in Vizag</strong> offering local taxi services, airport taxi, outstation cabs, corporate travel, wedding car rentals, and tour packages at affordable prices.
+</p>
             <address
               itemScope
               itemType="https://schema.org/LocalBusiness"
