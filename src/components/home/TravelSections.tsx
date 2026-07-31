@@ -36,7 +36,7 @@ const services: ServiceItem[] = [
     title: "Local Taxi Service in Vizag",
     description: (
       <p>
-        24/7 <b>local taxi service in Visakhapatnam</b> for city rides,
+        24/7 <strong>local taxi service in Visakhapatnam</strong> for city rides,
         shopping, office travel, railway station and hospital visits.
       </p>
     ),
@@ -47,7 +47,7 @@ const services: ServiceItem[] = [
     title: "Airport Taxi Service",
     description: (
       <p>
-        Reliable <b>Vizag Airport taxi</b> with on-time pickup & drop, flight
+        Reliable <strong>Vizag Airport taxi</strong> with on-time pickup & drop, flight
         tracking and affordable fares.
       </p>
     ),
@@ -58,8 +58,8 @@ const services: ServiceItem[] = [
     title: "Outstation Taxi Service",
     description: (
       <p>
-        One-way & round-trip <b>outstation taxi</b> from{" "}
-        <b>Vizag to Araku</b>, Tirupati, Vijayawada, Hyderabad and more.
+        One-way & round-trip <strong>outstation taxi</strong> from{" "}
+        <strong>Vizag to Araku</strong>, Tirupati, Vijayawada, Hyderabad and more.
       </p>
     ),
     path: "/destinations",
@@ -69,7 +69,7 @@ const services: ServiceItem[] = [
     title: "Corporate Taxi Service",
     description: (
       <p>
-        Professional <b>corporate cab service</b> for employee transport,
+        Professional <strong>corporate cab service</strong> for employee transport,
         client pickups and business travel.
       </p>
     ),
@@ -80,7 +80,7 @@ const services: ServiceItem[] = [
     title: "Wedding Car Rental",
     description: (
       <p>
-        Luxury wedding <b>car rental in Vizag</b> with professional
+        Luxury wedding <strong>car rental in Vizag</strong> with professional
         chauffeurs for weddings and special events.
       </p>
     ),
@@ -91,8 +91,8 @@ const services: ServiceItem[] = [
     title: "Vizag Tour Packages",
     description: (
       <p>
-        Affordable <b>Vizag sightseeing</b> and Andhra Pradesh{" "}
-        <b>tour packages including Araku, Lambasingi and Borra Caves</b>.
+        Affordable <strong>Vizag sightseeing</strong> and Andhra Pradesh{" "}
+        <strong>tour packages including Araku, Lambasingi and Borra Caves</strong>.
       </p>
     ),
     path: "/destinations",

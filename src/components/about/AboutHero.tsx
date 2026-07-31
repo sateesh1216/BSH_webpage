@@ -14,17 +14,25 @@ export default function AboutHero() {
       <div className="mx-auto grid w-[92%] max-w-310 items-center gap-10 py-16 lg:grid-cols-2 lg:gap-8">
         <div>
           <span className="text-xs font-bold uppercase tracking-widest text-primary">
-            About Us
-          </span>
-          <h1 className="mt-3 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl">
-            About
-            <br />
-            <span className="text-primary">BSH Taxi Services</span>
-          </h1>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-600 sm:text-base">
-            Your trusted travel partner for safe, reliable and comfortable
-            journeys across Visakhapatnam and Andhra Pradesh.
-          </p>
+  About BSH Taxi Services
+</span>
+
+<h1 className="mt-3 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl">
+  Best Taxi Service in
+  <br />
+  <span className="text-primary">
+    Visakhapatnam (Vizag)
+  </span>
+</h1>
+
+  <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
+    BSH Taxi Services is a trusted provider of <strong>taxi services in Visakhapatnam (Vizag)</strong>, offering
+    <strong> local taxi services</strong>, <strong>airport taxi transfers</strong>,
+    <strong> outstation taxi services</strong>, <strong>corporate cab services</strong>,
+    and <strong>Vizag tour packages</strong>. With experienced drivers,
+    well-maintained vehicles, affordable pricing, and 24/7 customer support,
+    we ensure every journey is safe, comfortable, and reliable.
+  </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
             {heroStats.map(({ icon: Icon, value, label }) => (

@@ -29,7 +29,7 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
     tagline: "Book the Best Taxi in Vizag",
     longDescription: (
       <p>
-        Looking for a <b>taxi in Vizag</b>? BSH Taxi Services provides the{" "}
+        Looking for a <strong>taxi in Vizag</strong>? BSH Taxi Services provides the{" "}
         <i>best taxi service in Visakhapatnam (Vizag)</i> with affordable
         fares and 24/7 availability. Book a local taxi in Vizag for office
         commutes, airport transfers, railway station pickups, shopping
@@ -57,7 +57,7 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
     longDescription: (
       <p>
         Planning a trip outside the city? BSH Taxi Services offers the
-        best <b>outstation taxi service in Vizag</b> for one-way drops,
+        best <strong>outstation taxi service in Vizag</strong> for one-way drops,
         round trips, and multi-day travel across Andhra Pradesh and
         nearby states. Whether you're traveling for business, family
         vacations, temple visits, or sightseeing, our outstation taxi in
@@ -89,7 +89,7 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
     tagline: "Reliable Airport Taxi Service in Vizag",
     longDescription: (
       <p>
-        Need a reliable <b>airport taxi in Vizag</b>? BSH Taxi Services
+        Need a reliable <strong>airport taxi in Vizag</strong>? BSH Taxi Services
         provides safe, affordable, and 24/7 airport transfer services to
         and from Visakhapatnam International Airport. Whether you're
         catching an early morning flight or arriving late at night, our
@@ -119,7 +119,7 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
       <p>
         Discover the beauty of Andhra Pradesh with BSH Taxi Services'
         affordable and customizable{" "}
-        <b>tour packages from Vizag</b>. Whether you're planning an{" "}
+        <strong>tour packages from Vizag</strong>. Whether you're planning an{" "}
         <i>Araku Valley</i> tour, Lambasingi trip, Annavaram Temple
         visit, Simhachalam Darshan, Borra Caves adventure, or a family
         sightseeing tour, we provide safe, comfortable, and reliable
@@ -147,7 +147,7 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
     longDescription: (
       <p>
         BSH Taxi Services provides reliable and professional{" "}
-        <b>corporate taxi services</b> for businesses of all sizes.
+        <strong>corporate taxi services</strong> for businesses of all sizes.
         Whether you need employee transportation, executive travel,
         client pickups, airport transfers, or event transportation, our
         corporate cab service ensures safe, comfortable, and punctual
@@ -177,7 +177,7 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
     longDescription: (
       <p>
         Make your special day unforgettable with BSH Taxi Services'
-        premium wedding <b>car rental service in Vizag</b>. We offer
+        premium wedding <strong>car rental service in Vizag</strong>. We offer
         elegant, well-maintained wedding cars with professional
         chauffeurs to ensure a stylish, comfortable, and punctual
         arrival for your wedding ceremonies, receptions, engagements,

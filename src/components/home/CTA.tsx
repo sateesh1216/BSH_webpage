@@ -158,9 +158,9 @@ export function CTA() {
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Need a Taxi?</h2>
             <p className="mt-1 max-w-md text-sm text-[#D6E4FF] sm:text-base">
-  Book your airport taxi, local cab, or outstation taxi in Visakhapatnam (Vizag).
-  Call BSH Taxi Services for 24/7 reliable taxi booking at affordable prices.
-</p>
+              <strong>Book your airport taxi, local cab, or outstation taxi in Visakhapatnam (Vizag). </strong>
+              Call BSH Taxi Services for 24/7 reliable taxi booking at affordable prices.
+            </p>
           </div>
         </div>
 

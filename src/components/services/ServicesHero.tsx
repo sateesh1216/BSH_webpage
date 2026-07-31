@@ -70,21 +70,27 @@ export default function ServicesHero() {
         </div>
 
         {/* Heading */}
-        <h1 className="fade-2 mx-auto mt-6 max-w-4xl text-center text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
-          Reliable Taxi Services
-          <span className="block text-primary">
-            For Every Journey
-          </span>
-        </h1>
+          <h1 className="fade-2 mx-auto mt-6 max-w-4xl text-center text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
+    Book the Best
+    <span className="block text-primary">
+      Taxi Service in Vizag
+    </span>
+  </h1>
 
         {/* Subtitle */}
-        <p className="fade-3 mx-auto mt-6 max-w-3xl text-center text-lg leading-8 text-slate-600">
-          Whether you're planning a local trip, airport transfer,
-          outstation journey, corporate travel, or family vacation,
-          BSH Taxi Services delivers safe, affordable, and comfortable
-          rides with professional drivers and well-maintained vehicles.
-        </p>
-
+            <p className="fade-3 mx-auto mt-6 max-w-3xl text-center text-lg leading-8 text-slate-600">
+      Looking for the <strong>best taxi service in Visakhapatnam (Vizag)</strong>?
+      BSH Taxi Services provides reliable <strong>local taxi service in Vizag</strong>,
+      <strong> airport taxi service</strong>,
+      <strong> outstation taxi service</strong>,
+      <strong> corporate taxi service</strong>,
+      <strong> wedding car rentals</strong>, and
+      <strong> Vizag tour packages</strong> at affordable prices.
+      We also offer <strong>Vizag local sightseeing cabs</strong>,
+      <strong> Vizag to Araku Valley taxi service</strong>, and comfortable
+      transportation across Andhra Pradesh with professional drivers,
+      clean vehicles, transparent pricing, and 24/7 customer support.
+    </p>
         {/* Buttons */}
         <div className="fade-3 mt-10 flex flex-wrap justify-center gap-4">
           <button
