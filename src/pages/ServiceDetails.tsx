@@ -289,10 +289,10 @@ const carFleet: CarPriceOption[] = [
       shadow: "shadow-blue-500/30",
     },
     fares: {
-      "One Way": { rate: "₹13", unit: "/km", note: "Min 130 km/day" },
-      "Round Trip": { rate: "₹11", unit: "/km", note: "Min 250 km/day" },
-      Hourly: { rate: "₹250", unit: "/hr", note: "40 km included" },
-      Package: { rate: "₹1,800", unit: "/8hr-80km", note: "Extra km ₹13" },
+      "One Way": { rate: "₹13", unit: "/km", note: "Min 300 km/day" },
+      "Round Trip": { rate: "₹14", unit: "/km", note: "Min 300 km/day" },
+      Hourly: { rate: "₹300", unit: "/hr", note: "" },
+      Package: { rate: "₹3000", unit: "/10hr-100km", note: "Extra km ₹13" },
     },
   },
   {
@@ -309,10 +309,10 @@ const carFleet: CarPriceOption[] = [
       shadow: "shadow-teal-500/30",
     },
     fares: {
-      "One Way": { rate: "₹16", unit: "/km", note: "Min 130 km/day" },
-      "Round Trip": { rate: "₹14", unit: "/km", note: "Min 250 km/day" },
-      Hourly: { rate: "₹300", unit: "/hr", note: "40 km included" },
-      Package: { rate: "₹2,200", unit: "/8hr-80km", note: "Extra km ₹16" },
+      "One Way": { rate: "₹16", unit: "/km", note: "Min 300 km/day" },
+      "Round Trip": { rate: "₹17", unit: "/km", note: "Min 300 km/day" },
+      Hourly: { rate: "₹350", unit: "/hr", note: "" },
+      Package: { rate: "₹3500", unit: "/10hr-100km", note: "Extra km ₹17" },
     },
   },
   {
@@ -329,10 +329,10 @@ const carFleet: CarPriceOption[] = [
       shadow: "shadow-violet-500/30",
     },
     fares: {
-      "One Way": { rate: "₹19", unit: "/km", note: "Min 130 km/day" },
-      "Round Trip": { rate: "₹17", unit: "/km", note: "Min 250 km/day" },
-      Hourly: { rate: "₹380", unit: "/hr", note: "40 km included" },
-      Package: { rate: "₹2,800", unit: "/8hr-80km", note: "Extra km ₹19" },
+      "One Way": { rate: "₹19", unit: "/km", note: "Min 300 km/day" },
+      "Round Trip": { rate: "₹20", unit: "/km", note: "Min 300 km/day" },
+      Hourly: { rate: "₹400", unit: "/hr", note: "" },
+      Package: { rate: "₹4000", unit: "/10hr-100km", note: "Extra km ₹20" },
     },
   },
   {
@@ -349,10 +349,10 @@ const carFleet: CarPriceOption[] = [
       shadow: "shadow-orange-500/30",
     },
     fares: {
-      "One Way": { rate: "₹28", unit: "/km", note: "Min 250 km/day" },
-      "Round Trip": { rate: "₹25", unit: "/km", note: "Min 300 km/day" },
-      Hourly: { rate: "₹650", unit: "/hr", note: "40 km included" },
-      Package: { rate: "₹4,500", unit: "/8hr-80km", note: "Extra km ₹28" },
+      "One Way": { rate: "₹29", unit: "/km", note: "Min 300 km/day" },
+      "Round Trip": { rate: "₹30", unit: "/km", note: "Min 300 km/day" },
+      Hourly: { rate: "₹650", unit: "/hr", note: "" },
+      Package: { rate: "₹6,500", unit: "/10hr-100km", note: "Extra km ₹28" },
     },
   },
 ];
