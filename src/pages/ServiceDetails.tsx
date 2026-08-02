@@ -430,26 +430,30 @@ const serviceFareConfig: Record<string, ServiceFareConfig> = {
 
   /* ---------------- Corporate Travel — One Way / Round Trip / Monthly */
   "corporate-travel": {
-    tabs: ["One Way", "Round Trip", "Monthly"],
+    tabs: ["One Way", "Round Trip", "Hourly", "Monthly"],
     fleet: [
       makeCar("Dzire", "Sedan", 4, 2, {
         "One Way": { rate: "₹13", unit: "/km", note: "Min 300 km/day" },
         "Round Trip": { rate: "₹14", unit: "/km", note: "Min 300 km/day" },
+        Hourly: { rate: "₹300", unit: "/hr", note: "Min 2 hrs booking" },
         Monthly: { rate: "Contact us", unit: "", note: "Custom billing for regular routes" },
       }),
       makeCar("Ertiga", "MUV", 6, 3, {
         "One Way": { rate: "₹16", unit: "/km", note: "Min 300 km/day" },
         "Round Trip": { rate: "₹17", unit: "/km", note: "Min 300 km/day" },
+        Hourly: { rate: "₹350", unit: "/hr", note: "Min 2 hrs booking" },
         Monthly: { rate: "Contact us", unit: "", note: "Custom billing for regular routes" },
       }),
       makeCar("Innova Crysta", "Premium SUV", 7, 4, {
         "One Way": { rate: "₹19", unit: "/km", note: "Min 300 km/day" },
         "Round Trip": { rate: "₹20", unit: "/km", note: "Min 300 km/day" },
+        Hourly: { rate: "₹400", unit: "/hr", note: "Min 2 hrs booking" },
         Monthly: { rate: "Contact us", unit: "", note: "Custom billing for regular routes" },
       }),
       makeCar("Tempo Traveller", "Group Travel", 17, 10, {
         "One Way": { rate: "₹29", unit: "/km", note: "Min 300 km/day" },
         "Round Trip": { rate: "₹30", unit: "/km", note: "Min 300 km/day" },
+        Hourly: { rate: "₹650", unit: "/hr", note: "Min 2 hrs booking" },
         Monthly: { rate: "Contact us", unit: "", note: "Custom billing for regular routes" },
       }),
     ],
