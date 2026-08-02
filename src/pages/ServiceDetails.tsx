@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   PhoneCall,
@@ -243,18 +243,21 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
 };
 
 /* ------------------------------------------------------------------ */
-/*  Price-card tabs: One Way / Round Trip / Hourly / Package          */
-/*  and the fleet + fares shown under each tab                        */
-/*  TODO: swap the numbers below for your real, current fares         */
+/*  Fare types                                                        */
 /* ------------------------------------------------------------------ */
-
-const tripTypeTabs = ["Package", "One Way", "Round Trip", "Hourly"] as const;
-type TripTypeTab = (typeof tripTypeTabs)[number];
 
 type FareInfo = {
   rate: string; // headline price
   unit: string; // what the rate is per
   note: string; // small print under the rate
+};
+
+type CarTheme = {
+  gradient: string; // badge background
+  glow: string; // soft blurred glow behind the badge
+  iconColor: string;
+  ring: string;
+  shadow: string; // colored drop-shadow matching the gradient
 };
 
 type CarPriceOption = {
@@ -263,23 +266,14 @@ type CarPriceOption = {
   seats: number;
   luggage: number;
   icon: typeof Car;
-  fares: Record<TripTypeTab, FareInfo>;
-  /** Tailwind classes used to give each car its own icon-badge color story */
-  theme: {
-    gradient: string; // badge background
-    glow: string; // soft blurred glow behind the badge
-    iconColor: string;
-    ring: string;
-    shadow: string; // colored drop-shadow matching the gradient
-  };
+  theme: CarTheme;
+  /** Fares keyed by tab label. When a service has no tabs, use the "default" key. */
+  fares: Record<string, FareInfo>;
 };
 
-const carFleet: CarPriceOption[] = [
-  {
-    name: "Dzire",
-    category: "Sedan",
-    seats: 4,
-    luggage: 2,
+/** Shared per-car branding so every service's fleet list looks consistent */
+const carThemes: Record<string, { icon: typeof Car; theme: CarTheme }> = {
+  Dzire: {
     icon: Car,
     theme: {
       gradient: "from-blue-500 to-sky-400",
@@ -288,18 +282,8 @@ const carFleet: CarPriceOption[] = [
       ring: "ring-blue-200",
       shadow: "shadow-blue-500/30",
     },
-    fares: {
-      "One Way": { rate: "₹13", unit: "/km", note: "Min 300 km/day" },
-      "Round Trip": { rate: "₹14", unit: "/km", note: "Min 300 km/day" },
-      Hourly: { rate: "₹300", unit: "/hr", note: "" },
-      Package: { rate: "₹3000", unit: "/10hr-100km", note: "Extra km ₹13" },
-    },
   },
-  {
-    name: "Ertiga",
-    category: "MUV",
-    seats: 6,
-    luggage: 3,
+  Ertiga: {
     icon: Car,
     theme: {
       gradient: "from-teal-500 to-emerald-400",
@@ -308,18 +292,8 @@ const carFleet: CarPriceOption[] = [
       ring: "ring-teal-200",
       shadow: "shadow-teal-500/30",
     },
-    fares: {
-      "One Way": { rate: "₹16", unit: "/km", note: "Min 300 km/day" },
-      "Round Trip": { rate: "₹17", unit: "/km", note: "Min 300 km/day" },
-      Hourly: { rate: "₹350", unit: "/hr", note: "" },
-      Package: { rate: "₹3500", unit: "/10hr-100km", note: "Extra km ₹17" },
-    },
   },
-  {
-    name: "Innova Crysta",
-    category: "Premium SUV",
-    seats: 7,
-    luggage: 4,
+  "Innova Crysta": {
     icon: Car,
     theme: {
       gradient: "from-violet-500 to-purple-400",
@@ -328,18 +302,8 @@ const carFleet: CarPriceOption[] = [
       ring: "ring-violet-200",
       shadow: "shadow-violet-500/30",
     },
-    fares: {
-      "One Way": { rate: "₹19", unit: "/km", note: "Min 300 km/day" },
-      "Round Trip": { rate: "₹20", unit: "/km", note: "Min 300 km/day" },
-      Hourly: { rate: "₹400", unit: "/hr", note: "" },
-      Package: { rate: "₹4000", unit: "/10hr-100km", note: "Extra km ₹20" },
-    },
   },
-  {
-    name: "Tempo Traveller",
-    category: "Group Travel",
-    seats: 17,
-    luggage: 10,
+  "Tempo Traveller": {
     icon: Car,
     theme: {
       gradient: "from-orange-500 to-amber-400",
@@ -348,14 +312,172 @@ const carFleet: CarPriceOption[] = [
       ring: "ring-orange-200",
       shadow: "shadow-orange-500/30",
     },
-    fares: {
-      "One Way": { rate: "₹29", unit: "/km", note: "Min 300 km/day" },
-      "Round Trip": { rate: "₹30", unit: "/km", note: "Min 300 km/day" },
-      Hourly: { rate: "₹650", unit: "/hr", note: "" },
-      Package: { rate: "₹6,500", unit: "/10hr-100km", note: "Extra km ₹28" },
-    },
   },
-];
+};
+
+/** Helper so each service's fleet definition stays short and readable */
+function makeCar(
+  name: keyof typeof carThemes,
+  category: string,
+  seats: number,
+  luggage: number,
+  fares: Record<string, FareInfo>
+): CarPriceOption {
+  const { icon, theme } = carThemes[name];
+  return { name, category, seats, luggage, icon, theme, fares };
+}
+
+/* ------------------------------------------------------------------ */
+/*  Per-service pricing configuration                                 */
+/*  - `tabs`: null/[] => no tab switcher, show the "default" fare     */
+/*  - each car's `fares` object is keyed by the matching tab label    */
+/*  TODO: swap the numbers below for your real, current fares         */
+/* ------------------------------------------------------------------ */
+
+type ServiceFareConfig = {
+  tabs: string[];
+  fleet: CarPriceOption[];
+};
+
+const serviceFareConfig: Record<string, ServiceFareConfig> = {
+  /* ---------------- Local Taxi — 8 Hours / 10 Hours packages ------- */
+  "local-taxi": {
+    tabs: ["8 Hours", "10 Hours"],
+    fleet: [
+      makeCar("Dzire", "Sedan", 4, 2, {
+        "8 Hours": { rate: "₹2,400", unit: "/80km", note: "Extra km ₹13" },
+        "10 Hours": { rate: "₹3,000", unit: "/100km", note: "Extra km ₹13" },
+      }),
+      makeCar("Ertiga", "MUV", 6, 3, {
+        "8 Hours": { rate: "₹2,800", unit: "/80km", note: "Extra km ₹16" },
+        "10 Hours": { rate: "₹3,500", unit: "/100km", note: "Extra km ₹16" },
+      }),
+      makeCar("Innova Crysta", "Premium SUV", 7, 4, {
+        "8 Hours": { rate: "₹3,200", unit: "/80km", note: "Extra km ₹19" },
+        "10 Hours": { rate: "₹4,000", unit: "/100km", note: "Extra km ₹19" },
+      }),
+      makeCar("Tempo Traveller", "Group Travel", 17, 10, {
+        "8 Hours": { rate: "₹5,200", unit: "/80km", note: "Extra km ₹28" },
+        "10 Hours": { rate: "₹6,500", unit: "/100km", note: "Extra km ₹28" },
+      }),
+    ],
+  },
+
+  /* ---------------- Outstation Taxi — One Way / Round Trip --------- */
+  "outstation-taxi": {
+    tabs: ["One Way", "Round Trip"],
+    fleet: [
+      makeCar("Dzire", "Sedan", 4, 2, {
+        "One Way": { rate: "₹13", unit: "/km", note: "Min 300 km/day" },
+        "Round Trip": { rate: "₹14", unit: "/km", note: "Min 300 km/day" },
+      }),
+      makeCar("Ertiga", "MUV", 6, 3, {
+        "One Way": { rate: "₹16", unit: "/km", note: "Min 300 km/day" },
+        "Round Trip": { rate: "₹17", unit: "/km", note: "Min 300 km/day" },
+      }),
+      makeCar("Innova Crysta", "Premium SUV", 7, 4, {
+        "One Way": { rate: "₹19", unit: "/km", note: "Min 300 km/day" },
+        "Round Trip": { rate: "₹20", unit: "/km", note: "Min 300 km/day" },
+      }),
+      makeCar("Tempo Traveller", "Group Travel", 17, 10, {
+        "One Way": { rate: "₹29", unit: "/km", note: "Min 300 km/day" },
+        "Round Trip": { rate: "₹30", unit: "/km", note: "Min 300 km/day" },
+      }),
+    ],
+  },
+
+  /* ---------------- Airport Transfer — no tabs, starts at ₹800 ----- */
+  "airport-transfer": {
+    tabs: [],
+    fleet: [
+      makeCar("Dzire", "Sedan", 4, 2, {
+        default: { rate: "₹800", unit: "/trip", note: "Starting fare, one-way" },
+      }),
+      makeCar("Ertiga", "MUV", 6, 3, {
+        default: { rate: "₹1,000", unit: "/trip", note: "Starting fare, one-way" },
+      }),
+      makeCar("Innova Crysta", "Premium SUV", 7, 4, {
+        default: { rate: "₹1,300", unit: "/trip", note: "Starting fare, one-way" },
+      }),
+      makeCar("Tempo Traveller", "Group Travel", 17, 10, {
+        default: { rate: "₹2,500", unit: "/trip", note: "Starting fare, one-way" },
+      }),
+    ],
+  },
+
+  /* ---------------- Tour Packages — Half Day / Full Day ------------ */
+  "tour-packages": {
+    tabs: ["Half Day", "Full Day"],
+    fleet: [
+      makeCar("Dzire", "Sedan", 4, 2, {
+        "Half Day": { rate: "₹1,800", unit: "/50km", note: "Extra km ₹13" },
+        "Full Day": { rate: "₹3,000", unit: "/100km", note: "Extra km ₹13" },
+      }),
+      makeCar("Ertiga", "MUV", 6, 3, {
+        "Half Day": { rate: "₹2,200", unit: "/50km", note: "Extra km ₹16" },
+        "Full Day": { rate: "₹3,500", unit: "/100km", note: "Extra km ₹16" },
+      }),
+      makeCar("Innova Crysta", "Premium SUV", 7, 4, {
+        "Half Day": { rate: "₹2,800", unit: "/50km", note: "Extra km ₹19" },
+        "Full Day": { rate: "₹4,000", unit: "/100km", note: "Extra km ₹19" },
+      }),
+      makeCar("Tempo Traveller", "Group Travel", 17, 10, {
+        "Half Day": { rate: "₹4,500", unit: "/50km", note: "Extra km ₹28" },
+        "Full Day": { rate: "₹6,500", unit: "/100km", note: "Extra km ₹28" },
+      }),
+    ],
+  },
+
+  /* ---------------- Corporate Travel — One Way / Round Trip / Monthly */
+  "corporate-travel": {
+    tabs: ["One Way", "Round Trip", "Monthly"],
+    fleet: [
+      makeCar("Dzire", "Sedan", 4, 2, {
+        "One Way": { rate: "₹13", unit: "/km", note: "Min 300 km/day" },
+        "Round Trip": { rate: "₹14", unit: "/km", note: "Min 300 km/day" },
+        Monthly: { rate: "Contact us", unit: "", note: "Custom billing for regular routes" },
+      }),
+      makeCar("Ertiga", "MUV", 6, 3, {
+        "One Way": { rate: "₹16", unit: "/km", note: "Min 300 km/day" },
+        "Round Trip": { rate: "₹17", unit: "/km", note: "Min 300 km/day" },
+        Monthly: { rate: "Contact us", unit: "", note: "Custom billing for regular routes" },
+      }),
+      makeCar("Innova Crysta", "Premium SUV", 7, 4, {
+        "One Way": { rate: "₹19", unit: "/km", note: "Min 300 km/day" },
+        "Round Trip": { rate: "₹20", unit: "/km", note: "Min 300 km/day" },
+        Monthly: { rate: "Contact us", unit: "", note: "Custom billing for regular routes" },
+      }),
+      makeCar("Tempo Traveller", "Group Travel", 17, 10, {
+        "One Way": { rate: "₹29", unit: "/km", note: "Min 300 km/day" },
+        "Round Trip": { rate: "₹30", unit: "/km", note: "Min 300 km/day" },
+        Monthly: { rate: "Contact us", unit: "", note: "Custom billing for regular routes" },
+      }),
+    ],
+  },
+
+  /* ---------------- Wedding Car Rentals — 4 Hours / 8 Hours -------- */
+  "wedding-car-rentals": {
+    tabs: ["4 Hours", "8 Hours"],
+    fleet: [
+      makeCar("Dzire", "Sedan", 4, 2, {
+        "4 Hours": { rate: "₹2,000", unit: "/40km", note: "Extra km ₹13" },
+        "8 Hours": { rate: "₹3,500", unit: "/80km", note: "Extra km ₹13" },
+      }),
+      makeCar("Ertiga", "MUV", 6, 3, {
+        "4 Hours": { rate: "₹2,500", unit: "/40km", note: "Extra km ₹16" },
+        "8 Hours": { rate: "₹4,200", unit: "/80km", note: "Extra km ₹16" },
+      }),
+      makeCar("Innova Crysta", "Premium SUV", 7, 4, {
+        "4 Hours": { rate: "₹3,000", unit: "/40km", note: "Extra km ₹19" },
+        "8 Hours": { rate: "₹5,000", unit: "/80km", note: "Extra km ₹19" },
+      }),
+      makeCar("Tempo Traveller", "Group Travel", 17, 10, {
+        "4 Hours": { rate: "₹4,500", unit: "/40km", note: "Extra km ₹28" },
+        "8 Hours": { rate: "₹7,000", unit: "/80km", note: "Extra km ₹28" },
+      }),
+    ],
+  },
+};
 
 /* WhatsApp business number — keep in sync with the call number below */
 const WHATSAPP_NUMBER = "918886803322";
@@ -393,7 +515,19 @@ const serviceToTab = {
 export default function ServiceDetails() {
   const { slug } = useParams<{ slug: string }>();
   const { openBooking, setTripType } = useBooking();
-  const [activeTab, setActiveTab] = useState<TripTypeTab>("Package");
+
+  const fareConfig = slug ? serviceFareConfig[slug] : undefined;
+  const hasTabs = !!fareConfig && fareConfig.tabs.length > 0;
+
+  const [activeTab, setActiveTab] = useState<string>(
+    fareConfig?.tabs[0] ?? "default"
+  );
+
+  // Reset the active tab whenever the visitor lands on a different service page
+  useEffect(() => {
+    setActiveTab(fareConfig?.tabs[0] ?? "default");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug]);
 
   const service = services.find((s) => s.slug === slug);
   const details = slug ? serviceDetailsContent[slug] : undefined;
@@ -405,9 +539,10 @@ export default function ServiceDetails() {
   };
 
   const getWhatsAppLink = (carName: string) => {
-    const message = `Hi BSH Taxi Services, I'd like to book a ${carName} for a ${activeTab} trip${
-      title ? ` (${title})` : ""
-    }. Please share availability and fare.`;
+    const tripLabel = hasTabs ? activeTab : "";
+    const message = `Hi BSH Taxi Services, I'd like to book a ${carName}${
+      tripLabel ? ` for a ${tripLabel} trip` : ""
+    }${title ? ` (${title})` : ""}. Please share availability and fare.`;
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   };
 
@@ -530,103 +665,111 @@ export default function ServiceDetails() {
       </section>
 
       {/* ---------------------------------------------------------- */}
-      {/* Price cards — One Way / Round Trip / Hourly / Package       */}
+      {/* Price cards — tabs vary per service, some have none          */}
       {/* ---------------------------------------------------------- */}
-      <section className="w-full bg-slate-50/60 px-6 py-20 sm:px-10 lg:px-16">
-        <SectionHeading eyebrow="Transparent Pricing" />
-        <p className="-mt-8 mb-10 text-center text-base text-slate-500">
-          Pick a trip type and see the fare for every car in our {title.toLowerCase()} fleet.
-        </p>
+      {fareConfig && (
+        <section className="w-full bg-slate-50/60 px-6 py-20 sm:px-10 lg:px-16">
+          <SectionHeading eyebrow="Transparent Pricing" />
+          <p className="-mt-8 mb-10 text-center text-base text-slate-500">
+            {hasTabs
+              ? `Pick a trip type and see the fare for every car in our ${title.toLowerCase()} fleet.`
+              : `Fares for every car in our ${title.toLowerCase()} fleet, starting at ${
+                  fareConfig.fleet[0]?.fares.default?.rate ?? ""
+                }.`}
+          </p>
 
-        {/* Tabs */}
-        <div className="mx-auto mb-12 flex max-w-2xl flex-wrap items-center justify-center gap-3">
-          {tripTypeTabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`rounded-full px-6 py-2.5 text-sm font-bold transition-all duration-200 ${
-                activeTab === tab
-                  ? "bg-primary text-white shadow-lg shadow-primary/20"
-                  : "border-2 border-slate-200 bg-white text-slate-600 hover:border-primary/40 hover:text-primary"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+          {/* Tabs — only rendered when the service actually needs them */}
+          {hasTabs && (
+            <div className="mx-auto mb-12 flex max-w-2xl flex-wrap items-center justify-center gap-3">
+              {fareConfig.tabs.map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`rounded-full px-6 py-2.5 text-sm font-bold transition-all duration-200 ${
+                    activeTab === tab
+                      ? "bg-primary text-white shadow-lg shadow-primary/20"
+                      : "border-2 border-slate-200 bg-white text-slate-600 hover:border-primary/40 hover:text-primary"
+                  }`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+          )}
 
-        {/* Price cards */}
-        <div className="mx-auto grid max-w-[80em] grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {carFleet.map((car) => {
-            const fare = car.fares[activeTab];
-            return (
-              <article
-                key={car.name}
-                className="group flex flex-col rounded-3xl bg-white p-6 shadow-[0_1px_2px_rgba(16,24,40,0.04)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_48px_rgba(16,24,40,0.12)] hover:ring-primary/15"
-              >
-                <div className="relative mx-auto h-20 w-20">
-                  {/* seat-count chip */}
-               
-                  <div
-                    className={`flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br ${car.theme.gradient} shadow-md transition-transform duration-300 group-hover:-translate-y-1`}
-                  >
-                    <car.icon size={32} className={car.theme.iconColor} strokeWidth={2} />
+          {/* Price cards */}
+          <div className="mx-auto grid max-w-[80em] grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {fareConfig.fleet.map((car) => {
+              const fare = car.fares[hasTabs ? activeTab : "default"];
+              if (!fare) return null;
+
+              return (
+                <article
+                  key={car.name}
+                  className="group flex flex-col rounded-3xl bg-white p-6 shadow-[0_1px_2px_rgba(16,24,40,0.04)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_48px_rgba(16,24,40,0.12)] hover:ring-primary/15"
+                >
+                  <div className="relative mx-auto h-20 w-20">
+                    <div
+                      className={`flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br ${car.theme.gradient} shadow-md transition-transform duration-300 group-hover:-translate-y-1`}
+                    >
+                      <car.icon size={32} className={car.theme.iconColor} strokeWidth={2} />
+                    </div>
                   </div>
-                </div>
 
-                <h3 className="mt-5 text-center text-lg font-bold text-slate-900">
-                  {car.name}
-                </h3>
-                <p className="text-center text-xs font-bold uppercase tracking-wide text-primary/70">
-                  {car.category}
-                </p>
+                  <h3 className="mt-5 text-center text-lg font-bold text-slate-900">
+                    {car.name}
+                  </h3>
+                  <p className="text-center text-xs font-bold uppercase tracking-wide text-primary/70">
+                    {car.category}
+                  </p>
 
-                <div className="mt-4 flex items-center justify-center gap-4 text-xs text-slate-500">
-                  <span className="flex items-center gap-1">
-                    <Users size={14} /> {car.seats} seats
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Briefcase size={14} /> {car.luggage} bags
-                  </span>
-                </div>
-
-                {/* Fare for the selected tab */}
-                <div className="mt-5 rounded-2xl border border-slate-100 bg-slate-50 px-4 py-4 text-center">
-                  <p className="text-2xl font-extrabold text-slate-900">
-                    {fare.rate}
-                    <span className="text-sm font-semibold text-slate-500">
-                      {fare.unit}
+                  <div className="mt-4 flex items-center justify-center gap-4 text-xs text-slate-500">
+                    <span className="flex items-center gap-1">
+                      <Users size={14} /> {car.seats} seats
                     </span>
-                  </p>
-                  <p className="mt-1 text-xs font-medium text-slate-500">
-                    {fare.note}
-                  </p>
-                </div>
+                    <span className="flex items-center gap-1">
+                      <Briefcase size={14} /> {car.luggage} bags
+                    </span>
+                  </div>
 
-                <div className="mt-5 flex flex-col gap-2">
-                  <button
-                    onClick={handleBookNow}
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary/10 py-3 text-sm font-bold text-primary transition hover:bg-primary hover:text-white"
-                  >
-                    Book Now
-                    <ArrowRight size={15} />
-                  </button>
+                  {/* Fare for the selected tab (or the single default fare) */}
+                  <div className="mt-5 rounded-2xl border border-slate-100 bg-slate-50 px-4 py-4 text-center">
+                    <p className="text-2xl font-extrabold text-slate-900">
+                      {fare.rate}
+                      <span className="text-sm font-semibold text-slate-500">
+                        {fare.unit}
+                      </span>
+                    </p>
+                    <p className="mt-1 text-xs font-medium text-slate-500">
+                      {fare.note}
+                    </p>
+                  </div>
 
-                  <a
-                    href={getWhatsAppLink(car.name)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-green-50 py-3 text-sm font-bold text-green-700 transition hover:bg-green-500 hover:text-white"
-                  >
-                    <WhatsAppIcon size={16} />
-                    WhatsApp
-                  </a>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </section>
+                  <div className="mt-5 flex flex-col gap-2">
+                    <button
+                      onClick={handleBookNow}
+                      className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary/10 py-3 text-sm font-bold text-primary transition hover:bg-primary hover:text-white"
+                    >
+                      Book Now
+                      <ArrowRight size={15} />
+                    </button>
+
+                    <a
+                      href={getWhatsAppLink(car.name)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-green-50 py-3 text-sm font-bold text-green-700 transition hover:bg-green-500 hover:text-white"
+                    >
+                      <WhatsAppIcon size={16} />
+                      WhatsApp
+                    </a>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* ---------------------------------------------------------- */}
       {/* Notes / terms                                               */}
