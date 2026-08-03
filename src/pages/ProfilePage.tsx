@@ -3,17 +3,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import SEO from "../components/seo/SEO";
 import { SUPPORT_PHONE, SUPPORT_PHONE_DISPLAY } from "../data/bookingConfig";
 
-/**
- * ProfilePage
- * -----------
- * Placeholder screen for the mobile bottom nav's "Profile" tab. There's
- * no login/account system in this project yet, so this simply surfaces
- * support info and a place riders will eventually see their own bookings.
- *
- * TODO before shipping a real profile: replace this with an actual
- * sign-in flow and a "My Bookings" list once you have a backend/auth
- * provider wired up.
- */
+
 export default function ProfilePage() {
   return (
     <>

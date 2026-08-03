@@ -15,9 +15,7 @@ type LocationAutocompleteProps = {
   id: string;
   label: string;
   value: string;
-  // Second arg is populated whenever the value came from picking a
-  // suggestion (popular list or live search) — omitted for free-typed
-  // text so callers know not to trust stale coordinates.
+
   onChange: (value: string, coords?: { lat: string; lon: string }) => void;
   placeholder: string;
   icon: LucideIcon;
@@ -28,16 +26,7 @@ type LocationAutocompleteProps = {
 const PHOTON_ENDPOINT = "https://photon.komoot.io/api/";
 const VIZAG_CENTER = { lat: 17.6868, lon: 83.2185 };
 
-// Two different radii on purpose:
-//  - SEARCH_RADIUS_KM is what we send to Photon as the bbox — generous,
-//    so it doesn't quietly exclude real nearby places (Anakapalli,
-//    Bheemunipatnam, Paravada, Yelamanchili, etc. all sit past a tight
-//    30-35km box even though they're common pickup points).
-//  - We no longer *hard-filter* results a second time on the client by
-//    that box (that was the actual bug — a place Photon correctly
-//    returned would still get dropped). Instead we sort by distance
-//    from the city center, so close-by places surface first without
-//    silently disappearing when they're a bit further out.
+
 const SEARCH_RADIUS_KM = 65;
 const DEG_LAT = SEARCH_RADIUS_KM / 111;
 const DEG_LON = SEARCH_RADIUS_KM / 106;
@@ -160,10 +149,7 @@ export default function LocationAutocomplete({
   const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const skipNextFetchRef = useRef(false);
   const requestIdRef = useRef(0);
-  // Only real DOM events (focus, typing) set this to true. The search
-  // effect below refuses to touch `isOpen` until this is true, so no
-  // amount of effect re-invocation (StrictMode double-mount, prop churn,
-  // parent re-renders, etc.) can pop the dropdown open on its own.
+
   const hasInteractedRef = useRef(false);
 
   const trimmedValue = value.trim();
@@ -181,9 +167,7 @@ export default function LocationAutocomplete({
     return [...localMatches, ...apiOnly];
   })();
 
-  // Recompute the dropdown's fixed-position coordinates from the input
-  // wrapper's real position on screen — this is what lets the portal
-  // render it above *everything*, regardless of parent overflow/z-index.
+  
   const updateCoords = () => {
     if (!wrapperRef.current) return;
     const rect = wrapperRef.current.getBoundingClientRect();
@@ -214,10 +198,7 @@ export default function LocationAutocomplete({
   }, []);
 
   useEffect(() => {
-    // Never let this effect open the dropdown on its own — only after the
-    // user has actually focused or typed into the field. This also covers
-    // the empty-value branch below, which would otherwise auto-open the
-    // "popular places" list for a field that starts out blank (e.g. Drop).
+
     if (!hasInteractedRef.current) return;
 
     if (skipNextFetchRef.current) {
@@ -260,11 +241,7 @@ export default function LocationAutocomplete({
 
         let results = data.features.map(photonFeatureToSuggestion);
 
-        // Don't hard-exclude results here — Photon's bbox param already
-        // scoped the search. Re-filtering client-side with the same box
-        // was dropping legitimate places that Photon correctly returned
-        // near the edge. Instead, just bring the closest-to-center
-        // results to the top so relevant local places surface first.
+
         if (limitToVizag) {
           results = results
             .map((s) => ({
@@ -296,8 +273,7 @@ export default function LocationAutocomplete({
 
   function selectSuggestion(suggestion: PlaceSuggestion) {
     skipNextFetchRef.current = true;
-    // Pass the coordinates along so the caller (BookingWizard) can hand
-    // them straight to the map instead of re-geocoding this same text.
+
     onChange(suggestion.fullLabel, { lat: suggestion.lat, lon: suggestion.lon });
     setSuggestions([]);
     setIsOpen(false);
@@ -341,8 +317,7 @@ export default function LocationAutocomplete({
           value={value}
           onChange={(event) => {
             hasInteractedRef.current = true;
-            // Free typing has no known coordinate — the caller should
-            // treat this as invalidating any previously selected point.
+
             onChange(event.target.value);
           }}
           onFocus={() => {

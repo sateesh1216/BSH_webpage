@@ -44,13 +44,7 @@ export default function FloatingContactButtons() {
         }
       `}</style>
 
-      {/* Mobile Call/WhatsApp now live in the bottom tab bar (MobileBottomNav),
-          so no separate floating buttons are rendered on mobile here —
-          avoids stacking two sets of the same buttons on small screens. */}
-
-      {/* ================= DESKTOP ================= */}
-
-      {/* Left Call */}
+    
       <a
         href={`tel:${phoneNumber}`}
         className="fixed left-6 bottom-6 z-[9999] hidden md:block"

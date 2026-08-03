@@ -24,11 +24,7 @@ interface Review {
   text: string;
 }
 
-// Sourced from BSH Taxi Services' public Google Business profile
-// (Visakhapatnam) — 5.0★ average across 151 reviews as of this pull.
-// Google's public listing API does not expose reviewer full names, so
-// initials are used in place of a photo/name to avoid misattributing
-// real quotes to fabricated identities.
+
 const reviews: Review[] = [
   {
     initials: "AV",

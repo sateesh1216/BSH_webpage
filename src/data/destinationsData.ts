@@ -1,5 +1,4 @@
-// Temporary fallback while you source the real destination photos above.
-// Once downloaded, swap these imports for the real files with matching names.
+
 
 import Aruku from "../assets/Destinations/araku-taxi-services-bshtaxiservices.webp";
 import lambasingi from "../assets/Destinations/Lambasingi-taxi-services-bshtaxiservices.webp";
@@ -231,44 +230,7 @@ export const destinations: Destination[] = [
       "During standby and ghat roads, the cabin A/C will be turned off to ensure safe driving power.",
       "Early morning sunrise-viewing trips may require starting from Vizag before dawn to catch the frosty hours.",
     ],
-    // places: [
-    //   {
-    //     name: "Lambasingi View Point",
-    //     image: Lambasingiviewpoint,
-    //     description: "The main sunrise spot, offering misty valley views and the coldest morning temperatures in the village.",
-    //   },
-    //   {
-    //     name: "Thajangi Reservoir",
-    //     image: Thajangireservoir,
-    //     description: "A scenic reservoir about 6 km away on the Narsipatnam–Paderu road, framed by hills and popular for boating.",
-    //   },
-    //   {
-    //     name: "Kothapalli Waterfalls",
-    //     image: Kothapalliwaterfalls,
-    //     tag: "Only Car Parking",
-    //     description: "A cascading forest waterfall over the Gostani River, roughly 37 km from Lambasingi, discovered by locals in 2012.",
-    //   },
-    //   {
-    //     name: "Strawberry & Dragon Fruit Farms",
-    //     image: Strawberryfarms,
-    //     description: "Cool-climate orchard farms growing strawberries, dragon fruit, coffee and pepper across the hillsides.",
-    //   },
-    //   {
-    //     name: "Susan Garden",
-    //     image: Susangarden,
-    //     description: "A colourful flower garden nicknamed the 'Amber Coloured Garden', best visited at sunset.",
-    //   },
-    //   {
-    //     name: "Yerravaram Waterfalls",
-    //     image: Yerravaramwaterfalls,
-    //     description: "A year-round cascade tucked in a quiet valley near Narsipatnam, popular with hill-climbers.",
-    //   },
-    //   {
-    //     name: "Paddy Fields & Buddha Statue",
-    //     image: Paddyfieldsbuddha,
-    //     description: "Terraced paddy fields dotted with carved Buddha statues, a quietly scenic and lesser-known stop.",
-    //   },
-    // ],
+ 
   },
 
 {
@@ -323,49 +285,7 @@ export const destinations: Destination[] = [
       "The above prices do not include tolls, entry fees, parking fees and driver food.",
       "Itinerary order may be adjusted slightly depending on traffic and opening hours.",
     ],
-    // places: [
-    //   {
-    //     name: "Rushikonda Beach",
-    //     image: Rushikondabeach,
-    //     description: "Vizag's Blue Flag-certified beach, known for golden sands and water sports like surfing and jet-skiing.",
-    //   },
-    //   {
-    //     name: "Kailasagiri Park",
-    //     image: Kailasagiripark,
-    //     description: "A 100-acre hilltop park with 40-ft Shiva-Parvati statues, ropeway rides and panoramic bay views.",
-    //   },
-    //   {
-    //     name: "RK Beach (Ramakrishna Beach)",
-    //     image: Rkbeach,
-    //     description: "A popular city beach and promenade lined with parks, food stalls and the Submarine Museum.",
-    //   },
-    //   {
-    //     name: "Submarine Museum",
-    //     image: Submarinemuseum,
-    //     tag: "Only Car Parking",
-    //     description: "The decommissioned INS Kursura, converted into Asia's only shore-based submarine museum in 2001.",
-    //   },
-    //   {
-    //     name: "Visakha Museum",
-    //     image: Visakhamuseum,
-    //     description: "Housed in a 150-year-old Dutch bungalow on RK Beach Road, showcasing the region's colonial and maritime history.",
-    //   },
-    //   {
-    //     name: "Tenneti Park",
-    //     image: Tennetipark,
-    //     description: "A coastal eco-park at the foot of the Kailasagiri ropeway, popular for its cliffside pathways and sea views.",
-    //   },
-    //   {
-    //     name: "Simhachalam Temple",
-    //     image: Simhachalamtemple,
-    //     description: "An ancient hilltop temple dedicated to Lord Narasimha, one of Vizag's most revered pilgrimage sites.",
-    //   },
-    //   {
-    //     name: "Kali Mata Temple",
-    //     image: Kalimatatemple,
-    //     description: "A well-known temple near RK Beach, often combined with a beach-side evening visit.",
-    //   },
-    // ],
+  
   },
 {
     slug: "simhachalam-temple",
@@ -421,38 +341,7 @@ export const destinations: Destination[] = [
       "Mobile phones, cameras and bags are not allowed inside the sanctum and must be deposited at the cloakroom.",
       "Special/VIP darshan tickets are payable separately at the temple counter and are not included in the taxi fare.",
     ],
-    // places: [
-    //   {
-    //     name: "Main Sanctum (Garbhagriha)",
-    //     image: Simhachalamsanctum,
-    //     description: "Home to the sandalwood-coated Varaha Narasimha idol, revealed in its true form only once a year.",
-    //   },
-    //   {
-    //     name: "Kalyana Mandapam",
-    //     image: Kalyanamandapam,
-    //     description: "An intricately carved pillared hall used for temple rituals and ceremonial functions.",
-    //   },
-    //   {
-    //     name: "Krishnadevaraya's Victory Pillar",
-    //     image: Victorypillar,
-    //     description: "A stone pillar said to have been gifted by the Vijayanagara emperor Krishnadevaraya.",
-    //   },
-    //   {
-    //     name: "Temple Tank (Pushkarini)",
-    //     image: Templetank,
-    //     description: "A sacred stepped water tank within the temple complex, used for ritual bathing.",
-    //   },
-    //   {
-    //     name: "Simhachalam View Point",
-    //     image: Simhachalamviewpoint,
-    //     description: "A scenic hilltop stop along the ghat road offering panoramic views of the surrounding Eastern Ghats and city.",
-    //   },
-    //   {
-    //     name: "Rajagopuram (Five-Tiered Gateway)",
-    //     image: Rajagopuram,
-    //     description: "The temple's towering entrance gopuram, showcasing a blend of Kalinga, Chalukya and Chola architectural styles.",
-    //   },
-    // ],
+ 
   },
 {
     slug: "tirupati",
@@ -509,48 +398,7 @@ export const destinations: Destination[] = [
       "Darshan tickets (Special Entry / Sarva Darshan) must be booked separately via TTD and are not included in the taxi fare.",
       "Personal vehicles are not allowed all the way to the temple doorstep; local shuttle/battery vehicles operate within the Tirumala complex.",
     ],
-    // places: [
-    //   {
-    //     name: "Sri Venkateswara Temple (Main Sanctum)",
-    //     image: Venkateswaratemple,
-    //     description: "The gold-plated sanctum atop Tirumala hill, home to the deity Lord Venkateswara, visited by over 50,000 pilgrims daily.",
-    //   },
-    //   {
-    //     name: "Vaikuntam Queue Complex",
-    //     image: Vaikuntamqueue,
-    //     description: "A series of interconnected halls that guide devotees through the darshan queue toward the main shrine.",
-    //   },
-    //   {
-    //     name: "Sri Padmavathi Temple, Tiruchanoor",
-    //     image: Padmavathitemple,
-    //     description: "Dedicated to Goddess Padmavathi, consort of Lord Venkateswara; devotees traditionally visit here before Tirumala.",
-    //   },
-    //   {
-    //     name: "Silathoranam",
-    //     image: Silathoranam,
-    //     description: "A rare natural rock arch formed within the Tirumala hills, reachable via a short trek.",
-    //   },
-    //   {
-    //     name: "Sri Govindaraja Swamy Temple",
-    //     image: Govindarajatemple,
-    //     description: "A 12th-century temple in Tirupati town with a 50-foot gopuram, dedicated to a reclining form of Vishnu.",
-    //   },
-    //   {
-    //     name: "Talakona Waterfall",
-    //     image: Talakonawaterfall,
-    //     description: "Andhra Pradesh's highest waterfall, tucked inside the Sri Venkateswara Wildlife Sanctuary near Tirupati.",
-    //   },
-    //   {
-    //     name: "Chandragiri Fort",
-    //     image: Chandragirifort,
-    //     description: "A centuries-old Vijayanagara-era fort and palace complex a short drive from Tirupati town.",
-    //   },
-    //   {
-    //     name: "Sri Venkateswara Dhyana Vignan Mandiram",
-    //     image: Dhyanamandiram,
-    //     description: "An open-air meditation centre and museum, opened in 1980, showcasing religious artifacts and offering a quiet retreat.",
-    //   },
-    // ],
+  
   },
 {
     slug: "annavaram-temple",
@@ -607,39 +455,7 @@ export const destinations: Destination[] = [
       "Special/VIP darshan and Vratham booking slots must be arranged separately at the temple counter or via the Devasthanam website.",
       "The final stretch up Ratnagiri hill is via steps, ghat road, or ropeway — private vehicles do not go all the way to the sanctum.",
     ],
-    // places: [
-    //   {
-    //     name: "Sri Satyanarayana Swamy Temple",
-    //     image: Satyanarayanatemple,
-    //     description: "The main Dravidian-style shrine atop Ratnagiri hill, home to the 13-ft Trimurthi idol and the famed Satyanarayana Vratham.",
-    //   },
-    //   {
-    //     name: "Ratnagiri Hill & Ghat Steps",
-    //     image: Ratnagirihill,
-    //     description: "About 460 stone steps (or a ghat road) climb roughly 300 ft to the temple, with scenic sunrise and sunset viewpoints along the way.",
-    //   },
-    //   {
-    //     name: "Pampa River & Pampa Sarovara",
-    //     image: Pampariver,
-    //     description: "The river encircling the base of Ratnagiri hill, with a barrage and boating facility used for ritual bathing before darshan.",
-    //   },
-    //   {
-    //     name: "Vaikunta Narayana Dwaram",
-    //     image: Vaikuntadwaram,
-    //     description: "A key gateway within the temple complex, tied to the belief that the deity grants devotees whatever they earnestly desire.",
-    //   },
-    //   {
-    //     name: "Bojjannakonda",
-    //     image: Bojjannakonda,
-    //     tag: "Only Car Parking",
-    //     description: "A nearby Buddhist archaeological site with rock-cut caves, stupas and ancient sculptures.",
-    //   },
-    //   {
-    //     name: "Thalupulamma Talli Temple",
-    //     image: Thalupulammatemple,
-    //     description: "A temple roughly 15 km away between Annavaram and Tuni, popular with travellers seeking protection for new vehicles.",
-    //   },
-    // ],
+ 
   },
 {
     slug: "arasavalli-temple",
@@ -694,33 +510,7 @@ export const destinations: Destination[] = [
       "Vehicles must be parked a short distance from the temple; the final approach is on foot through a narrow walkway.",
       "Special entry darshan is available for a small additional fee, payable directly at the temple counter.",
     ],
-    // places: [
-    //   {
-    //     name: "Sri Suryanarayana Swamy Sanctum",
-    //     image: Suryanarayanasanctum,
-    //     description: "The 7th-century main shrine where sunrise rays are said to fall directly on the deity's feet during Rathasapthami.",
-    //   },
-    //   {
-    //     name: "Five Temple Gateways",
-    //     image: Templegateways,
-    //     description: "The precisely aligned entrances built to channel sunlight to the sanctum, a hallmark of the temple's Kalinga architecture.",
-    //   },
-    //   {
-    //     name: "Sri Sathya Sai Dhyana Mandir",
-    //     image: Dhyanamandir,
-    //     description: "A meditation centre located directly opposite the temple, popular with pilgrims for quiet reflection before or after darshan.",
-    //   },
-    //   {
-    //     name: "Nagavali River",
-    //     image: Nagavaliriver,
-    //     description: "The river associated with the temple's founding legend, said to have been channelled here by Balarama in the Dwapara Yuga.",
-    //   },
-    //   {
-    //     name: "Srikakulam Town",
-    //     image: Srikakulamtown,
-    //     description: "The district headquarters just 1 km away, known for traditional brass crafts and temple bell-making.",
-    //   },
-    // ],
+  
   },
 {
     slug: "vanjangi-hills",
@@ -777,28 +567,7 @@ export const destinations: Destination[] = [
       "The final 4-5 km stretch to the viewpoint is a forest trek on foot — the taxi cannot go beyond Paderu/the trek starting point.",
       "Cloud views are weather-dependent and most reliable in winter (Nov-Feb); monsoon and summer months rarely produce the cloud bed.",
     ],
-    // places: [
-    //   {
-    //     name: "Vanjangi Sunrise Viewpoint",
-    //     image: Vanjangiviewpoint,
-    //     description: "The hilltop summit where the famous 'Sea of Clouds' unfolds at sunrise, with the sun rising through a valley blanketed in fog.",
-    //   },
-    //   {
-    //     name: "Paderu Town",
-    //     image: Paderutown,
-    //     description: "The last motorable point before the trek begins, and the main hub for guides, jeeps and basic supplies.",
-    //   },
-    //   {
-    //     name: "Forest Trekking Trail",
-    //     image: Foresttrail,
-    //     description: "A 4-5 km trail through dense Eastern Ghats forest connecting Paderu to the Vanjangi summit.",
-    //   },
-    //   {
-    //     name: "Coffee Plantations",
-    //     image: Vanjangicoffeeplantations,
-    //     description: "Shade-grown coffee estates surrounding the village, similar to those found in nearby Araku Valley.",
-    //   },
-    // ],
+  
   },
 
 {

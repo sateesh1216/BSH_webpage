@@ -118,15 +118,13 @@ const { openBooking } = useBooking();
   "Hill Station";
 
   const theme = CATEGORY_THEME[category];
-  // const CategoryIcon = theme.Icon;
-  // Fill level of the route marker's odometer bar: closer destinations read
-  // "fuller" on a 0–130km scale, since nothing we serve sits further than that.
+
 
   const routeFill = Math.min(100, Math.round((distanceKm / 130) * 100));
 
   return (
     <>
-      {/* eslint-disable-next-line react/no-unknown-property */}
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
         .font-display { font-family: 'Fraunces', serif; font-feature-settings: 'liga' 1; }

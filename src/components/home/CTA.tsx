@@ -79,23 +79,7 @@ function ContactInfoCard({ detail, index }: { detail: ContactDetail; index: numb
   return <div className={cardClass}>{content}</div>;
 }
 
-/**
- * MapEmbed
- * --------
- * Google's "output=embed" iframe looks lightweight from our side (just a
- * <iframe src="...">), but internally Google loads its full Maps JS
- * bundle (places.js, main.js, init_embed.js, controls.js, etc. — ~400 KiB
- * uncompressed) the moment the iframe mounts. Native `loading="lazy"`
- * isn't reliable enough to stop this on a long homepage, since Lighthouse
- * (and some browsers) still treat a below-the-fold iframe as "close
- * enough" to preload.
- *
- * Fix: show a static, zero-JS placeholder card first. Only mount the
- * real iframe — and therefore only trigger Google's Maps JS download —
- * once the user actually clicks it. Most homepage visitors never click
- * the embedded map (they use "Open in Maps" or just read the address),
- * so this removes ~223 KiB of unused JS for the common case.
- */
+
 function MapEmbed({ title, embedUrl, linkUrl }: { title: string; embedUrl: string; linkUrl: string }) {
   const [loadMap, setLoadMap] = useState(false);
 
@@ -191,9 +175,7 @@ export function CTA() {
           </button>
         </div>
 
-        {/* <div className="hidden shrink-0 lg:block">
-          <img src="/src/assets/cars/Homepage_Dzire-taxi-services-2-in-visakhapatnam-bshtaxiservices.webp" alt="BSH Taxi Services car" className="h-auto w-64 object-contain drop-shadow-[0_12px_20px_rgba(0,0,0,0.35)]" />
-        </div> */}
+       
       </div>
     </section>
   );

@@ -300,14 +300,7 @@ function TripSummarySidebar({
           <SummaryRow icon={Briefcase} label="Luggage" value={trip.luggage} />
           <SummaryRow icon={Navigation} label="Distance" value={distanceKm ? `${distanceKm} km` : "Not calculated"} />
           <SummaryRow icon={Clock} label="Est. Time" value={minutes ? formatDuration(minutes) : "Not calculated"} />
-          {/* {total > 0 && (
-            <div className="flex items-center justify-between py-3">
-              <span className="text-xs font-bold text-slate-600">Estimated Total</span>
-              <span className="bg-linear-to-br from-primary to-primary/70 bg-clip-text text-lg font-extrabold tabular-nums text-transparent">
-                {formatCurrency(total)}
-              </span>
-            </div>
-          )} */}
+
         </div>
       </div>
 
@@ -445,17 +438,14 @@ function DateTimePickerField({
   }
 
   function handleToggle() {
-    // Re-sync the visible month with whatever's currently selected each
-    // time the popover opens, so it never opens on a stale month.
+
     const base = dateValue ? new Date(`${dateValue}T00:00:00`) : today;
     setViewYear(base.getFullYear());
     setViewMonth(base.getMonth());
     setIsOpen((o) => !o);
   }
 
-  // Selecting a date keeps the popover open so the time can be picked right
-  // after, in the same interaction — closing only happens via Done, Escape,
-  // or a tap outside.
+
   function handleSelectDate(iso: string) {
     onDateChange(iso);
   }
@@ -1360,22 +1350,15 @@ export default function BookingWizard({ vehicleId }: BookingWizardProps) {
   const [bookingId, setBookingId] = useState(makeBookingId());
   const [confirmed, setConfirmed] = useState(false);
 
-  // Real distance/time reported by the live map, once it resolves the route.
   const [mapRoute, setMapRoute] = useState<{ distanceKm: number; minutes: number } | null>(null);
 
-  // Coordinates resolved directly from LocationAutocomplete (user picked a
-  // suggestion). When present, RouteMapPreview can skip geocoding that
-  // point entirely and go straight to routing.
   const [pickupCoords, setPickupCoords] = useState<GeoPoint | null>(null);
   const [dropCoords, setDropCoords] = useState<GeoPoint | null>(null);
 
   const vehicle = useMemo(() => VEHICLES.find((v) => v.id === selectedVehicleId) ?? null, [selectedVehicleId]);
 
-  // Instant placeholder estimate shown before the map finishes geocoding/routing.
   const fallbackEstimate = useMemo(() => estimateRoute(trip.pickup, trip.drop), [trip.pickup, trip.drop]);
 
-  // Clear the resolved route whenever pickup/drop changes so the fallback
-  // estimate shows again until the map recomputes the real one.
   useEffect(() => {
     setMapRoute(null);
   }, [trip.pickup, trip.drop]);

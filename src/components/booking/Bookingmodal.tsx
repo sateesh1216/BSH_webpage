@@ -69,9 +69,6 @@ export default function BookingModal() {
           </p>
         </div>
 
-        {/* Card body — this is the scrolling container; the sticky footer
-            inside <InstantBookingCard> attaches to it. Also respects the
-            bottom safe-area on notched phones. */}
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-white pb-[env(safe-area-inset-bottom)]">
           <InstantBookingCard
             vehicleName={vehicleName}

@@ -1,13 +1,6 @@
 import type { VehicleId } from "./bookingConfig";
 
-/* ---------------------------------------------------------------------- */
-/*  Fixed, hand-set prices — NOT calculated from distance/km at runtime.   */
-/*  Edit the numbers below directly to change what a customer sees for a   */
-/*  given destination + car + trip type. Add a new destination slug here   */
-/*  (matching the slug in POPULAR_SLUGS in MobileSearchBar.tsx, and in     */
-/*  destinationsData.ts) to give it its own prices — any destination/car   */
-/*  combination that isn't listed just falls back to "Contact for pricing".*/
-/* ---------------------------------------------------------------------- */
+
 
 export type FixedPriceEntry = {
   oneWay?: number;

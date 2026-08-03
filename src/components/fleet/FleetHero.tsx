@@ -155,59 +155,7 @@ export default function FleetHero() {
             </div>
           ))}
         </div>
-                {/* Statistics */}
-        {/* <div className="fade-4 mt-13 rounded-3xl border border-slate-200 bg-white/10 p-4 shadow-lg backdrop-blur">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {stats.map(({ icon: Icon, value, label }) => (
-              <div
-                key={label}
-                className="group text-center transition-transform duration-300 hover:-translate-y-2"
-              >
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
-                  <Icon size={28} />
-                </div>
-
-                <h3 className="mt-4 text-3xl font-extrabold text-slate-900">
-                  {value}
-                </h3>
-
-                <p className="mt-2 text-sm font-medium text-slate-600">
-                  {label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div> */}
-
-        {/* Bottom Premium Banner */}
-        {/* <div className="fade-4 mt-12 overflow-hidden rounded-3xl bg-linear-to-r from-primary via-blue-600 to-sky-600 px-8 py-6 text-white shadow-2xl">
-
-          <div className="flex flex-col items-center justify-between gap-8 lg:flex-row">
-
-            <div className="text-center lg:text-left">
-              <h2 className="text-3xl font-extrabold">
-                Travel With Confidence
-              </h2>
-
-              <p className="mt-3 max-w-2xl text-base leading-7 text-blue-100">
-                Every vehicle in our fleet is professionally maintained,
-                thoroughly cleaned, and driven by experienced chauffeurs.
-                Whether you're planning a local trip, airport transfer,
-                corporate ride, pilgrimage, or outstation journey, we
-                guarantee a safe, comfortable, and affordable travel
-                experience.
-              </p>
-            </div>
-
-            <button
-              onClick={() => openBooking({ resetTrip: true })}
-              className="rounded-xl bg-white px-8 py-4 font-bold text-primary shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
-            >
-              Book Your Ride
-            </button>
-
-          </div>
-        </div> */}
+    
 
       </div>
     </section>

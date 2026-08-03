@@ -38,22 +38,6 @@ interface InstantBookingCardProps {
 // auto-zoom the whole page on focus, which is jarring on a modal form.
 const INPUT_TEXT = "text-base sm:text-xs";
 
-/**
- * InstantBookingCard
- * -------------------
- * A short, single-screen booking form used inside <BookingModal>.
- * Deliberately NOT the multi-step <BookingWizard> — just the fields
- * needed to get a booking request moving: pickup, drop, vehicle, date,
- * time, name, phone. Submitting opens WhatsApp with all the details
- * pre-filled so the BSH team can confirm directly.
- *
- * Mobile notes:
- * - Inputs use 16px text below `sm` to avoid iOS Safari's auto-zoom.
- * - The submit button + call link sit in a `sticky bottom-0` footer so
- *   they stay reachable while the fields above scroll (this relies on
- *   the parent <BookingModal> body being the scrolling container).
- * - Touch targets (vehicle cards, inputs, button) are sized for thumbs.
- */
 export default function InstantBookingCard({
   vehicleName,
   initialPickup,
@@ -62,8 +46,7 @@ export default function InstantBookingCard({
 }: InstantBookingCardProps) {
   const [pickup, setPickup] = useState(initialPickup?.trim() ? initialPickup : "Visakhapatnam");
   const [drop, setDrop] = useState(initialDrop ?? "");
-  // Pre-select the vehicle if this card was opened from a specific fleet
-  // card's "Book Now" (vehicleName matches one of VEHICLES by name).
+
   const [selectedVehicleId, setSelectedVehicleId] = useState<string | undefined>(
     () => VEHICLES.find((v) => v.name.toLowerCase() === vehicleName?.toLowerCase())?.id
   );
@@ -298,9 +281,7 @@ export default function InstantBookingCard({
         </div>
       </div>
 
-      {/* Sticky footer — stays reachable while fields above scroll, since
-          the parent <BookingModal> body (overflow-y-auto) is the
-          scrolling ancestor this sticky container attaches to. */}
+
       <div className="sticky bottom-0 -mx-4 -mb-4 mt-4 border-t border-slate-100 bg-white/95 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-sm sm:-mx-6 sm:-mb-6 sm:px-6">
         <button
           type="button"

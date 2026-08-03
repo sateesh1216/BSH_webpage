@@ -4,12 +4,7 @@ interface SectionHeadingProps {
   align?: "center" | "left";
 }
 
-// The design uses one consistent header pattern for section labels
-// ("— WHY CHOOSE BSH TAXI SERVICES —", "— OUR SERVICES —", "— OUR PREMIUM FLEET —"):
-// a single bold, uppercase, letter-spaced line, centered, flanked by thin
-// divider rules. There's no separate large title or underline bar beneath it.
-// `title` is kept optional for any section that genuinely needs a bigger
-// heading below the eyebrow — omit it to match the standard pattern.
+
 export default function SectionHeading({ eyebrow, title, align = "center" }: SectionHeadingProps) {
   const isCentered = align === "center";
 

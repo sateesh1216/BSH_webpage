@@ -7,9 +7,7 @@ type TrustItem = {
   description: string;
 };
 
-// Matches the 4 cards under "— WHY CHOOSE BSH TAXI SERVICES —" in the design.
-// If you'd rather keep this data-driven, move this array back into
-// ../../data/trustItems and update the copy there to match.
+
 const trustItems: TrustItem[] = [
   { icon: ShieldCheck, title: "Safe & Secure", description: "Your safety is our top priority" },
   { icon: UserCheck, title: "Professional Drivers", description: "Trained, verified & experienced" },

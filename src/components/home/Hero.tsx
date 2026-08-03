@@ -9,10 +9,7 @@ import {
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
-// import heroBanner from "../../assets/Home page banners/bshtaxiservice-homepage-banner_3.webp"; // Change to your actual image name
-// Hero-only presentation config (icon + hero image per tab). Trip-shape
-// config (tripOptions/dropLabel/dropPlaceholder) now lives in
-// BookingContext's TRIP_CONFIG, shared across every entry point.
+
 
 interface HeroBadge {
   icon: LucideIcon;
@@ -49,10 +46,7 @@ export default function Hero() {
         className="pointer-events-none absolute -right-24 -top-32 z-0 h-72 w-72 rounded-full bg-primary/15 blur-3xl sm:h-96 sm:w-96"
       />
 
-      {/* Signature: a dashed route line running from the text column toward
-          the image, with a pin marking the destination — the one visual idea
-          this page is allowed to be a little bold about. Decorative only,
-          desktop-only since the two-column layout it traces only exists at lg+. */}
+  
       <svg
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-10 z-0 hidden h-64 w-full lg:block motion-reduce:[&_path]:stroke-dasharray-none!"
@@ -146,9 +140,7 @@ and corporate travel.</strong> Our professional drivers and well-maintained vehi
           ))}
         </div>
 
-        {/* Floating trust card — desktop only, sits near the route line's
-            destination pin. Reuses the previously-unused bsh-float-card
-            keyframe so it isn't dead CSS. */}
+      
         <div className="bsh-float-card pointer-events-none absolute right-10 top-8 hidden items-center gap-3 rounded-2xl border border-slate-100 bg-white/90 px-4 py-3 shadow-[0_12px_32px_-8px_rgba(16,24,40,0.18)] backdrop-blur-sm xl:flex">
           <div className="grid h-9 w-9 place-items-center rounded-full bg-amber-50 text-amber-500">
             <Star size={16} fill="currentColor" />

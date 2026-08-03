@@ -54,15 +54,7 @@ export const navLinks: NavLink[] = [
         label: "Wedding Car Rentals",
         href: "/services/wedding-car-rentals?type=wedding-car-rentals",
       },
-      // {
-      //   label: "One Way Taxi",
-      //   href: "/services/one-way-taxi?type=one-way-taxi",
-      // },
-
-      // {
-      //   label: "Round Trip Taxi",
-      //   href: "/services/round-trip-taxi?type=round-trip-taxi",
-      // },
+ 
 
     ],
   },

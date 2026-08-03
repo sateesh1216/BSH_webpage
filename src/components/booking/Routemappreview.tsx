@@ -4,37 +4,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { formatDuration } from "../../data/bookingConfig";
 
-/**
- * NOTE ON DEPENDENCIES
- * --------------------
- * This component renders a real, interactive map. It needs:
- *
- *   npm install leaflet
- *   npm install -D @types/leaflet
- *
- * It uses free, keyless services so it works out of the box:
- *   - Tiles:     OpenStreetMap
- *   - Geocoding: Photon (openstreetmap-based, komoot.io) — used only as a
- *                fallback for free-typed pickup/drop text. When the text
- *                came from LocationAutocomplete's suggestion list, the
- *                caller already has coordinates and passes them straight
- *                in via `pickupCoords` / `dropCoords`, so no geocode call
- *                happens at all for the common case.
- *   - Routing:   OSRM public demo server
- *
- * These public services are rate-limited and meant for light/demo use.
- * Photon is noticeably more forgiving than Nominatim (which enforces a
- * hard 1 request/second cap and routinely 403s on anything faster), and
- * since coordinates are usually supplied directly now, geocode traffic
- * here is already much lower than before. Sequential calls, retry with
- * backoff, and a results cache are all still kept as a safety net for
- * whatever free-typed traffic remains.
- *
- * For production traffic at scale, swap `geocode()` / the OSRM fetch
- * below for a paid provider (Google, Mapbox, HERE, etc.) — the
- * component's public API (props + onRouteComputed) stays the same.
- */
-
 interface GeocodedPoint {
   lat: number;
   lon: number;
@@ -43,12 +12,10 @@ interface GeocodedPoint {
 interface RouteMapPreviewProps {
   pickupLabel: string;
   dropLabel: string;
-  /** Known coordinates for pickup/drop, if the caller already has them
-   *  (e.g. user picked a suggestion from LocationAutocomplete). When
-   *  present, geocoding is skipped entirely for that point. */
+
   pickupCoords?: GeocodedPoint | null;
   dropCoords?: GeocodedPoint | null;
-  /** Called with the real, routed distance/time once the map resolves it. */
+
   onRouteComputed?: (info: { distanceKm: number; minutes: number }) => void;
 }
 
@@ -58,15 +25,11 @@ const PHOTON_URL = "https://photon.komoot.io/api/";
 const OSRM_URL = "https://router.project-osrm.org/route/v1/driving";
 const DEFAULT_CENTER: [number, number] = [17.686, 83.2185]; // Visakhapatnam
 
-// Photon's usage policy is far more relaxed than Nominatim's, but this
-// still only fires for free-typed text (coords-known cases skip it
-// entirely), so a small courtesy gap is enough — no more forced 1.1s
-// stalls per lookup.
+
 const GEOCODE_MIN_GAP_MS = 350;
 let lastGeocodeCallAt = 0;
 
-// Cache geocode results for the lifetime of the tab so navigating back
-// and forth between wizard steps doesn't re-hit the API for the same text.
+
 const geocodeCache = new Map<string, GeocodedPoint | null>();
 
 function wait(ms: number) {
@@ -81,7 +44,6 @@ async function respectRateLimit() {
   lastGeocodeCallAt = Date.now();
 }
 
-/** Generic fetch with retry + exponential backoff for transient failures. */
 async function fetchWithRetry(
   url: string,
   options: RequestInit,
@@ -167,11 +129,9 @@ export default function RouteMapPreview({
   const [status, setStatus] = useState<Status>("idle");
   const [distanceKm, setDistanceKm] = useState(0);
   const [minutes, setMinutes] = useState(0);
-  // Bumping this forces the resolve effect to re-run even if pickup/drop
-  // text hasn't changed — used by the manual "Retry" button.
+
   const [retryTick, setRetryTick] = useState(0);
 
-  // Initialize the map exactly once.
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
 
@@ -188,10 +148,7 @@ export default function RouteMapPreview({
     layerRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
 
-    // Some parent layouts (e.g. this preview sitting in a flex/grid cell
-    // that changes size once siblings render) can leave Leaflet with a
-    // stale container size, which shows as a partially grey/broken map.
-    // A couple of delayed invalidateSize() calls fix that cheaply.
+
     const t1 = setTimeout(() => map.invalidateSize(), 150);
     const t2 = setTimeout(() => map.invalidateSize(), 500);
 
@@ -212,9 +169,7 @@ export default function RouteMapPreview({
     }
   }, []);
 
-  // Resolve pickup/drop to coordinates (reusing known coords when
-  // possible, geocoding only what's missing), fetch a real route, draw
-  // it. Retries transient failures automatically.
+
   useEffect(() => {
     const pickup = pickupLabel.trim();
     const drop = dropLabel.trim();
@@ -232,11 +187,7 @@ export default function RouteMapPreview({
     const debounce = setTimeout(async () => {
       setStatus("loading");
       try {
-        // Reuse coordinates the caller already resolved (e.g. the user
-        // picked a suggestion from LocationAutocomplete) instead of
-        // re-geocoding. Only fall back to a live lookup for free-typed
-        // text, and even then do it sequentially — some geocoders
-        // throttle/block parallel requests from the same client.
+        
         const from = pickupCoords ?? (await geocode(`${pickup}, Andhra Pradesh, India`, controller.signal));
         const to = dropCoords ?? (await geocode(`${drop}, India`, controller.signal));
 

@@ -23,9 +23,7 @@ const quickLinks = navLinks.filter((link) =>
   ),
 );
 
-// Each service gets its own icon + accent color so the list scans instantly
-// `slug` must match the `slug` used in ../../data/servicesData.ts so these
-// links route to the correct /services/:slug detail page.
+
 const serviceLinks = [
   { label: "Outstation Taxi", slug: "outstation-taxi", icon: FaRoute, color: "text-sky-400" },
   { label: "Local Taxi", slug: "local-taxi", icon: FaCity, color: "text-emerald-400" },
@@ -35,9 +33,7 @@ const serviceLinks = [
   { label: "Wedding Cars", slug: "wedding-car-rentals", icon: FaRing, color: "text-pink-400" },
 ];
 
-// `slug` must match the `slug` used in ../../data/servicesData.ts (destinations
-// array) so these links route to the correct /destinations/:slug detail page.
-// "And More" routes to the full destinations listing instead of a single slug.
+
 const destinationLinks = [
   { label: "Araku Valley", slug: "araku-valley", color: "text-emerald-400" },
   { label: "Lambasingi", slug: "lambasingi", color: "text-sky-400" },
@@ -223,24 +219,7 @@ export default function Footer() {
     </li>
   </ul>
 
-  {/* <form onSubmit={handleSubscribe} className="flex flex-col gap-2.5">
-    <label htmlFor="footer-email" className="sr-only">Email address</label>
-    <input
-      id="footer-email"
-      type="email"
-      required
-      value={email}
-      onChange={(event) => setEmail(event.target.value)}
-      placeholder="Enter your email"
-      className="w-full rounded-lg border border-white/10 bg-white px-4 py-2.5 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/40"
-    />
-    <button
-      type="submit"
-      className="w-full shrink-0 rounded-lg bg-gradient-to-r from-primary to-rose-500 px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-[#0B1220]"
-    >
-      {subscribed ? "You're in ✓" : "Get travel deals"}
-    </button>
-  </form> */}
+
 
   {/* fast path for people who want a ride NOW, not a newsletter later */}
   <a

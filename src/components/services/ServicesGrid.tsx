@@ -1,17 +1,10 @@
 
-// import { ArrowRight } from "lucide-react";
+
 import SectionHeading from "../ui/SectionHeading";
 import { services } from "../../data/servicesData";
-// import { useBooking } from "../booking/BookingContext";
+
 import { Link } from "react-router-dom";
-//               const serviceToTab = {
-//   "local-taxi": "Local",
-//   "outstation-taxi": "Outstation",
-//   "airport-transfer": "Airport",
-//   "tour-packages": "Tour",
-//   "corporate-travel": "Local",      // choose the tab you want
-//   "wedding-car-rentals": "Local",   // choose the tab you want
-// } as const;
+
 export default function ServicesGrid() {
   return (
     <section className="w-full bg-slate-50/60 px-6 py-20 sm:px-10 lg:px-16">

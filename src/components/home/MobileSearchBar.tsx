@@ -15,11 +15,6 @@ import { destinations } from "../../data/destinationsData";
 import { VEHICLES, SUPPORT_PHONE } from "../../data/bookingConfig";
 import { FIXED_PRICES } from "../../data/fixedPrices";
 
-/* ---------------------------------------------------------------------- */
-/*  Default / popular locations — pulled straight from destinationsData    */
-/*  so the images, names and distances stay in sync with the rest of the   */
-/*  site. Add/remove slugs here to change what shows in the dropdown.       */
-/* ---------------------------------------------------------------------- */
 
 const POPULAR_SLUGS: { slug: string; label: string }[] = [
   { slug: "vizag-local", label: "Vizag Local Sightseeing" },
@@ -112,9 +107,7 @@ export default function MobileSearchBar() {
     setDropdownOpen(false);
   }
 
-  /** Enter key or the search icon: match against the popular list first;
-   *  anything that doesn't match goes straight to WhatsApp — never to
-   *  Google Maps or any other map service. */
+
   function handleSearch() {
     const trimmed = query.trim();
     if (!trimmed) {
@@ -129,9 +122,7 @@ export default function MobileSearchBar() {
       return;
     }
 
-    // Custom / typed-in location that isn't one of our defaults — send it
-    // straight to WhatsApp so a real person can quote it, instead of
-    // opening any map.
+
     const message = `Hi BSH Taxi Services! I'd like to book a taxi from ${PICKUP_CITY} to "${trimmed}". Please share the fare and available cars.`;
     window.open(waLink(message), "_blank", "noopener,noreferrer");
   }

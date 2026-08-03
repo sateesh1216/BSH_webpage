@@ -12,24 +12,19 @@ import {
 export type { TabKey } from "../../data/bookingConfig";
 
 type OpenBookingOptions = {
-  /** Set when opened from a specific fleet card. Shown as a badge in the
-   *  modal and used to pre-select the matching vehicle on the Vehicle step. */
+
   vehicleName?: string;
-  /** Pre-fill the pickup field (e.g. from the fare estimator's "From"). */
+
   pickup?: string;
-  /** Pre-fill the drop field (e.g. from the fare estimator's selected destination). */
+
   drop?: string;
-  /** Reset trip fields back to defaults before opening. Used by entry
-   *  points (fleet cards, the CTA button) that aren't continuing from an
-   *  already-filled-in search widget. */
+
   resetTrip?: boolean;
 };
 
 type BookingContextValue = {
   trip: TripDetails;
-  /** Same shape as a useState setter — the wizard's internal step
-   *  components already call this as `setTrip((prev) => ({ ...prev, x }))`,
-   *  so it's a drop-in replacement for what used to be local state. */
+
   setTrip: (updater: (prev: TripDetails) => TripDetails) => void;
   vehicleName?: string;
   vehicle: Vehicle | null;
@@ -100,9 +95,7 @@ export function BookingProvider({ children }: { children: ReactNode }) {
       setTrip(makeDefaultTrip());
     }
 
-    // Pre-fill pickup/drop when the caller supplies them (e.g. the fare
-    // estimator's "From"/destination), applied after the reset above so
-    // they always win.
+
     if (options?.pickup !== undefined) {
       setTrip((prev) => ({ ...prev, pickup: options.pickup! }));
     }
