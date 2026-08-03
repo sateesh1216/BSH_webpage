@@ -74,7 +74,7 @@ export default function Header() {
         }`}
       >
         {/* Top hairline highlight for glass depth */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/70 to-transparent" />
 
         {/* Signature accent: a whisper of taxi-livery checker, not a literal
             block — a fine diagonal check fading in from the edges into a
@@ -82,7 +82,7 @@ export default function Header() {
             otherwise quiet header, and it only shows once scrolled so it
             reads as an earned detail rather than default decoration. */}
         <div
-          className={`pointer-events-none absolute bottom-0 left-0 right-0 h-[3px] transition-opacity duration-500 ${
+          className={`pointer-events-none absolute bottom-0 left-0 right-0 h-0.75 transition-opacity duration-500 ${
             scrolled ? "opacity-100" : "opacity-0"
           }`}
           style={{
@@ -116,7 +116,7 @@ export default function Header() {
               <span className="flex flex-col justify-center leading-none">
                 <span className="text-base font-extrabold tracking-tight sm:text-lg">
                   <span className="text-slate-900">BSH </span>
-                  <span className="bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
+                  <span className="bg-linear-to-r from-yellow-400 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
                     TAXI
                   </span>
                 </span>
@@ -127,7 +127,7 @@ export default function Header() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex h-1 w-1 rounded-full bg-emerald-500" />
                   </span>
-                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-[#155EEF] to-amber-400 transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-linear-to-r from-primary to-amber-400 transition-all duration-300 group-hover:w-full" />
                 </span>
               </span>
             </Link>
@@ -151,7 +151,7 @@ export default function Header() {
                         onMouseLeave={() => setOpenDropdown(null)}
                       >
                         <button
-                          className="flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-1.5 text-[12px] font-semibold text-slate-700 outline-none transition-colors duration-200 hover:text-[#155EEF] focus-visible:ring-2 focus-visible:ring-[#155EEF]/40 xl:px-3 xl:text-[13px]"
+                          className="flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-1.5 text-[12px] font-semibold text-slate-700 outline-none transition-colors duration-200 hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/40 xl:px-3 xl:text-[13px]"
                           aria-expanded={openDropdown === link.label}
                         >
                           {link.label}
@@ -174,7 +174,7 @@ export default function Header() {
                             <Link
                               key={item.label}
                               to={item.href}
-                              className="group/item flex items-center justify-between rounded-xl px-3 py-2 text-[13px] font-medium text-slate-700 outline-none transition-all duration-200 hover:bg-[#155EEF] hover:pl-4 hover:text-white focus-visible:bg-[#155EEF] focus-visible:pl-4 focus-visible:text-white"
+                              className="group/item flex items-center justify-between rounded-xl px-3 py-2 text-[13px] font-medium text-slate-700 outline-none transition-all duration-200 hover:bg-primary hover:pl-4 hover:text-white focus-visible:bg-primary focus-visible:pl-4 focus-visible:text-white"
                             >
                               {item.label}
                               <ChevronDown
@@ -192,8 +192,8 @@ export default function Header() {
                     <Link
                       key={link.label}
                       to={link.href}
-                      className={`group relative whitespace-nowrap rounded-full px-2 py-1.5 text-[12px] font-semibold outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-[#155EEF]/40 xl:px-3 xl:text-[13px] ${
-                        active ? "text-[#155EEF]" : "text-slate-700 hover:text-[#155EEF]"
+                      className={`group relative whitespace-nowrap rounded-full px-2 py-1.5 text-[12px] font-semibold outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary/40 xl:px-3 xl:text-[13px] ${
+                        active ? "text-primary" : "text-slate-700 hover:text-primary"
                       }`}
                     >
                       <span className="relative z-10">{link.label}</span>
@@ -216,9 +216,9 @@ export default function Header() {
               <a
                 href="tel:+918886803322"
                 aria-label="Call +91 8886803322"
-                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[#155EEF] py-1.5 pl-1.5 pr-1.5 text-[13px] font-semibold text-white shadow-lg shadow-blue-600/20 outline-none transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-blue-600/30 focus-visible:ring-2 focus-visible:ring-[#155EEF]/50 focus-visible:ring-offset-2 xl:pr-5"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-primary py-1.5 pl-1.5 pr-1.5 text-[13px] font-semibold text-white shadow-lg shadow-blue-600/20 outline-none transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-blue-600/30 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 xl:pr-5"
               >
-                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                 <span className="relative grid h-6 w-6 shrink-0 place-items-center rounded-full bg-white/15">
                   <Phone size={13} className="animate-[pulse_2.5s_ease-in-out_infinite]" />
                 </span>
@@ -237,9 +237,9 @@ export default function Header() {
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
-              className={`grid h-9 w-9 shrink-0 place-items-center rounded-full shadow-sm outline-none backdrop-blur-md transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#155EEF]/50 focus-visible:ring-offset-2 lg:hidden ${
+              className={`grid h-9 w-9 shrink-0 place-items-center rounded-full shadow-sm outline-none backdrop-blur-md transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 lg:hidden ${
                 menuOpen
-                  ? "bg-[#155EEF] text-white shadow-[0_6px_18px_-4px_rgba(21,94,239,0.5)]"
+                  ? "bg-primary text-white shadow-[0_6px_18px_-4px_rgba(21,94,239,0.5)]"
                   : "bg-white/70 text-slate-900 hover:bg-white/90"
               }`}
             >
@@ -283,7 +283,7 @@ export default function Header() {
         <nav
           className={`overflow-hidden border-t transition-all duration-300 lg:hidden ${
             menuOpen
-              ? "max-h-[700px] border-slate-100 opacity-100"
+              ? "max-h-175 border-slate-100 opacity-100"
               : "max-h-0 border-transparent opacity-0 pointer-events-none"
           }`}
         >
@@ -291,7 +291,7 @@ export default function Header() {
               drawer so the signature detail reads as one motif rather than
               a one-off on the desktop bottom edge. */}
           <div
-            className="h-[3px] w-full"
+            className="h-0.75 w-full"
             style={{
               backgroundImage:
                 "repeating-linear-gradient(45deg, rgba(21,94,239,0.4) 0, rgba(21,94,239,0.4) 3px, rgba(245,158,11,0.4) 3px, rgba(245,158,11,0.4) 6px)",
@@ -315,7 +315,7 @@ export default function Header() {
                       onClick={() =>
                         setOpenDropdown(openDropdown === link.label ? null : link.label)
                       }
-                      className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-[13px] font-semibold text-slate-800 outline-none transition-colors duration-200 hover:bg-[#155EEF]/10 hover:text-[#155EEF] focus-visible:ring-2 focus-visible:ring-[#155EEF]/40"
+                      className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-[13px] font-semibold text-slate-800 outline-none transition-colors duration-200 hover:bg-primary/10 hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/40"
                     >
                       {link.label}
                       <ChevronDown
@@ -331,7 +331,7 @@ export default function Header() {
                         openDropdown === link.label ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                       }`}
                     >
-                      <div className="ml-3 mt-1 space-y-0.5 border-l-2 border-[#155EEF]/15 pl-3">
+                      <div className="ml-3 mt-1 space-y-0.5 border-l-2 border-primary/15 pl-3">
                         {link.children.map((child) => (
                           <Link
                             key={child.label}
@@ -340,7 +340,7 @@ export default function Header() {
                               setMenuOpen(false);
                               setOpenDropdown(null);
                             }}
-                            className="block rounded-lg px-2.5 py-1.5 text-[13px] text-slate-600 outline-none transition-colors duration-200 hover:bg-[#155EEF] hover:text-white focus-visible:bg-[#155EEF] focus-visible:text-white"
+                            className="block rounded-lg px-2.5 py-1.5 text-[13px] text-slate-600 outline-none transition-colors duration-200 hover:bg-primary hover:text-white focus-visible:bg-primary focus-visible:text-white"
                           >
                             {child.label}
                           </Link>
@@ -357,12 +357,12 @@ export default function Header() {
                   to={link.href}
                   onClick={() => setMenuOpen(false)}
                   style={{ transitionDelay: menuOpen ? `${i * 40}ms` : "0ms" }}
-                  className={`rounded-xl px-3 py-2 text-[13px] font-semibold outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#155EEF]/40 ${
+                  className={`rounded-xl px-3 py-2 text-[13px] font-semibold outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary/40 ${
                     menuOpen ? "translate-x-0 opacity-100" : "-translate-x-3 opacity-0"
                   } ${
                     active
-                      ? "bg-[#155EEF] text-white shadow-[0_6px_16px_-4px_rgba(21,94,239,0.4)]"
-                      : "text-slate-800 hover:bg-[#155EEF]/10 hover:text-[#155EEF]"
+                      ? "bg-primary text-white shadow-[0_6px_16px_-4px_rgba(21,94,239,0.4)]"
+                      : "text-slate-800 hover:bg-primary/10 hover:text-primary"
                   }`}
                 >
                   {link.label}
@@ -372,7 +372,7 @@ export default function Header() {
 
             <a
               href="tel:+918886803322"
-              className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#155EEF] to-[#0F4FD8] px-4 py-2.5 text-[13px] font-semibold text-white shadow-[0_8px_20px_-6px_rgba(21,94,239,0.5)] outline-none transition-all duration-200 hover:shadow-[0_10px_24px_-6px_rgba(21,94,239,0.6)] focus-visible:ring-2 focus-visible:ring-[#155EEF]/50 focus-visible:ring-offset-2 active:scale-[0.98]"
+              className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-primary to-[#0F4FD8] px-4 py-2.5 text-[13px] font-semibold text-white shadow-[0_8px_20px_-6px_rgba(21,94,239,0.5)] outline-none transition-all duration-200 hover:shadow-[0_10px_24px_-6px_rgba(21,94,239,0.6)] focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 active:scale-[0.98]"
             >
               <Phone size={16} />
               +91 8886803322
@@ -385,7 +385,7 @@ export default function Header() {
           matches the header's natural height: h-14 main row + border-t
           search row on desktop, h-14 alone on mobile. Adjust if the
           search row's vertical padding changes. */}
-      <div className="h-14 lg:h-[88px]" />
+      <div className="h-14 lg:h-22" />
     </>
   );
 }
