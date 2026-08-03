@@ -32,9 +32,9 @@ export default function WhoWeAre() {
 
 <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
   BSH Taxi Services is one of the most trusted providers of <strong>taxi services in Visakhapatnam (Vizag)</strong>, offering reliable
-  <strong> local taxi services</strong>, <strong>airport taxi transfers</strong>,
+  <em> local taxi services</em>, <strong>airport taxi transfers</strong>,
   <strong> outstation taxi services</strong>, <strong>corporate cab services</strong>,
-  <strong> wedding car rentals</strong>, and <strong>Vizag tour packages</strong>.
+  <strong> wedding car rentals</strong>, and <em>Vizag tour packages</em>.
   With experienced drivers, well-maintained vehicles, transparent pricing,
   and 24/7 customer support, we are committed to providing safe, comfortable,
   affordable, and on-time transportation across Visakhapatnam and Andhra Pradesh.

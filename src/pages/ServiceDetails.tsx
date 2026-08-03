@@ -83,8 +83,8 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
 	  aria-label="Outstation Taxi Service in Vizag - BSH Taxi Services" 
     className="hover:underline"
   >
-    <i>our outstation taxi in
-        Vizag</i>
+    <em>our outstation taxi in
+        Vizag</em>
   </a>{" "} 
          ensures a safe, comfortable, and affordable journey. We
         provide reliable one-way taxi and outstation cab services with
@@ -391,23 +391,23 @@ const serviceFareConfig: Record<string, ServiceFareConfig> = {
     tabs: [],
     fleet: [
       makeCar("Dzire", "Sedan", 4, 2, {
-        default: { rate: "₹800", unit: "/trip", note: "Starting fare, one-way" },
-      }),
-      makeCar("Ertiga", "MUV", 6, 3, {
         default: { rate: "₹1,000", unit: "/trip", note: "Starting fare, one-way" },
       }),
-      makeCar("Innova Crysta", "Premium SUV", 7, 4, {
+      makeCar("Ertiga", "MUV", 6, 3, {
         default: { rate: "₹1,300", unit: "/trip", note: "Starting fare, one-way" },
       }),
+      makeCar("Innova Crysta", "Premium SUV", 7, 4, {
+        default: { rate: "₹1,500", unit: "/trip", note: "Starting fare, one-way" },
+      }),
       makeCar("Tempo Traveller", "Group Travel", 17, 10, {
-        default: { rate: "₹2,500", unit: "/trip", note: "Starting fare, one-way" },
+        default: { rate: "₹3,000", unit: "/trip", note: "Starting fare, one-way" },
       }),
     ],
   },
 
   /* ---------------- Tour Packages — Half Day / Full Day ------------ */
   "tour-packages": {
-    tabs: ["Half Day", "Full Day"],
+    tabs: [ "Full Day"],
     fleet: [
       makeCar("Dzire", "Sedan", 4, 2, {
         "Half Day": { rate: "₹1,800", unit: "/50km", note: "Extra km ₹13" },
@@ -435,25 +435,25 @@ const serviceFareConfig: Record<string, ServiceFareConfig> = {
       makeCar("Dzire", "Sedan", 4, 2, {
         "One Way": { rate: "₹13", unit: "/km", note: "Min 300 km/day" },
         "Round Trip": { rate: "₹14", unit: "/km", note: "Min 300 km/day" },
-        Hourly: { rate: "₹300", unit: "/hr", note: "Min 2 hrs booking" },
+        Hourly: { rate: "₹300", unit: "/hr", note: "Min 8 hrs booking" },
         Monthly: { rate: "Contact us", unit: "", note: "Custom billing for regular routes" },
       }),
       makeCar("Ertiga", "MUV", 6, 3, {
         "One Way": { rate: "₹16", unit: "/km", note: "Min 300 km/day" },
         "Round Trip": { rate: "₹17", unit: "/km", note: "Min 300 km/day" },
-        Hourly: { rate: "₹350", unit: "/hr", note: "Min 2 hrs booking" },
+        Hourly: { rate: "₹350", unit: "/hr", note: "Min 8 hrs booking" },
         Monthly: { rate: "Contact us", unit: "", note: "Custom billing for regular routes" },
       }),
       makeCar("Innova Crysta", "Premium SUV", 7, 4, {
         "One Way": { rate: "₹19", unit: "/km", note: "Min 300 km/day" },
         "Round Trip": { rate: "₹20", unit: "/km", note: "Min 300 km/day" },
-        Hourly: { rate: "₹400", unit: "/hr", note: "Min 2 hrs booking" },
+        Hourly: { rate: "₹400", unit: "/hr", note: "Min 8 hrs booking" },
         Monthly: { rate: "Contact us", unit: "", note: "Custom billing for regular routes" },
       }),
       makeCar("Tempo Traveller", "Group Travel", 17, 10, {
         "One Way": { rate: "₹29", unit: "/km", note: "Min 300 km/day" },
         "Round Trip": { rate: "₹30", unit: "/km", note: "Min 300 km/day" },
-        Hourly: { rate: "₹650", unit: "/hr", note: "Min 2 hrs booking" },
+        Hourly: { rate: "₹650", unit: "/hr", note: "Min 8 hrs booking" },
         Monthly: { rate: "Contact us", unit: "", note: "Custom billing for regular routes" },
       }),
     ],
@@ -461,23 +461,23 @@ const serviceFareConfig: Record<string, ServiceFareConfig> = {
 
   /* ---------------- Wedding Car Rentals — 4 Hours / 8 Hours -------- */
   "wedding-car-rentals": {
-    tabs: ["4 Hours", "8 Hours"],
+    tabs: ["8 Hours", "10 Hours"],
     fleet: [
       makeCar("Dzire", "Sedan", 4, 2, {
-        "4 Hours": { rate: "₹2,000", unit: "/40km", note: "Extra km ₹13" },
-        "8 Hours": { rate: "₹3,500", unit: "/80km", note: "Extra km ₹13" },
+        "8 Hours": { rate: "₹2,400", unit: "/80hr", note: "Extra km ₹13" },
+        "10 Hours": { rate: "₹3,000", unit: "/10hr", note: "Extra km ₹13" },
       }),
       makeCar("Ertiga", "MUV", 6, 3, {
-        "4 Hours": { rate: "₹2,500", unit: "/40km", note: "Extra km ₹16" },
-        "8 Hours": { rate: "₹4,200", unit: "/80km", note: "Extra km ₹16" },
+        "8 Hours": { rate: "₹2,800", unit: "/80hr", note: "Extra km ₹17" },
+        "10 Hours": { rate: "₹3,500", unit: "/10hr", note: "Extra km ₹17" },
       }),
       makeCar("Innova Crysta", "Premium SUV", 7, 4, {
-        "4 Hours": { rate: "₹3,000", unit: "/40km", note: "Extra km ₹19" },
-        "8 Hours": { rate: "₹5,000", unit: "/80km", note: "Extra km ₹19" },
+        "8 Hours": { rate: "₹3,200", unit: "/80hr", note: "Extra km ₹20" },
+        "10 Hours": { rate: "₹4,000", unit: "/10hr", note: "Extra km ₹20" },
       }),
       makeCar("Tempo Traveller", "Group Travel", 17, 10, {
-        "4 Hours": { rate: "₹4,500", unit: "/40km", note: "Extra km ₹28" },
-        "8 Hours": { rate: "₹7,000", unit: "/80km", note: "Extra km ₹28" },
+        "8 Hours": { rate: "₹5,200", unit: "/80hr", note: "Extra km ₹30" },
+        "10 Hours": { rate: "₹6,500", unit: "/10hr", note: "Extra km ₹30" },
       }),
     ],
   },

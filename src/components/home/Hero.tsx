@@ -110,7 +110,7 @@ export default function Hero() {
 
         <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-500 sm:mt-5 sm:max-w-lg sm:text-base lg:text-base">
 BSH Taxi Services provides reliable taxi services in Visakhapatnam (Vizag), 
-including <strong>airport taxi, 
+including <strong><em>airport taxi</em>
   {" "}
   <a
     href="https://www.bshtaxiservices.com/services/local-taxi?type=local-taxi-services"

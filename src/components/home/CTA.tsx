@@ -152,7 +152,7 @@ export function CTA() {
     className="hover:underline"
   >
     <strong>Book your airport taxi, </strong>
-  </a>{" "} local cab, or outstation taxi in Visakhapatnam (Vizag). </strong>
+  </a>{" "} local cab, or outstation <em>taxi in Visakhapatnam (Vizag).</em> </strong>
               Call BSH Taxi Services for 24/7 reliable taxi booking at affordable prices.
             </p>
           </div>

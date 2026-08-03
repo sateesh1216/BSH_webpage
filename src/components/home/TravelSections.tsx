@@ -47,7 +47,7 @@ const services: ServiceItem[] = [
     title: "Airport Taxi Service",
     description: (
       <p>
-        Reliable <strong>Vizag Airport taxi</strong> with on-time pickup & drop, flight
+        Reliable <em>Vizag Airport taxi</em> with on-time pickup & drop, flight
         tracking and affordable fares.
       </p>
     ),
@@ -58,7 +58,7 @@ const services: ServiceItem[] = [
     title: "Outstation Taxi Service",
     description: (
       <p>
-        One-way & round-trip <strong>outstation taxi</strong> from{" "}
+        One-way & round-trip <em>outstation taxi</em> from{" "}
         <strong>Vizag to Araku</strong>, Tirupati, Vijayawada, Hyderabad and more.
       </p>
     ),
