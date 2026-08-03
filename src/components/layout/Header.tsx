@@ -81,17 +81,7 @@ export default function Header() {
             solid brand line at center. This is the one bold flourish in an
             otherwise quiet header, and it only shows once scrolled so it
             reads as an earned detail rather than default decoration. */}
-        <div
-          className={`pointer-events-none absolute bottom-0 left-0 right-0 h-0.75 transition-opacity duration-500 ${
-            scrolled ? "opacity-100" : "opacity-0"
-          }`}
-          style={{
-            backgroundImage:
-              "linear-gradient(90deg, transparent 0%, transparent 8%, rgba(21,94,239,0.9) 8%, rgba(21,94,239,0.9) 92%, transparent 92%, transparent 100%), " +
-              "repeating-linear-gradient(45deg, rgba(21,94,239,0.35) 0, rgba(21,94,239,0.35) 3px, rgba(245,158,11,0.35) 3px, rgba(245,158,11,0.35) 6px)",
-            backgroundBlendMode: "normal",
-          }}
-        />
+  
 
         {/* Single shared-width shell for BOTH rows below. Defining
             `w-[92%] max-w-7xl mx-auto` exactly once here — instead of on
