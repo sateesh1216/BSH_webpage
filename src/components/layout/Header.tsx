@@ -11,10 +11,6 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  // Refs used to measure the nav-links pill's EXACT rendered box (it's
-  // content-width, not a fixed size, so there's no Tailwind class that can
-  // guarantee this — we read the real DOM rect instead) and mirror that
-  // left offset + width onto the search row below it.
   const shellRef = useRef<HTMLDivElement | null>(null);
   const navPillRef = useRef<HTMLElement | null>(null);
   const [pillBounds, setPillBounds] = useState<{ left: number; width: number } | null>(null);
@@ -32,8 +28,7 @@ export default function Header() {
 
     measure();
 
-    // Re-measure on resize, and whenever the pill itself changes size
-    // (e.g. web font finishing load, nav items changing).
+
     window.addEventListener("resize", measure);
     const ro = new ResizeObserver(measure);
     if (navPillRef.current) ro.observe(navPillRef.current);
@@ -76,19 +71,10 @@ export default function Header() {
         {/* Top hairline highlight for glass depth */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/70 to-transparent" />
 
-        {/* Signature accent: a whisper of taxi-livery checker, not a literal
-            block — a fine diagonal check fading in from the edges into a
-            solid brand line at center. This is the one bold flourish in an
-            otherwise quiet header, and it only shows once scrolled so it
-            reads as an earned detail rather than default decoration. */}
+    
   
 
-        {/* Single shared-width shell for BOTH rows below. Defining
-            `w-[92%] max-w-7xl mx-auto` exactly once here — instead of on
-            each row separately — is what guarantees the search bar's
-            left/right edges land on the exact same pixels as the logo and
-            call button above it. Never duplicate this width elsewhere in
-            the header. */}
+
         <div ref={shellRef} className="mx-auto w-[92%] max-w-5xl">
           {/* Main row: logo + nav + call button. */}
           <div className="flex h-14 items-center justify-between gap-2 lg:gap-3 xl:gap-4">
@@ -122,8 +108,7 @@ export default function Header() {
               </span>
             </Link>
 
-            {/* Desktop Navigation — centers the pill in the remaining space
-                between the logo and the call button. */}
+ 
             <div className="hidden min-w-0 flex-1 items-center justify-center lg:flex">
               <nav
                 ref={navPillRef}
@@ -251,9 +236,7 @@ export default function Header() {
           </div>
           {/* /Main row */}
 
-          {/* Search row — sits directly under the nav pill and mirrors its
-              exact left offset + width via pillBounds, so its edges line
-              up perfectly with the pill above it rather than the shell. */}
+
           <div className="hidden border-t border-white/30 pb-2 pt-2 lg:block">
             <div
               style={
@@ -277,9 +260,7 @@ export default function Header() {
               : "max-h-0 border-transparent opacity-0 pointer-events-none"
           }`}
         >
-          {/* Same checker-livery whisper, echoed at the top of the mobile
-              drawer so the signature detail reads as one motif rather than
-              a one-off on the desktop bottom edge. */}
+
           <div
             className="h-0.75 w-full"
             style={{
@@ -371,10 +352,6 @@ export default function Header() {
         </nav>
       </header>
 
-      {/* Spacer so page content doesn't sit under the fixed header. Height
-          matches the header's natural height: h-14 main row + border-t
-          search row on desktop, h-14 alone on mobile. Adjust if the
-          search row's vertical padding changes. */}
       <div className="h-14 lg:h-22" />
     </>
   );
