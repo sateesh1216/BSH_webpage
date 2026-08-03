@@ -27,6 +27,15 @@ import { useBooking } from "../booking/BookingContext";
  *  - Functional behavior otherwise unchanged: clicking a destination card
  *    sets "To" and looks up the static fare for the selected vehicle;
  *    fare updates when destination or vehicle changes.
+ *
+ * RESPONSIVE NOTES:
+ *  - Layout stacks to a single column below `lg`, with the fare estimator
+ *    rendering under the destinations grid on phones/tablets.
+ *  - The two-column field/summary split inside the estimator collapses to
+ *    one column below `sm`, with a horizontal divider swapped in for the
+ *    vertical one so the sections still read as separated.
+ *  - Paddings, gaps, type sizes and tap targets scale down at the `xs`/`sm`
+ *    breakpoints so nothing crowds or clips on narrow screens (~320px+).
  */
 
 type Destination = {
@@ -133,12 +142,12 @@ function SectionHeading({
 }) {
   return (
     <div
-      className={`flex items-center gap-2.5 ${
+      className={`flex items-center gap-2 sm:gap-2.5 ${
         align === "center" ? "justify-center" : ""
       }`}
     >
-      <span className="h-4 w-1.5 rounded-full bg-linear-to-b from-blue-500 to-blue-700" />
-      <h2 className="text-[15px] font-extrabold uppercase tracking-[0.08em] text-slate-900">
+      <span className="h-3.5 w-1.5 rounded-full bg-linear-to-b from-blue-500 to-blue-700 sm:h-4" />
+      <h2 className="text-[13px] font-extrabold uppercase tracking-[0.06em] text-slate-900 sm:text-[15px] sm:tracking-[0.08em]">
         {children}
       </h2>
     </div>
@@ -185,20 +194,20 @@ export default function Features() {
   }
 
   return (
-    <section className="relative w-full overflow-hidden bg-linear-to-b from-slate-50 via-slate-50 to-white py-10">
+    <section className="relative w-full overflow-hidden bg-linear-to-b from-slate-50 via-slate-50 to-white py-8 sm:py-10">
       {/* Decorative background accents */}
-      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-blue-200/30 blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-blue-100/40 blur-3xl" />
+      <div className="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full bg-blue-200/30 blur-3xl sm:-left-24 sm:-top-24 sm:h-72 sm:w-72" />
+      <div className="pointer-events-none absolute -right-16 top-1/3 h-56 w-56 rounded-full bg-blue-100/40 blur-3xl sm:-right-24 sm:h-80 sm:w-80" />
 
-      <div className="relative w-full px-6 sm:px-10 lg:px-16">
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
+      <div className="relative w-full px-4 sm:px-6 lg:px-10 xl:px-16">
+        <div className="grid gap-5 sm:gap-8 lg:grid-cols-[1.2fr_1fr]">
           {/* ---------------- Destinations ---------------- */}
-          <div className="flex flex-col rounded-2xl border border-slate-100 bg-white/90 p-6 shadow-[0_2px_20px_-4px_rgba(15,23,42,0.06)] backdrop-blur-sm transition-shadow duration-300 hover:shadow-[0_8px_30px_-6px_rgba(15,23,42,0.1)] sm:p-7">
-            <div className="mb-6 flex items-center justify-between">
+          <div className="flex flex-col rounded-2xl border border-slate-100 bg-white/90 p-4 shadow-[0_2px_20px_-4px_rgba(15,23,42,0.06)] backdrop-blur-sm transition-shadow duration-300 hover:shadow-[0_8px_30px_-6px_rgba(15,23,42,0.1)] sm:p-6 lg:p-7">
+            <div className="mb-4 flex items-center justify-between sm:mb-6">
               <SectionHeading>Discover Amazing Destinations</SectionHeading>
               <a
                 href="/destinations"
-                className="group inline-flex items-center gap-1 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700"
+                className="group inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-blue-600 transition-colors hover:text-blue-700 sm:text-sm"
               >
                 View All
                 <ArrowRight
@@ -208,7 +217,7 @@ export default function Features() {
               </a>
             </div>
 
-            <div className="grid flex-1 grid-cols-2 gap-4 sm:grid-cols-3">
+            <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
               {destinations.map((d) => {
                 const isActive = destination?.title === d.title;
                 const imageFailed = failedImages[d.title];
@@ -225,7 +234,7 @@ export default function Features() {
                         : "ring-1 ring-slate-100 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-200/60"
                     }`}
                   >
-                    <div className="relative h-28 overflow-hidden bg-slate-100">
+                    <div className="relative h-24 overflow-hidden bg-slate-100 sm:h-28">
                       {fallbackFailed ? (
                         <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-300">
                           <ImageOff size={20} />
@@ -277,11 +286,11 @@ export default function Features() {
                         </span>
                       )}
                     </div>
-                    <div className="px-3 py-2.5">
-                      <p className="text-sm font-semibold leading-tight text-slate-900">
+                    <div className="px-2.5 py-2 sm:px-3 sm:py-2.5">
+                      <p className="text-[13px] font-semibold leading-tight text-slate-900 sm:text-sm">
                         {d.title}
                       </p>
-                      <p className="mt-0.5 text-xs text-slate-400">
+                      <p className="mt-0.5 text-[11px] text-slate-400 sm:text-xs">
                         from Vizag
                       </p>
                     </div>
@@ -292,14 +301,14 @@ export default function Features() {
           </div>
 
           {/* ---------------- Fare estimator ---------------- */}
-          <div className="flex flex-col rounded-2xl border border-slate-100 bg-white/90 p-6 shadow-[0_2px_20px_-4px_rgba(15,23,42,0.06)] backdrop-blur-sm transition-shadow duration-300 hover:shadow-[0_8px_30px_-6px_rgba(15,23,42,0.1)] sm:p-7">
-            <div className="mb-6">
+          <div className="flex flex-col rounded-2xl border border-slate-100 bg-white/90 p-4 shadow-[0_2px_20px_-4px_rgba(15,23,42,0.06)] backdrop-blur-sm transition-shadow duration-300 hover:shadow-[0_8px_30px_-6px_rgba(15,23,42,0.1)] sm:p-6 lg:p-7">
+            <div className="mb-4 sm:mb-6">
               <SectionHeading align="center">
                 Estimate Your Fare
               </SectionHeading>
             </div>
 
-            <div className="grid flex-1 gap-x-6 gap-y-4 sm:grid-cols-2 sm:divide-x sm:divide-slate-100">
+            <div className="grid flex-1 gap-x-6 gap-y-5 divide-y divide-slate-100 sm:grid-cols-2 sm:gap-y-4 sm:divide-x sm:divide-y-0">
               {/* ---- Left column: fields ---- */}
               <div className="space-y-4 sm:pr-6">
                 {/* From */}
@@ -316,8 +325,8 @@ export default function Features() {
                   >
                     {origin ? (
                       <span className="flex items-center gap-2 text-sm text-slate-800">
-                        <MapPin size={14} className="text-blue-600" />
-                        {origin}
+                        <MapPin size={14} className="shrink-0 text-blue-600" />
+                        <span className="truncate">{origin}</span>
                       </span>
                     ) : (
                       <span className="text-sm text-slate-400">
@@ -329,7 +338,7 @@ export default function Features() {
                         type="button"
                         aria-label="Clear pickup location"
                         onClick={() => setOrigin(null)}
-                        className="rounded p-0.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                        className="shrink-0 rounded p-0.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                       >
                         <X size={14} />
                       </button>
@@ -360,8 +369,8 @@ export default function Features() {
                   >
                     {destination ? (
                       <span className="flex items-center gap-2 text-sm text-slate-800">
-                        <MapPin size={14} className="text-blue-600" />
-                        {destination.title}
+                        <MapPin size={14} className="shrink-0 text-blue-600" />
+                        <span className="truncate">{destination.title}</span>
                       </span>
                     ) : (
                       <span className="text-sm text-slate-400">
@@ -373,7 +382,7 @@ export default function Features() {
                         type="button"
                         aria-label="Clear drop location"
                         onClick={() => setDestination(null)}
-                        className="rounded p-0.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                        className="shrink-0 rounded p-0.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                       >
                         <X size={14} />
                       </button>
@@ -411,75 +420,75 @@ export default function Features() {
               </div>
 
               {/* ---- Right column: distance / fare / book ---- */}
-          <div className="flex flex-col space-y-5 sm:pl-6">
-  {/* Fare Card */}
-  <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-blue-600 via-blue-700 to-indigo-700 p-5 text-center shadow-xl shadow-blue-600/20">
-    {/* Background Decoration */}
-    <Sparkles
-      size={60}
-      className="absolute -right-3 -top-3 text-white/10"
-    />
+              <div className="flex flex-col space-y-4 pt-5 sm:space-y-5 sm:pl-6 sm:pt-0">
+                {/* Fare Card */}
+                <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-blue-600 via-blue-700 to-indigo-700 p-4 text-center shadow-xl shadow-blue-600/20 sm:p-5">
+                  {/* Background Decoration */}
+                  <Sparkles
+                    size={60}
+                    className="absolute -right-3 -top-3 text-white/10"
+                  />
 
-    <div className="absolute -bottom-10 -left-10 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
-    <div className="absolute -right-8 bottom-0 h-20 w-20 rounded-full bg-white/10 blur-xl" />
+                  <div className="absolute -bottom-10 -left-10 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
+                  <div className="absolute -right-8 bottom-0 h-20 w-20 rounded-full bg-white/10 blur-xl" />
 
-    <p className="text-xs font-semibold uppercase tracking-widest text-blue-100">
-      Fixed Fare
-    </p>
+                  <p className="text-[11px] font-semibold uppercase tracking-widest text-blue-100 sm:text-xs">
+                    Fixed Fare
+                  </p>
 
-    <h2 className="mt-2 text-4xl font-extrabold tracking-tight text-white">
-      {fare ? `₹${fare.toLocaleString("en-IN")}` : "--"}
-    </h2>
+                  <h2 className="mt-2 break-words text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                    {fare ? `₹${fare.toLocaleString("en-IN")}` : "--"}
+                  </h2>
 
-    <p className="mt-1 text-xs text-blue-100">
-      No Hidden Charges
-    </p>
-  </div>
+                  <p className="mt-1 text-xs text-blue-100">
+                    No Hidden Charges
+                  </p>
+                </div>
 
-  {/* Book Button — opens the InstantBookingCard modal, pre-filled */}
-  <button
-    type="button"
-    disabled={!canBook}
-    onClick={handleBook}
-    className={`group flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
-      !canBook
-        ? "cursor-not-allowed bg-slate-300"
-        : "bg-linear-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-600/30 active:translate-y-0"
-    }`}
-  >
-    {!canBook ? (
-      "Select Pickup & Drop"
-    ) : (
-      <>
-        Book This Ride
-        <ArrowRight
-          size={16}
-          className="transition-transform duration-300 group-hover:translate-x-1"
-        />
-      </>
-    )}
-  </button>
+                {/* Book Button — opens the InstantBookingCard modal, pre-filled */}
+                <button
+                  type="button"
+                  disabled={!canBook}
+                  onClick={handleBook}
+                  className={`group flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
+                    !canBook
+                      ? "cursor-not-allowed bg-slate-300"
+                      : "bg-linear-to-r from-blue-600 to-blue-700 shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-600/30 active:translate-y-0"
+                  }`}
+                >
+                  {!canBook ? (
+                    "Select Pickup & Drop"
+                  ) : (
+                    <>
+                      Book This Ride
+                      <ArrowRight
+                        size={16}
+                        className="transition-transform duration-300 group-hover:translate-x-1"
+                      />
+                    </>
+                  )}
+                </button>
 
-  {/* Secure Booking Card */}
-  <div className="rounded-2xl border border-blue-100 bg-linear-to-r from-slate-50 to-blue-50 p-4">
-    <div className="flex items-start gap-3">
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
-        <ShieldCheck className="h-5 w-5 text-blue-600" />
-      </div>
+                {/* Secure Booking Card */}
+                <div className="rounded-2xl border border-blue-100 bg-linear-to-r from-slate-50 to-blue-50 p-3.5 sm:p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-100 sm:h-10 sm:w-10">
+                      <ShieldCheck className="h-4.5 w-4.5 text-blue-600 sm:h-5 sm:w-5" />
+                    </div>
 
-      <div>
-        <h4 className="text-sm font-semibold text-slate-800">
-          100% Secure Booking
-        </h4>
+                    <div>
+                      <h4 className="text-sm font-semibold text-slate-800">
+                        100% Secure Booking
+                      </h4>
 
-        <p className="mt-1 text-xs leading-relaxed text-slate-500">
-          Your information is encrypted and completely safe with BSH Taxi
-          Services.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
+                      <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                        Your information is encrypted and completely safe with BSH Taxi
+                        Services.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

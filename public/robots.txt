@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bshtaxiservices.com/sitemap.xml

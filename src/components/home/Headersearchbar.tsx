@@ -301,7 +301,7 @@ export default function HeaderSearchBar() {
                   const fare = lookupFare(selected.slug, vehicle.id, tripType);
                   const message =
                     fare != null
-                      ? `Hi BSH Taxi Services! I want to book a ${vehicle.name} (${tripType}) from ${PICKUP_CITY} to ${selected.name} (~${selected.distanceKm} km). Fare: ?${fare}. Please confirm availability.`
+                      ? `Hi BSH Taxi Services! I want to book a ${vehicle.name} (${tripType}) from ${PICKUP_CITY} to ${selected.name} (~${selected.distanceKm} km). Fare: ₹${fare.toLocaleString("en-IN")}. Please confirm availability.`
                       : `Hi BSH Taxi Services! I want to book a ${vehicle.name} (${tripType}) from ${PICKUP_CITY} to ${selected.name} (~${selected.distanceKm} km). Please share the pricing.`;
 
                   return (
@@ -327,7 +327,7 @@ export default function HeaderSearchBar() {
                           </span>
                         </div>
                         <p className="mt-0.5 text-xs font-extrabold text-primary md:text-sm">
-                          {fare != null ? `?${fare.toLocaleString("en-IN")}` : "Contact for pricing"}
+                          {fare != null ? `₹${fare.toLocaleString("en-IN")}` : "Contact for pricing"}
                         </p>
                         <a
                           href={waLink(message)}
