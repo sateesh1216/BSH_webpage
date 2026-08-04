@@ -10,8 +10,8 @@ type SEOProps = {
 };
 
 export const SITE_NAME = "BSH Taxi Services";
-export const SITE_URL = "https://www.bshtaxiservices.com"; // TODO: update to your real domain
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+export const SITE_URL = "https://bshtaxiservices.com";
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/bshtaxiservice-homepage-banner_3.webp`;
 
 export default function SEO({
   title,

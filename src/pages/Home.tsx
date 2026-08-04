@@ -14,7 +14,7 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "TaxiService",
   name: "BSH Taxi Services",
-  image: "https://www.bshtaxiservices.com/og-image.jpg",
+  image: "https://bshtaxiservices.com/bshtaxiservice-homepage-banner_3.webp",
   telephone: "+91-8886803322",
   email: "info.bshtaxiservices@gmail.com",
   address: {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link , Navigate, useLocation} from "react-router-dom";
 import {
   PhoneCall,
   ArrowRight,
@@ -12,6 +12,8 @@ import {
 import { services } from "../data/servicesData";
 import { useBooking } from "../components/booking/BookingContext";
 import SectionHeading from "../components/ui/SectionHeading";
+import { pageMeta } from "../data/pageMeta";
+import SEO from "../components/seo/SEO";
 
 /* ------------------------------------------------------------------ */
 /*  Extra per-service copy (H2 tagline, long description, notes)      */
@@ -522,7 +524,11 @@ export default function ServiceDetails() {
 
   const fareConfig = slug ? serviceFareConfig[slug] : undefined;
   const hasTabs = !!fareConfig && fareConfig.tabs.length > 0;
-
+  const { pathname } = useLocation();
+  const meta = pageMeta[pathname];
+    if (!meta) {
+    return <Navigate to="/services" replace />;
+  }
   const [activeTab, setActiveTab] = useState<string>(
     fareConfig?.tabs[0] ?? "default"
   );
@@ -576,6 +582,12 @@ export default function ServiceDetails() {
 
   return (
     <>
+      <SEO
+        title={meta.title}
+        description={meta.description}
+        keywords={meta.keywords}
+        canonicalPath={pathname}
+      />
       {/* ---------------------------------------------------------- */}
       {/* Hero                                                       */}
       {/* ---------------------------------------------------------- */}

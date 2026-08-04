@@ -1,4 +1,4 @@
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link, Navigate,useLocation } from "react-router-dom";
 import {
   MapPin,
   IndianRupee,
@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { destinations } from "../data/destinationsData";
 import { useBooking } from "../components/booking/BookingContext";
+import SEO from "../components/seo/SEO";
+import { pageMeta } from "../data/pageMeta";
 // Every category gets its own accent, drawn from the thing it's actually
 // known for — moss for the hills, wet stone for the caves, sea-teal for the
 // coast, sandalwood-rust for the temple, and instrument-panel blue for transit.
@@ -91,6 +93,10 @@ export default function DestinationDetail() {
   const { slug } = useParams<{ slug: string }>();
   const destination = destinations.find((d) => d.slug === slug);
 const { openBooking } = useBooking();
+  const { pathname } = useLocation();
+  const meta = pageMeta[pathname];
+
+
   if (!destination) return <Navigate to="/Destinations" replace />;
 
     const {
@@ -124,7 +130,13 @@ const { openBooking } = useBooking();
 
   return (
     <>
+     <SEO
+        title={meta?.title ?? `${name} Taxi from Vizag | BSH Taxi Services`}
 
+        description={meta.description}
+        keywords={meta.keywords}
+        canonicalPath={pathname}
+      />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
         .font-display { font-family: 'Fraunces', serif; font-feature-settings: 'liga' 1; }
