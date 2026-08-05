@@ -109,8 +109,8 @@ export default function Hero() {
 </h1>
 
         <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-500 sm:mt-5 sm:max-w-lg sm:text-base lg:text-base">
-BSH Taxi Services provides reliable taxi services in Visakhapatnam (Vizag), 
-including <strong><em>airport taxi</em>
+BSH Taxi Services provides reliable taxi services in Vizag, 
+including <strong><em>airport taxi</em>,
   {" "}
   <a
     href="https://www.bshtaxiservices.com/services/local-taxi?type=local-taxi-services"
@@ -122,7 +122,7 @@ including <strong><em>airport taxi</em>
   >
     <strong>local cab service,</strong>
   </a>{" "} outstation cabs, one-way taxi, round trips, 
-and corporate travel.</strong> Our professional drivers and well-maintained vehicles are available 24/7 across Andhra Pradesh.
+and corporate travel.</strong> Our professional drivers.
 </p>
 
         {/* Trust badges — 4 inline items matching the design */}
