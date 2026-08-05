@@ -14,7 +14,7 @@ const FleetPage = lazy(() => import("./pages/FleetPage"));
 const DestinationsPage = lazy(() => import("./pages/DestinationsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const DestinationDetail = lazy(() => import("./pages/DestinationDetail"));
-import LocalTaxi from "./pages/Localtaxi";
+import LocalTaxi from "./pages/LocalTaxi";
 
 export default function App() {
   return (
