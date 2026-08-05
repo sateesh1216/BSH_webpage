@@ -8,6 +8,12 @@ import HeaderSearchBar from "../home/Headersearchbar";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  // Which second-level item's flyout (grandchildren) is open on desktop, e.g. "Local Taxi Services"
+  const [openNested, setOpenNested] = useState<string | null>(null);
+  // Mobile: which top-level accordion is open
+  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
+  // Mobile: which nested (second-level) accordion is open, e.g. "Local Taxi Services"
+  const [openMobileNested, setOpenMobileNested] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
@@ -27,7 +33,6 @@ export default function Header() {
     }
 
     measure();
-
 
     window.addEventListener("resize", measure);
     const ro = new ResizeObserver(measure);
@@ -49,6 +54,8 @@ export default function Header() {
 
   useEffect(() => {
     setMenuOpen(false);
+    setOpenMobileDropdown(null);
+    setOpenMobileNested(null);
   }, [location.pathname]);
 
   return (
@@ -70,10 +77,6 @@ export default function Header() {
       >
         {/* Top hairline highlight for glass depth */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/70 to-transparent" />
-
-    
-  
-
 
         <div ref={shellRef} className="mx-auto w-[92%] max-w-5xl">
           {/* Main row: logo + nav + call button. */}
@@ -108,7 +111,6 @@ export default function Header() {
               </span>
             </Link>
 
- 
             <div className="hidden min-w-0 flex-1 items-center justify-center lg:flex">
               <nav
                 ref={navPillRef}
@@ -123,7 +125,10 @@ export default function Header() {
                         key={link.label}
                         className="relative"
                         onMouseEnter={() => setOpenDropdown(link.label)}
-                        onMouseLeave={() => setOpenDropdown(null)}
+                        onMouseLeave={() => {
+                          setOpenDropdown(null);
+                          setOpenNested(null);
+                        }}
                       >
                         <button
                           className="flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-1.5 text-[12px] font-semibold text-slate-700 outline-none transition-colors duration-200 hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/40 xl:px-3 xl:text-[13px]"
@@ -139,25 +144,60 @@ export default function Header() {
                         </button>
 
                         <div
-                          className={`absolute left-0 top-full z-50 mt-2 w-56 rounded-2xl border border-slate-100 bg-white/95 p-1.5 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.25)] backdrop-blur-xl transition-all duration-300 ${
+                          className={`absolute left-0 top-full z-50 mt-2 w-60 rounded-2xl border border-slate-100 bg-white/95 p-1.5 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.25)] backdrop-blur-xl transition-all duration-300 ${
                             openDropdown === link.label
                               ? "visible translate-y-0 opacity-100"
                               : "invisible -translate-y-2 opacity-0"
                           }`}
                         >
-                          {link.children.map((item) => (
-                            <Link
-                              key={item.label}
-                              to={item.href}
-                              className="group/item flex items-center justify-between rounded-xl px-3 py-2 text-[13px] font-medium text-slate-700 outline-none transition-all duration-200 hover:bg-primary hover:pl-4 hover:text-white focus-visible:bg-primary focus-visible:pl-4 focus-visible:text-white"
-                            >
-                              {item.label}
-                              <ChevronDown
-                                size={12}
-                                className="-rotate-90 opacity-0 transition-opacity duration-200 group-hover/item:opacity-70"
-                              />
-                            </Link>
-                          ))}
+                          {link.children.map((item) => {
+                            const hasNested = !!item.children?.length;
+
+                            return (
+                              <div
+                                key={item.label}
+                                className="relative"
+                                onMouseEnter={() => hasNested && setOpenNested(item.label)}
+                                onMouseLeave={() => hasNested && setOpenNested(null)}
+                              >
+                                <Link
+                                  to={item.href}
+                                  className="group/item flex items-center justify-between rounded-xl px-3 py-2 text-[13px] font-medium text-slate-700 outline-none transition-all duration-200 hover:bg-primary hover:pl-4 hover:text-white focus-visible:bg-primary focus-visible:pl-4 focus-visible:text-white"
+                                >
+                                  {item.label}
+                                  <ChevronDown
+                                    size={12}
+                                    className={`shrink-0 transition-transform duration-200 ${
+                                      hasNested
+                                        ? "-rotate-90 opacity-70"
+                                        : "-rotate-90 opacity-0 group-hover/item:opacity-70"
+                                    }`}
+                                  />
+                                </Link>
+
+                                {/* Third-level flyout: package/duration options (8Hr/80Km, 10Hr/100Km, etc.) */}
+                                {hasNested && (
+                                  <div
+                                    className={`absolute left-full top-0 z-50 ml-1 w-48 rounded-2xl border border-slate-100 bg-white/95 p-1.5 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.25)] backdrop-blur-xl transition-all duration-200 ${
+                                      openNested === item.label
+                                        ? "visible translate-x-0 opacity-100"
+                                        : "invisible -translate-x-2 opacity-0"
+                                    }`}
+                                  >
+                                    {item.children!.map((sub) => (
+                                      <Link
+                                        key={sub.label}
+                                        to={sub.href}
+                                        className="block rounded-xl px-3 py-2 text-[13px] font-medium text-slate-700 outline-none transition-all duration-200 hover:bg-primary hover:pl-4 hover:text-white focus-visible:bg-primary focus-visible:pl-4 focus-visible:text-white"
+                                      >
+                                        {sub.label}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
                     );
@@ -236,7 +276,6 @@ export default function Header() {
           </div>
           {/* /Main row */}
 
-
           <div className="hidden border-t border-white/30 pb-2 pt-2 lg:block">
             <div
               style={
@@ -256,11 +295,10 @@ export default function Header() {
         <nav
           className={`overflow-hidden border-t transition-all duration-300 lg:hidden ${
             menuOpen
-              ? "max-h-175 border-slate-100 opacity-100"
+              ? "max-h-175 overflow-y-auto border-slate-100 opacity-100"
               : "max-h-0 border-transparent opacity-0 pointer-events-none"
           }`}
         >
-
           <div
             className="h-0.75 w-full"
             style={{
@@ -284,7 +322,7 @@ export default function Header() {
                     <button
                       type="button"
                       onClick={() =>
-                        setOpenDropdown(openDropdown === link.label ? null : link.label)
+                        setOpenMobileDropdown(openMobileDropdown === link.label ? null : link.label)
                       }
                       className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-[13px] font-semibold text-slate-800 outline-none transition-colors duration-200 hover:bg-primary/10 hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/40"
                     >
@@ -292,30 +330,85 @@ export default function Header() {
                       <ChevronDown
                         size={16}
                         className={`transition-transform duration-300 ${
-                          openDropdown === link.label ? "rotate-180" : ""
+                          openMobileDropdown === link.label ? "rotate-180" : ""
                         }`}
                       />
                     </button>
 
                     <div
                       className={`overflow-hidden transition-all duration-300 ${
-                        openDropdown === link.label ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                        openMobileDropdown === link.label ? "max-h-[999px] opacity-100" : "max-h-0 opacity-0"
                       }`}
                     >
                       <div className="ml-3 mt-1 space-y-0.5 border-l-2 border-primary/15 pl-3">
-                        {link.children.map((child) => (
-                          <Link
-                            key={child.label}
-                            to={child.href}
-                            onClick={() => {
-                              setMenuOpen(false);
-                              setOpenDropdown(null);
-                            }}
-                            className="block rounded-lg px-2.5 py-1.5 text-[13px] text-slate-600 outline-none transition-colors duration-200 hover:bg-primary hover:text-white focus-visible:bg-primary focus-visible:text-white"
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
+                        {link.children.map((child) => {
+                          const hasNested = !!child.children?.length;
+
+                          if (!hasNested) {
+                            return (
+                              <Link
+                                key={child.label}
+                                to={child.href}
+                                onClick={() => {
+                                  setMenuOpen(false);
+                                  setOpenMobileDropdown(null);
+                                  setOpenMobileNested(null);
+                                }}
+                                className="block rounded-lg px-2.5 py-1.5 text-[13px] text-slate-600 outline-none transition-colors duration-200 hover:bg-primary hover:text-white focus-visible:bg-primary focus-visible:text-white"
+                              >
+                                {child.label}
+                              </Link>
+                            );
+                          }
+
+                          // Second-level accordion for package/duration options
+                          return (
+                            <div key={child.label}>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setOpenMobileNested(
+                                    openMobileNested === child.label ? null : child.label
+                                  )
+                                }
+                                className="flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-[13px] font-medium text-slate-600 outline-none transition-colors duration-200 hover:bg-primary hover:text-white focus-visible:bg-primary focus-visible:text-white"
+                              >
+                                {child.label}
+                                <ChevronDown
+                                  size={13}
+                                  className={`transition-transform duration-300 ${
+                                    openMobileNested === child.label ? "rotate-180" : ""
+                                  }`}
+                                />
+                              </button>
+
+                              <div
+                                className={`overflow-hidden transition-all duration-300 ${
+                                  openMobileNested === child.label
+                                    ? "max-h-96 opacity-100"
+                                    : "max-h-0 opacity-0"
+                                }`}
+                              >
+                                <div className="ml-3 mt-0.5 space-y-0.5 border-l border-primary/10 pl-3">
+                                  {child.children!.map((sub) => (
+                                    <Link
+                                      key={sub.label}
+                                      to={sub.href}
+                                      onClick={() => {
+                                        setMenuOpen(false);
+                                        setOpenMobileDropdown(null);
+                                        setOpenMobileNested(null);
+                                      }}
+                                      className="block rounded-lg px-2.5 py-1.5 text-[12px] text-slate-500 outline-none transition-colors duration-200 hover:bg-primary hover:text-white focus-visible:bg-primary focus-visible:text-white"
+                                    >
+                                      {sub.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>

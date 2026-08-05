@@ -1,5 +1,15 @@
 import { useState, useEffect } from "react";
-import { useParams, Link , Navigate, useLocation} from "react-router-dom";
+import { useParams, Link, Navigate, useLocation } from "react-router-dom";
+/**
+ * ROUTING — this component now serves TWO routes. Wherever your <Routes>
+ * are declared (App.tsx / router.tsx), make sure BOTH of these point here:
+ *
+ *   <Route path="/services/:slug" element={<ServiceDetails />} />
+ *   <Route path="/services/:slug/:pkg" element={<ServiceDetails />} />
+ *
+ * The second route is what makes /services/local-taxi/8hr-80km,
+ * /services/outstation-taxi/one-way, etc. resolve as real, separate pages.
+ */
 import {
   PhoneCall,
   ArrowRight,
@@ -28,45 +38,6 @@ type ServiceDetailContent = {
 };
 
 const serviceDetailsContent: Record<string, ServiceDetailContent> = {
-  "local-taxi": {
-    tagline: "Book the Best Taxi in Vizag",
-    longDescription: (
-      <p>
-        Looking for a 
-        {" "}
-  <a
-    href="https://www.bshtaxiservices.com/destinations/vizag-local?type=taxi-services-in-vizag"
-    target="_blank"
-    rel="noopener noreferrer"
-	  title="Vizag Local Taxi Service in Vizag - BSH Taxi Services" 
-	  aria-label="Vizag Local Taxi Service in Vizag - BSH Taxi Services" 
-    className="hover:underline"
-  >
-    <strong>taxi in Vizag</strong>?
-  </a>{" "} 
-         BSH Taxi Services provides the{" "}
-        <i>best taxi service in Visakhapatnam (Vizag)</i> with affordable
-        fares and 24/7 availability. Book a local taxi in Vizag for office
-        commutes, airport transfers, railway station pickups, shopping
-        trips, hospital visits, business travel, and sightseeing. Our
-        experienced drivers, clean vehicles, and transparent pricing make
-        us one of the most trusted taxi services in Vizag. Whether you
-        need a local cab, airport taxi, or outstation taxi, BSH Taxi
-        Services is ready to serve you anytime.
-      </p>
-    ),
-    highlights: [
-      "Point-to-point & hourly packages",
-      "Available 24/7, including late nights",
-      "Verified, background-checked drivers",
-      "No surge pricing, ever",
-    ],
-    notes: [
-      "Fare is calculated based on distance and time.",
-      "Waiting charges apply after the first 10 minutes.",
-      "Toll, parking, and state permit charges (if any) are extra.",
-    ],
-  },
   "outstation-taxi": {
     tagline: "Reliable Outstation Taxi Service in Vizag",
     longDescription: (
@@ -75,20 +46,18 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
         best <strong>outstation taxi service in Vizag</strong> for one-way drops,
         round trips, and multi-day travel across Andhra Pradesh and
         nearby states. Whether you're traveling for business, family
-        vacations, temple visits, or sightseeing, 
-              {" "}
-  <a
-    href="https://bshtaxiservices.com/destinations/tirupati?type=outstation-taxi-services"
-    target="_blank"
-    rel="noopener noreferrer"
-	  title="Outstation Taxi Service in Vizag - BSH Taxi Services" 
-	  aria-label="Outstation Taxi Service in Vizag - BSH Taxi Services" 
-    className="hover:underline"
-  >
-    <em>our outstation taxi in
-        Vizag</em>
-  </a>{" "} 
-         ensures a safe, comfortable, and affordable journey. We
+        vacations, temple visits, or sightseeing,{" "}
+        <a
+          href="https://bshtaxiservices.com/destinations/tirupati?type=outstation-taxi-services"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Outstation Taxi Service in Vizag - BSH Taxi Services"
+          aria-label="Outstation Taxi Service in Vizag - BSH Taxi Services"
+          className="hover:underline"
+        >
+          <em>our outstation taxi in Vizag</em>
+        </a>{" "}
+        ensures a safe, comfortable, and affordable journey. We
         provide reliable one-way taxi and outstation cab services with
         experienced highway drivers, well-maintained vehicles,
         transparent pricing, and 24/7 customer support.{" "}
@@ -117,21 +86,18 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
     longDescription: (
       <p>
         Need a reliable <strong>airport taxi in Vizag</strong>? BSH Taxi Services
-        provides safe, affordable, and 24/7 
-         {" "}
-  <a
-    href="https://bshtaxiservices.com/destinations/vizag-airport?type=airport-taxi"
-    target="_blank"
-    rel="noopener noreferrer"
-	  title="Airport Taxi Service in Vizag - BSH Taxi Services" 
-	  aria-label="Airport Taxi Service in Vizag - BSH Taxi Services" 
-    className="hover:underline"
-  >
-    <i>airport transfer services</i>
-  </a>{" "} 
-
-         to
-        and from Visakhapatnam International Airport. Whether you're
+        provides safe, affordable, and 24/7{" "}
+        <a
+          href="https://bshtaxiservices.com/destinations/vizag-airport?type=airport-taxi"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Airport Taxi Service in Vizag - BSH Taxi Services"
+          aria-label="Airport Taxi Service in Vizag - BSH Taxi Services"
+          className="hover:underline"
+        >
+          <i>airport transfer services</i>
+        </a>{" "}
+        to and from Visakhapatnam International Airport. Whether you're
         catching an early morning flight or arriving late at night, our
         professional drivers ensure on-time pickups and drop-offs with
         comfortable, well-maintained vehicles. We monitor your flight
@@ -342,29 +308,6 @@ type ServiceFareConfig = {
 };
 
 const serviceFareConfig: Record<string, ServiceFareConfig> = {
-  /* ---------------- Local Taxi — 8 Hours / 10 Hours packages ------- */
-  "local-taxi": {
-    tabs: ["8 Hours", "10 Hours"],
-    fleet: [
-      makeCar("Dzire", "Sedan", 4, 2, {
-        "8 Hours": { rate: "₹2,400", unit: "/80km", note: "Extra km ₹13" },
-        "10 Hours": { rate: "₹3,000", unit: "/100km", note: "Extra km ₹13" },
-      }),
-      makeCar("Ertiga", "MUV", 6, 3, {
-        "8 Hours": { rate: "₹2,800", unit: "/80km", note: "Extra km ₹16" },
-        "10 Hours": { rate: "₹3,500", unit: "/100km", note: "Extra km ₹16" },
-      }),
-      makeCar("Innova Crysta", "Premium SUV", 7, 4, {
-        "8 Hours": { rate: "₹3,200", unit: "/80km", note: "Extra km ₹19" },
-        "10 Hours": { rate: "₹4,000", unit: "/100km", note: "Extra km ₹19" },
-      }),
-      makeCar("Tempo Traveller", "Group Travel", 17, 10, {
-        "8 Hours": { rate: "₹5,200", unit: "/80km", note: "Extra km ₹28" },
-        "10 Hours": { rate: "₹6,500", unit: "/100km", note: "Extra km ₹28" },
-      }),
-    ],
-  },
-
   /* ---------------- Outstation Taxi — One Way / Round Trip --------- */
   "outstation-taxi": {
     tabs: ["One Way", "Round Trip"],
@@ -388,7 +331,7 @@ const serviceFareConfig: Record<string, ServiceFareConfig> = {
     ],
   },
 
-  /* ---------------- Airport Transfer — no tabs, starts at ₹800 ----- */
+  /* ---------------- Airport Transfer — no tabs, starts at ₹1000 ---- */
   "airport-transfer": {
     tabs: [],
     fleet: [
@@ -409,7 +352,7 @@ const serviceFareConfig: Record<string, ServiceFareConfig> = {
 
   /* ---------------- Tour Packages — Half Day / Full Day ------------ */
   "tour-packages": {
-    tabs: [ "Full Day"],
+    tabs: ["Half Day", "Full Day"],
     fleet: [
       makeCar("Dzire", "Sedan", 4, 2, {
         "Half Day": { rate: "₹1,800", unit: "/50km", note: "Extra km ₹13" },
@@ -461,7 +404,7 @@ const serviceFareConfig: Record<string, ServiceFareConfig> = {
     ],
   },
 
-  /* ---------------- Wedding Car Rentals — 4 Hours / 8 Hours -------- */
+  /* ---------------- Wedding Car Rentals — 8 Hours / 10 Hours ------- */
   "wedding-car-rentals": {
     tabs: ["8 Hours", "10 Hours"],
     fleet: [
@@ -484,6 +427,52 @@ const serviceFareConfig: Record<string, ServiceFareConfig> = {
     ],
   },
 };
+
+/* ------------------------------------------------------------------ */
+/*  Maps the `:pkg` route segment (used by the header's nested flyout  */
+/*  links, e.g. /services/local-taxi/8hr-80km) to the matching fare    */
+/*  tab label for each service slug.                                   */
+/*  Keep these keys in sync with the path segments used in nav.ts.     */
+/* ------------------------------------------------------------------ */
+
+const packageParamToTab: Record<string, Record<string, string>> = {
+  "outstation-taxi": {
+    "one-way": "One Way",
+    "round-trip": "Round Trip",
+  },
+  "tour-packages": {
+    "half-day": "Half Day",
+    "full-day": "Full Day",
+  },
+  "corporate-travel": {
+    "one-way": "One Way",
+    "round-trip": "Round Trip",
+    hourly: "Hourly",
+    monthly: "Monthly",
+  },
+  "wedding-car-rentals": {
+    "8hr": "8 Hours",
+    "10hr": "10 Hours",
+  },
+};
+
+/** Resolve the initial/active tab for a slug from the `:pkg` route param,
+ *  falling back to the service's first tab (or "default" when it has none). */
+function resolveTab(
+  slug: string | undefined,
+  pkg: string | undefined,
+  fareConfig: ServiceFareConfig | undefined
+): string {
+  if (!fareConfig) return "default";
+  if (fareConfig.tabs.length === 0) return "default";
+
+  const mappedTab = slug && pkg ? packageParamToTab[slug]?.[pkg] : undefined;
+  if (mappedTab && fareConfig.tabs.includes(mappedTab)) {
+    return mappedTab;
+  }
+
+  return fareConfig.tabs[0];
+}
 
 /* WhatsApp business number — keep in sync with the call number below */
 const WHATSAPP_NUMBER = "918886803322";
@@ -510,7 +499,6 @@ function WhatsAppIcon({ size = 18 }: { size?: number }) {
 /* ------------------------------------------------------------------ */
 
 const serviceToTab = {
-  "local-taxi": "Local",
   "outstation-taxi": "Outstation",
   "airport-transfer": "Airport",
   "tour-packages": "Tour",
@@ -519,28 +507,54 @@ const serviceToTab = {
 } as const;
 
 export default function ServiceDetails() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug, pkg } = useParams<{ slug: string; pkg?: string }>();
   const { openBooking, setTripType } = useBooking();
+  const { pathname } = useLocation();
 
   const fareConfig = slug ? serviceFareConfig[slug] : undefined;
   const hasTabs = !!fareConfig && fareConfig.tabs.length > 0;
-  const { pathname } = useLocation();
-  const meta = pageMeta[pathname];
-    if (!meta) {
-    return <Navigate to="/services" replace />;
-  }
-  const [activeTab, setActiveTab] = useState<string>(
-    fareConfig?.tabs[0] ?? "default"
-  );
-
-  // Reset the active tab whenever the visitor lands on a different service page
-  useEffect(() => {
-    setActiveTab(fareConfig?.tabs[0] ?? "default");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
 
   const service = services.find((s) => s.slug === slug);
   const details = slug ? serviceDetailsContent[slug] : undefined;
+
+  // Look for an explicit pageMeta entry for this exact URL first (e.g. if
+  // you later hand-write SEO copy for /services/local-taxi/8hr-80km). If
+  // there isn't one yet, fall back to the base service's meta and derive a
+  // package-specific title/description automatically so every package URL
+  // still gets a distinct, non-duplicate <title> and meta description.
+  const exactMeta = pageMeta[pathname];
+  const baseMeta = slug ? pageMeta[`/services/${slug}`] : undefined;
+
+  // Hooks must run unconditionally on every render (before any early
+  // return), even for an invalid slug — resolveTab() safely no-ops when
+  // fareConfig is undefined.
+  const [activeTab, setActiveTab] = useState<string>(
+    resolveTab(slug, pkg, fareConfig)
+  );
+
+  // Re-sync the active tab whenever the visitor lands on a different service
+  // or package page (e.g. /services/local-taxi/8hr-80km vs /10hr-100km).
+  useEffect(() => {
+    setActiveTab(resolveTab(slug, pkg, fareConfig));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug, pkg]);
+
+  // Only a totally unknown service slug (no base meta at all) is a real 404.
+  if (!service || !details || !baseMeta) {
+    return <Navigate to="/services" replace />;
+  }
+
+  const packageLabel = hasTabs ? activeTab : null;
+
+  const meta =
+    exactMeta ??
+    (packageLabel
+      ? {
+          ...baseMeta,
+          title: `${service.title} — ${packageLabel} Package | BSH Taxi Services`,
+          description: `${baseMeta.description} Viewing the ${packageLabel} ${service.title.toLowerCase()} package — fares, inclusions, and instant WhatsApp booking.`,
+        }
+      : baseMeta);
 
   const handleBookNow = () => {
     const tab = slug ? serviceToTab[slug as keyof typeof serviceToTab] : undefined;
@@ -555,27 +569,6 @@ export default function ServiceDetails() {
     }${title ? ` (${title})` : ""}. Please share availability and fare.`;
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   };
-
-  // Fallback for an unknown / missing slug
-  if (!service || !details) {
-    return (
-      <section className="mx-auto flex max-w-2xl flex-col items-center px-6 py-32 text-center">
-        <h1 className="text-3xl font-extrabold text-slate-900">
-          Service not found
-        </h1>
-        <p className="mt-3 text-slate-500">
-          The service you're looking for doesn't exist or may have moved.
-        </p>
-        <Link
-          to="/services"
-          className="mt-8 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-blue-700"
-        >
-          <ArrowLeft size={18} />
-          Back to all services
-        </Link>
-      </section>
-    );
-  }
 
   const { icon: Icon, title, description, image } = service;
   const { tagline, longDescription, highlights, notes } = details;
@@ -613,6 +606,11 @@ export default function ServiceDetails() {
 
               <h1 className="mt-6 text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl">
                 {title}
+                {hasTabs && (
+                  <span className="block text-2xl font-bold text-primary sm:text-3xl">
+                    {activeTab} Package
+                  </span>
+                )}
               </h1>
 
               <h2 className="mt-3 text-xl font-semibold text-primary">
