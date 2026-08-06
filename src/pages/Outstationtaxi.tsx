@@ -6,8 +6,6 @@ import {
   Sparkle,
   ArrowRight,
   Clock,
-  Navigation,
-  Quote,
   Building2,
   Landmark,
   Briefcase,
