@@ -92,33 +92,33 @@ export default function Hero() {
           Your Journey, Our Responsibility.
         </span>
 
-     <h1 className="text-[1.75rem] font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-4xl sm:leading-[1.08] md:text-5xl lg:text-[3.25rem] lg:leading-[1.05]">
-  Best Taxi Service in <span className="text-[#2997FF]">Vizag</span>
-</h1>
+              <h1 className="text-[1.75rem] font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-4xl sm:leading-[1.08] md:text-5xl lg:text-[3.25rem] lg:leading-[1.05]">
+            Best Taxi Service in <span className="text-[#2997FF]">Vizag</span>
+          </h1>
 
-<p
-  className="mt-2 text-base sm:text-lg lg:text-xl text-[#2997FF] font-normal"
-  style={{
-    fontFamily: '"Rouge Script", cursive',
-    fontWeight: 400,
-  }}
->
-  Airport Taxi | Local Cab | Outstation Cabs | One Way Taxi | Round Trips
-</p>
+          <p
+            className="mt-2 text-base sm:text-lg lg:text-xl text-[#2997FF] font-normal"
+            style={{
+              fontFamily: '"Rouge Script", cursive',
+              fontWeight: 400,
+            }}
+          >
+            Airport Taxi | Local Cab | Outstation Cabs | One Way Taxi | Round Trips
+          </p>
 
-<p className="mt-4 max-w-md text-sm leading-relaxed text-slate-500 sm:mt-5 sm:max-w-lg sm:text-base lg:text-base">
-  Book the <strong>best taxi service in Vizag</strong> with BSH Taxi Services.
-  We provide reliable airport taxi service,
-  <a
-    href="/services/local-taxi?type=local-taxi-services"
-    className="hover:underline"
-    title="Local Taxi Service in Vizag | BSH Taxi Services"
-    aria-label="Local Taxi Service in Vizag"
-  >
-    <strong>local cab service</strong>
-  </a>,
-  outstation taxi service, one-way taxi, round trips, and corporate travel at affordable prices with professional drivers.
-</p>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-500 sm:mt-5 sm:max-w-lg sm:text-base lg:text-base">
+            Book the <strong>best taxi service in Vizag</strong> with BSH Taxi Services.
+            We provide reliable airport taxi service,
+            <a
+              href="/services/local-taxi?type=local-taxi-services"
+              className="hover:underline"
+              title="Local Taxi Service in Vizag | BSH Taxi Services"
+              aria-label="Local Taxi Service in Vizag"
+            >
+              <strong>local cab service</strong>
+            </a>,
+            outstation taxi service, one-way taxi, round trips, and corporate travel at affordable prices with professional drivers.
+          </p>
 
         {/* Trust badges — 4 inline items matching the design */}
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-3 xs:grid-cols-2 sm:mt-8 sm:gap-y-4 sm:flex sm:flex-wrap sm:gap-x-8">

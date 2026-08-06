@@ -7,27 +7,30 @@ export default function ContactHero() {
       <div className="absolute -top-24 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-blue-500/10 blur-[120px]" />
       <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-indigo-500/10 blur-[100px]" />
 
-      <div className="relative mt-8 mx-auto flex max-w-5xl flex-col items-center px-6 text-center">
+      <div className="relative mx-auto mt-8 flex max-w-5xl flex-col items-center px-6 text-center">
         {/* Badge */}
         <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          <PhoneCall size={25} />
-          Contact Us
+          <PhoneCall size={22} />
+          Contact BSH Taxi Services
         </span>
 
         {/* Heading */}
         <h1 className="mt-6 text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
-          We're Here to{" "}
-          <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            Help You!
+          Contact the Best
+          <span className="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            Taxi Service in Vizag
           </span>
         </h1>
 
         {/* Description */}
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-          Have questions or need assistance? Our friendly support team is
-          available{" "}
-          <span className="font-semibold text-slate-900">24/7</span> to help
-          you with bookings, travel plans, and any queries.
+        <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+          Need help booking the <strong>best taxi service in Vizag</strong>?
+          Contact <strong>BSH Taxi Services</strong> for
+          <strong> airport taxi service</strong>,
+          <strong> local cab service</strong>,
+          <strong> outstation taxi service</strong>,
+          one-way taxi bookings, round trips, corporate travel, and Vizag tour packages.
+          Our friendly support team is available <strong>24/7</strong> to assist you with bookings and travel inquiries.
         </p>
 
         {/* Feature Cards */}
@@ -38,13 +41,13 @@ export default function ContactHero() {
               <Headset size={30} />
             </div>
 
-            <h3 className="mt-5 text-xl font-bold text-slate-900">
+            <h2 className="mt-5 text-xl font-bold text-slate-900">
               24/7 Customer Support
-            </h3>
+            </h2>
 
             <p className="mt-2 text-sm leading-6 text-slate-500">
-              Our support team is always available to assist you anytime,
-              anywhere.
+              Get instant assistance for airport transfers, local taxi bookings,
+              outstation trips, and travel planning anytime.
             </p>
           </div>
 
@@ -54,12 +57,12 @@ export default function ContactHero() {
               <Timer size={30} />
             </div>
 
-            <h3 className="mt-5 text-xl font-bold text-slate-900">
+            <h2 className="mt-5 text-xl font-bold text-slate-900">
               Quick Response
-            </h3>
+            </h2>
 
             <p className="mt-2 text-sm leading-6 text-slate-500">
-              We respond quickly so your travel plans never have to wait.
+              We respond quickly to ensure your taxi booking is confirmed without delay.
             </p>
           </div>
         </div>

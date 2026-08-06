@@ -31,9 +31,10 @@ export default function DestinationsHero() {
         </span>
 
         {/* Heading */}
+      
         <h1 className="mt-6 text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
-          Discover Amazing{" "}
-          <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          Discover Amazing {" "}
+          <span className="block bg-linear-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
             Destinations
           </span>
         </h1>

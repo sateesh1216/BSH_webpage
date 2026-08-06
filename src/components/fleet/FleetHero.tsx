@@ -109,11 +109,25 @@ export default function FleetHero() {
 
         {/* Description */}
         <p className="fade-3 mx-auto mt-6 max-w-3xl text-center text-lg leading-8 text-slate-600">
-          Whether you're looking for a compact sedan, premium SUV,
-          spacious Innova Crysta, Tempo Traveller or luxury vehicle,
-          BSH Taxi Services provides comfortable, clean and reliable
-          transportation for airport transfers, local rides,
-          outstation trips, corporate travel and family vacations.
+          Looking for the <strong>best taxi fleet in Vizag</strong>?
+          BSH Taxi Services offers well-maintained sedans,
+          SUVs, Innova Crysta, Tempo Travellers,
+          and luxury vehicles for
+          <strong>airport transfers</strong>,
+          <strong>local taxi service</strong>,
+          {" "}
+            <a
+            href="/Destinations?type=cabs-in-vizag"
+            title="Vizag to Araku Valley Taxi Service - BSH Taxi Services"
+            aria-label="Vizag to Araku Valley Taxi Service - BSH Taxi Services"
+            className="hover:underline"
+          >
+            <strong>outstation taxi service</strong>,
+            </a>{" "} 
+          
+          corporate travel,
+          family vacations,
+          and sightseeing trips across Andhra Pradesh.
         </p>
 
         {/* CTA Buttons */}
