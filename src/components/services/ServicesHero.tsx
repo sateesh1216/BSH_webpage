@@ -81,23 +81,18 @@ export default function ServicesHero() {
             <p className="fade-3 mx-auto mt-6 max-w-3xl text-center text-lg leading-8 text-slate-600">
       Looking for the <strong>best taxi service in Visakhapatnam (Vizag)</strong>?
       BSH Taxi Services provides reliable <strong>local taxi service in Vizag</strong>,
-      <strong> airport taxi service</strong>,
-      <strong> outstation taxi service</strong>,
-      <strong> corporate taxi service</strong>,
-      <strong> wedding car rentals</strong>, and
-      <strong> Vizag tour packages</strong> at affordable prices.
+       airport taxi service, <strong> outstation taxi service </strong>, corporate taxi service,
+       wedding car rentals, and  <strong> Vizag tour packages</strong> at affordable prices.
       We also offer <strong>Vizag local sightseeing cabs</strong>,
       {" "}
   <a
-    href="https://www.bshtaxiservices.com/destinations/araku-valley?type=vizag-to-araku-taxi"
-    target="_blank"
-    rel="noopener noreferrer"
-	  title="Best Taxi Service in Vizag - BSH Taxi Services" 
-	  aria-label="Taxi Service in Vizag - BSH Taxi Services" 
-    className="hover:underline"
-  >
-    <strong> Vizag to Araku Valley taxi service,</strong>
-  </a>{" "} 
+  href="/destinations/araku-valley?type=vizag-to-araku-taxi"
+  title="Vizag to Araku Valley Taxi Service - BSH Taxi Services"
+  aria-label="Vizag to Araku Valley Taxi Service - BSH Taxi Services"
+  className="hover:underline"
+>
+  <strong>Vizag to Araku Valley taxi service</strong>
+</a>{" "} 
        and comfortable
       transportation across Andhra Pradesh with professional drivers,
       clean vehicles, transparent pricing, and 24/7 customer support.
