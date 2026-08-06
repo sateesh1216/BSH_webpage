@@ -119,6 +119,8 @@ export default function Header() {
                   const active = location.pathname === link.href;
 
                   if (link.children) {
+                    const children = link.children; // narrow once, reuse everywhere below
+
                     return (
                       <div
                         key={link.label}
@@ -155,9 +157,9 @@ export default function Header() {
                             <div className="flex gap-5">
                               {Array.from(
                                 {
-                                  length: Math.ceil(link.children.length / 7),
+                                  length: Math.ceil(children.length / 7),
                                 },
-                                (_, i) => link.children.slice(i * 7, i * 7 + 7)
+                                (_, i) => children.slice(i * 7, i * 7 + 7)
                               ).map((column, index) => (
                                 <div key={index} className="min-w-[160px]">
                                   {column.map((item) => (
@@ -173,7 +175,7 @@ export default function Header() {
                               ))}
                             </div>
                           ) : (
-                            link.children.map((item) => {
+                            children.map((item) => {
                               const hasNested = !!item.children?.length;
                               // Wide multi-column grid for flyouts with a lot of
                               // grandchildren (e.g. "Outstation Taxi" -> city list)
@@ -358,6 +360,8 @@ export default function Header() {
               const active = location.pathname === link.href;
 
               if (link.children) {
+                const children = link.children; // narrow once, reuse everywhere below
+
                 return (
                   <div
                     key={link.label}
@@ -388,7 +392,7 @@ export default function Header() {
                       }`}
                     >
                       <div className="ml-3 mt-1 space-y-0.5 border-l-2 border-primary/15 pl-3">
-                        {link.children.map((child) => {
+                        {children.map((child) => {
                           const hasNested = !!child.children?.length;
 
                           if (!hasNested) {
