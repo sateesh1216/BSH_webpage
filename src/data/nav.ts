@@ -21,10 +21,15 @@ export interface NavLink {
  * Each grandchild link points at the SAME service detail page as its parent
  * (e.g. /services/local-taxi) but adds a `pkg=` query param. ServiceDetails.tsx
  * reads that param on load and pre-selects the matching fare tab (8 Hours,
- * 10 Hours, One Way, Round Trip, etc.) so the visitor lands directly on the
- * package they clicked instead of the default tab.
+ * 10 Hours, etc.) so the visitor lands directly on the package they clicked
+ * instead of the default tab.
  *
  * Keep these `pkg` values in sync with `packageParamToTab` in ServiceDetails.tsx.
+ *
+ * NOTE — Outstation Taxi is the one exception: its third-level flyout below
+ * lists actual destinations (Araku, Annavaram, Kakinada, ...) instead of a
+ * One Way / Round Trip toggle. Each entry links straight to that
+ * destination's own page (/destinations/<slug>), not to a `pkg=` query param.
  */
 export const navLinks: NavLink[] = [
   {
@@ -41,33 +46,33 @@ export const navLinks: NavLink[] = [
         label: "All Services",
         href: "/services?type=taxi-services-in-vizag",
       },
-   {
-  label: "Local Taxi Services",
-  href: "/services/local-taxi?type=local-taxi-services",
-  children: [
-    {
-      label: "8 Hr / 80 Km",
-      href: "/services/local-taxi/8hr-80km?type=local-taxi-services",
-    },
-    {
-      label: "10 Hr / 100 Km",
-      href: "/services/local-taxi/10hr-100km?type=local-taxi-services",
-    },
-  ],
-},
+      {
+        label: "Local Taxi Services",
+        href: "/services/local-taxi?type=local-taxi-services",
+        children: [
+          {
+            label: "8 Hr / 80 Km",
+            href: "/services/local-taxi/8hr-80km?type=local-taxi-services",
+          },
+          {
+            label: "10 Hr / 100 Km",
+            href: "/services/local-taxi/10hr-100km?type=local-taxi-services",
+          },
+        ],
+      },
 
       {
         label: "Outstation Taxi",
         href: "/services/outstation-taxi?type=outstation-taxi-services",
         children: [
-          {
-            label: "One Way Trip",
-            href: "/services/outstation-taxi?type=outstation-taxi-services&pkg=one-way",
-          },
-          {
-            label: "Round Trip",
-            href: "/services/outstation-taxi?type=outstation-taxi-services&pkg=round-trip",
-          },
+          { label: "Araku Valley", href: "/destinations/araku-valley?type=outstation-taxi-services" },
+          { label: "Annavaram", href: "/destinations/annavaram-temple?type=outstation-taxi-services" },
+          { label: "Kakinada", href: "/destinations/kakinada?type=outstation-taxi-services" },
+          { label: "Rajahmundry", href: "/destinations/rajahmundry?type=outstation-taxi-services" },
+          { label: "Vijayawada", href: "/destinations/vijayawada?type=outstation-taxi-services" },
+          { label: "Tirupati", href: "/destinations/tirupati?type=outstation-taxi-services" },
+          { label: "Hyderabad", href: "/destinations/hyderabad?type=outstation-taxi-services" },
+          { label: "Puri (Odisha)", href: "/destinations/puri-odisha?type=outstation-taxi-services" },
         ],
       },
 

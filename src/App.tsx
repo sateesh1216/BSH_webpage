@@ -15,6 +15,7 @@ const DestinationsPage = lazy(() => import("./pages/DestinationsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const DestinationDetail = lazy(() => import("./pages/DestinationDetail"));
 import LocalTaxi from "./pages/LocalTaxi";
+import OutstationTaxi from "./pages/Outstationtaxi";
 
 export default function App() {
   return (
@@ -43,6 +44,8 @@ export default function App() {
                 (e.g. /services/outstation-taxi/one-way) resolve. */}
             <Route path="/services/:slug" element={<ServiceDetails />} />
             <Route path="/services/:slug/:pkg" element={<ServiceDetails />} />
+            <Route path="/services/outstation-taxi" element={<OutstationTaxi />} />
+
           </Routes>
         </Suspense>
         <Footer />
