@@ -144,26 +144,31 @@ export function calculateOutstationFare(
 
 export const outstations: Outstation[] = [
   {
-    slug: "kakinada",
-    name: "Kakinada",
-
-    distanceFromVizag: "280 KM Round Trip from Vizag",
-    distanceKm: 140,
+    slug: "vizag-to-kakinada-taxi",
+    name: "Vizag to Kakinada",
+    distanceFromVizag: "350 KM Round Trip from Vizag",
+    distanceKm: 350,
     driveTime: "3-3.5 hrs",
     sources: ["AP Tourism", "Incredible India", "Trawell"],
     category: "City",
     description:
-      "Book a reliable Vizag to Kakinada taxi with BSH Taxi Services. Comfortable outstation cabs for business trips, sightseeing, and pilgrimage visits nearby.",
+      "Book the best Vizag to Kakinada taxi service with BSH Taxi Services. We offer reliable outstation taxi services, one-way and round-trip cab booking from Visakhapatnam to Kakinada at affordable prices. Travel comfortably with experienced drivers, well-maintained AC vehicles, transparent fares, and 24/7 customer support for business trips, family travel, sightseeing, and temple visits.",
     seoTitle: "Vizag to Kakinada Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Kakinada taxi with BSH Taxi Services. Affordable outstation cab booking, round-trip packages, AC cabs, 24/7 taxi service.",
-    keywords: [
+    
+      keywords: [
       "vizag to kakinada taxi",
       "vizag to kakinada cab service",
       "kakinada taxi service",
       "visakhapatnam to kakinada taxi fare",
       "vizag to kakinada one day trip",
       "outstation cab vizag to kakinada",
+       "vizag to kakinada cab",
+          "visakhapatnam to kakinada taxi",
+          "kakinada cab booking",
+          "one way taxi to kakinada",
+          "outstation taxi vizag"
     ],
     tagline: "The Pearl City of Andhra Pradesh",
     costPerDay: 5000,
@@ -184,7 +189,7 @@ export const outstations: Outstation[] = [
     bestTimeToVisit:
       "October to February is the best time to visit Kakinada, when the coastal humidity eases and the weather stays pleasant for beach visits, temple hopping, and day trips into Konaseema.",
     howToReach:
-      "Kakinada is around 140 KM from Visakhapatnam via NH16. Book your Vizag to Kakinada taxi with BSH Taxi Services for a comfortable door-to-door ride — the drive takes roughly 3 to 3.5 hours depending on traffic near Anaparthi.",
+      "Kakinada is around 350 KM from Visakhapatnam via NH16. Book your Vizag to Kakinada taxi with BSH Taxi Services for a comfortable door-to-door ride — the drive takes roughly 3 to 3.5 hours depending on traffic near Anaparthi.",
     funFact:
       "Kakinada's natural harbour is shielded by Hope Island, an 18-km sandbar that formed after a cyclone in the 1800s — it's one of the few port cities in India protected by a self-made barrier island.",
     places: [
@@ -237,11 +242,11 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "araku",
-    name: "Araku",
+    slug: "vizag-to-araku-taxi",
+    name: "Vizag to Araku",
 
-    distanceFromVizag: "250 KM Round Trip from Vizag",
-    distanceKm: 120,
+    distanceFromVizag: "300 KM Round Trip from Vizag",
+    distanceKm: 300,
     driveTime: "3-4 hrs",
     sources: ["AP Tourism", "Holidify"],
     category: "City",
@@ -335,8 +340,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "vijayawada",
-    name: "Vijayawada",
+    slug: "vizag-to-vijayawada-taxi",
+    name: "Vizag to Vijayawada",
 
     distanceFromVizag: "870 KM Round Trip from Vizag",
     distanceKm: 350,
@@ -427,8 +432,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "rajahmundry",
-    name: "Rajahmundry",
+    slug: "vizag-to-rajahmundry-taxi",
+    name: "Vizag to Rajahmundry",
 
     distanceFromVizag: "480 KM Round Trip from Vizag",
     distanceKm: 240,
@@ -519,8 +524,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "vizianagaram",
-    name: "Vizianagaram",
+    slug: "vizag-to-vizianagaram-taxi",
+    name: "Vizag to Vizianagaram",
 
     distanceFromVizag: "130 KM Round Trip from Vizag",
     distanceKm: 65,
@@ -610,8 +615,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "srikakulam",
-    name: "Srikakulam",
+    slug: "vizag-to-srikakulam-taxi",
+    name: "Vizag to Srikakulam",
 
     distanceFromVizag: "226 KM Round Trip from Vizag",
     distanceKm: 113,
@@ -694,8 +699,8 @@ export const outstations: Outstation[] = [
   // ---------------------------------------------------------------------------
 
   {
-    slug: "amadalavalasa",
-    name: "Amadalavalasa",
+    slug: "vizag-to-amadalavalasa-taxi",
+    name: "Vizag to Amadalavalasa",
     distanceFromVizag: "260 KM Round Trip from Vizag",
     distanceKm: 130,
     driveTime: "2.5-3 hrs",
@@ -766,8 +771,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "annavaram",
-    name: "Annavaram",
+    slug: "vizag-to-annavaram-taxi",
+    name: "Vizag to Annavaram",
     distanceFromVizag: "240 KM Round Trip from Vizag",
     distanceKm: 120,
     driveTime: "2.5-3 hrs",
@@ -838,8 +843,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "arasavalli",
-    name: "Arasavalli",
+    slug: "vizag-to-arasavalli-taxi",
+    name: "Vizag to Arasavalli",
     distanceFromVizag: "230 KM Round Trip from Vizag",
     distanceKm: 115,
     driveTime: "2.5-3 hrs",
@@ -910,8 +915,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "bangalore",
-    name: "Bangalore",
+    slug: "vizag-to-bangalore-taxi",
+    name: "Vizag to Bangalore",
     distanceFromVizag: "1980 KM Round Trip from Vizag",
     distanceKm: 990,
     driveTime: "16-18 hrs",
@@ -982,8 +987,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "bhadrachalam",
-    name: "Bhadrachalam",
+    slug: "vizag-to-bhadrachalam-taxi",
+    name: "Vizag to Bhadrachalam",
     distanceFromVizag: "660 KM Round Trip from Vizag",
     distanceKm: 330,
     driveTime: "6.5-7.5 hrs",
@@ -1054,8 +1059,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "bhubaneswar",
-    name: "Bhubaneswar",
+    slug: "vizag-to-bhubaneswar-taxi",
+    name: "Vizag to Bhubaneswar",
     distanceFromVizag: "910 KM Round Trip from Vizag",
     distanceKm: 455,
     driveTime: "8-9 hrs",
@@ -1126,8 +1131,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "bobbili",
-    name: "Bobbili",
+    slug: "vizag-to-bobbili-taxi",
+    name: "Vizag to Bobbili",
     distanceFromVizag: "290 KM Round Trip from Vizag",
     distanceKm: 145,
     driveTime: "3-3.5 hrs",
@@ -1198,8 +1203,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "chennai",
-    name: "Chennai",
+    slug: "vizag-to-chennai-taxi",
+    name: "Vizag to Chennai",
     distanceFromVizag: "1590 KM Round Trip from Vizag",
     distanceKm: 795,
     driveTime: "14-15 hrs",
@@ -1270,8 +1275,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "eluru",
-    name: "Eluru",
+    slug: "vizag-to-eluru-taxi",
+    name: "Vizag to Eluru",
     distanceFromVizag: "580 KM Round Trip from Vizag",
     distanceKm: 290,
     driveTime: "5.5-6 hrs",
@@ -1342,8 +1347,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "guntur",
-    name: "Guntur",
+    slug: "vizag-to-guntur-taxi",
+    name: "Vizag to Guntur",
     distanceFromVizag: "830 KM Round Trip from Vizag",
     distanceKm: 415,
     driveTime: "7.5-8 hrs",
@@ -1414,8 +1419,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "hyderabad",
-    name: "Hyderabad",
+    slug: "vizag-to-hyderabad-taxi",
+    name: "Vizag to Hyderabad",
     distanceFromVizag: "1306 KM Round Trip from Vizag",
     distanceKm: 653,
     driveTime: "11-12 hrs",
@@ -1486,8 +1491,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "ichchapuram",
-    name: "Ichchapuram",
+    slug: "vizag-to-ichchapuram-taxi",
+    name: "Vizag to Ichchapuram",
     distanceFromVizag: "360 KM Round Trip from Vizag",
     distanceKm: 180,
     driveTime: "3.5-4 hrs",
@@ -1558,8 +1563,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "jagdalpur",
-    name: "Jagdalpur",
+    slug: "vizag-to-jagdalpur-taxi",
+    name: "Vizag to Jagdalpur",
     distanceFromVizag: "660 KM Round Trip from Vizag",
     distanceKm: 330,
     driveTime: "7.5-8.5 hrs",
@@ -1636,8 +1641,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "khammam",
-    name: "Khammam",
+    slug: "vizag-to-khammam-taxi",
+    name: "Vizag to Khammam",
     distanceFromVizag: "740 KM Round Trip from Vizag",
     distanceKm: 370,
     driveTime: "7-7.5 hrs",
@@ -1708,8 +1713,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "kolkata",
-    name: "Kolkata",
+    slug: "vizag-to-kolkata-taxi",
+    name: "Vizag to Kolkata",
     distanceFromVizag: "1790 KM Round Trip from Vizag",
     distanceKm: 895,
     driveTime: "16-17 hrs",
@@ -1780,8 +1785,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "kurnool",
-    name: "Kurnool",
+    slug: "vizag-to-kurnool-taxi",
+    name: "Vizag to Kurnool",
     distanceFromVizag: "1420 KM Round Trip from Vizag",
     distanceKm: 710,
     driveTime: "12-13 hrs",
@@ -1852,8 +1857,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "lambasingi",
-    name: "Lambasingi",
+    slug: "vizag-to-lambasingi-taxi",
+    name: "Vizag to Lambasingi",
     distanceFromVizag: "200 KM Round Trip from Vizag",
     distanceKm: 100,
     driveTime: "3-3.5 hrs",
@@ -1924,8 +1929,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "narasannapeta",
-    name: "Narasannapeta",
+    slug: "vizag-to-narasannapeta-taxi",
+    name: "Vizag to Narasannapeta",
     distanceFromVizag: "210 KM Round Trip from Vizag",
     distanceKm: 105,
     driveTime: "2.5-3 hrs",
@@ -1989,8 +1994,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "nellore",
-    name: "Nellore",
+    slug: "vizag-to-nellore-taxi",
+    name: "Vizag to Nellore",
     distanceFromVizag: "1280 KM Round Trip from Vizag",
     distanceKm: 640,
     driveTime: "11-12 hrs",
@@ -2061,8 +2066,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "palakollu",
-    name: "Palakollu",
+    slug: "vizag-to-palakollu-taxi",
+    name: "Vizag to Palakollu",
     distanceFromVizag: "460 KM Round Trip from Vizag",
     distanceKm: 230,
     driveTime: "4.5-5 hrs",
@@ -2133,8 +2138,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "palakonda",
-    name: "Palakonda",
+    slug: "vizag-to-palakonda-taxi",
+    name: "Vizag to Palakonda",
     distanceFromVizag: "300 KM Round Trip from Vizag",
     distanceKm: 150,
     driveTime: "3-3.5 hrs",
@@ -2198,8 +2203,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "palasa",
-    name: "Palasa",
+    slug: "vizag-to-palasa-taxi",
+    name: "Vizag to Palasa",
     distanceFromVizag: "340 KM Round Trip from Vizag",
     distanceKm: 170,
     driveTime: "3.5-4 hrs",
@@ -2270,8 +2275,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "parvathipuram",
-    name: "Parvathipuram",
+    slug: "vizag-to-parvathipuram-taxi",
+    name: "Vizag to Parvathipuram",
     distanceFromVizag: "320 KM Round Trip from Vizag",
     distanceKm: 160,
     driveTime: "3.5-4 hrs",
@@ -2335,8 +2340,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "raipur",
-    name: "Raipur",
+    slug: "vizag-to-raipur-taxi",
+    name: "Vizag to Raipur",
     distanceFromVizag: "1100 KM Round Trip from Vizag",
     distanceKm: 550,
     driveTime: "10-11 hrs",
@@ -2407,8 +2412,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "ravulapalem",
-    name: "Ravulapalem",
+    slug: "vizag-to-ravulapalem-taxi",
+    name: "Vizag to Ravulapalem",
     distanceFromVizag: "380 KM Round Trip from Vizag",
     distanceKm: 190,
     driveTime: "3.5-4 hrs",
@@ -2478,8 +2483,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "razam",
-    name: "Razam",
+    slug: "vizag-to-razam-taxi",
+    name: "Vizag to Razam",
     distanceFromVizag: "300 KM Round Trip from Vizag",
     distanceKm: 150,
     driveTime: "3-3.5 hrs",
@@ -2543,8 +2548,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "sompeta",
-    name: "Sompeta",
+    slug: "vizag-to-sompeta-taxi",
+    name: "Vizag to Sompeta",
     distanceFromVizag: "330 KM Round Trip from Vizag",
     distanceKm: 165,
     driveTime: "3.5-4 hrs",
@@ -2608,8 +2613,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "srimukhalingam",
-    name: "Srimukhalingam",
+    slug: "vizag-to-srimukhalingam-taxi",
+    name: "Vizag to Srimukhalingam",
     distanceFromVizag: "310 KM Round Trip from Vizag",
     distanceKm: 155,
     driveTime: "3.5-4 hrs",
@@ -2679,8 +2684,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "tirupati",
-    name: "Tirupati",
+    slug: "vizag-to-tirupati-taxi",
+    name: "Vizag to Tirupati",
     distanceFromVizag: "1540 KM Round Trip from Vizag",
     distanceKm: 770,
     driveTime: "13-14 hrs",
@@ -2751,8 +2756,8 @@ export const outstations: Outstation[] = [
     ],
   },
   {
-    slug: "tuni",
-    name: "Tuni",
+    slug: "vizag-to-tuni-taxi",
+    name: "Vizag to Tuni",
     distanceFromVizag: "200 KM Round Trip from Vizag",
     distanceKm: 100,
     driveTime: "2-2.5 hrs",
