@@ -130,10 +130,8 @@ export default function OutstationDetail() {
     places,
     history,
     highlights,
-    quickFacts,
-    bestTimeToVisit,
-    howToReach,
-    funFact,
+    
+
     sources,
   } = outstation;
 
@@ -259,21 +257,7 @@ export default function OutstationDetail() {
           {/* ------------------------------------------------------------ */}
           {/* Quick facts + highlights                                     */}
           {/* ------------------------------------------------------------ */}
-          {quickFacts && quickFacts.length > 0 && (
-            <div className="mx-auto mt-2 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-4">
-              {quickFacts.map((fact) => (
-                <div
-                  key={fact.label}
-                  className={`lift-on-hover rounded-2xl border border-black/5 bg-white px-4 py-4 text-center ring-1 ${theme.ring}`}
-                >
-                  <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">{fact.label}</p>
-                  <p className="font-mono-route mt-1.5 text-sm font-semibold text-slate-900 sm:text-base">
-                    {fact.value}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
+
 
           {highlights && highlights.length > 0 && (
             <div className="mx-auto mt-8 flex max-w-4xl flex-wrap justify-center gap-2.5">
@@ -416,47 +400,9 @@ export default function OutstationDetail() {
             </div>
           )}
 
-          {/* ------------------------------------------------------------ */}
-          {/* Plan your visit                                               */}
-          {/* ------------------------------------------------------------ */}
-          {(bestTimeToVisit || howToReach) && (
-            <div className="mx-auto mt-16 max-w-5xl">
-              <h2 className="section-heading text-center text-3xl font-semibold tracking-tight text-slate-900">
-                Plan Your Visit
-              </h2>
-              <div className={`mx-auto mt-3 mb-8 h-1 w-14 rounded-full ${theme.accent}`} />
-              <div className="grid gap-5 sm:grid-cols-2">
-                {bestTimeToVisit && (
-                  <div className="lift-on-hover rounded-3xl border border-slate-100 bg-white p-7 shadow-sm">
-                    <p className={`flex items-center gap-2 text-sm font-bold uppercase tracking-widest ${theme.accentText}`}>
-                      <Clock size={16} /> Best Time to Visit
-                    </p>
-                    <p className="mt-3 text-[15px] leading-relaxed text-slate-600">{bestTimeToVisit}</p>
-                  </div>
-                )}
-                {howToReach && (
-                  <div className="lift-on-hover rounded-3xl border border-slate-100 bg-white p-7 shadow-sm">
-                    <p className={`flex items-center gap-2 text-sm font-bold uppercase tracking-widest ${theme.accentText}`}>
-                      <Navigation size={16} /> How to Reach
-                    </p>
-                    <p className="mt-3 text-[15px] leading-relaxed text-slate-600">{howToReach}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
 
-          {/* ------------------------------------------------------------ */}
-          {/* Fun fact                                                      */}
-          {/* ------------------------------------------------------------ */}
-          {funFact && (
-            <div className="mx-auto mt-14 max-w-3xl">
-              <div className={`relative rounded-3xl ${theme.accent} px-8 py-9 text-white shadow-lg sm:px-12 sm:py-11`}>
-                <Quote size={28} className="mb-3 text-white/50" />
-                <p className="font-display text-xl leading-snug sm:text-2xl">{funFact}</p>
-              </div>
-            </div>
-          )}
+
+
 
           {/* ------------------------------------------------------------ */}
           {/* Places you'll visit                                           */}

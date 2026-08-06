@@ -143,105 +143,114 @@ export function calculateOutstationFare(
 // ---------------------------------------------------------------------------
 
 export const outstations: Outstation[] = [
-  {
-    slug: "vizag-to-kakinada-taxi",
-    name: "Vizag to Kakinada",
-    distanceFromVizag: "350 KM Round Trip from Vizag",
-    distanceKm: 350,
-    driveTime: "3-3.5 hrs",
-    sources: ["AP Tourism", "Incredible India", "Trawell"],
-    category: "City",
-    description:
-      "Book the best Vizag to Kakinada taxi service with BSH Taxi Services. We offer reliable outstation taxi services, one-way and round-trip cab booking from Visakhapatnam to Kakinada at affordable prices. Travel comfortably with experienced drivers, well-maintained AC vehicles, transparent fares, and 24/7 customer support for business trips, family travel, sightseeing, and temple visits.",
-    seoTitle: "Vizag to Kakinada Taxi | Outstation Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Kakinada taxi with BSH Taxi Services. Affordable outstation cab booking, round-trip packages, AC cabs, 24/7 taxi service.",
-    
-      keywords: [
-      "vizag to kakinada taxi",
-      "vizag to kakinada cab service",
-      "kakinada taxi service",
-      "visakhapatnam to kakinada taxi fare",
-      "vizag to kakinada one day trip",
-      "outstation cab vizag to kakinada",
-       "vizag to kakinada cab",
-          "visakhapatnam to kakinada taxi",
-          "kakinada cab booking",
-          "one way taxi to kakinada",
-          "outstation taxi vizag"
-    ],
-    tagline: "The Pearl City of Andhra Pradesh",
-    costPerDay: 5000,
-    highlights: [
-      "Known as the Pearl City of Andhra Pradesh",
-      "Major port and industrial hub on the Bay of Bengal",
-      "Gateway to Konaseema's backwaters and the Godavari delta",
-      "Home to some of the oldest Shiva temples in coastal Andhra",
-    ],
-    quickFacts: [
-      { label: "District", value: "Kakinada" },
-      { label: "Best Time", value: "Oct – Feb" },
-      { label: "Known For", value: "Port, Beaches & Temples" },
-      { label: "Distance", value: "140 KM" },
-    ],
-    history:
-      "Kakinada has been a working port on the Bay of Bengal since well before colonial times, with references to trade along this coastline going back to around the 2nd century BCE. Successive dynasties used its harbour to move goods along the eastern seaboard, and the town grew into one of the best-planned commercial centres in the Godavari delta.\n\nToday the city is nicknamed the \"Pearl City\" for its clean, orderly layout, and it doubles as a hub for fertiliser, natural gas, and petrochemical industries — which is why locals also call it the \"Fertilizer City.\" None of that industrial growth has crowded out its older identity as a pilgrimage town, and temples that predate the port by centuries still draw devotees from across the state.",
-    bestTimeToVisit:
-      "October to February is the best time to visit Kakinada, when the coastal humidity eases and the weather stays pleasant for beach visits, temple hopping, and day trips into Konaseema.",
-    howToReach:
-      "Kakinada is around 350 KM from Visakhapatnam via NH16. Book your Vizag to Kakinada taxi with BSH Taxi Services for a comfortable door-to-door ride — the drive takes roughly 3 to 3.5 hours depending on traffic near Anaparthi.",
-    funFact:
-      "Kakinada's natural harbour is shielded by Hope Island, an 18-km sandbar that formed after a cyclone in the 1800s — it's one of the few port cities in India protected by a self-made barrier island.",
-    places: [
-      {
-        name: "Uppada Beach",
-        tag: "Beach",
-        description:
-          "A long stretch of silver sand about 10 KM from the city, known for calm waters, a cool sea breeze, and standout sunrise and sunset views.",
-      },
-      {
-        name: "Draksharamam Temple",
-        tag: "Pilgrimage",
-        description:
-          "One of the Pancharama Kshetras, built by the Eastern Chalukyas around the 9th century, with an 8-ft Shiva lingam and early-morning sunlight that falls directly on it.",
-      },
-      {
-        name: "Coringa Wildlife Sanctuary",
-        tag: "Nature",
-        description:
-          "A mangrove reserve near the Godavari estuary, home to saltwater crocodiles, migratory birds, and boat trails through the backwaters.",
-      },
-      {
-        name: "Hope Island",
-        tag: "Nature",
-        description:
-          "An 18-km sandbar that shelters Kakinada's natural harbour, reachable by boat and popular for its untouched, quiet shoreline.",
-      },
-      {
-        name: "Sri Kukkuteswara Swamy Temple, Pithapuram",
-        tag: "Pilgrimage",
-        description:
-          "A historic Shiva temple around 15 KM from the city, considered one of the oldest and most significant in East Godavari district.",
-      },
-      {
-        name: "Kakinada Beach (Suryaraopeta)",
-        tag: "Beach",
-        description:
-          "The city's own promenade beach, popular for evening walks, roadside snacks, and a relaxed local vibe just minutes from the town centre.",
-      },
-      {
-        name: "Yanam",
-        tag: "Heritage",
-        description:
-          "A former French colonial enclave around 25 KM away, on the banks of the Coringa river, with a quiet European-influenced church and riverside promenade.",
-      },
-    ],
-    importantNotes: [
-      "The above prices do not include tolls, entry fees, parking fees and driver food.",
-      "Add extra time for stops at Draksharamam or Uppada Beach if sightseeing along the way.",
-    ],
-  },
-  {
+ {
+  slug: "vizag-to-kakinada-taxi",
+  name: "Vizag to Kakinada",
+  distanceFromVizag: "350 KM Round Trip from Vizag",
+  distanceKm: 350,
+  driveTime: "3-3.5 hrs",
+  sources: ["AP Tourism", "Incredible India", "Trawell"],
+  category: "City",
+
+  description:
+    "Book Vizag to Kakinada taxi service with BSH Taxi Services. Reliable one-way and round-trip outstation cabs from Visakhapatnam to Kakinada at affordable, transparent fares — AC vehicles, experienced drivers, and 24/7 support for business trips, family travel, sightseeing, and temple visits.",
+
+  seoTitle: "Vizag to Kakinada Taxi | Outstation Cab Booking",
+  seoDescription:
+    "Book Vizag to Kakinada taxi with BSH Taxi Services. Affordable one-way & round-trip cabs, AC vehicles, transparent fares, 24/7 support.",
+
+  keywords: [
+    "vizag to kakinada taxi",
+    "vizag to kakinada cab service",
+    "kakinada taxi service",
+    "visakhapatnam to kakinada taxi fare",
+    "vizag to kakinada one day trip",
+    "outstation cab vizag to kakinada",
+    "kakinada cab booking",
+    "one way taxi to kakinada",
+  ],
+
+  tagline: "The Pearl City of Andhra Pradesh",
+  costPerDay: 5000,
+
+  highlights: [
+    "Known as the Pearl City of Andhra Pradesh",
+    "Major port and industrial hub on the Bay of Bengal",
+    "Gateway to Konaseema's backwaters and the Godavari delta",
+    "Home to some of the oldest Shiva temples in coastal Andhra",
+  ],
+
+  // quickFacts: [
+  //   { label: "District", value: "Kakinada" },
+  //   { label: "Best Time", value: "Oct – Feb" },
+  //   { label: "Known For", value: "Port, Beaches & Temples" },
+  //   { label: "Distance", value: "175 KM (one way)" },
+  // ],
+
+  history:
+    "Kakinada has been a working port on the Bay of Bengal since well before colonial times, with trade along this coastline dating back to around the 2nd century BCE. Successive dynasties used its harbour to move goods along the eastern seaboard, and the town grew into one of the best-planned commercial centres in the Godavari delta.\n\nToday the city is nicknamed the \"Pearl City\" for its clean, orderly layout, and it doubles as a hub for fertiliser, natural gas, and petrochemical industries — earning it the nickname \"Fertilizer City\" too. None of that industrial growth has crowded out its older identity as a pilgrimage town, and temples that predate the port by centuries still draw devotees from across the state.",
+
+  // bestTimeToVisit:
+  //   "October to February is the best time to visit Kakinada, when coastal humidity eases and the weather stays pleasant for beach visits, temple hopping, and day trips into Konaseema.",
+
+  // howToReach:
+  //   "Kakinada is around 175 KM one-way from Visakhapatnam via NH16. Book your Vizag to Kakinada taxi with BSH Taxi Services for a comfortable door-to-door ride — the drive takes roughly 3 to 3.5 hours depending on traffic near Anaparthi.",
+
+  // funFact:
+  //   "Kakinada's natural harbour is shielded by Hope Island, an 18-km sandbar that formed after a cyclone in the 1800s — one of the few port cities in India protected by a self-made barrier island.",
+
+  // places: [
+  //   {
+  //     name: "Uppada Beach",
+  //     tag: "Beach",
+  //     description:
+  //       "A long stretch of silver sand about 10 KM from the city, known for calm waters, a cool sea breeze, and standout sunrise and sunset views.",
+  //   },
+  //   {
+  //     name: "Draksharamam Temple",
+  //     tag: "Pilgrimage",
+  //     description:
+  //       "One of the Pancharama Kshetras, built by the Eastern Chalukyas around the 9th century, with an 8-ft Shiva lingam and early-morning sunlight that falls directly on it.",
+  //   },
+  //   {
+  //     name: "Coringa Wildlife Sanctuary",
+  //     tag: "Nature",
+  //     description:
+  //       "A mangrove reserve near the Godavari estuary, home to saltwater crocodiles, migratory birds, and boat trails through the backwaters.",
+  //   },
+  //   {
+  //     name: "Hope Island",
+  //     tag: "Nature",
+  //     description:
+  //       "An 18-km sandbar that shelters Kakinada's natural harbour, reachable by boat and popular for its untouched, quiet shoreline.",
+  //   },
+  //   {
+  //     name: "Sri Kukkuteswara Swamy Temple, Pithapuram",
+  //     tag: "Pilgrimage",
+  //     description:
+  //       "A historic Shiva temple around 15 KM from the city, considered one of the oldest and most significant in East Godavari district.",
+  //   },
+  //   {
+  //     name: "Kakinada Beach (Suryaraopeta)",
+  //     tag: "Beach",
+  //     description:
+  //       "The city's own promenade beach, popular for evening walks, roadside snacks, and a relaxed local vibe just minutes from the town centre.",
+  //   },
+  //   {
+  //     name: "Yanam",
+  //     tag: "Heritage",
+  //     description:
+  //       "A former French colonial enclave around 25 KM away, on the banks of the Coringa river, with a quiet European-influenced church and riverside promenade.",
+  //   },
+  // ],
+
+  importantNotes: [
+    "The above prices do not include tolls, entry fees, parking fees and driver food.",
+    "Add extra time for stops at Draksharamam or Uppada Beach if sightseeing along the way.",
+  ],
+}, 
+
+{
     slug: "vizag-to-araku-taxi",
     name: "Vizag to Araku",
 
