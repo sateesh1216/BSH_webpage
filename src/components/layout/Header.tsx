@@ -110,7 +110,6 @@ export default function Header() {
                 </span>
               </span>
             </Link>
-
             <div className="hidden min-w-0 flex-1 items-center justify-center lg:flex">
               <nav
                 ref={navPillRef}
@@ -144,60 +143,108 @@ export default function Header() {
                         </button>
 
                         <div
-                          className={`absolute left-0 top-full z-50 mt-2 w-60 rounded-2xl border border-slate-100 bg-white/95 p-1.5 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.25)] backdrop-blur-xl transition-all duration-300 ${
+                          className={`absolute top-full left-1/2 -translate-x-1/2 z-50 mt-6 ${
+                            link.label === "Outstation Taxi" ? "w-[1000px]" : "w-60"
+                          } rounded-2xl border border-slate-100 bg-white/95 p-2 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.25)] backdrop-blur-xl transition-all duration-300 ${
                             openDropdown === link.label
                               ? "visible translate-y-0 opacity-100"
                               : "invisible -translate-y-2 opacity-0"
                           }`}
                         >
-                          {link.children.map((item) => {
-                            const hasNested = !!item.children?.length;
+                          {link.label === "Outstation Taxi" ? (
+                            <div className="flex gap-5">
+                              {Array.from(
+                                {
+                                  length: Math.ceil(link.children.length / 7),
+                                },
+                                (_, i) => link.children.slice(i * 7, i * 7 + 7)
+                              ).map((column, index) => (
+                                <div key={index} className="min-w-[160px]">
+                                  {column.map((item) => (
+                                    <Link
+                                      key={item.label}
+                                      to={item.href}
+                                      className="block rounded-xl px-3 py-2 text-[13px] font-medium text-slate-700 transition-all duration-200 hover:bg-primary hover:text-white"
+                                    >
+                                      {item.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            link.children.map((item) => {
+                              const hasNested = !!item.children?.length;
+                              // Wide multi-column grid for flyouts with a lot of
+                              // grandchildren (e.g. "Outstation Taxi" -> city list)
+                              const isWideNested = hasNested && item.children!.length > 8;
 
-                            return (
-                              <div
-                                key={item.label}
-                                className="relative"
-                                onMouseEnter={() => hasNested && setOpenNested(item.label)}
-                                onMouseLeave={() => hasNested && setOpenNested(null)}
-                              >
-                                <Link
-                                  to={item.href}
-                                  className="group/item flex items-center justify-between rounded-xl px-3 py-2 text-[13px] font-medium text-slate-700 outline-none transition-all duration-200 hover:bg-primary hover:pl-4 hover:text-white focus-visible:bg-primary focus-visible:pl-4 focus-visible:text-white"
+                              return (
+                                <div
+                                  key={item.label}
+                                  className="relative"
+                                  onMouseEnter={() =>
+                                    hasNested && setOpenNested(item.label)
+                                  }
+                                  onMouseLeave={() =>
+                                    hasNested && setOpenNested(null)
+                                  }
                                 >
-                                  {item.label}
-                                  <ChevronDown
-                                    size={12}
-                                    className={`shrink-0 transition-transform duration-200 ${
-                                      hasNested
-                                        ? "-rotate-90 opacity-70"
-                                        : "-rotate-90 opacity-0 group-hover/item:opacity-70"
-                                    }`}
-                                  />
-                                </Link>
-
-                                {/* Third-level flyout: package/duration options (8Hr/80Km, 10Hr/100Km, etc.) */}
-                                {hasNested && (
-                                  <div
-                                    className={`absolute left-full top-0 z-50 ml-1 w-48 rounded-2xl border border-slate-100 bg-white/95 p-1.5 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.25)] backdrop-blur-xl transition-all duration-200 ${
-                                      openNested === item.label
-                                        ? "visible translate-x-0 opacity-100"
-                                        : "invisible -translate-x-2 opacity-0"
-                                    }`}
+                                  <Link
+                                    to={item.href}
+                                    className="group/item flex items-center justify-between rounded-xl px-3 py-2 text-[13px] font-medium text-slate-700 transition-all duration-200 hover:bg-primary hover:pl-4 hover:text-white"
                                   >
-                                    {item.children!.map((sub) => (
-                                      <Link
-                                        key={sub.label}
-                                        to={sub.href}
-                                        className="block rounded-xl px-3 py-2 text-[13px] font-medium text-slate-700 outline-none transition-all duration-200 hover:bg-primary hover:pl-4 hover:text-white focus-visible:bg-primary focus-visible:pl-4 focus-visible:text-white"
-                                      >
-                                        {sub.label}
-                                      </Link>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                            );
-                          })}
+                                    {item.label}
+
+                                    <ChevronDown
+                                      size={12}
+                                      className={`shrink-0 transition-transform duration-200 ${
+                                        hasNested
+                                          ? "-rotate-90 opacity-70"
+                                          : "-rotate-90 opacity-0 group-hover/item:opacity-70"
+                                      }`}
+                                    />
+                                  </Link>
+
+                                  {hasNested && (
+                                    <div
+                                      className={`absolute left-full top-0 z-50 ml-1 rounded-2xl border border-slate-100 bg-white/95 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.25)] backdrop-blur-xl transition-all duration-200 ${
+                                        isWideNested ? "w-[720px] p-3" : "w-48 p-1.5"
+                                      } ${
+                                        openNested === item.label
+                                          ? "visible translate-x-0 opacity-100"
+                                          : "invisible -translate-x-2 opacity-0"
+                                      }`}
+                                    >
+                                      {isWideNested ? (
+                                        <div className="grid max-h-[70vh] grid-cols-5 gap-x-1 gap-y-0.5 overflow-y-auto">
+                                          {item.children!.map((sub) => (
+                                            <Link
+                                              key={sub.label}
+                                              to={sub.href}
+                                              className="block rounded-lg px-3 py-2 text-[13px] font-medium text-slate-700 transition-all duration-200 hover:bg-primary hover:text-white"
+                                            >
+                                              {sub.label}
+                                            </Link>
+                                          ))}
+                                        </div>
+                                      ) : (
+                                        item.children!.map((sub) => (
+                                          <Link
+                                            key={sub.label}
+                                            to={sub.href}
+                                            className="block rounded-xl px-3 py-2 text-[13px] font-medium text-slate-700 transition-all duration-200 hover:bg-primary hover:pl-4 hover:text-white"
+                                          >
+                                            {sub.label}
+                                          </Link>
+                                        ))
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })
+                          )}
                         </div>
                       </div>
                     );

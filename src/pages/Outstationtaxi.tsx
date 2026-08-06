@@ -1,654 +1,601 @@
-import { Link } from "react-router-dom";
+import { useParams, Link, Navigate, useLocation } from "react-router-dom";
 import {
-  PhoneCall,
-  ArrowRight,
-  CheckCircle2,
-  Car,
-  Users,
-  Briefcase,
   MapPin,
-  ShieldCheck,
-  Route,
-  Luggage,
-  Sparkles,
-  Star,
+  IndianRupee,
+
+  Sparkle,
+  ArrowRight,
   Clock,
-  Flame,
+  Navigation,
+  Quote,
+  Building2,
+  Landmark,
+  Briefcase,
+  Factory,
+  CalendarCheck,
+  Phone,
+  Car,
+  CarFront,
+  Bus,
+  Gem,
+  Users,
+  Luggage,
+  MessageCircle,
 } from "lucide-react";
+import {
+  outstations,
+  vehicleOptions,
+  type VehicleOption,
+} from "../data/Outstationtaxidata";
+import { getOutstationFare, type VehicleSlug } from "../data/Outstationprices";
 import { useBooking } from "../components/booking/BookingContext";
 import SEO from "../components/seo/SEO";
-/* ------------------------------------------------------------------ */
-/*  FIXED: this now correctly points to                               */
-/*  src/data/outstationDestinations.data.ts (the actual file/export   */
-/*  name). Previously this imported from "../data/Outstationtaxidata" */
-/*  which does not exist, so destinations (incl. Araku Valley) never  */
-/*  connected correctly / would break the build.                      */
-/* ------------------------------------------------------------------ */
-import { outstationDestinations } from "../data/Outstationtaxidata";
+import { pageMeta } from "../data/pageMeta";
 
-/* ------------------------------------------------------------------ */
-/*  Standalone route, same pattern as LocalTaxi.tsx — its own hero,   */
-/*  its own palette (slate-950 hero + amber accent), and              */
-/*  ServiceDetails-style gradient price cards.                        */
-/*                                                                    */
-/*  Pricing here is a FIXED starting amount per car (not per-km, no   */
-/*  One Way / Round Trip toggle) — the header's Outstation submenu    */
-/*  now links straight to destination pages instead of a pkg switch.  */
-/*                                                                    */
-/*  DATA:                                                             */
-/*    All per-destination content (name, km, duration, fromPrice,     */
-/*    hot flag, slug) now comes from                                  */
-/*    src/data/outstationDestinations.data.ts — this file only        */
-/*    derives display slices from it (featured cards + full A-Z       */
-/*    directory). Update fares/distances in that one file and both    */
-/*    sections below update automatically.                            */
-/*                                                                    */
-/*  ROUTING:                                                          */
-/*    <Route path="/services/outstation-taxi" element={<OutstationTaxi />} /> */
-/*    <Route path="/destinations/:slug" element={<DestinationPage />} />     */
-/*    (DestinationPage.tsx reads outstationDestinations.data.ts by    */
-/*    :slug param when ?type=outstation-taxi-services is present —    */
-/*    unchanged, this file only needs a correct, matching import.)    */
-/* ------------------------------------------------------------------ */
+// Independent theme map — no relation to Destination categories
+type OutstationCategory = "City" | "Pilgrimage" | "Business Hub" | "Industrial City";
 
-const WHATSAPP_NUMBER = "918886803322";
-
-type Fare = { rate: string; note: string; includes: string };
-
-type CarTheme = {
-  gradient: string;
-  iconColor: string;
-  ring: string;
-  glow: string;
-};
-
-const carThemes: Record<string, CarTheme> = {
-  "Swift Dzire": {
-    gradient: "from-blue-500 to-sky-400",
-    iconColor: "text-white",
-    ring: "hover:ring-blue-400/30",
-    glow: "group-hover:shadow-blue-400/30",
+const CATEGORY_THEME: Record<
+  OutstationCategory,
+  {
+    accent: string;
+    accentSoft: string;
+    accentText: string;
+    hoverBg: string;
+    ring: string;
+    Icon: typeof Building2;
+    label: string;
+  }
+> = {
+  City: {
+    accent: "bg-[#2F5C82]",
+    accentSoft: "bg-[#2F5C82]/10",
+    accentText: "text-[#2F5C82]",
+    hoverBg: "hover:bg-[#2F5C82]",
+    ring: "ring-[#2F5C82]/25",
+    Icon: Building2,
+    label: "City",
   },
-  Ertiga: {
-    gradient: "from-teal-500 to-emerald-400",
-    iconColor: "text-white",
-    ring: "hover:ring-emerald-400/30",
-    glow: "group-hover:shadow-emerald-400/30",
+  Pilgrimage: {
+    accent: "bg-[#A8472B]",
+    accentSoft: "bg-[#A8472B]/10",
+    accentText: "text-[#A8472B]",
+    hoverBg: "hover:bg-[#A8472B]",
+    ring: "ring-[#A8472B]/25",
+    Icon: Landmark,
+    label: "Pilgrimage",
   },
-  "Innova Crysta": {
-    gradient: "from-violet-500 to-purple-400",
-    iconColor: "text-white",
-    ring: "hover:ring-violet-400/30",
-    glow: "group-hover:shadow-violet-400/30",
+  "Business Hub": {
+    accent: "bg-[#3D6B3F]",
+    accentSoft: "bg-[#3D6B3F]/10",
+    accentText: "text-[#3D6B3F]",
+    hoverBg: "hover:bg-[#3D6B3F]",
+    ring: "ring-[#3D6B3F]/25",
+    Icon: Briefcase,
+    label: "Business Hub",
   },
-  "Tempo Traveller": {
-    gradient: "from-orange-500 to-amber-400",
-    iconColor: "text-white",
-    ring: "hover:ring-amber-400/30",
-    glow: "group-hover:shadow-amber-400/30",
+  "Industrial City": {
+    accent: "bg-[#7A6A4F]",
+    accentSoft: "bg-[#7A6A4F]/10",
+    accentText: "text-[#7A6A4F]",
+    hoverBg: "hover:bg-[#7A6A4F]",
+    ring: "ring-[#7A6A4F]/25",
+    Icon: Factory,
+    label: "Industrial City",
   },
 };
 
-type Car2 = {
-  name: string;
-  category: string;
-  seats: number;
-  luggage: number;
-  theme: CarTheme;
-  fare: Fare;
-  popular?: boolean;
+// Vehicle category → icon, kept independent from destination theming.
+// Each tier gets its own mark so the ride lineup reads as a real hierarchy, not four repeats.
+const VEHICLE_ICON: Record<VehicleOption["category"], typeof Car> = {
+  Sedan: Car,
+  MUV: CarFront,
+  "Premium SUV": Gem,
+  "Group Travel": Bus,
 };
 
-/* TODO: swap these fixed starting fares for your real, current rates */
-const fleet: Car2[] = [
-  {
-    name: "Swift Dzire",
-    category: "Sedan",
-    seats: 4,
-    luggage: 2,
-    theme: carThemes["Swift Dzire"],
-    fare: {
-      rate: "₹4,200",
-      note: "Starting fare · Toll, parking & permit extra",
-      includes: "Best for a comfortable one-way or round trip for up to 4.",
-    },
-  },
-  {
-    name: "Ertiga",
-    category: "MUV",
-    seats: 6,
-    luggage: 3,
-    theme: carThemes.Ertiga,
-    fare: {
-      rate: "₹5,200",
-      note: "Starting fare · Toll, parking & permit extra",
-      includes: "Good for a family of 5-6 with luggage on outstation trips.",
-    },
-    popular: true,
-  },
-  {
-    name: "Innova Crysta",
-    category: "Premium SUV",
-    seats: 7,
-    luggage: 4,
-    theme: carThemes["Innova Crysta"],
-    fare: {
-      rate: "₹6,500",
-      note: "Starting fare · Toll, parking & permit extra",
-      includes: "Comfortable pick for long highway drives and overnight halts.",
-    },
-  },
-  {
-    name: "Tempo Traveller",
-    category: "Group Travel",
-    seats: 17,
-    luggage: 10,
-    theme: carThemes["Tempo Traveller"],
-    fare: {
-      rate: "₹9,800",
-      note: "Starting fare · Toll, parking & permit extra",
-      includes: "Best for group tours, pilgrimages, and multi-day outings.",
-    },
-  },
-];
+const CONTACT_PHONE = "+918886803322";
+const CONTACT_PHONE_DISPLAY = "+91 8886803322";
 
-const useCases = [
-  { icon: Route, label: "One-way & round-trip outstation drops" },
-  { icon: MapPin, label: "Temple & pilgrimage travel" },
-  { icon: Car, label: "Multi-day tour packages" },
-  { icon: Users, label: "Family & group outstation trips" },
-  { icon: Luggage, label: "Relocation & long-distance moves" },
-  { icon: Sparkles, label: "Weekend getaways from Vizag" },
-];
-
-const whyUs = [
-  { title: "No surge pricing", body: "The fare you're quoted is the fare you pay — no last-minute multipliers, ever." },
-  { title: "Verified drivers", body: "Every driver is background-checked, licensed, and trained for highway driving." },
-  { title: "Clean, maintained cars", body: "Sanitised interiors and regularly serviced vehicles across the whole fleet." },
-  { title: "24/7 availability", body: "Early morning starts or late-night pickups — we're on call around the clock." },
-];
-
-/* ------------------------------------------------------------------ */
-/*  Featured destinations — derived from outstationDestinations.data. */
-/*  `hot: true` entries surface first (they get the "Trending" badge  */
-/*  in the UI below — this is where Araku Valley shows up, since it   */
-/*  is marked hot: true in the data file), padded out with the next   */
-/*  entries in file order so the grid keeps up to 8 cards even if     */
-/*  fewer are marked hot.                                             */
-/* ------------------------------------------------------------------ */
-const FEATURED_COUNT = 8;
-
-const featuredDestinations = outstationDestinations
-  .filter((d) => d.hot)
-  .concat(outstationDestinations.filter((d) => !d.hot))
-  .slice(0, FEATURED_COUNT)
-  .map((d) => ({
-    name: d.name,
-    km: d.km,
-    duration: d.duration,
-    fromPrice: d.fromPrice,
-    hot: d.hot,
-    href: `/destinations/${d.slug}?type=outstation-taxi-services`,
-  }));
-
-/* ------------------------------------------------------------------ */
-/*  Full destinations directory — alphabetical, using each entry's    */
-/*  own slug from the data file (no on-the-fly slugify needed).       */
-/*  Araku Valley appears here too, at /destinations/araku-valley.     */
-/* ------------------------------------------------------------------ */
-const allDestinations = [...outstationDestinations].sort((a, b) =>
-  a.name.localeCompare(b.name)
-);
-
-function WhatsAppIcon({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-      <path d="M12.004 2C6.486 2 2.01 6.477 2.01 11.996c0 2.115.664 4.078 1.796 5.688L2 22l4.443-1.767a9.94 9.94 0 0 0 5.561 1.674h.004c5.518 0 9.994-4.477 9.994-9.996C21.998 6.477 17.522 2 12.004 2zm0 18.16h-.003a8.13 8.13 0 0 1-4.156-1.14l-.298-.176-3.098 1.233.83-3.05-.194-.313a8.13 8.13 0 0 1-1.246-4.318c0-4.5 3.67-8.16 8.166-8.16 2.18 0 4.229.852 5.77 2.394a8.1 8.1 0 0 1 2.393 5.775c0 4.5-3.67 8.16-8.164 8.16z" />
-    </svg>
-  );
+function formatINR(amount: number): string {
+  return `₹${amount.toLocaleString("en-IN")}`;
 }
 
-export default function OutstationTaxi() {
-  const { openBooking, setTripType } = useBooking();
+export default function OutstationDetail() {
+  const { slug } = useParams<{ slug?: string }>();
 
-  const handleBookNow = () => {
-    setTripType("Outstation");
-    openBooking({ resetTrip: false });
-  };
+  // No slug = listing page
+  if (!slug) {
+    return <Navigate to="/services/outstation-taxi" replace />;
+  }
 
-  const getWhatsAppLink = (carName: string) =>
-    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-      `Hi BSH Taxi Services, I'd like to book a ${carName} for an outstation trip from Vizag. Please share availability and fare.`
-    )}`;
+  const outstation = outstations.find((o) => o.slug === slug);
+
+  if (!outstation) {
+    return <Navigate to="/services/outstation-taxi" replace />;
+  }
+
+  const { openBooking } = useBooking();
+  const { pathname } = useLocation();
+  const meta = pageMeta[pathname];
+
+  const {
+    name,
+    distanceFromVizag,
+    driveTime,
+    description,
+    tagline,
+    costPerDay,
+
+    places,
+    history,
+    highlights,
+    quickFacts,
+    bestTimeToVisit,
+    howToReach,
+    funFact,
+    sources,
+  } = outstation;
+
+  const distanceKm = outstation.distanceKm ?? 0;
+  const category: keyof typeof CATEGORY_THEME =
+    (outstation.category as keyof typeof CATEGORY_THEME) ?? "City";
+  const theme = CATEGORY_THEME[category];
+  const routeFill = Math.min(100, Math.round((distanceKm / 450) * 100));
+
+  const otherOutstations = outstations
+    .filter((o) => o.slug !== outstation.slug)
+    .slice(0, 4);
+
+  const waMessage = encodeURIComponent(
+    `Hi BSH Taxi Services, I'd like to book a Vizag to ${name} outstation taxi.`
+  );
 
   return (
     <>
       <SEO
-        title="Outstation Taxi from Vizag | BSH Taxi Services"
-        description="Book an outstation taxi from Vizag with transparent, fixed fares, verified highway drivers, and 24/7 availability. Covering Araku, Vijayawada, Hyderabad, Tirupati and more."
-        keywords={[
-          "outstation taxi in vizag",
-          "vizag outstation cab",
-          "outstation taxi services",
-        ]}
-        canonicalPath="/services/outstation-taxi"
+        title={meta?.title ?? `${name} Taxi from Vizag | BSH Taxi Services`}
+        description={meta?.description}
+        keywords={meta?.keywords}
+        canonicalPath={pathname}
       />
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+        .font-display { font-family: 'Fraunces', serif; }
+        .font-body { font-family: 'Public Sans', sans-serif; }
+        .font-mono-route { font-family: 'IBM Plex Mono', monospace; }
+        .route-dash { background-image: repeating-linear-gradient(to right, currentColor 0 10px, transparent 10px 18px); }
+        .drop-cap::first-letter { font-family: 'Fraunces', serif; font-weight: 600; font-size: 3.5rem; line-height: 0.85; float: left; padding-right: 0.35rem; padding-top: 0.2rem; }
+        .lift-on-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .lift-on-hover:hover { transform: translateY(-3px); box-shadow: 0 12px 24px -12px rgba(0,0,0,0.18); }
+        .book-btn { transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease; }
+        .book-btn:hover { transform: translateY(-1px); filter: brightness(1.08); box-shadow: 0 10px 20px -8px rgba(0,0,0,0.35); }
+        .book-btn:active { transform: translateY(0); }
+        .eyebrow { letter-spacing: 0.22em; }
+        .section-heading { font-family: 'Fraunces', serif; }
+        .price-card { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+        .price-card:hover { transform: translateY(-4px); }
+        :focus-visible { outline: 2px solid rgba(27,27,22,0.45); outline-offset: 3px; border-radius: 4px; }
+      `}</style>
 
-      {/* ---------------------------------------------------------- */}
-      {/* Hero                                                        */}
-      {/* ---------------------------------------------------------- */}
-      <section className="relative overflow-hidden bg-slate-950 pt-24">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-amber-500/20 blur-3xl" />
-          <div className="absolute -right-32 top-1/3 h-96 w-96 rounded-full bg-primary/25 blur-3xl" />
-          <div
-            className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
-              backgroundSize: "40px 40px",
-            }}
-          />
-        </div>
+      <div className="font-body bg-[#F6F1E4] text-[#1B1B16]">
+        {/* Hero — content-driven, no image (DestinationsHero style) */}
+        <section className="relative mt-8 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-20 sm:py-28">
+          {/* Background blur blobs — tinted with the category accent */}
+          <div className={`absolute -top-24 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full ${theme.accent} opacity-10 blur-[120px]`} />
+          <div className={`absolute bottom-0 right-0 h-72 w-72 rounded-full ${theme.accent} opacity-10 blur-[100px]`} />
 
-        <div className="relative z-10 mx-auto max-w-6xl px-6 pb-16 pt-10 lg:px-10">
-          <nav className="mb-8 flex items-center gap-2 text-xs font-medium text-slate-400">
-            <Link to="/" className="hover:text-amber-400">Home</Link>
-            <span>/</span>
-            <Link to="/services" className="hover:text-amber-400">Services</Link>
-            <span>/</span>
-            <span className="text-slate-200">Outstation Taxi</span>
-          </nav>
-
-          <span className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-amber-300 shadow-[0_0_20px_rgba(251,191,36,0.15)]">
-            <Sparkles size={14} />
-            Outstation Taxi from Vizag
-          </span>
-
-          <h1 className="mt-5 max-w-3xl text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
-            Outstation Taxi
-            <span className="mt-2 block bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-300 bg-clip-text text-transparent">
-              from Vizag
+          <div className="relative mx-auto flex max-w-6xl flex-col items-center px-6 text-center">
+            {/* Badge */}
+            <span className={`inline-flex items-center gap-2 rounded-full ${theme.accentSoft} ${theme.accentText} px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em]`}>
+              <theme.Icon size={18} />
+              {theme.label}
             </span>
-          </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-            BSH Taxi Services runs outstation cabs to Araku, Vijayawada,
-            Hyderabad, Tirupati, and every major town in Andhra Pradesh and
-            beyond — with fixed, transparent pricing and drivers who know
-            the highways well.
-          </p>
+            {/* Tagline */}
+            {tagline && (
+              <p className={`font-display mt-5 text-lg italic ${theme.accentText} sm:text-xl`}>
+                {tagline}
+              </p>
+            )}
 
-          <div className="mt-8 flex flex-wrap gap-4">
-            <button
-              onClick={handleBookNow}
-              className="inline-flex items-center gap-2 rounded-xl bg-amber-400 px-8 py-4 font-bold text-slate-900 shadow-lg shadow-amber-400/20 transition-all duration-300 hover:-translate-y-1 hover:bg-amber-300 hover:shadow-xl hover:shadow-amber-400/30"
-            >
-              Book This Trip
-              <ArrowRight size={18} />
-            </button>
+            {/* Heading */}
+            <h1 className="mt-4 text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
+              {name}
+            </h1>
 
-            <a
-              href="tel:+918886803322"
-              className="flex items-center gap-2 rounded-xl border-2 border-white/15 bg-white/5 px-8 py-4 font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:bg-white/10"
-            >
-              <PhoneCall size={20} />
-              Call Now
-            </a>
-
-            <a
-              href={getWhatsAppLink("a car")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-xl border-2 border-green-400/30 bg-green-400/10 px-8 py-4 font-bold text-green-300 transition-all duration-300 hover:-translate-y-1 hover:border-green-400/60 hover:bg-green-400/20"
-            >
-              <WhatsAppIcon size={20} />
-              WhatsApp
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------------------------------------------------- */}
-      {/* Use cases strip                                             */}
-      {/* ---------------------------------------------------------- */}
-      <section className="mx-auto max-w-6xl px-6 py-14 lg:px-10">
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-          {useCases.map(({ icon: Icon, label }) => (
-            <div
-              key={label}
-              className="group flex flex-col items-center gap-2 rounded-2xl border border-slate-100 bg-white p-4 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-amber-200 hover:shadow-md"
-            >
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-amber-50 text-amber-600 transition-colors duration-300 group-hover:bg-amber-400 group-hover:text-white">
-                <Icon size={20} />
-              </div>
-              <p className="text-xs font-semibold text-slate-600">{label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ---------------------------------------------------------- */}
-      {/* Featured destinations — highlighted cards w/ price          */}
-      {/* Data source: outstationDestinations (hot flag + full info)  */}
-      {/* ---------------------------------------------------------- */}
-      <section className="relative overflow-hidden px-6 py-16 lg:px-10">
-        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-full bg-gradient-to-b from-amber-50/50 via-white to-white" />
-
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-10 text-center">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
-              <Flame size={14} />
-              Popular Routes
-            </span>
-            <h2 className="mt-3 text-3xl font-extrabold text-slate-900 sm:text-4xl">
-              Popular outstation destinations
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-slate-500">
-              Tap a destination to see the full route page — distance, drive
-              time, and starting fare.
+            {/* Description */}
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+              {description}
             </p>
-          </div>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredDestinations.map((dest) => (
-              <Link
-                key={dest.name}
-                to={dest.href}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-300 hover:shadow-xl hover:shadow-amber-100"
+            {/* Route info card */}
+            <div className="mt-10 flex w-full max-w-3xl items-center gap-4 rounded-2xl border border-white/60 bg-white/80 px-5 py-4 shadow-lg backdrop-blur sm:gap-6 sm:px-7">
+              <div className="flex shrink-0 items-center gap-2">
+                <MapPin size={18} className={theme.accentText} />
+                <span className="font-mono-route text-sm font-semibold text-slate-900 sm:text-base">
+                  {distanceFromVizag}
+                </span>
+              </div>
+
+              <div className="route-dash hidden h-px flex-1 text-slate-300 sm:block" />
+
+              <div
+                className="relative hidden h-1.5 w-24 shrink-0 overflow-hidden rounded-full bg-slate-100 sm:block"
+                aria-label={`${distanceKm} kilometers from Visakhapatnam`}
               >
-                {dest.hot && (
-                  <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-700">
-                    <Flame size={11} />
-                    Trending
-                  </span>
-                )}
-
-                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-amber-100 to-amber-50 text-amber-600 transition-transform duration-300 group-hover:scale-110 group-hover:from-amber-400 group-hover:to-amber-300 group-hover:text-white">
-                  <MapPin size={22} />
-                </div>
-
-                <p className="text-lg font-bold text-slate-900">{dest.name}</p>
-
-                <div className="mt-2 flex items-center justify-center gap-3 text-xs font-medium text-slate-500">
-                  <span className="flex items-center gap-1">
-                    <Route size={12} />
-                    {dest.km}
-                  </span>
-                  <span className="h-3 w-px bg-slate-200" />
-                  <span className="flex items-center gap-1">
-                    <Clock size={12} />
-                    {dest.duration}
-                  </span>
-                </div>
-
-                <div className="mt-4 border-t border-dashed border-slate-100 pt-4">
-                  <p className="text-xs font-medium text-slate-400">Starting from</p>
-                  <p className="mt-0.5 text-xl font-extrabold text-amber-600">
-                    {dest.fromPrice}
-                  </p>
-                </div>
-
-                <span className="mt-4 inline-flex items-center justify-center gap-1 text-xs font-bold text-slate-400 transition-colors duration-300 group-hover:text-amber-600">
-                  View route
-                  <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------------------------------------------------- */}
-      {/* Fleet & pricing — fixed starting fare per car, no tabs       */}
-      {/* ---------------------------------------------------------- */}
-      <section className="w-full bg-gradient-to-b from-slate-50 to-slate-100/60 px-6 py-20 sm:px-10 lg:px-16">
-        <div className="mb-4 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
-            Transparent Pricing
-          </span>
-          <h2 className="mt-3 text-3xl font-extrabold text-slate-900 sm:text-4xl">
-            Choose your ride
-          </h2>
-        </div>
-        <p className="mx-auto mb-12 max-w-2xl text-center text-base text-slate-500">
-          Fixed starting fares across our full outstation fleet — the exact
-          amount depends on your destination, so confirm it with our team
-          before booking.
-        </p>
-
-        <div className="mx-auto grid max-w-[80em] grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {fleet.map((car) => (
-            <article
-              key={car.name}
-              className={`group relative flex flex-col rounded-3xl bg-white p-6 shadow-[0_1px_2px_rgba(16,24,40,0.04)] ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${car.theme.ring} ${car.theme.glow} ${
-                car.popular ? "ring-2 ring-amber-300 sm:scale-[1.03]" : ""
-              }`}
-            >
-              {car.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gradient-to-r from-amber-400 to-amber-300 px-4 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-900 shadow-md">
-                  <Star size={10} className="mr-1 inline -mt-0.5 fill-slate-900" />
-                  Most Popular
-                </span>
-              )}
-
-              <div className="relative mx-auto h-20 w-20">
-                <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${car.theme.gradient} opacity-20 blur-lg transition-opacity duration-300 group-hover:opacity-40`} />
-                <div
-                  className={`relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br ${car.theme.gradient} shadow-md transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-105`}
-                >
-                  <Car size={32} className={car.theme.iconColor} strokeWidth={2} />
-                </div>
+                <div className={`h-full rounded-full ${theme.accent}`} style={{ width: `${routeFill}%` }} />
               </div>
 
-              <h3 className="mt-5 text-center text-lg font-bold text-slate-900">
-                {car.name}
-              </h3>
-              <p className="text-center text-xs font-bold uppercase tracking-wide text-amber-600/80">
-                {car.category}
-              </p>
-
-              <div className="mt-4 flex items-center justify-center gap-4 text-xs text-slate-500">
-                <span className="flex items-center gap-1">
-                  <Users size={14} /> {car.seats} seats
-                </span>
-                <span className="flex items-center gap-1">
-                  <Briefcase size={14} /> {car.luggage} bags
-                </span>
+              <div className="flex shrink-0 items-center gap-1.5 border-l border-slate-200 pl-4 text-slate-600">
+                <Clock size={16} />
+                <span className="font-mono-route text-xs font-medium sm:text-sm">{driveTime}</span>
               </div>
-
-              {/* Fixed starting fare — no per-km rate, no tabs */}
-              <div className="mt-5 rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white px-4 py-4 text-center transition-colors duration-300 group-hover:border-amber-100">
-                <p className="text-2xl font-extrabold text-slate-900">
-                  {car.fare.rate}
-                </p>
-                <p className="mt-1 text-xs font-medium text-slate-500">
-                  {car.fare.note}
-                </p>
-              </div>
-
-              <p className="mt-3 text-center text-xs leading-relaxed text-slate-500">
-                {car.fare.includes}
-              </p>
-
-              <div className="mt-5 flex flex-col gap-2">
-                <button
-                  onClick={handleBookNow}
-                  className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-amber-50 py-3 text-sm font-bold text-amber-700 transition-all duration-300 hover:bg-amber-400 hover:text-slate-900 hover:shadow-md"
-                >
-                  Book Now
-                  <ArrowRight size={15} />
-                </button>
-
-                <a
-                  href={getWhatsAppLink(car.name)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-green-50 py-3 text-sm font-bold text-green-700 transition-all duration-300 hover:bg-green-500 hover:text-white hover:shadow-md"
-                >
-                  <WhatsAppIcon size={16} />
-                  WhatsApp
-                </a>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* ---------------------------------------------------------- */}
-      {/* Full destinations directory — alphabetical grid              */}
-      {/* Data source: outstationDestinations (sorted by name)         */}
-      {/* ---------------------------------------------------------- */}
-      <section className="mx-auto max-w-6xl px-6 py-20 lg:px-10">
-        <div className="mb-8 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
-            All Routes
-          </span>
-          <h2 className="mt-3 text-3xl font-extrabold text-slate-900 sm:text-4xl">
-            Every outstation destination we cover
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-slate-500">
-            From nearby towns to cities across neighbouring states — tap a
-            destination to open its route page.
-          </p>
-        </div>
-
-        <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8">
-          <div className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3 lg:grid-cols-4">
-            {allDestinations.map((dest) => (
-              <Link
-                key={dest.slug}
-                to={`/destinations/${dest.slug}?type=outstation-taxi-services`}
-                className="flex items-center gap-1.5 text-sm font-semibold text-slate-600 transition-colors duration-200 hover:text-amber-600"
-              >
-                <MapPin size={12} className="text-slate-300" />
-                {dest.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------------------------------------------------- */}
-      {/* Why us                                                      */}
-      {/* ---------------------------------------------------------- */}
-      <section className="mx-auto max-w-6xl px-6 py-20 lg:px-10">
-        <div className="mb-12 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
-            Why BSH Taxi Services
-          </span>
-          <h2 className="mt-3 text-3xl font-extrabold text-slate-900 sm:text-4xl">
-            Vizag's trusted outstation taxi service
-          </h2>
-        </div>
-
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {whyUs.map(({ title, body }) => (
-            <div
-              key={title}
-              className="group rounded-3xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-amber-200 hover:shadow-md"
-            >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-50 text-amber-500 transition-colors duration-300 group-hover:bg-amber-400 group-hover:text-white">
-                <ShieldCheck size={20} />
-              </div>
-              <h3 className="mt-4 font-bold text-slate-900">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-500">{body}</p>
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* ---------------------------------------------------------- */}
-      {/* Other services links                                        */}
-      {/* ---------------------------------------------------------- */}
-      <section className="mx-auto max-w-6xl px-6 py-20 lg:px-10">
-        <div className="mb-10 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-amber-600">
-            Explore More
-          </span>
-          <h2 className="mt-3 text-3xl font-extrabold text-slate-900 sm:text-4xl">
-            Other services
-          </h2>
-        </div>
-
-        <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8">
-          <h3 className="flex items-center gap-2 font-bold text-slate-900">
-            <Car size={18} className="text-amber-500" />
-            Other taxi services
-          </h3>
-          <div className="mt-5 grid gap-x-6 gap-y-1 sm:grid-cols-2">
-            {[
-              { label: "Local Taxi", href: "/services/local-taxi" },
-              { label: "Airport Transfers", href: "/services/airport-transfer?type=airport-taxi" },
-              { label: "Tour Packages", href: "/services/tour-packages?type=tour-packages" },
-              { label: "Corporate Taxi", href: "/services/corporate-travel?type=corporate-cab-services" },
-              { label: "Wedding Car Rentals", href: "/services/wedding-car-rentals?type=wedding-car-rentals" },
-            ].map((service) => (
-              <Link
-                key={service.label}
-                to={service.href}
-                className="group flex items-center justify-between border-b border-slate-100 py-3 text-sm font-semibold text-slate-700 transition-colors duration-200 last:border-b-0 hover:text-amber-600 sm:odd:border-r-0"
-              >
-                {service.label}
-                <ArrowRight size={16} className="text-slate-300 transition-all duration-200 group-hover:translate-x-1 group-hover:text-amber-500" />
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------------------------------------------------- */}
-      {/* Fine print + final CTA                                      */}
-      {/* ---------------------------------------------------------- */}
-      <section className="bg-slate-950 px-6 py-20 sm:px-10 lg:px-16">
-        <div className="mx-auto max-w-4xl">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur sm:p-10">
-            <h3 className="text-lg font-bold text-white">Good to know</h3>
-            <ul className="mt-5 space-y-3">
-              {[
-                "The price shown is a starting fare — the final amount depends on your exact destination and trip type.",
-                "Toll, parking, and state permit charges are extra and shown separately in your invoice.",
-                "Overnight halts include a driver allowance — ask our team for the exact amount for your route.",
-                "Call or WhatsApp us with your destination for an exact, confirmed quote.",
-              ].map((note) => (
-                <li key={note} className="flex items-start gap-3">
-                  <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-amber-400" />
-                  <p className="text-sm leading-relaxed text-slate-300">{note}</p>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-8 flex flex-wrap gap-4 border-t border-white/10 pt-8">
+            {/* Buttons */}
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <button
-                onClick={handleBookNow}
-                className="inline-flex items-center gap-2 rounded-xl bg-amber-400 px-8 py-4 font-bold text-slate-900 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-amber-300"
+                type="button"
+                onClick={() => openBooking({ resetTrip: true, drop: name })}
+                className={`book-btn inline-flex items-center justify-center gap-2 rounded-xl ${theme.accent} px-8 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl`}
               >
+                <CalendarCheck size={18} />
                 Book Now
-                <ArrowRight size={18} />
               </button>
 
               <a
-                href="tel:+918886803322"
-                className="flex items-center gap-2 rounded-xl border-2 border-white/15 bg-white/5 px-8 py-4 font-bold text-white transition hover:border-white/30 hover:bg-white/10"
+                href={`tel:${CONTACT_PHONE}`}
+                className={`flex items-center justify-center gap-2 rounded-xl border-2 border-current bg-white px-8 py-4 text-base font-semibold ${theme.accentText} ${theme.hoverBg} transition-all duration-300 hover:text-white`}
               >
-                <PhoneCall size={20} />
-                +91 8886803322
-              </a>
-
-              <a
-                href={getWhatsAppLink("a car")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-xl border-2 border-green-400/30 bg-green-400/10 px-8 py-4 font-bold text-green-300 transition hover:border-green-400/60 hover:bg-green-400/20"
-              >
-                <WhatsAppIcon size={20} />
-                Chat on WhatsApp
+                <Phone size={18} />
+                {CONTACT_PHONE_DISPLAY}
               </a>
             </div>
           </div>
+        </section>
+
+        <section className="w-full px-6 pb-28 pt-16 sm:px-10 sm:pb-16 sm:pt-20 lg:px-16">
+          {/* ------------------------------------------------------------ */}
+          {/* Quick facts + highlights                                     */}
+          {/* ------------------------------------------------------------ */}
+          {quickFacts && quickFacts.length > 0 && (
+            <div className="mx-auto mt-2 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-4">
+              {quickFacts.map((fact) => (
+                <div
+                  key={fact.label}
+                  className={`lift-on-hover rounded-2xl border border-black/5 bg-white px-4 py-4 text-center ring-1 ${theme.ring}`}
+                >
+                  <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">{fact.label}</p>
+                  <p className="font-mono-route mt-1.5 text-sm font-semibold text-slate-900 sm:text-base">
+                    {fact.value}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {highlights && highlights.length > 0 && (
+            <div className="mx-auto mt-8 flex max-w-4xl flex-wrap justify-center gap-2.5">
+              {highlights.map((h) => (
+                <span
+                  key={h}
+                  className={`inline-flex items-center gap-1.5 rounded-full ${theme.accentSoft} ${theme.accentText} px-3.5 py-1.5 text-xs font-semibold sm:text-sm`}
+                >
+                  <Sparkle size={13} />
+                  {h}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* ------------------------------------------------------------ */}
+          {/* Choose Your Ride — vehicle pricing cards                     */}
+          {/* ------------------------------------------------------------ */}
+          <div className="mx-auto mt-20 max-w-6xl">
+            <div className="text-center">
+              <p className={`eyebrow text-xs font-bold uppercase ${theme.accentText}`}>Transparent Pricing</p>
+              <h2 className="section-heading mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+                Choose Your Ride to {name}
+              </h2>
+              <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-slate-600">
+                Pick a vehicle below to see the round-trip fare for the {distanceFromVizag.toLowerCase()} —
+                every package includes a driver, fuel, and standard toll allowance for the base kilometers.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {vehicleOptions.map((vehicle) => {
+                const VIcon = VEHICLE_ICON[vehicle.category];
+                const fare = getOutstationFare(outstation.slug, vehicle.slug as VehicleSlug);
+                const isFeatured = vehicle.category === "MUV";
+
+                return (
+                  <div
+                    key={vehicle.slug}
+                    className={`price-card group relative flex flex-col overflow-hidden rounded-[28px] bg-white ${
+                      isFeatured
+                        ? `ring-2 ${theme.ring} shadow-xl lg:-translate-y-2`
+                        : "shadow-sm ring-1 ring-slate-100 hover:shadow-xl"
+                    }`}
+                  >
+                    {/* Accent bar */}
+                    <div className={`h-1.5 w-full ${theme.accent}`} />
+
+                    {isFeatured && (
+                      <span
+                        className={`absolute right-5 top-6 rounded-full ${theme.accent} px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-md`}
+                      >
+                        Best Value
+                      </span>
+                    )}
+
+                    <div className="flex flex-1 flex-col p-7">
+                      <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${theme.accentSoft} ${theme.accentText}`}>
+                        <VIcon size={26} strokeWidth={1.75} />
+                      </div>
+
+                      <p className="font-display mt-5 text-xl font-semibold leading-snug text-slate-900">
+                        {vehicle.name}
+                      </p>
+                      <p className={`mt-0.5 text-[11px] font-bold uppercase tracking-widest ${theme.accentText}`}>
+                        {vehicle.category}
+                      </p>
+
+                      <div className="mt-4 flex items-center gap-4 border-y border-slate-100 py-3 text-xs font-medium text-slate-500">
+                        <span className="flex items-center gap-1.5">
+                          <Users size={14} className="text-slate-400" /> {vehicle.seats} seats
+                        </span>
+                        <span className="h-3 w-px bg-slate-200" aria-hidden="true" />
+                        <span className="flex items-center gap-1.5">
+                          <Luggage size={14} className="text-slate-400" /> {vehicle.bags} bags
+                        </span>
+                      </div>
+
+                      <div className="mt-5">
+                        <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+                          Round-trip fare
+                        </p>
+                        <p className="font-mono-route mt-1 flex items-baseline gap-0.5 text-[28px] font-bold leading-none text-slate-900">
+                          <IndianRupee size={20} strokeWidth={2.5} className="translate-y-[1px]" />
+                          {fare.toLocaleString("en-IN")}
+                        </p>
+                        <p className="mt-1.5 text-[11px] text-slate-500">
+                          Extra km ₹{vehicle.extraKmRate} · Extra hr ₹{vehicle.extraHourRate}
+                        </p>
+                      </div>
+
+                      <p className="mt-4 flex-1 text-[13px] leading-relaxed text-slate-500">{vehicle.bestFor}</p>
+
+                      <div className="mt-6 flex flex-col gap-2.5">
+                        <button
+                          type="button"
+                          onClick={() => openBooking({ resetTrip: true, drop: name })}
+                          className={`book-btn inline-flex items-center justify-center gap-2 rounded-xl ${theme.accent} px-4 py-3 text-sm font-semibold text-white shadow-md`}
+                        >
+                          Book Now <ArrowRight size={14} />
+                        </button>
+                        <a
+                          href={`https://wa.me/${CONTACT_PHONE.replace("+", "")}?text=${waMessage}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-sm font-semibold text-emerald-700 transition-colors duration-200 hover:bg-emerald-100"
+                        >
+                          <MessageCircle size={14} /> WhatsApp
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <p className="mx-auto mt-6 max-w-2xl text-center text-xs text-slate-400">
+              Fares shown are fixed round-trip package rates for the {distanceFromVizag.toLowerCase()}. Final fare may vary
+              with tolls, entry fees, waiting time, and driver night halt where applicable.
+            </p>
+          </div>
+
+          {/* ------------------------------------------------------------ */}
+          {/* History                                                       */}
+          {/* ------------------------------------------------------------ */}
+          {history && (
+            <div className="mx-auto mt-20 max-w-3xl">
+              <h2 className="section-heading text-center text-3xl font-semibold tracking-tight text-slate-900">
+                The Story of {name}
+              </h2>
+              <div className={`mx-auto mt-3 mb-8 h-1 w-14 rounded-full ${theme.accent}`} />
+              {history.split("\n\n").map((para, i) => (
+                <p key={i} className={`mb-5 text-[15.5px] leading-[1.85] text-slate-700 sm:text-base ${i === 0 ? "drop-cap" : ""}`}>
+                  {para}
+                </p>
+              ))}
+              {sources && sources.length > 0 && (
+                <p className="mt-2 text-xs italic text-slate-400">Sourced from {sources.join(", ")}.</p>
+              )}
+            </div>
+          )}
+
+          {/* ------------------------------------------------------------ */}
+          {/* Plan your visit                                               */}
+          {/* ------------------------------------------------------------ */}
+          {(bestTimeToVisit || howToReach) && (
+            <div className="mx-auto mt-16 max-w-5xl">
+              <h2 className="section-heading text-center text-3xl font-semibold tracking-tight text-slate-900">
+                Plan Your Visit
+              </h2>
+              <div className={`mx-auto mt-3 mb-8 h-1 w-14 rounded-full ${theme.accent}`} />
+              <div className="grid gap-5 sm:grid-cols-2">
+                {bestTimeToVisit && (
+                  <div className="lift-on-hover rounded-3xl border border-slate-100 bg-white p-7 shadow-sm">
+                    <p className={`flex items-center gap-2 text-sm font-bold uppercase tracking-widest ${theme.accentText}`}>
+                      <Clock size={16} /> Best Time to Visit
+                    </p>
+                    <p className="mt-3 text-[15px] leading-relaxed text-slate-600">{bestTimeToVisit}</p>
+                  </div>
+                )}
+                {howToReach && (
+                  <div className="lift-on-hover rounded-3xl border border-slate-100 bg-white p-7 shadow-sm">
+                    <p className={`flex items-center gap-2 text-sm font-bold uppercase tracking-widest ${theme.accentText}`}>
+                      <Navigation size={16} /> How to Reach
+                    </p>
+                    <p className="mt-3 text-[15px] leading-relaxed text-slate-600">{howToReach}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* ------------------------------------------------------------ */}
+          {/* Fun fact                                                      */}
+          {/* ------------------------------------------------------------ */}
+          {funFact && (
+            <div className="mx-auto mt-14 max-w-3xl">
+              <div className={`relative rounded-3xl ${theme.accent} px-8 py-9 text-white shadow-lg sm:px-12 sm:py-11`}>
+                <Quote size={28} className="mb-3 text-white/50" />
+                <p className="font-display text-xl leading-snug sm:text-2xl">{funFact}</p>
+              </div>
+            </div>
+          )}
+
+          {/* ------------------------------------------------------------ */}
+          {/* Places you'll visit                                           */}
+          {/* ------------------------------------------------------------ */}
+          {places && places.length > 0 && (
+            <div className="mx-auto mt-20 max-w-3xl">
+              <h2 className="section-heading text-center text-3xl font-semibold tracking-tight text-slate-900">
+                Places You'll Visit
+              </h2>
+              <div className={`mx-auto mt-3 mb-10 h-1 w-14 rounded-full ${theme.accent}`} />
+              <ol className="relative">
+                <div
+                  className={`absolute left-6.75 top-2 bottom-2 hidden w-px sm:block ${theme.accentSoft}`}
+                  style={{ borderLeft: "2px dashed currentColor" }}
+                  aria-hidden="true"
+                />
+                {places.map((place, i) => (
+                  <li key={place.name} className="relative mb-6 flex gap-5 last:mb-0 sm:gap-6">
+                    <div className={`z-10 hidden h-14 w-14 shrink-0 items-center justify-center rounded-full ${theme.accent} font-mono-route text-base font-bold text-white shadow-md sm:flex`}>
+                      {String(i + 1).padStart(2, "0")}
+                    </div>
+                    <div className="lift-on-hover flex flex-1 gap-4 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+                      <div className="flex flex-col justify-center py-3 pr-4 pl-4 sm:pl-0">
+                        <span className={`mb-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest ${theme.accentText} sm:hidden`}>
+                          Stop {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <p className="text-sm font-bold uppercase tracking-wide text-slate-900 sm:text-base">
+                          {place.name}
+                          {place.tag && (
+                            <span className="ml-1.5 text-[11px] font-medium normal-case text-slate-400">({place.tag})</span>
+                          )}
+                        </p>
+                        {place.description && (
+                          <p className="mt-1 text-[13px] leading-snug text-slate-500 sm:text-sm">{place.description}</p>
+                        )}
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {/* ------------------------------------------------------------ */}
+          {/* Cross-sell: other outstation destinations                    */}
+          {/* ------------------------------------------------------------ */}
+          {otherOutstations.length > 0 && (
+            <div className="mx-auto mt-20 max-w-6xl">
+              <div className="text-center">
+                <p className={`eyebrow text-xs font-bold uppercase ${theme.accentText}`}>Go Further</p>
+                <h2 className="section-heading mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+                  Explore More Outstation Destinations
+                </h2>
+                <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-slate-600">
+                  Planning a longer trip? Here's what our outstation cabs from Vizag typically cost to other
+                  popular destinations.
+                </p>
+              </div>
+
+              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {otherOutstations.map((dest) => {
+                  const destTheme = CATEGORY_THEME[dest.category as keyof typeof CATEGORY_THEME] ?? CATEGORY_THEME.City;
+                  return (
+                    <Link
+                      key={dest.slug}
+                      to={`/services/outstation-taxi/${dest.slug}`}
+                      className="lift-on-hover group flex flex-col rounded-2xl border border-slate-100 bg-white p-5 shadow-sm"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className={`inline-flex items-center gap-1.5 rounded-full ${destTheme.accentSoft} ${destTheme.accentText} px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest`}>
+                          <destTheme.Icon size={12} />
+                          {destTheme.label}
+                        </span>
+                        <ArrowRight
+                          size={16}
+                          className={`${destTheme.accentText} transition-transform group-hover:translate-x-1`}
+                        />
+                      </div>
+                      <p className="mt-4 text-lg font-bold text-slate-900">{dest.name}</p>
+                      <p className="mt-1 flex items-center gap-1.5 text-xs text-slate-500">
+                        <MapPin size={12} /> {dest.distanceKm} KM · {dest.driveTime}
+                      </p>
+                      {dest.costPerDay && (
+                        <p className="mt-3 font-mono-route text-sm font-semibold text-slate-900">
+                          From {formatINR(dest.costPerDay)}
+                        </p>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* ------------------------------------------------------------ */}
+          {/* Final CTA                                                     */}
+          {/* ------------------------------------------------------------ */}
+          <div className="mx-auto mt-16 max-w-3xl">
+            <div className={`flex flex-col items-center justify-between gap-5 rounded-3xl ${theme.accent} px-8 py-9 text-center text-white shadow-lg sm:flex-row sm:text-left`}>
+              <div>
+                <p className="font-display text-2xl font-semibold">Ready to visit {name}?</p>
+                <p className="mt-1 text-sm text-white/80">Lock in your trip and we'll handle the rest.</p>
+              </div>
+              <button
+                onClick={() => openBooking({ resetTrip: true, drop: name })}
+                className={`book-btn hidden items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold ${theme.accentText} shadow-lg sm:inline-flex`}
+              >
+                <CalendarCheck size={16} />
+                Book Now
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Mobile sticky booking bar */}
+        <div className="fixed inset-x-0 bottom-0 z-20 border-t border-black/5 bg-white/95 px-5 py-3 shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.25)] backdrop-blur sm:hidden">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              {costPerDay ? (
+                <>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">Starting From</p>
+                  <p className="font-mono-route text-base font-bold text-slate-900">
+                    ₹{costPerDay.toLocaleString("en-IN")}/day onwards
+                  </p>
+                </>
+              ) : (
+                <p className="font-display text-sm font-semibold text-slate-900">{name}</p>
+              )}
+            </div>
+            <button
+              onClick={() => openBooking({ resetTrip: true, drop: name })}
+              className={`book-btn inline-flex items-center gap-2 rounded-full ${theme.accent} px-5 py-2.5 text-sm font-bold text-white shadow-lg`}
+            >
+              <CalendarCheck size={16} />
+              Book Now
+            </button>
+          </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }

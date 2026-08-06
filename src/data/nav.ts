@@ -31,6 +31,8 @@ export interface NavLink {
  * One Way / Round Trip toggle. Each entry links straight to that
  * destination's own page (/destinations/<slug>), not to a `pkg=` query param.
  */
+
+
 export const navLinks: NavLink[] = [
   {
     label: "Home",
@@ -61,21 +63,49 @@ export const navLinks: NavLink[] = [
         ],
       },
 
-      {
-        label: "Outstation Taxi",
-        href: "/services/outstation-taxi?type=outstation-taxi-services",
-        children: [
-          { label: "Araku Valley", href: "/destinations/araku-valley?type=outstation-taxi-services" },
-          { label: "Annavaram", href: "/destinations/annavaram-temple?type=outstation-taxi-services" },
-          { label: "Kakinada", href: "/destinations/kakinada?type=outstation-taxi-services" },
-          { label: "Rajahmundry", href: "/destinations/rajahmundry?type=outstation-taxi-services" },
-          { label: "Vijayawada", href: "/destinations/vijayawada?type=outstation-taxi-services" },
-          { label: "Tirupati", href: "/destinations/tirupati?type=outstation-taxi-services" },
-          { label: "Hyderabad", href: "/destinations/hyderabad?type=outstation-taxi-services" },
-          { label: "Puri (Odisha)", href: "/destinations/puri-odisha?type=outstation-taxi-services" },
-        ],
-      },
+{
+  label: "Outstation Taxi",
+  href: "/services/outstation-taxi?type=outstation-taxi-services",
+  children: [
+    { label: "Kakinada", href: "/outstation/kakinada" },
+    { label: "Araku", href: "/outstation/araku" },
+    { label: "Vijayawada", href: "/outstation/vijayawada" },
+    { label: "Rajahmundry", href: "/outstation/rajahmundry" },
+    { label: "Vizianagaram", href: "/outstation/vizianagaram" },
+    { label: "Srikakulam", href: "/outstation/srikakulam" },
 
+    { label: "Amadalavalasa", href: "/outstation/amadalavalasa" },
+    { label: "Annavaram", href: "/outstation/annavaram" },
+    { label: "Arasavalli", href: "/outstation/arasavalli" },
+    { label: "Bangalore", href: "/outstation/bangalore" },
+    { label: "Bhadrachalam", href: "/outstation/bhadrachalam" },
+    { label: "Bhubaneswar", href: "/outstation/bhubaneswar" },
+    { label: "Bobbili", href: "/outstation/bobbili" },
+    { label: "Chennai", href: "/outstation/chennai" },
+    { label: "Eluru", href: "/outstation/eluru" },
+    { label: "Guntur", href: "/outstation/guntur" },
+    { label: "Hyderabad", href: "/outstation/hyderabad" },
+    { label: "Ichchapuram", href: "/outstation/ichchapuram" },
+    { label: "Jagdalpur", href: "/outstation/jagdalpur" },
+    { label: "Khammam", href: "/outstation/khammam" },
+    { label: "Kolkata", href: "/outstation/kolkata" },
+    { label: "Kurnool", href: "/outstation/kurnool" },
+    { label: "Lambasingi", href: "/outstation/lambasingi" },
+    { label: "Narasannapeta", href: "/outstation/narasannapeta" },
+    { label: "Nellore", href: "/outstation/nellore" },
+    { label: "Palakollu", href: "/outstation/palakollu" },
+    { label: "Palakonda", href: "/outstation/palakonda" },
+    { label: "Palasa", href: "/outstation/palasa" },
+    { label: "Parvathipuram", href: "/outstation/parvathipuram" },
+    { label: "Raipur", href: "/outstation/raipur" },
+    { label: "Ravulapalem", href: "/outstation/ravulapalem" },
+    { label: "Razam", href: "/outstation/razam" },
+    { label: "Sompeta", href: "/outstation/sompeta" },
+    { label: "Srimukhalingam", href: "/outstation/srimukhalingam" },
+    { label: "Tirupati", href: "/outstation/tirupati" },
+    { label: "Tuni", href: "/outstation/tuni" },
+  ],
+},
       {
         label: "Airport Transfers",
         href: "/services/airport-transfer?type=airport-taxi",
