@@ -1,22 +1,4 @@
-// ============================================================================
-// Outstation Taxi Pricing — BSH Taxi Services
-// ----------------------------------------------------------------------------
-// Two pricing modes per route:
-//
-//   1. "fixed"  -> Show the exact round-trip ₹ price (edit outstationPrices).
-//                  Used for: Araku, Vizianagaram, Srikakulam, Annavaram,
-//                  Arasavalli, Bobbili, Lambasingi, Srimukhalingam.
-//
-//   2. "perKm"  -> Show a per-km rate instead of a fixed price
-//                  (e.g. "₹13/km"). Used for every other route.
-//                  Rates: Swift Dzire ₹13, Ertiga ₹14,
-//                         Innova Crysta ₹18, Tempo Traveller ₹20.
-//
-// To move a route from perKm -> fixed: add its prices to `outstationPrices`
-// and add its slug to `FIXED_PRICE_SLUGS`.
-// To move a route from fixed -> perKm: remove its slug from
-// `FIXED_PRICE_SLUGS` (and its distance must exist in `oneWayDistanceKm`
-// if you still want a computed round-trip fare anywhere).
+
 // ============================================================================
 
 import type { VehicleOption } from "./Outstationtaxidata";
@@ -48,17 +30,17 @@ export const FIXED_PRICE_SLUGS: string[] = [
  * Edit any value freely — these are the only routes that use a flat price.
  */
 export const outstationPrices: Record<string, Record<VehicleSlug, number>> = {
-  "vizag-to-araku-taxi": { "swift-dzire": 3200, "ertiga": 3900, "innova-crysta": 4600, "tempo-traveller": 6800 }, // Araku — 120 km one-way
-  "vizag-to-vizianagaram-taxi": { "swift-dzire": 2400, "ertiga": 2800, "innova-crysta": 3200, "tempo-traveller": 5200 }, // Vizianagaram — 65 km one-way
-  "vizag-to-srikakulam-taxi": { "swift-dzire": 3000, "ertiga": 3700, "innova-crysta": 4300, "tempo-traveller": 6400 }, // Srikakulam — 113 km one-way
-  "vizag-to-annavaram-taxi": { "swift-dzire": 3200, "ertiga": 3900, "innova-crysta": 4600, "tempo-traveller": 6800 }, // Annavaram — 120 km one-way
-  "vizag-to-arasavalli-taxi": { "swift-dzire": 3000, "ertiga": 3700, "innova-crysta": 4400, "tempo-traveller": 6500 }, // Arasavalli — 115 km one-way
+  "vizag-to-araku-taxi": { "swift-dzire": 5000, "ertiga": 6500, "innova-crysta": 8000, "tempo-traveller": 12000 }, // Araku — 120 km one-way
+  "vizag-to-vizianagaram-taxi": { "swift-dzire": 3000, "ertiga": 3500, "innova-crysta": 4000, "tempo-traveller": 8000 }, // Vizianagaram — 65 km one-way
+  "vizag-to-srikakulam-taxi": { "swift-dzire": 3500, "ertiga": 4500, "innova-crysta": 7000, "tempo-traveller": 12000 }, // Srikakulam — 113 km one-way
+  "vizag-to-annavaram-taxi": { "swift-dzire": 5000, "ertiga": 6500, "innova-crysta": 8000, "tempo-traveller": 12000 }, // Annavaram — 120 km one-way
+  "vizag-to-arasavalli-taxi": { "swift-dzire": 5000, "ertiga": 6500, "innova-crysta": 8000, "tempo-traveller": 12000 }, // Arasavalli — 115 km one-way
   "vizag-to-bobbili-taxi": { "swift-dzire": 3800, "ertiga": 4700, "innova-crysta": 5600, "tempo-traveller": 8200 }, // Bobbili — 145 km one-way
   // NOTE: Lambasingi was missing from the original table. Added using the
   // ~100-120 km one-way road distance (same bracket as Araku/Annavaram).
   // Update this if you have an exact operator-quoted price.
-  "vizag-to-lambasingi-taxi": { "swift-dzire": 3200, "ertiga": 3900, "innova-crysta": 4600, "tempo-traveller": 6800 }, // Lambasingi — ~110 km one-way
-  "vizag-to-srimukhalingam-taxi": { "swift-dzire": 4100, "ertiga": 5000, "innova-crysta": 5900, "tempo-traveller": 8700 }, // Srimukhalingam — 155 km one-way
+  "vizag-to-lambasingi-taxi": { "swift-dzire": 5000, "ertiga": 6500, "innova-crysta": 8000, "tempo-traveller": 12000 }, // Lambasingi — ~110 km one-way
+  "vizag-to-srimukhalingam-taxi": { "swift-dzire": 5000, "ertiga": 6500, "innova-crysta": 8000, "tempo-traveller": 12000 }, // Srimukhalingam — 155 km one-way
 };
 
 // ----------------------------------------------------------------------------
@@ -66,10 +48,10 @@ export const outstationPrices: Record<string, Record<VehicleSlug, number>> = {
 //    this. Displayed as a rate (e.g. "₹13/km"), not a total price.
 // ----------------------------------------------------------------------------
 export const perKmRates: Record<VehicleSlug, number> = {
-  "swift-dzire": 13,
-  "ertiga": 14,
-  "innova-crysta": 18,
-  "tempo-traveller": 20,
+  "swift-dzire": 14,
+  "ertiga": 17,
+  "innova-crysta": 20,
+  "tempo-traveller": 30,
 };
 
 /**
