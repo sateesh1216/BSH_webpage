@@ -1,1474 +1,1128 @@
-import { useEffect, useMemo, useRef, useState, lazy,Suspense} from "react";
+import { useRef, useState, useEffect, type ElementType } from "react";
 import {
-  Check,
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  MapPin,
-  Navigation,
   Car,
-  Users,
+  Navigation,
+  Plane,
   Briefcase,
-  Repeat2,
-  ArrowRight,
-  ArrowLeftRight,
-  Calendar as CalendarIcon,
+  Calendar,
   Clock,
-  Info,
-  ShieldCheck,
-  Phone,
+  ChevronDown,
+  Check,
+  X,
+  AlertCircle,
   MessageCircle,
-  Mail,
-  User,
-  Headphones,
-  Home,
-  // Lock,
-  BookOpen,
-  Sparkles,
-  Crown,
+  CalendarCheck,
+  ArrowLeftRight,
+  Users,
+  MapPin,
+  Locate,
+  ShieldCheck,
+  BadgeIndianRupee,
+  Headset,
+  UserRound,
 } from "lucide-react";
-import LocationAutocomplete, {
-  POPULAR_PICKUP_PLACES,
-  POPULAR_DROP_PLACES,
-} from "./LocationAutocomplete";
-const RouteMapPreview = lazy(() => import("./Routemappreview"));
-import type {
-  TripDetails,
-  PassengerDetails,
-  Vehicle,
-} from "../../data/bookingConfig";
+import { createPortal } from "react-dom";
 
-import {
-  SUPPORT_PHONE_DISPLAY,
-  SUPPORT_PHONE,
-  TRIP_CONFIG,
-  PASSENGER_OPTIONS,
-  LUGGAGE_OPTIONS,
-  VEHICLES,
-  makeDefaultTrip,
-  makeDefaultPassenger,
-  estimateRoute,
-  formatDuration,
-  formatDateLabel,
-  formatCurrency,
-  makeBookingId,
-  buildWhatsAppMessage,
-} from "../../data/bookingConfig";
+const WHATSAPP_NUMBER = "918886803322";
 
-interface BookingWizardProps {
-  vehicleId?: string;
-}
+import DzireImg from "../../assets/icons_cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
+import ErtigaImg from "../../assets/icons_cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
+import InnovaCrystaImg from "../../assets/icons_cars/innova-crysta-in-vizag-bshtaxiservices.webp";
+import TempoTravellerImg from "../../assets/icons_cars/17-seater-tempo-traveller-bshtaxiservices.webp";
 
-// Simple lat/lon pair — mirrors the shape RouteMapPreview expects.
-type GeoPoint = { lat: number; lon: number };
+// =============================================================================
+// VEHICLE CATALOG
+// Every fare below is a FIXED value you set directly — nothing is calculated
+// or multiplied. To change a price, just edit the number in the tables below.
+// =============================================================================
 
-// Date & Time picker was merged into the Trip Details step, and the
-// standalone Review step was removed — the wizard now has 4 steps.
-const STEPS = [
-  { key: "trip", label: "Trip Details", sub: "Pickup, Drop & Schedule" },
-  { key: "vehicle", label: "Vehicle", sub: "Choose your ride" },
-  { key: "passenger", label: "Passenger Details", sub: "Contact information" },
-  { key: "confirm", label: "Confirm Booking", sub: "You're almost done!" },
+const CAR_TYPES = [
+  {
+    id: "sedan",
+    name: "Dzire, Etios",
+    subtitle: "Comfortable city rides",
+    image: DzireImg,
+    seats: 4,
+    ac: true,
+  },
+  {
+    id: "suv",
+    name: "SUV (Ertiga, Innova)",
+    subtitle: "Spacious for families & groups",
+    image: ErtigaImg,
+    seats: 7,
+    ac: true,
+  },
+  {
+    id: "innova_crysta",
+    name: "Innova Crysta",
+    subtitle: "Premium long-distance travel",
+    image: InnovaCrystaImg,
+    seats: 7,
+    ac: true,
+  },
+  {
+    id: "tempo_traveller",
+    name: "17-Seater Tempo Traveller",
+    subtitle: "Best for large groups & outings",
+    image: TempoTravellerImg,
+    seats: 17,
+    ac: true,
+  },
 ] as const;
 
-/* ---------------------------------------------------------------------- */
-/*  Small shared UI bits                                                   */
-/* ---------------------------------------------------------------------- */
+type CarId = (typeof CAR_TYPES)[number]["id"];
+type CarType = (typeof CAR_TYPES)[number];
 
-function FieldShell({
-  icon: Icon,
-  children,
-}: {
-  icon: React.ComponentType<{ size?: number; className?: string }>;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="group flex items-center gap-2.5 rounded-xl border border-slate-200/80 bg-white px-3 py-2.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-200 focus-within:border-primary focus-within:shadow-[0_0_0_3.5px_var(--tw-shadow-color)] focus-within:shadow-primary/12 hover:border-slate-300">
-      <span className="flex 'h-6' 'w-6.5' h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary transition-all duration-200 group-focus-within:bg-primary group-focus-within:text-white group-focus-within:shadow-sm group-focus-within:shadow-primary/40">
-        <Icon size={13} className="shrink-0" />
-      </span>
-      {children}
-    </div>
-  );
+// ---- LOCAL package definitions (label/description only — prices live below) ----
+const LOCAL_PACKAGES = [
+  { id: "pkg8_80", label: "8 Hours / 80 KM", description: "Ideal for local city travel" },
+  { id: "pkg10_100", label: "10 Hours / 100 KM", description: "More time, more places" },
+] as const;
+
+type LocalPackageId = (typeof LOCAL_PACKAGES)[number]["id"];
+
+// ---- FIXED local fares: [carId][packageId] -> price. Edit freely. ----
+const LOCAL_FARES: Record<CarId, Record<LocalPackageId, number>> = {
+  sedan: { pkg8_80: 2500, pkg10_100: 3000 },
+  suv: { pkg8_80: 3200, pkg10_100: 3800 },
+  innova_crysta: { pkg8_80: 4000, pkg10_100: 4700 },
+  tempo_traveller: { pkg8_80: 5500, pkg10_100: 6500 },
+};
+
+// ---- FIXED airport fares: [carId] -> price. Edit freely. ----
+const AIRPORT_FARES: Record<CarId, number> = {
+  sedan: 549,
+  suv: 799,
+  innova_crysta: 999,
+  tempo_traveller: 1799,
+};
+
+const POPULAR_PICKUP_PLACES = [
+  "RTC Complex, Vizag",
+  "Vizag Railway Station",
+  "Visakhapatnam Airport (VTZ)",
+  "MVP Colony",
+  "Dwaraka Nagar",
+  "Gajuwaka",
+  "Madhurawada",
+  "Rushikonda Beach",
+  "Simhachalam",
+  "Pendurthi",
+  "Yendada",
+  "Beach Road, Vizag",
+];
+
+const POPULAR_DROP_PLACES = [
+  "Araku Valley",
+  "Vijayawada",
+  "Rajahmundry",
+  "Srikakulam",
+  "Vizianagaram",
+  "Hyderabad",
+  "Bhubaneswar",
+  "Annavaram",
+];
+
+// ---- TOUR packages: metadata only — prices live in TOUR_FARES below ----
+const TOUR_PACKAGES = [
+  {
+    id: "araku_1d",
+    name: "Araku Valley Day Trip",
+    days: 1,
+    nights: 0,
+    description: "Coffee plantations, Borra Caves & scenic ghats",
+    highlights: ["Borra Caves", "Coffee Museum", "Tribal Museum", "Katiki Waterfalls"],
+  },
+  {
+    id: "araku_2d",
+    name: "Araku Valley 2D/1N",
+    days: 2,
+    nights: 1,
+    description: "Overnight stay with sunrise viewpoint",
+    highlights: ["Padmapuram Gardens", "Sunrise Viewpoint", "Borra Caves", "Local stay"],
+  },
+  {
+    id: "lambasingi_2d",
+    name: "Lambasingi 2D/1N",
+    days: 2,
+    nights: 1,
+    description: "'Kashmir of Andhra' — misty hills getaway",
+    highlights: ["Lambasingi hills", "Valley viewpoints", "Apple orchards", "Bonfire evening"],
+  },
+  {
+    id: "vizag_city",
+    name: "Vizag City Full Day",
+    days: 1,
+    nights: 0,
+    description: "Beaches, temples & submarine museum",
+    highlights: ["RK Beach", "Kailasagiri", "INS Kurusura Museum", "Simhachalam Temple"],
+  },
+  {
+    id: "vizag_araku_3d",
+    name: "Vizag + Araku 3D/2N",
+    days: 3,
+    nights: 2,
+    description: "Full city & valley combo package",
+    highlights: ["City sightseeing", "Araku Valley", "Borra Caves", "2 nights stay"],
+  },
+] as const;
+
+type TourId = (typeof TOUR_PACKAGES)[number]["id"];
+
+// ---- FIXED tour fares: [tourId][carId] -> price. Edit freely. ----
+const TOUR_FARES: Record<TourId, Record<CarId, number>> = {
+  araku_1d: { sedan: 3499, suv: 4899, innova_crysta: 5999, tempo_traveller: 8499 },
+  araku_2d: { sedan: 6499, suv: 8999, innova_crysta: 10999, tempo_traveller: 15999 },
+  lambasingi_2d: { sedan: 6999, suv: 9499, innova_crysta: 11499, tempo_traveller: 16999 },
+  vizag_city: { sedan: 2499, suv: 3499, innova_crysta: 4299, tempo_traveller: 6499 },
+  vizag_araku_3d: { sedan: 10999, suv: 14999, innova_crysta: 17999, tempo_traveller: 25999 },
+};
+
+function formatCurrency(amount: number | null | undefined) {
+  if (amount === null || amount === undefined) return "—";
+  return `₹${Math.round(amount).toLocaleString("en-IN")}`;
 }
 
-function Label({ htmlFor, children }: { htmlFor?: string; children: React.ReactNode }) {
-  return (
-    <label htmlFor={htmlFor} className="mb-1.5 flex items-center gap-1 text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-500">
-      {children}
-    </label>
-  );
+function todayISO() {
+  return new Date().toISOString().split("T")[0];
 }
 
-function SectionEyebrow({ step, title, sub }: { step: number; title: string; sub: string }) {
-  return (
-    <div className="mb-1">
-      <div className="flex items-center gap-2">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-linear-to-r from-primary/10 to-primary/3 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.12em] text-primary ring-1 ring-inset ring-primary/15">
-          <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-          Step {step} of {STEPS.length}
-        </span>
-      </div>
-      <h2 className="mt-2 text-[1.35rem] font-extrabold tracking-tight text-slate-900">{title}</h2>
-      <p className="mt-1 text-[13px] text-slate-500">{sub}</p>
-    </div>
-  );
-}
+/* =============================================================================
+   LOCATION AUTOCOMPLETE (plain text + suggestion list, no distance/coords)
+   ============================================================================= */
 
-function SummaryRow({
-  icon: Icon,
-  label,
-  value,
-}: {
-  icon: React.ComponentType<{ size?: number; className?: string }>;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="flex items-center justify-between py-2 text-xs">
-      <div className="flex items-center gap-1.5 text-slate-400">
-        <Icon size={13} className="text-primary/70" />
-        <span>{label}</span>
-      </div>
-      <span className="max-w-[55%] truncate text-right font-semibold text-slate-800">{value}</span>
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------------- */
-/*  Stepper                                                                 */
-/* ---------------------------------------------------------------------- */
-
-function Stepper({ currentIndex }: { currentIndex: number }) {
-  const progressPct =
-    STEPS.length > 1
-      ? (currentIndex / (STEPS.length - 1)) * 100
-      : 0;
-
-  return (
-    <div className="relative overflow-hidden border-b border-slate-200/70 bg-linear-to-br from-slate-50 via-white to-blue-50/40 px-5 py-6">
-
-      {/* Background Glow */}
-      <div className="pointer-events-none absolute -left-24 -top-20 h-60 w-60 rounded-full bg-primary/10 blur-3xl" />
-      <div className="pointer-events-none absolute -right-20 bottom-0 h-48 w-48 rounded-full bg-sky-300/10 blur-3xl" />
-
-      {/* Progress Track */}
-      <div className="pointer-events-none absolute left-6 right-6 top-9.5 hidden sm:block">
-        <div className="relative h-1.25 rounded-full bg-slate-200">
-
-          {/* Progress */}
-          <div
-            className="relative h-full rounded-full bg-linear-to-r from-primary via-blue-500 to-primary transition-all duration-700 ease-out"
-            style={{ width: `${progressPct}%` }}
-          >
-            {/* Moving Dot */}
-            <span className="absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 translate-x-1/2 rounded-full border-4 border-white bg-primary shadow-lg shadow-primary/40" />
-          </div>
-        </div>
-      </div>
-
-      {/* Steps */}
-      <div className="relative flex justify-between">
-        {STEPS.map((step, i) => {
-          const state =
-            i < currentIndex
-              ? "done"
-              : i === currentIndex
-              ? "active"
-              : "todo";
-
-          return (
-            <div
-              key={step.key}
-              className="group flex flex-1 flex-col items-center"
-            >
-              {/* Circle */}
-              <div
-                className={`
-                  relative flex h-12 w-12 items-center justify-center rounded-full
-                  text-sm font-bold transition-all duration-300
-
-                  ${
-                    state === "done"
-                      ? "bg-linear-to-br from-primary to-blue-600 text-white shadow-lg shadow-primary/30"
-                      : state === "active"
-                      ? "scale-110 bg-linear-to-br from-primary to-blue-500 text-white ring-8 ring-primary/10 shadow-xl shadow-primary/40"
-                      : "bg-white text-slate-400 ring-2 ring-slate-200"
-                  }
-
-                  group-hover:scale-105
-                `}
-              >
-                {state === "done" ? (
-                  <Check
-                    size={18}
-                    strokeWidth={3}
-                    className="animate-in zoom-in duration-300"
-                  />
-                ) : (
-                  i + 1
-                )}
-
-                {/* Pulse */}
-                {state === "active" && (
-                  <span className="absolute inset-0 rounded-full border-2 border-primary animate-ping opacity-20" />
-                )}
-              </div>
-
-              {/* Labels */}
-              <div className="mt-3 hidden text-center sm:block">
-                <p
-                  className={`text-sm font-semibold transition-colors ${
-                    state === "todo"
-                      ? "text-slate-400"
-                      : "text-slate-900"
-                  }`}
-                >
-                  {step.label}
-                </p>
-
-                <p
-                  className={`mt-1 text-xs ${
-                    state === "active"
-                      ? "text-primary"
-                      : "text-slate-400"
-                  }`}
-                >
-                  {step.sub}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-/* ---------------------------------------------------------------------- */
-/*  Trip summary sidebar                                                   */
-/* ---------------------------------------------------------------------- */
-
-function TripSummarySidebar({
-  trip,
-  vehicle,
-  distanceKm,
-  minutes,
-  // total,
-}: {
-  trip: TripDetails;
-  vehicle: Vehicle | null;
-  distanceKm: number;
-  minutes: number;
-  total: number;
-}) {
-  return (
-    <aside className="w-full shrink-0 self-start overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-[0_2px_10px_rgba(15,23,42,0.06)] lg:sticky lg:top-4 lg:w-72">
-      <div className="relative overflow-hidden border-b border-slate-100 bg-linear-to-br from-primary/8 via-primary/2 to-white px-4 py-4">
-        <div className="pointer-events-none absolute -right-6 -top-8 h-20 w-20 rounded-full bg-primary/10 blur-2xl" />
-        <h3 className="relative flex items-center gap-1.5 text-sm font-extrabold tracking-tight text-slate-900">
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary">
-            <Sparkles size={11} />
-          </span>
-          Trip Summary
-        </h3>
-      </div>
-
-      <div className="px-4 pt-4">
-        <div className="flex gap-3">
-          <div className="flex flex-col items-center pt-1">
-            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500 ring-4 ring-emerald-50" />
-            <span className="my-1 h-6 w-px flex-1 border-l-2 border-dashed border-slate-200" />
-            <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-red-500 ring-4 ring-red-50" />
-          </div>
-          <div className="flex-1 space-y-3">
-            <div>
-              <p className="text-sm font-semibold leading-tight text-slate-900">{trip.pickup || "Pickup location"}</p>
-              <p className="text-[11px] text-slate-400">Pickup location</p>
-            </div>
-            <div>
-              <p className="text-sm font-semibold leading-tight text-slate-900">{trip.drop || "Drop location"}</p>
-              <p className="text-[11px] text-slate-400">Drop location</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-3 divide-y divide-slate-100 border-t border-slate-100">
-          <SummaryRow icon={Car} label="Vehicle" value={vehicle ? vehicle.name : "Not selected"} />
-          <SummaryRow icon={ArrowLeftRight} label="Trip Type" value={trip.tripOption} />
-          <SummaryRow icon={CalendarIcon} label="Date & Time" value={trip.travelDate ? `${formatDateLabel(trip.travelDate)}` : "Not selected"} />
-          <SummaryRow icon={Users} label="Passengers" value={trip.passengers} />
-          <SummaryRow icon={Briefcase} label="Luggage" value={trip.luggage} />
-          <SummaryRow icon={Navigation} label="Distance" value={distanceKm ? `${distanceKm} km` : "Not calculated"} />
-          <SummaryRow icon={Clock} label="Est. Time" value={minutes ? formatDuration(minutes) : "Not calculated"} />
-
-        </div>
-      </div>
-
-      <div className="mx-4 mb-3.5 mt-3 flex items-center gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3 py-2.5 ring-1 ring-inset ring-primary/10">
-        <ShieldCheck size={16} className="shrink-0 text-primary" />
-        <div>
-          <p className="text-xs font-semibold text-slate-800">100% Secure Booking</p>
-          <p className="text-[11px] text-slate-500">Your information is safe with us.</p>
-        </div>
-      </div>
-
-      <div className="mx-4 mb-4 flex items-center justify-between border-t border-slate-100 pt-3.5">
-<div>
-  <p className="text-xs font-semibold text-slate-800">Need Help?</p>
-  <a
-    href={`tel:+${SUPPORT_PHONE}`}
-    className="inline-flex items-center gap-1.5 mt-1 px-3 py-1.5 rounded-full bg-primary text-white text-xs font-bold shadow-md shadow-primary/30 animate-pulse hover:shadow-lg transition-shadow"
-  >
-    📞 {SUPPORT_PHONE_DISPLAY}
-  </a>
-  <p className="text-[11px] text-slate-400 mt-1">We're available 24/7</p>
-</div>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-linear-to-br from-primary/15 to-primary/5 text-primary">
-          <Headphones size={17} />
-        </div>
-      </div>
-    </aside>
-  );
-}
-
-/* ---------------------------------------------------------------------- */
-/*  Primary CTA button (shared styling)                                    */
-/* ---------------------------------------------------------------------- */
-
-function PrimaryButton({
-  children,
-  onClick,
-  disabled,
-  className = "",
-}: {
-  children: React.ReactNode;
-  onClick?: () => void;
-  disabled?: boolean;
-  className?: string;
-}) {
-  return (
-    <button
-      type="button"
-      disabled={disabled}
-      onClick={onClick}
-      className={`flex items-center justify-center gap-2 rounded-xl bg-linear-to-b from-primary to-primary/90 px-4 py-3 text-sm font-bold tracking-tight text-white shadow-[0_4px_14px_-2px] shadow-primary/35 transition-all duration-150 hover:brightness-[1.07] hover:shadow-[0_6px_18px_-2px] hover:shadow-primary/45 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none ${className}`}
-    >
-      {children}
-    </button>
-  );
-}
-
-/* ---------------------------------------------------------------------- */
-/*  Date & time constants (used inside Step 1 — Trip Details)              */
-/* ---------------------------------------------------------------------- */
-
-const WEEKDAY_LABELS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-const TIME_SLOTS = Array.from({ length: 24 * 2 }, (_, i) => {
-  const totalMinutes = i * 30;
-  const h24 = Math.floor(totalMinutes / 60);
-  const m = totalMinutes % 60;
-  const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
-  const suffix = h24 < 12 ? "AM" : "PM";
-  return `${String(h12).padStart(2, "0")}:${String(m).padStart(2, "0")} ${suffix}`;
-});
-
-/* ---------------------------------------------------------------------- */
-/*  Click-to-open date picker — a compact trigger field that reveals a     */
-/*  calendar popover on click/tap, and closes on selection or outside tap  */
-/* ---------------------------------------------------------------------- */
-
-function DateTimePickerField({
+function LocationAutocomplete({
   id,
-  dateValue,
-  timeValue,
-  onDateChange,
-  onTimeChange,
+  value,
+  onChange,
+  placeholder,
+  icon: Icon = MapPin,
+  popularPlaces = [],
+  allowGeolocate = false,
 }: {
   id: string;
-  dateValue: string;
-  timeValue: string;
-  onDateChange: (iso: string) => void;
-  onTimeChange: (time: string) => void;
+  value: string;
+  onChange: (label: string) => void;
+  placeholder: string;
+  icon?: ElementType;
+  popularPlaces?: string[];
+  allowGeolocate?: boolean;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-  const today = new Date();
-  const todayIso = today.toISOString().split("T")[0];
-  const selectedDate = dateValue ? new Date(`${dateValue}T00:00:00`) : today;
-
-  const [viewYear, setViewYear] = useState(selectedDate.getFullYear());
-  const [viewMonth, setViewMonth] = useState(selectedDate.getMonth());
-
-  const monthLabel = new Date(viewYear, viewMonth, 1).toLocaleDateString("en-IN", {
-    month: "long",
-    year: "numeric",
-  });
-
-  const calendarCells = useMemo(() => {
-    const firstDay = new Date(viewYear, viewMonth, 1).getDay();
-    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
-    const daysInPrevMonth = new Date(viewYear, viewMonth, 0).getDate();
-    const cells: { day: number; inMonth: boolean; iso: string }[] = [];
-    for (let i = firstDay - 1; i >= 0; i--) {
-      cells.push({ day: daysInPrevMonth - i, inMonth: false, iso: "" });
-    }
-    for (let d = 1; d <= daysInMonth; d++) {
-      const iso = `${viewYear}-${String(viewMonth + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-      cells.push({ day: d, inMonth: true, iso });
-    }
-    while (cells.length % 7 !== 0) {
-      cells.push({ day: cells.length, inMonth: false, iso: "" });
-    }
-    return cells;
-  }, [viewYear, viewMonth]);
-
-  function changeMonth(delta: number) {
-    let m = viewMonth + delta;
-    let y = viewYear;
-    if (m < 0) {
-      m = 11;
-      y -= 1;
-    } else if (m > 11) {
-      m = 0;
-      y += 1;
-    }
-    setViewMonth(m);
-    setViewYear(y);
-  }
-
-  function handleToggle() {
-
-    const base = dateValue ? new Date(`${dateValue}T00:00:00`) : today;
-    setViewYear(base.getFullYear());
-    setViewMonth(base.getMonth());
-    setIsOpen((o) => !o);
-  }
-
-
-  function handleSelectDate(iso: string) {
-    onDateChange(iso);
-  }
-
-  function handleDone() {
-    setIsOpen(false);
-  }
+  const [open, setOpen] = useState(false);
+  const [locating, setLocating] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!isOpen) return;
-    function handleOutside(e: MouseEvent | TouchEvent) {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
+    function onClickOutside(e: MouseEvent) {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);
     }
-    function handleEscape(e: KeyboardEvent) {
-      if (e.key === "Escape") setIsOpen(false);
-    }
-    document.addEventListener("mousedown", handleOutside);
-    document.addEventListener("touchstart", handleOutside);
-    document.addEventListener("keydown", handleEscape);
-    return () => {
-      document.removeEventListener("mousedown", handleOutside);
-      document.removeEventListener("touchstart", handleOutside);
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, [isOpen]);
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
 
-  const triggerLabel = dateValue
-    ? `${formatDateLabel(dateValue)}${timeValue ? ` • ${timeValue}` : ""}`
-    : "Select travel date & time";
+  const filtered = (() => {
+    const q = value.trim().toLowerCase();
+    if (!q) return popularPlaces;
+    return popularPlaces.filter((p) => p.toLowerCase().includes(q));
+  })();
+
+  function handleGeolocate() {
+    if (!navigator.geolocation) return;
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      () => {
+        onChange("My Current Location");
+        setLocating(false);
+        setOpen(false);
+      },
+      () => setLocating(false),
+      { timeout: 8000 }
+    );
+  }
 
   return (
-    <div ref={containerRef} className="relative z-30">
-      <Label htmlFor={id}>Travel Date &amp; Time *</Label>
-      <button
-        type="button"
-        id={id}
-        onClick={handleToggle}
-        aria-haspopup="dialog"
-        aria-expanded={isOpen}
-        className={`group flex w-full items-center gap-2.5 rounded-xl border bg-white px-3 py-2.5 text-left shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-200 ${
-          isOpen ? "border-primary shadow-[0_0_0_3.5px_var(--tw-shadow-color)] shadow-primary/12" : "border-slate-200/80 hover:border-slate-300"
-        }`}
-      >
-        <span
-          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary transition-all duration-200 ${
-            isOpen ? "bg-primary text-white shadow-sm shadow-primary/40" : ""
-          }`}
-        >
-          <CalendarIcon size={13} className="shrink-0" />
+    <div className="relative" ref={wrapRef}>
+      <div className="flex items-center gap-2 rounded-xl border border-white/70 bg-white/60 px-3 py-2.5 backdrop-blur-md transition-colors focus-within:border-blue-400 focus-within:bg-white/80 focus-within:ring-4 focus-within:ring-blue-500/10">
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-500/10 text-blue-600">
+          <Icon size={13} />
         </span>
-        <span className={`flex-1 truncate text-xs font-medium ${dateValue ? "text-slate-800" : "text-slate-400"}`}>
-          {triggerLabel}
-        </span>
-        <ChevronDown size={14} className={`shrink-0 text-slate-400 transition-transform duration-200 ${isOpen ? "rotate-180 text-primary" : ""}`} />
-      </button>
+        <input
+          id={id}
+          type="text"
+          value={value}
+          onFocus={() => setOpen(true)}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className="w-full min-w-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+        />
+        {allowGeolocate && (
+          <button
+            type="button"
+            onClick={handleGeolocate}
+            aria-label="Use current location"
+            className="shrink-0 text-slate-400 hover:text-blue-600"
+          >
+            <Locate size={16} className={locating ? "animate-pulse text-blue-500" : ""} />
+          </button>
+        )}
+      </div>
 
-      {isOpen && (
-        <div
-          role="dialog"
-          className="absolute left-0 top-full z-100 mt-2 w-[min(92vw,480px)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10 animate-in fade-in zoom-in-95 duration-150"
-        >
-          {/* Side-by-side: calendar on the left, time slots on the right */}
-          <div className="grid grid-cols-[1fr_150px] divide-x divide-slate-100">
-            {/* ---------------- Calendar (left) ---------------- */}
-            <div className="p-3.5">
-              <div className="mb-2.5 flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={() => changeMonth(-1)}
-                  className="rounded-full p-1.5 text-slate-500 transition-colors hover:bg-primary/8 hover:text-primary"
-                >
-                  <ChevronLeft size={16} />
-                </button>
-                <p className="text-xs font-extrabold tracking-tight text-slate-800">{monthLabel}</p>
-                <button
-                  type="button"
-                  onClick={() => changeMonth(1)}
-                  className="rounded-full p-1.5 text-slate-500 transition-colors hover:bg-primary/8 hover:text-primary"
-                >
-                  <ChevronRight size={16} />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-bold tracking-wide text-slate-400">
-                {WEEKDAY_LABELS.map((w) => (
-                  <span key={w}>{w}</span>
-                ))}
-              </div>
-
-              <div className="mt-1.5 grid grid-cols-7 gap-1">
-                {calendarCells.map((cell, i) => {
-                  const isPast = cell.inMonth && cell.iso < todayIso;
-                  const isSelected = cell.inMonth && cell.iso === dateValue;
-                  const isToday = cell.inMonth && cell.iso === todayIso;
-                  return (
-                    <button
-                      key={i}
-                      type="button"
-                      disabled={!cell.inMonth || isPast}
-                      onClick={() => handleSelectDate(cell.iso)}
-                      className={`relative aspect-square rounded-lg text-xs font-semibold transition-all duration-150 ${
-                        !cell.inMonth
-                          ? "text-transparent"
-                          : isSelected
-                          ? "scale-105 bg-linear-to-b from-primary to-primary/90 font-bold text-white shadow-md shadow-primary/40 ring-2 ring-primary/20"
-                          : isPast
-                          ? "cursor-not-allowed text-slate-300"
-                          : isToday
-                          ? "text-primary ring-1 ring-inset ring-primary/30 hover:bg-primary/10"
-                          : "text-slate-700 hover:bg-primary/10"
-                      }`}
-                    >
-                      {cell.day}
-                      {isToday && !isSelected && (
-                        <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary" />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-
+      {open && filtered.length > 0 && (
+        <ul className="absolute left-0 right-0 top-full z-50 mt-1.5 max-h-56 overflow-y-auto rounded-xl border border-white/70 bg-white/95 py-1 shadow-xl backdrop-blur-xl">
+          {filtered.map((place) => (
+            <li key={place}>
               <button
                 type="button"
-                onClick={() => handleSelectDate(todayIso)}
-                className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-lg bg-primary/5 px-2.5 py-1.5 text-[11px] font-bold text-primary transition-colors hover:bg-primary/10"
+                onClick={() => {
+                  onChange(place);
+                  setOpen(false);
+                }}
+                className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-700 hover:bg-blue-50"
               >
-                <CalendarIcon size={12} /> Today: {formatDateLabel(todayIso)}
+                <MapPin size={13} className="shrink-0 text-slate-300" />
+                <span className="truncate">{place}</span>
               </button>
-            </div>
-
-            {/* ---------------- Time slots (right) ---------------- */}
-            <div className="flex flex-col">
-              <p className="flex items-center gap-1.5 border-b border-slate-100 bg-slate-50/60 px-3 py-2.5 text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-500">
-                <Clock size={12} className="text-primary" /> Time
-              </p>
-              <div className="max-h-65 flex-1 overflow-y-auto px-1.5 py-1.5 scrollbar-thin">
-                {TIME_SLOTS.map((t) => {
-                  const isSelected = t === timeValue;
-                  return (
-                    <button
-                      key={t}
-                      type="button"
-                      onClick={() => onTimeChange(t)}
-                      className={`mb-1 flex w-full items-center justify-center rounded-lg px-2 py-1.5 text-xs font-semibold tabular-nums transition-all duration-150 ${
-                        isSelected
-                          ? "bg-linear-to-b from-primary to-primary/90 text-white shadow-sm shadow-primary/40"
-                          : "text-slate-600 hover:bg-primary/8 hover:text-primary"
-                      }`}
-                    >
-                      {t}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-slate-100 p-3">
-            <button
-              type="button"
-              onClick={handleDone}
-              disabled={!dateValue}
-              className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-linear-to-b from-primary to-primary/90 px-3 py-2.5 text-xs font-bold text-white shadow-sm shadow-primary/30 transition-all hover:brightness-105 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
-            >
-              <Check size={13} /> Done
-            </button>
-          </div>
-        </div>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
 }
 
-/* ---------------------------------------------------------------------- */
-/*  Step 1 — Trip Details (now also includes Date & Time)                  */
-/* ---------------------------------------------------------------------- */
+/* =============================================================================
+   SHARED UI PIECES
+   ============================================================================= */
 
-function StepTripDetails({
-  trip,
-  setTrip,
-  distanceKm,
-  minutes,
-  pickupCoords,
-  dropCoords,
-  onPickupCoords,
-  onDropCoords,
-  onRouteComputed,
-  onNext,
+function StepField({
+  index,
+  label,
+  icon: Icon,
+  children,
 }: {
-  trip: TripDetails;
-  setTrip: (updater: (prev: TripDetails) => TripDetails) => void;
-  distanceKm: number;
-  minutes: number;
-  pickupCoords: GeoPoint | null;
-  dropCoords: GeoPoint | null;
-  onPickupCoords: (coords: GeoPoint | null) => void;
-  onDropCoords: (coords: GeoPoint | null) => void;
-  onRouteComputed: (info: { distanceKm: number; minutes: number }) => void;
-  onNext: () => void;
+  index: number;
+  label: string;
+  icon?: ElementType;
+  children: React.ReactNode;
 }) {
-  const config = TRIP_CONFIG[trip.tripType];
+  return (
+    <div className="min-w-0">
+      <p className="mb-2 flex items-center gap-1.5 text-[13px] font-semibold text-slate-600 sm:gap-2 sm:text-sm">
+        {Icon && <Icon size={14} className="shrink-0 text-slate-400 sm:hidden" />}
+        <span className="hidden h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-500 text-[10px] font-bold text-white shadow-sm shadow-blue-500/30 sm:flex">
+          {index}
+        </span>
+        <span>
+          {index}. {label}
+        </span>
+      </p>
+      {children}
+    </div>
+  );
+}
 
-  const canContinue =
-    trip.pickup.trim().length > 0 &&
-    trip.drop.trim().length > 0 &&
-    trip.travelDate.trim().length > 0;
+function CarSelect({ car, onChange }: { car: CarType; onChange: (id: CarId) => void }) {
+  const [open, setOpen] = useState(false);
+  const [coords, setCoords] = useState({ top: 0, left: 0, width: 0 });
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  function toggleOpen() {
+    if (!open && btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect();
+      setCoords({
+        top: rect.bottom + window.scrollY + 6,
+        left: rect.left + window.scrollX,
+        width: Math.min(rect.width, window.innerWidth - 20),
+      });
+    }
+    setOpen((o) => !o);
+  }
+
+  useEffect(() => {
+    if (!open) return;
+    function reposition() {
+      if (!btnRef.current) return;
+      const rect = btnRef.current.getBoundingClientRect();
+      setCoords({
+        top: rect.bottom + window.scrollY + 6,
+        left: rect.left + window.scrollX,
+        width: rect.width,
+      });
+    }
+    window.addEventListener("scroll", reposition, true);
+    window.addEventListener("resize", reposition);
+    return () => {
+      window.removeEventListener("scroll", reposition, true);
+      window.removeEventListener("resize", reposition);
+    };
+  }, [open]);
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
-      <div>
-        <SectionEyebrow step={1} title="Enter Trip Details" sub="Please provide your pickup, drop location & preferred schedule" />
+    <div className="relative">
+      <button
+        ref={btnRef}
+        type="button"
+        onClick={toggleOpen}
+        className="flex w-full items-center gap-3 rounded-xl border border-white/70 bg-white/60 px-3 py-2 text-left backdrop-blur-md transition-colors hover:border-blue-300 hover:bg-white/80"
+      >
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white/80 ring-1 ring-white/80 sm:h-11 sm:w-11">
+          <img
+            src={car.image}
+            alt={car.name}
+            className="h-full w-full object-cover"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).style.display = "none";
+            }}
+          />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-sm font-semibold text-slate-800">{car.name}</span>
+          <span className="flex items-center gap-1 text-xs text-slate-500">
+            <Users size={11} /> {car.seats} Seater • {car.ac ? "AC" : "Non-AC"}
+          </span>
+        </span>
+        <ChevronDown size={16} className={`shrink-0 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
 
-        {/* Pickup / Drop side by side with the live map preview */}
-        <div className="mt-4 grid gap-4 md:grid-cols-2">
-          {/* relative z-10 keeps this whole column (and the date/time
-              popover it renders) above the map preview in stacking order,
-              which matters most on mobile where the two stack vertically */}
-          <div className="relative z-10 space-y-3">
-            <LocationAutocomplete
-              id="wizard-pickup"
-              label="Pickup Location"
-              value={trip.pickup}
-              onChange={(v, coords) => {
-                setTrip((p) => ({ ...p, pickup: v }));
-                // Keep the resolved point alongside the text so the map
-                // can skip re-geocoding when the user picked a suggestion;
-                // free-typed edits (no coords arg) clear it so the map
-                // falls back to geocoding the new text itself.
-                onPickupCoords(coords ? { lat: parseFloat(coords.lat), lon: parseFloat(coords.lon) } : null);
+      {open &&
+        createPortal(
+          <>
+            <div className="fixed inset-0 z-[999]" onClick={() => setOpen(false)} />
+            <ul
+              style={{
+                position: "absolute",
+                top: coords.top,
+                left: coords.left,
+                width: coords.width,
               }}
-              placeholder="Enter pickup location"
-              icon={MapPin}
-              limitToVizag
-              popularPlaces={POPULAR_PICKUP_PLACES}
-            />
-            <LocationAutocomplete
-              id="wizard-drop"
-              label={config.dropLabel}
-              value={trip.drop}
-              onChange={(v, coords) => {
-                setTrip((p) => ({ ...p, drop: v }));
-                onDropCoords(coords ? { lat: parseFloat(coords.lat), lon: parseFloat(coords.lon) } : null);
-              }}
-              placeholder={config.dropPlaceholder}
-              icon={MapPin}
-              popularPlaces={POPULAR_DROP_PLACES}
-            />
-
-            {/* Travel date & time now sits right here, filling the space
-                below the location fields instead of a separate section */}
-            <DateTimePickerField
-              id="wizard-date"
-              dateValue={trip.travelDate}
-              timeValue={trip.travelTime}
-              onDateChange={(iso) => setTrip((p) => ({ ...p, travelDate: iso }))}
-              onTimeChange={(t) => setTrip((p) => ({ ...p, travelTime: t }))}
-            />
-          </div>
-
-          {/* relative isolate z-0: creates a fresh stacking context so any
-              high z-index values the map library sets internally (tile
-              panes, zoom controls, markers) are capped inside this box and
-              can never paint above the date/time popover next to it */}
-          <div className="relative isolate z-0 overflow-hidden rounded-xl border border-slate-100 shadow-[0_2px_10px_rgba(15,23,42,0.06)]">
-  {trip.pickup.trim().length >= 3 && trip.drop.trim().length >= 3 ? (
-    <Suspense
-      fallback={
-        <div className="flex h-56 w-full items-center justify-center bg-slate-50 text-xs text-slate-400 md:h-full md:min-h-60">
-          Loading map…
-        </div>
-      }
-    >
-      <RouteMapPreview
-        pickupLabel={trip.pickup}
-        dropLabel={trip.drop}
-        pickupCoords={pickupCoords}
-        dropCoords={dropCoords}
-        onRouteComputed={onRouteComputed}
-      />
-    </Suspense>
-  ) : (
-    <div className="flex h-56 w-full flex-col items-center justify-center gap-1.5 bg-slate-50 text-slate-400 md:h-full md:min-h-60">
-      <MapPin size={22} />
-      <p className="text-xs">Enter pickup &amp; drop to preview the route</p>
+              className="z-[1000] max-h-80 overflow-y-auto rounded-xl border border-white/70 bg-white/95 py-1 shadow-2xl backdrop-blur-xl"
+            >
+              {CAR_TYPES.map((option) => (
+                <li key={option.id}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onChange(option.id);
+                      setOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-3 px-3 py-2.5 text-left transition-colors hover:bg-blue-50 ${
+                      option.id === car.id ? "bg-blue-50" : ""
+                    }`}
+                  >
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-slate-50 ring-1 ring-slate-100 sm:h-11 sm:w-11">
+                      <img
+                        src={option.image}
+                        alt={option.name}
+                        className="h-full w-full object-cover"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).style.display = "none";
+                        }}
+                      />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-semibold text-slate-800">{option.name}</span>
+                      <span className="block text-xs text-slate-400">{option.subtitle}</span>
+                    </span>
+                    {option.id === car.id && <Check size={15} className="shrink-0 text-blue-600" />}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </>,
+          document.body
+        )}
     </div>
-  )}
-</div>
+  );
+}
+
+function DateTimeFields({
+  date,
+  time,
+  onDate,
+  onTime,
+  dateLabel = "Pickup Date",
+}: {
+  date: string;
+  time: string;
+  onDate: (v: string) => void;
+  onTime: (v: string) => void;
+  dateLabel?: string;
+}) {
+  return (
+    <div className="grid grid-cols-2 gap-2">
+      <div>
+        <label className="mb-1.5 flex items-center gap-1 text-[11px] font-medium text-slate-500">
+          <Calendar size={11} /> {dateLabel}
+        </label>
+        <input
+          type="date"
+          value={date}
+          min={todayISO()}
+          onChange={(e) => onDate(e.target.value)}
+          className="w-full rounded-lg border border-white/70 bg-white/60 px-2.5 py-2 text-xs text-slate-700 outline-none backdrop-blur-md focus:border-blue-400 focus:bg-white/80"
+        />
+      </div>
+      <div>
+        <label className="mb-1.5 flex items-center gap-1 text-[11px] font-medium text-slate-500">
+          <Clock size={11} /> Time
+        </label>
+        <input
+          type="time"
+          value={time}
+          onChange={(e) => onTime(e.target.value)}
+          className="w-full rounded-lg border border-white/70 bg-white/60 px-2.5 py-2 text-xs text-slate-700 outline-none backdrop-blur-md focus:border-blue-400 focus:bg-white/80"
+        />
+      </div>
+    </div>
+  );
+}
+
+function FareSummary({
+  amount,
+  note,
+}: {
+  amount: number | null | undefined;
+  note?: string;
+}) {
+  return (
+    <div className="flex items-center justify-between rounded-xl border border-blue-200/60 bg-blue-500/10 px-3 py-2.5 backdrop-blur-md">
+      <span className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wide text-blue-700">
+        <BadgeIndianRupee size={13} /> Fixed Fare
+      </span>
+      {amount !== null && amount !== undefined ? (
+        <span className="text-lg font-bold leading-tight text-slate-800">{formatCurrency(amount)}</span>
+      ) : (
+        <span className="text-xs font-medium text-slate-500">{note ?? "Select options"}</span>
+      )}
+    </div>
+  );
+}
+
+function OnCallFare() {
+  return (
+    <div className="flex items-center justify-between rounded-xl border border-amber-200/60 bg-amber-500/10 px-3 py-2.5 backdrop-blur-md">
+      <span className="text-[11px] font-medium text-amber-700">Fare confirmed on call / WhatsApp</span>
+    </div>
+  );
+}
+
+function TrustItem({
+  icon: Icon,
+  label,
+  iconBg,
+  iconColor,
+}: {
+  icon: ElementType;
+  label: string;
+  iconBg: string;
+  iconColor: string;
+}) {
+  return (
+    <div className="flex items-center gap-2.5">
+      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${iconBg}`}>
+        <Icon size={15} className={iconColor} />
+      </span>
+      <span className="text-xs font-medium text-slate-600">{label}</span>
+    </div>
+  );
+}
+
+function ProceedButtons({
+  onBook,
+  onWhatsApp,
+  error,
+}: {
+  onBook: () => void;
+  onWhatsApp: () => void;
+  error: string | null;
+}) {
+  return (
+    <div className="space-y-2">
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          onClick={onBook}
+          className="flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-indigo-600 via-blue-600 to-blue-500 py-3 text-[13px] font-semibold text-white shadow-lg shadow-blue-500/30 transition-transform hover:scale-[1.01] hover:shadow-xl active:scale-[0.99] sm:text-sm"
+        >
+          <CalendarCheck size={15} /> Book Now
+        </button>
+        <button
+          type="button"
+          onClick={onWhatsApp}
+          className="flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-[#25D366] py-3 text-[13px] font-semibold text-white shadow-lg shadow-emerald-500/30 transition-transform hover:scale-[1.01] active:scale-[0.99] sm:text-sm"
+        >
+          <MessageCircle size={15} /> WhatsApp
+        </button>
+      </div>
+      {error && (
+        <p className="flex items-start gap-1.5 text-[11px] font-medium text-red-500">
+          <AlertCircle size={13} className="mt-0.5 shrink-0" /> {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/* =============================================================================
+   CONFIRM MODAL
+   ============================================================================= */
+
+function ConfirmModal({
+  summary,
+  onClose,
+  onConfirm,
+}: {
+  summary: {
+    title: string;
+    rows: { label: string; value: string }[];
+    fareLabel: string;
+    fare: number | null;
+  };
+  onClose: () => void;
+  onConfirm: () => void;
+}) {
+  return (
+    <div className="fixed inset-0 z-[1000] flex items-end justify-center bg-slate-900/40 p-4 backdrop-blur-sm sm:items-center">
+      <div className="w-full max-w-md rounded-2xl border border-white/70 bg-white/90 p-4 shadow-2xl backdrop-blur-xl sm:max-w-sm sm:p-5">
+        <div className="mb-3 flex items-center justify-between">
+          <h3 className="text-base font-bold text-slate-800">{summary.title}</h3>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="flex h-7 w-7 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100"
+          >
+            <X size={16} />
+          </button>
         </div>
 
-        {/* Trip type */}
-        <div className="mt-4">
-          <span className="mb-1.5 block text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-500">Trip Type</span>
-          <div className="flex flex-wrap gap-2 sm:flex-nowrap">
-            {config.tripOptions.map((option) => {
-              const active = trip.tripOption === option;
+        <div className="space-y-2 rounded-xl bg-slate-50/80 p-3">
+          {summary.rows.map((row) => (
+            <div key={row.label} className="flex items-start justify-between gap-3 text-sm">
+              <span className="text-slate-500">{row.label}</span>
+              <span className="text-right font-medium text-slate-800">{row.value}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-3 flex items-center justify-between rounded-xl border border-blue-200/60 bg-blue-500/10 px-3 py-2.5">
+          <span className="text-sm font-medium text-slate-600">{summary.fareLabel}</span>
+          <span className="text-xl font-bold text-blue-600">
+            {summary.fare !== null ? formatCurrency(summary.fare) : "On call"}
+          </span>
+        </div>
+
+        <p className="mt-3 text-center text-[11px] text-slate-400">
+          Fixed package fare. Tolls, parking &amp; waiting charges (if any) are extra.
+        </p>
+
+        <button
+          type="button"
+          onClick={onConfirm}
+          className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-[#25D366] py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition-transform hover:scale-[1.01] active:scale-[0.99] sm:py-3 sm:text-sm"
+        >
+          <MessageCircle size={16} /> Confirm &amp; Continue on WhatsApp
+        </button>
+        <button
+          type="button"
+          onClick={onClose}
+          className="mt-2 w-full rounded-xl py-2.5 text-sm font-medium text-slate-500 hover:bg-slate-50"
+        >
+          Edit Details
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const TABS = [
+  { id: "local", label: "Local", icon: Car },
+  { id: "outstation", label: "Outstation", icon: Navigation },
+  { id: "airport", label: "Airport", icon: Plane },
+  { id: "tour", label: "Tour Packages", icon: Briefcase },
+] as const;
+
+type TabId = (typeof TABS)[number]["id"];
+
+export default function BookingCard() {
+  const [activeTab, setActiveTab] = useState<TabId>("local");
+  const [carId, setCarId] = useState<CarId>(CAR_TYPES[0].id); // default: Sedan
+  const car = CAR_TYPES.find((c) => c.id === carId) ?? CAR_TYPES[0];
+
+  const [error, setError] = useState<string | null>(null);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
+  // ---- Local tab state ----
+  const [localPickup, setLocalPickup] = useState("");
+  const [localPackageId, setLocalPackageId] = useState<LocalPackageId>(LOCAL_PACKAGES[0].id);
+  const [localDate, setLocalDate] = useState(todayISO());
+  const [localTime, setLocalTime] = useState("");
+
+  // ---- Outstation tab state ----
+  const [outPickup, setOutPickup] = useState("");
+  const [outDrop, setOutDrop] = useState("");
+  const [tripType, setTripType] = useState<"oneway" | "round">("oneway");
+  const [outDate, setOutDate] = useState(todayISO());
+  const [outTime, setOutTime] = useState("");
+
+  // ---- Airport tab state ----
+  const [airportDirection, setAirportDirection] = useState<"fromAirport" | "toAirport">("fromAirport");
+  const [airportOther, setAirportOther] = useState("");
+  const [airportDate, setAirportDate] = useState(todayISO());
+  const [airportTime, setAirportTime] = useState("");
+
+  // ---- Tour tab state ----
+  const [tourId, setTourId] = useState<TourId>(TOUR_PACKAGES[0].id);
+  const [tourDate, setTourDate] = useState(todayISO());
+  const tourPkg = TOUR_PACKAGES.find((t) => t.id === tourId) ?? TOUR_PACKAGES[0];
+
+  const airportPickupLabel = airportDirection === "fromAirport" ? "Visakhapatnam Airport (VTZ)" : airportOther;
+  const airportDropLabel = airportDirection === "fromAirport" ? airportOther : "Visakhapatnam Airport (VTZ)";
+
+  // ---- FIXED fares — pure lookups by [car] and [package], no math ----
+  const localFare = LOCAL_FARES[carId][localPackageId];
+  const airportFare = AIRPORT_FARES[carId];
+  const tourFare = TOUR_FARES[tourId][carId];
+
+  function switchTab(tab: TabId) {
+    setActiveTab(tab);
+    setError(null);
+  }
+
+  function swapOutstation() {
+    setOutPickup(outDrop);
+    setOutDrop(outPickup);
+  }
+
+  // ---- Validation ----
+  function validate() {
+    if (activeTab === "local") {
+      if (localPickup.trim().length < 3) return "Please enter a pickup location.";
+      if (!localTime) return "Please choose a pickup time.";
+    }
+    if (activeTab === "outstation") {
+      if (outPickup.trim().length < 3) return "Please enter a pickup location.";
+      if (outDrop.trim().length < 3) return "Please enter a drop location.";
+      if (!outTime) return "Please choose a pickup time.";
+    }
+    if (activeTab === "airport") {
+      if (airportOther.trim().length < 3)
+        return airportDirection === "fromAirport"
+          ? "Please enter a drop location."
+          : "Please enter a pickup location.";
+      if (!airportTime) return "Please choose a pickup time.";
+    }
+    if (activeTab === "tour") {
+      if (!tourId) return "Please select a tour package.";
+    }
+    return null;
+  }
+
+  function buildSummary() {
+    if (activeTab === "local") {
+      const pkg = LOCAL_PACKAGES.find((p) => p.id === localPackageId)!;
+      return {
+        title: "Confirm Local Booking",
+        rows: [
+          { label: "Pickup", value: localPickup },
+          { label: "Package", value: pkg.label },
+          { label: "Date & Time", value: `${localDate} · ${localTime || "—"}` },
+          { label: "Car", value: car.name },
+        ],
+        fareLabel: "Package Fare",
+        fare: localFare,
+      };
+    }
+    if (activeTab === "outstation") {
+      return {
+        title: "Confirm Outstation Booking",
+        rows: [
+          { label: "Pickup", value: outPickup },
+          { label: "Drop", value: outDrop },
+          { label: "Trip Type", value: tripType === "round" ? "Round Trip" : "One Way" },
+          { label: "Date & Time", value: `${outDate} · ${outTime || "—"}` },
+          { label: "Car", value: car.name },
+        ],
+        fareLabel: "Trip Fare",
+        fare: null, // confirmed on call/WhatsApp
+      };
+    }
+    if (activeTab === "airport") {
+      return {
+        title: "Confirm Airport Booking",
+        rows: [
+          { label: "Direction", value: airportDirection === "fromAirport" ? "Airport → City" : "City → Airport" },
+          { label: "Pickup", value: airportPickupLabel },
+          { label: "Drop", value: airportDropLabel },
+          { label: "Date & Time", value: `${airportDate} · ${airportTime || "—"}` },
+          { label: "Car", value: car.name },
+        ],
+        fareLabel: "Airport Fare",
+        fare: airportFare,
+      };
+    }
+    return {
+      title: "Confirm Tour Booking",
+      rows: [
+        { label: "Package", value: tourPkg.name },
+        { label: "Duration", value: `${tourPkg.days}D / ${tourPkg.nights}N` },
+        { label: "Travel Date", value: tourDate },
+        { label: "Car", value: car.name },
+      ],
+      fareLabel: "Package Price",
+      fare: tourFare,
+    };
+  }
+
+  function handleBookNow() {
+    const err = validate();
+    if (err) {
+      setError(err);
+      return;
+    }
+    setError(null);
+    setConfirmOpen(true);
+  }
+
+  function openWhatsApp() {
+    const summary = buildSummary();
+    const lines = [
+      "Hi BSH Taxi Services! I'd like to book a cab.",
+      "",
+      `*${summary.title.replace("Confirm ", "").replace(" Booking", "")}*`,
+      ...summary.rows.map((r) => `${r.label}: ${r.value}`),
+      `${summary.fareLabel}: ${summary.fare !== null ? formatCurrency(summary.fare) : "Please confirm on call"}`,
+    ];
+    const message = encodeURIComponent(lines.join("\n"));
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank", "noopener,noreferrer");
+    setConfirmOpen(false);
+  }
+
+  function handleQuickWhatsApp() {
+    const err = validate();
+    if (err) {
+      setError(err);
+      return;
+    }
+    setError(null);
+    openWhatsApp();
+  }
+
+  return (
+    <div className="relative mx-auto w-full max-w-6xl">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -inset-4 -z-10 rounded-[2rem] bg-gradient-to-br from-blue-200/60 via-indigo-100/50 to-sky-200/60 blur-2xl sm:-inset-6 sm:rounded-[2.5rem] lg:-inset-10"
+      />
+
+      <div className="relative overflow-hidden rounded-[24px] border border-white/60 bg-white/45 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:rounded-[28px] lg:rounded-[32px]">
+        <div className="relative z-10">
+          <div className="grid grid-cols-4 gap-1.5 p-3 sm:m-4 sm:mb-0 sm:flex sm:w-fit sm:gap-2 sm:rounded-2xl sm:border sm:border-white/60 sm:bg-white/50 sm:p-1.5 sm:backdrop-blur-md">
+            {TABS.map(({ id, label, icon: Icon }) => {
+              const active = activeTab === id;
               return (
                 <button
-                  key={option}
+                  key={id}
                   type="button"
-                  onClick={() => setTrip((p) => ({ ...p, tripOption: option }))}
-                  className={`flex flex-1 basis-[calc(50%-0.25rem)] items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-xs font-bold transition-all duration-150 sm:basis-auto ${
+                  onClick={() => switchTab(id)}
+                  className={`flex flex-col items-center justify-center gap-1 rounded-xl border py-2.5 text-[10.5px] font-semibold leading-tight transition-all sm:flex-row sm:gap-2 sm:rounded-xl sm:border-0 sm:px-4 sm:py-2.5 sm:text-sm ${
                     active
-                      ? "border-primary bg-linear-to-b from-primary to-primary/90 text-white shadow-sm shadow-primary/30"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-primary/40 hover:bg-primary/5"
+                      ? "border-transparent bg-gradient-to-br from-indigo-600 to-blue-500 text-white shadow-md shadow-blue-500/30 sm:bg-gradient-to-r"
+                      : "border-slate-200/80 bg-white/70 text-slate-500 hover:border-blue-200 hover:text-blue-600 sm:border-0 sm:bg-transparent sm:hover:bg-white/60"
                   }`}
                 >
-                  {option.toLowerCase().includes("round") || option.toLowerCase().includes("multi") ? (
-                    <Repeat2 size={13} />
-                  ) : (
-                    <ArrowRight size={13} />
-                  )}
-                  {option}
+                  <Icon size={19} strokeWidth={2.15} className="sm:hidden" />
+                  <Icon size={17} strokeWidth={2.25} className="hidden sm:block" />
+                  <span className="text-center">{label}</span>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Passengers / Luggage */}
-        <div className="mt-3.5 grid grid-cols-2 gap-3">
-          <div>
-            <Label htmlFor="wizard-passengers">Passengers</Label>
-            <FieldShell icon={Users}>
-              <select
-                id="wizard-passengers"
-                value={trip.passengers}
-                onChange={(e) => setTrip((p) => ({ ...p, passengers: e.target.value }))}
-                className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none"
-              >
-                {PASSENGER_OPTIONS.map((o) => (
-                  <option key={o} value={o}>
-                    {o}
-                  </option>
-                ))}
-              </select>
-            </FieldShell>
-          </div>
-          <div>
-            <Label htmlFor="wizard-luggage">Luggage (Optional)</Label>
-            <FieldShell icon={Briefcase}>
-              <select
-                id="wizard-luggage"
-                value={trip.luggage}
-                onChange={(e) => setTrip((p) => ({ ...p, luggage: e.target.value }))}
-                className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none"
-              >
-                {LUGGAGE_OPTIONS.map((o) => (
-                  <option key={o} value={o}>
-                    {o}
-                  </option>
-                ))}
-              </select>
-            </FieldShell>
-          </div>
-        </div>
+        <div className="relative z-10 p-4 sm:p-6">
+          {/* ------------------------------------------------------------- LOCAL */}
+          {activeTab === "local" && (
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.4fr_1fr_1.1fr_1fr]">
+              <StepField index={1} label="Pickup Location" icon={MapPin}>
+                <div className="space-y-2.5">
+                  <LocationAutocomplete
+                    id="local-pickup"
+                    value={localPickup}
+                    onChange={setLocalPickup}
+                    placeholder="Enter pickup location"
+                    icon={MapPin}
+                    popularPlaces={POPULAR_PICKUP_PLACES}
+                    allowGeolocate
+                  />
+                  <DateTimeFields date={localDate} time={localTime} onDate={setLocalDate} onTime={setLocalTime} />
+                </div>
+              </StepField>
 
+              <StepField index={2} label="Package" icon={Clock}>
+                <div className="grid grid-cols-2 gap-2 lg:grid-cols-1">
+                  {LOCAL_PACKAGES.map((pkg) => (
+                    <label
+                      key={pkg.id}
+                      className={`flex cursor-pointer items-start gap-2 rounded-xl border px-3 py-2.5 backdrop-blur-md transition-colors ${
+                        localPackageId === pkg.id
+                          ? "border-blue-400 bg-blue-500/10"
+                          : "border-white/70 bg-white/50 hover:border-blue-200"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="local-package"
+                        className="mt-0.5 accent-blue-600"
+                        checked={localPackageId === pkg.id}
+                        onChange={() => setLocalPackageId(pkg.id)}
+                      />
+                      <span>
+                        <span className="block text-sm font-semibold text-slate-800">{pkg.label}</span>
+                        <span className="block text-xs text-slate-500">{pkg.description}</span>
+                        <span className="mt-0.5 block text-xs font-semibold text-blue-600">
+                          {formatCurrency(LOCAL_FARES[carId][pkg.id])}
+                        </span>
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </StepField>
 
-        <div className="mt-3.5 flex items-start gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3.5 py-2.5 text-xs text-slate-600 ring-1 ring-inset ring-primary/10">
-          <Info size={14} className="mt-0.5 shrink-0 text-primary" />
-          Note: Our driver will arrive 15 minutes before the scheduled pickup time.
-        </div>
+              <StepField index={3} label="Select Car" icon={Car}>
+                <div className="space-y-3">
+                  <CarSelect car={car} onChange={setCarId} />
+                  <FareSummary amount={localFare} />
+                </div>
+              </StepField>
 
-        <PrimaryButton disabled={!canContinue} onClick={onNext} className="mt-5 w-full">
-          Continue to Choose Vehicle
-          <ArrowRight size={15} />
-        </PrimaryButton>
-      </div>
+              <StepField index={4} label="Proceed" icon={CalendarCheck}>
+                <ProceedButtons onBook={handleBookNow} onWhatsApp={handleQuickWhatsApp} error={error} />
+              </StepField>
+            </div>
+          )}
 
-      <TripSummarySidebar trip={trip} vehicle={null} distanceKm={distanceKm} minutes={minutes} total={0} />
-    </div>
-  );
-}
-/* ---------------------------------------------------------------------- */
-/*  Step 2 — Vehicle                                                       */
-/* ---------------------------------------------------------------------- */
+          {/* -------------------------------------------------------- OUTSTATION */}
+          {activeTab === "outstation" && (
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.4fr_1fr_1.1fr_1fr]">
+              <StepField index={1} label="Pickup & Drop" icon={MapPin}>
+                <div className="relative space-y-2">
+                  <LocationAutocomplete
+                    id="out-pickup"
+                    value={outPickup}
+                    onChange={setOutPickup}
+                    placeholder="Pickup location"
+                    icon={MapPin}
+                    popularPlaces={POPULAR_PICKUP_PLACES}
+                    allowGeolocate
+                  />
+                  <div className="flex justify-center">
+                    <button
+                      type="button"
+                      onClick={swapOutstation}
+                      aria-label="Swap pickup and drop"
+                      className="flex h-7 w-7 items-center justify-center rounded-full border border-white/70 bg-white/60 text-slate-400 backdrop-blur-md hover:border-blue-300 hover:text-blue-600"
+                    >
+                      <ArrowLeftRight size={13} />
+                    </button>
+                  </div>
+                  <LocationAutocomplete
+                    id="out-drop"
+                    value={outDrop}
+                    onChange={setOutDrop}
+                    placeholder="Drop location / city"
+                    icon={Navigation}
+                    popularPlaces={POPULAR_DROP_PLACES}
+                  />
+                </div>
+              </StepField>
 
-function StepVehicle({
-  trip,
-  distanceKm,
-  minutes,
-  vehicle,
-  setVehicleId,
-  onBack,
-  onNext,
-}: {
-  trip: TripDetails;
-  distanceKm: number;
-  minutes: number;
-  vehicle: Vehicle | null;
-  setVehicleId: (id: string) => void;
-  onBack: () => void;
-  onNext: () => void;
-}) {
-  return (
-    <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
-      <div>
-        <SectionEyebrow step={2} title="Choose Your Vehicle" sub="Select the vehicle that best suits your journey" />
+              <StepField index={2} label="Trip Type" icon={ArrowLeftRight}>
+                <div className="space-y-2">
+                  <div className="grid grid-cols-2 gap-2 lg:grid-cols-1">
+                    {(["oneway", "round"] as const).map((type) => (
+                      <label
+                        key={type}
+                        className={`flex cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 backdrop-blur-md transition-colors ${
+                          tripType === type
+                            ? "border-blue-400 bg-blue-500/10"
+                            : "border-white/70 bg-white/50 hover:border-blue-200"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="trip-type"
+                          className="accent-blue-600"
+                          checked={tripType === type}
+                          onChange={() => setTripType(type)}
+                        />
+                        <span className="text-sm font-semibold text-slate-800">
+                          {type === "oneway" ? "One Way" : "Round Trip"}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                  <DateTimeFields date={outDate} time={outTime} onDate={setOutDate} onTime={setOutTime} />
+                </div>
+              </StepField>
 
-        <div className="mt-4 flex flex-wrap items-center gap-4 rounded-xl border border-slate-100 bg-linear-to-r from-slate-50/80 to-white px-3.5 py-2.5 text-xs font-semibold text-slate-600">
-          <span className="flex items-center gap-1.5">
-            <Navigation size={13} className="text-primary" /> {distanceKm} km
-          </span>
-          <span className="h-3 w-px bg-slate-200" />
-          <span className="flex items-center gap-1.5">
-            <Clock size={13} className="text-primary" /> {formatDuration(minutes)}
-          </span>
-          <span className="h-3 w-px bg-slate-200" />
-          <span className="flex items-center gap-1.5">
-            <ArrowLeftRight size={13} className="text-primary" /> {trip.tripOption}
-          </span>
-          <span className="h-3 w-px bg-slate-200" />
-          <span className="flex items-center gap-1.5">
-            <Users size={13} className="text-primary" /> {trip.passengers}
-          </span>
-        </div>
+              <StepField index={3} label="Select Car" icon={Car}>
+                <div className="space-y-3">
+                  <CarSelect car={car} onChange={setCarId} />
+                  <OnCallFare />
+                </div>
+              </StepField>
 
-        <p className="mt-4 mb-2.5 text-xs font-bold text-slate-800">
-          Available Vehicles <span className="ml-1 font-normal text-slate-400">— all vehicles are sanitized and well maintained</span>
-        </p>
+              <StepField index={4} label="Proceed" icon={CalendarCheck}>
+                <ProceedButtons onBook={handleBookNow} onWhatsApp={handleQuickWhatsApp} error={error} />
+              </StepField>
+            </div>
+          )}
 
-        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 xl:grid-cols-4">
-          {VEHICLES.map((v) => {
-            const active = vehicle?.id === v.id;
-            const total = Math.round(v.ratePerKm * distanceKm * 1.05);
-            return (
-              <button
-                key={v.id}
-                type="button"
-                onClick={() => setVehicleId(v.id)}
-                className={`group relative rounded-2xl border p-3.5 text-left transition-all duration-200 ${
-                  active
-                    ? "border-primary bg-linear-to-b from-primary/6 to-transparent shadow-lg shadow-primary/15 ring-1 ring-primary/25"
-                    : "border-slate-200 bg-white hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg hover:shadow-slate-200/60"
-                }`}
-              >
-                {active && (
-                  <span className="absolute right-3 top-3 flex 'h-5.5' 'w-5.5' h-5 w-5 items-center justify-center rounded-full bg-primary text-white shadow-sm shadow-primary/40">
-                    <Check size={12} strokeWidth={3} />
-                  </span>
-                )}
-                <div className="flex h-32 items-center justify-center overflow-hidden rounded-xl bg-linear-to-b from-slate-50 to-slate-100/60">
-                  {v.image ? (
-                    <img
-                      src={v.image}
-                      alt={v.name}
-                      className="h-full w-full object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+          {/* ------------------------------------------------------------ AIRPORT */}
+          {activeTab === "airport" && (
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.4fr_1fr_1.1fr_1fr]">
+              <StepField index={1} label="Direction & Location" icon={Plane}>
+                <div className="space-y-2.5">
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { id: "fromAirport" as const, label: "Airport → City" },
+                      { id: "toAirport" as const, label: "City → Airport" },
+                    ].map((opt) => (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        onClick={() => setAirportDirection(opt.id)}
+                        className={`rounded-xl border px-2 py-2 text-xs font-semibold backdrop-blur-md transition-colors ${
+                          airportDirection === opt.id
+                            ? "border-blue-400 bg-blue-500/10 text-blue-700"
+                            : "border-white/70 bg-white/50 text-slate-500 hover:border-blue-200"
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                  <LocationAutocomplete
+                    id="airport-other"
+                    value={airportOther}
+                    onChange={setAirportOther}
+                    placeholder={airportDirection === "fromAirport" ? "Drop location in Vizag" : "Pickup location in Vizag"}
+                    icon={MapPin}
+                    popularPlaces={POPULAR_PICKUP_PLACES}
+                    allowGeolocate
+                  />
+                </div>
+              </StepField>
+
+              <StepField index={2} label="Date & Time" icon={Calendar}>
+                <DateTimeFields
+                  date={airportDate}
+                  time={airportTime}
+                  onDate={setAirportDate}
+                  onTime={setAirportTime}
+                  dateLabel={airportDirection === "fromAirport" ? "Flight Landing Date" : "Pickup Date"}
+                />
+              </StepField>
+
+              <StepField index={3} label="Select Car" icon={Car}>
+                <div className="space-y-3">
+                  <CarSelect car={car} onChange={setCarId} />
+                  <FareSummary amount={airportFare} />
+                </div>
+              </StepField>
+
+              <StepField index={4} label="Proceed" icon={CalendarCheck}>
+                <ProceedButtons onBook={handleBookNow} onWhatsApp={handleQuickWhatsApp} error={error} />
+              </StepField>
+            </div>
+          )}
+
+          {/* --------------------------------------------------------------- TOUR */}
+          {activeTab === "tour" && (
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.6fr_1fr_1.1fr_1fr]">
+              <StepField index={1} label="Select Package" icon={Briefcase}>
+                <div className="max-h-64 space-y-2 overflow-y-auto pr-1">
+                  {TOUR_PACKAGES.map((pkg) => (
+                    <label
+                      key={pkg.id}
+                      className={`flex cursor-pointer items-start gap-2 rounded-xl border px-3 py-2.5 backdrop-blur-md transition-colors ${
+                        tourId === pkg.id
+                          ? "border-blue-400 bg-blue-500/10"
+                          : "border-white/70 bg-white/50 hover:border-blue-200"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="tour-package"
+                        className="mt-1 accent-blue-600"
+                        checked={tourId === pkg.id}
+                        onChange={() => setTourId(pkg.id)}
+                      />
+                      <span className="min-w-0">
+                        <span className="block text-sm font-semibold text-slate-800">{pkg.name}</span>
+                        <span className="block text-xs text-slate-500">
+                          {pkg.days}D/{pkg.nights}N · {pkg.description}
+                        </span>
+                        <span className="mt-0.5 block text-xs font-semibold text-blue-600">
+                          {formatCurrency(TOUR_FARES[pkg.id][carId])} with {car.name}
+                        </span>
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </StepField>
+
+              <StepField index={2} label="Travel Date" icon={Calendar}>
+                <div className="space-y-2">
+                  <div>
+                    <label className="mb-1.5 flex items-center gap-1 text-[11px] font-medium text-slate-500">
+                      <Calendar size={11} /> Travel Date
+                    </label>
+                    <input
+                      type="date"
+                      value={tourDate}
+                      min={todayISO()}
+                      onChange={(e) => setTourDate(e.target.value)}
+                      className="w-full rounded-lg border border-white/70 bg-white/60 px-2.5 py-2 text-xs text-slate-700 outline-none backdrop-blur-md focus:border-blue-400 focus:bg-white/80"
                     />
-                  ) : (
-                    <Car size={40} className="text-slate-300" />
-                  )}
+                  </div>
+                  <ul className="space-y-1 text-[11px] text-slate-500">
+                    {tourPkg.highlights.map((h) => (
+                      <li key={h} className="flex items-center gap-1.5">
+                        <Check size={11} className="text-blue-600" /> {h}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="mt-2.5 flex items-center gap-1.5">
-                  <p className="text-sm font-extrabold tracking-tight text-slate-900">{v.name}</p>
-                  {v.badge && (
-                    <span className="inline-flex items-center gap-0.5 rounded-full bg-linear-to-r from-amber-400/20 to-amber-400/10 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-amber-700 ring-1 ring-inset ring-amber-400/30">
-                      <Crown size={9} className="text-amber-500" />
-                      {v.badge}
-                    </span>
-                  )}
+              </StepField>
+
+              <StepField index={3} label="Select Car" icon={Car}>
+                <div className="space-y-3">
+                  <CarSelect car={car} onChange={setCarId} />
+                  <FareSummary amount={tourFare} />
                 </div>
-                <div className="mt-1.5 flex flex-wrap gap-x-2.5 gap-y-0.5 text-[11px] text-slate-500">
-                  <span className="flex items-center gap-1">
-                    <Users size={11} /> {v.seats}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Briefcase size={11} /> {v.bags} Bags
-                  </span>
-                  {v.ac && <span className="font-semibold text-emerald-600">AC</span>}
-                </div>
-                <div className="mt-2 border-t border-dashed border-slate-200 pt-2">
-                  <p className="text-sm font-extrabold tabular-nums text-slate-900">
-                    ₹{v.ratePerKm.toFixed(2)} <span className="text-[10px] font-normal text-slate-400">/km</span>
-                  </p>
-                  <p className="text-[11px] text-slate-400">{distanceKm ? formatCurrency(total) : "—"} (Total est.)</p>
-                </div>
-                <div
-                  className={`mt-2.5 w-full rounded-lg py-1.5 text-center text-[11px] font-bold transition-colors ${
-                    active ? "bg-primary text-white shadow-sm shadow-primary/30" : "border border-slate-200 text-slate-600 group-hover:border-primary/30 group-hover:text-primary"
-                  }`}
-                >
-                  {active ? "Selected" : "Select"}
-                </div>
-              </button>
-            );
-          })}
-        </div>
+              </StepField>
 
-        <div className="mt-4 flex items-start gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3.5 py-2.5 text-xs text-slate-600 ring-1 ring-inset ring-primary/10">
-          <ShieldCheck size={14} className="mt-0.5 shrink-0 text-primary" />
-          All our vehicles are verified, insured &amp; sanitized for your safety and comfort.
-        </div>
-
-        <div className="mt-5 flex gap-3">
-          <button
-            type="button"
-            onClick={onBack}
-            className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-xs font-bold text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50"
-          >
-            <ChevronLeft size={14} /> Back to Trip Details
-          </button>
-          <PrimaryButton disabled={!vehicle} onClick={onNext} className="flex-1">
-            Continue to Passenger Details <ArrowRight size={15} />
-          </PrimaryButton>
-        </div>
-      </div>
-
-      <TripSummarySidebar trip={trip} vehicle={vehicle} distanceKm={distanceKm} minutes={minutes} total={0} />
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------------- */
-/*  Step 3 — Passenger Details (now includes a WhatsApp contact action)    */
-/* ---------------------------------------------------------------------- */
-
-function StepPassenger({
-  trip,
-  vehicle,
-  distanceKm,
-  minutes,
-  pricing,
-  passenger,
-  setPassenger,
-  onBack,
-  onNext,
-}: {
-  trip: TripDetails;
-  vehicle: Vehicle | null;
-  distanceKm: number;
-  minutes: number;
-  pricing: { base: number; gst: number; total: number };
-  passenger: PassengerDetails;
-  setPassenger: (updater: (prev: PassengerDetails) => PassengerDetails) => void;
-  onBack: () => void;
-  onNext: () => void;
-}) {
-  const emailsMismatch =
-    passenger.email.trim().length > 0 &&
-    passenger.confirmEmail.trim().length > 0 &&
-    passenger.email !== passenger.confirmEmail;
-
-  const hasNameAndPhone = passenger.fullName.trim().length > 0 && passenger.phone.trim().length >= 10;
-
-  const canContinue = hasNameAndPhone && !emailsMismatch;
-
-  // Uses the same shared bookingConfig builder as the Confirm step, so
-  // both "Send on WhatsApp" actions in the wizard produce one consistent
-  // message (with the passenger's name & phone, no fare total).
-  function sendWhatsAppContact() {
-    const message = encodeURIComponent(buildWhatsAppMessage(trip, vehicle, passenger));
-    window.open(`https://wa.me/${SUPPORT_PHONE}?text=${message}`, "_blank", "noopener,noreferrer");
-  }
-
-  return (
-    <div className="grid gap-4 lg:grid-cols-[1fr_300px]">
-      <div>
-        <SectionEyebrow step={3} title="Passenger Details" sub="Please provide passenger and contact information" />
-
-        <div className="mt-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-[0_2px_10px_rgba(15,23,42,0.05)]">
-          <p className="flex items-center gap-2 text-xs font-bold text-slate-800">
-            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-linear-to-br from-primary/12 to-primary/5 text-primary">
-              <User size={12} />
-            </span>
-            Contact Information
-          </p>
-          <div className="mt-3.5 grid gap-3.5 sm:grid-cols-3">
-            <div>
-              <Label htmlFor="p-name">Full Name *</Label>
-              <FieldShell icon={User}>
-                <input
-                  id="p-name"
-                  value={passenger.fullName}
-                  onChange={(e) => setPassenger((p) => ({ ...p, fullName: e.target.value }))}
-                  placeholder="Enter full name"
-                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:font-normal placeholder:text-slate-400"
-                />
-              </FieldShell>
+              <StepField index={4} label="Proceed" icon={CalendarCheck}>
+                <ProceedButtons onBook={handleBookNow} onWhatsApp={handleQuickWhatsApp} error={error} />
+              </StepField>
             </div>
-            <div>
-              <Label htmlFor="p-phone">Phone Number *</Label>
-              <FieldShell icon={Phone}>
-                <input
-                  id="p-phone"
-                  value={passenger.phone}
-                  onChange={(e) => setPassenger((p) => ({ ...p, phone: e.target.value }))}
-                  placeholder="Enter 10 digit mobile number"
-                  inputMode="numeric"
-                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:font-normal placeholder:text-slate-400"
-                />
-              </FieldShell>
-            </div>
-            <div>
-              <Label htmlFor="p-whatsapp">WhatsApp Number (Optional)</Label>
-              <FieldShell icon={MessageCircle}>
-                <input
-                  id="p-whatsapp"
-                  value={passenger.whatsapp}
-                  onChange={(e) => setPassenger((p) => ({ ...p, whatsapp: e.target.value }))}
-                  placeholder="Enter WhatsApp number"
-                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:font-normal placeholder:text-slate-400"
-                />
-              </FieldShell>
-            </div>
-            <div>
-              <Label htmlFor="p-email">Email Address (Optional)</Label>
-              <FieldShell icon={Mail}>
-                <input
-                  id="p-email"
-                  type="email"
-                  value={passenger.email}
-                  onChange={(e) => setPassenger((p) => ({ ...p, email: e.target.value }))}
-                  placeholder="Enter email address"
-                  className="w-full bg-transparent text-xs font-medium text-slate-800 outline-none placeholder:font-normal placeholder:text-slate-400"
-                />
-              </FieldShell>
-            </div>
-          </div>
-
-          {/* WhatsApp contact action — becomes available once name & phone are filled in */}
-          <div className="mt-3.5 flex flex-col gap-2 rounded-xl border border-dashed border-emerald-200 bg-emerald-50/60 px-3.5 py-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-                <MessageCircle size={15} />
-              </span>
-              <div>
-                <p className="text-xs font-semibold text-slate-800">Prefer WhatsApp?</p>
-                <p className="text-[11px] text-slate-500">
-                  {hasNameAndPhone
-                    ? "Send your name, number & trip details straight to our team."
-                    : "Enter your name and phone number to send via WhatsApp."}
-                </p>
-              </div>
-            </div>
-            <button
-              type="button"
-              disabled={!hasNameAndPhone}
-              onClick={sendWhatsAppContact}
-              className="flex items-center justify-center gap-1.5 rounded-lg bg-emerald-500 px-3.5 py-2 text-[11px] font-bold text-white shadow-sm shadow-emerald-500/30 transition-all hover:brightness-105 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
-            >
-              <MessageCircle size={13} /> Message on WhatsApp
-            </button>
-          </div>
-        </div>
-
-        <div className="mt-3.5 flex items-center gap-2.5 rounded-xl bg-linear-to-br from-primary/[0.07] to-primary/2 px-3.5 py-2.5 text-xs text-slate-600 ring-1 ring-inset ring-primary/10">
-          <ShieldCheck size={14} className="shrink-0 text-primary" />
-          Your details are safe and secure. We never share your information with third parties.
-        </div>
-
-        <div className="mt-5 flex gap-3">
-          <button
-            type="button"
-            onClick={onBack}
-            className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-xs font-bold text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50"
-          >
-            <ChevronLeft size={14} /> Back to Choose Vehicle
-          </button>
-          <PrimaryButton disabled={!canContinue} onClick={onNext} className="flex-1">
-            Continue to Confirm Booking <ArrowRight size={15} />
-          </PrimaryButton>
-        </div>
-      </div>
-
-      <TripSummarySidebar trip={trip} vehicle={vehicle} distanceKm={distanceKm} minutes={minutes} total={pricing.total} />
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------------- */
-/*  Step 4 — Confirm booking                                                */
-/* ---------------------------------------------------------------------- */
-
-function StepConfirm({
-  trip,
-  vehicle,
-  passenger,
-  distanceKm,
-  minutes,
-  pricing,
-  bookingId,
-  confirmed,
-  // onConfirm,
-  onBack,
-  onClose,
-}: {
-  trip: TripDetails;
-  vehicle: Vehicle | null;
-  passenger: PassengerDetails;
-  distanceKm: number;
-  minutes: number;
-  pricing: { base: number; gst: number; total: number };
-  bookingId: string;
-  confirmed: boolean;
-  onConfirm: () => void;
-  onBack: () => void;
-  onClose: () => void;
-}) {
-  const bookingDateLabel = new Date().toLocaleString("en-IN", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-
-  // Same shared bookingConfig builder used in the Passenger Details step —
-  // one WhatsApp message shape everywhere in the wizard.
-  function sendWhatsApp() {
-    const message = encodeURIComponent(buildWhatsAppMessage(trip, vehicle, passenger));
-    window.open(`https://wa.me/${SUPPORT_PHONE}?text=${message}`, "_blank", "noopener,noreferrer");
-  }
-
-  return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px_300px]">
-      <div>
-        <SectionEyebrow
-          step={4}
-          title={confirmed ? "Booking Confirmed!" : "Confirm Your Booking"}
-          sub={confirmed ? "Thank you for choosing BSH Taxi Services." : "Please review your booking details and confirm to complete"}
-        />
-
-        <div className="relative mt-4 overflow-hidden rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-[0_4px_20px_rgba(15,23,42,0.06)] sm:p-7">
-          {confirmed && (
-            <>
-              <div className="pointer-events-none absolute -left-8 -top-10 h-32 w-32 rounded-full bg-emerald-200/25 blur-3xl" />
-              <div className="pointer-events-none absolute -right-10 -bottom-10 h-32 w-32 rounded-full bg-primary/10 blur-3xl" />
-            </>
-          )}
-          <div
-            className={`relative mx-auto flex h-16 w-16 items-center justify-center rounded-full transition-transform duration-300 ${
-              confirmed ? "scale-110 bg-emerald-50 ring-8 ring-emerald-50/60" : "bg-linear-to-br from-primary/12 to-primary/5 ring-8 ring-primary/4"
-            }`}
-          >
-            <Check size={32} className={confirmed ? "text-emerald-500" : "text-primary"} strokeWidth={2.5} />
-          </div>
-          <h3 className="mt-3.5 text-lg font-extrabold tracking-tight text-slate-900">{confirmed ? "Booking Confirmed!" : "Almost Done!"}</h3>
-          <p className="mt-1 text-xs text-slate-500">
-            {confirmed
-              ? "Your booking is confirmed and we're excited to serve you."
-              : "Please confirm your booking to complete the reservation."}
-          </p>
-
-          <div className="mx-auto mt-4 max-w-sm rounded-xl border border-slate-100 bg-linear-to-br from-slate-50/80 to-white p-3.5 text-left">
-            <p className="text-[10.5px] font-bold uppercase tracking-[0.08em] text-slate-400">Booking ID</p>
-            <p className="bg-linear-to-br from-primary to-primary/70 bg-clip-text text-base font-extrabold tracking-tight text-transparent">{bookingId}</p>
-            <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-slate-500">
-              <CalendarIcon size={12} /> {bookingDateLabel}
-            </div>
-          </div>
-
-          {confirmed ? (
-            <div className="mt-4 grid grid-cols-1 gap-2.5 rounded-xl bg-emerald-50 p-3.5 text-left sm:grid-cols-3">
-              <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-                  <MessageCircle size={14} />
-                </span>
-                <div>
-                  <p className="text-[11px] font-semibold text-slate-800">SMS Sent</p>
-                  <p className="text-[10px] text-slate-500">Booking details sent to your mobile</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-                  <Phone size={14} />
-                </span>
-                <div>
-                  <p className="text-[11px] font-semibold text-slate-800">WhatsApp Sent</p>
-                  <p className="text-[10px] text-slate-500">Booking details sent on WhatsApp</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-                  <Mail size={14} />
-                </span>
-                <div>
-                  <p className="text-[11px] font-semibold text-slate-800">Email Sent</p>
-                  <p className="text-[10px] text-slate-500">Booking details sent to your email</p>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="mt-4 space-y-2.5 text-left">
-              <div className="flex items-start gap-2.5 rounded-xl bg-amber-50 px-3.5 py-2.5 text-xs text-amber-700">
-                <Info size={14} className="mt-0.5 shrink-0" />
-                Free Cancellation — cancel up to 12 hours before the scheduled pickup time for a full refund.
-              </div>
-            </div>
-          )}
-
-          <div className="mt-5 grid grid-cols-1 gap-2.5 text-left sm:grid-cols-3">
-            <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500">
-                <Car size={14} />
-              </span>
-              <div>
-                <p className="text-[11px] font-semibold text-slate-800">Driver Assigned</p>
-                <p className="text-[10px] text-slate-500">We'll assign the best driver for your trip.</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500">
-                <Phone size={14} />
-              </span>
-              <div>
-                <p className="text-[11px] font-semibold text-slate-800">You'll Get Updates</p>
-                <p className="text-[10px] text-slate-500">Receive driver details via SMS, WhatsApp &amp; Email.</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500">
-                <MapPin size={14} />
-              </span>
-              <div>
-                <p className="text-[11px] font-semibold text-slate-800">Enjoy Your Ride</p>
-                <p className="text-[10px] text-slate-500">Our driver will reach on time and ensure comfort.</p>
-              </div>
-            </div>
-          </div>
-
-          {confirmed ? (
-            <div className="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-              <button className="flex items-center justify-center gap-1.5 rounded-xl bg-linear-to-b from-primary to-primary/90 px-3 py-2.5 text-[11px] font-bold text-white shadow-sm shadow-primary/25 transition-all hover:brightness-105 active:scale-[0.98]">
-                <BookOpen size={13} /> Track Booking
-              </button>
-              <button
-                onClick={sendWhatsApp}
-                className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 px-3 py-2.5 text-[11px] font-bold text-emerald-600 transition-colors hover:bg-emerald-50"
-              >
-                <MessageCircle size={13} /> Share on WhatsApp
-              </button>
-              <a
-                href={`tel:+${SUPPORT_PHONE}`}
-                className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 px-3 py-2.5 text-[11px] font-bold text-primary transition-colors hover:bg-primary/5"
-              >
-                <Phone size={13} /> Call Support
-              </a>
-              <button
-                onClick={onClose}
-                className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 px-3 py-2.5 text-[11px] font-bold text-slate-600 transition-colors hover:bg-slate-50"
-              >
-                <Home size={13} /> Back to Home
-              </button>
-            </div>
-          ) : (
-            <>
-              <div className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-                {/* <button
-                  type="button"
-                  onClick={onConfirm}
-                  className="flex items-center justify-center gap-1.5 rounded-xl bg-linear-to-b from-primary to-primary/90 px-4 py-3 text-xs font-bold text-white shadow-[0_4px_14px_-2px] shadow-primary/35 transition-all duration-150 hover:brightness-[1.07] hover:shadow-[0_6px_18px_-2px] hover:shadow-primary/45 active:scale-[0.98]"
-                >
-                  <Lock size={14} /> Confirm Booking Now
-                </button> */}
-                <button
-                  type="button"
-                  onClick={sendWhatsApp}
-                  className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 px-4 py-3 text-xs font-bold text-emerald-600 transition-colors hover:bg-emerald-50"
-                >
-                  <MessageCircle size={14} /> Send Booking on WhatsApp
-                </button>
-                <a
-                  href={`tel:+${SUPPORT_PHONE}`}
-                  className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 px-4 py-3 text-xs font-bold text-primary transition-colors hover:bg-primary/5"
-                >
-                  <Phone size={14} /> Call to Confirm
-                </a>
-              </div>
-              <p className="mt-3 text-[11px] text-slate-400">
-                By confirming, you agree to our Terms &amp; Conditions and Privacy Policy.
-              </p>
-            </>
           )}
         </div>
 
-        {!confirmed && (
-          <button
-            type="button"
-            onClick={onBack}
-            className="mt-3.5 flex items-center gap-2 text-xs font-bold text-slate-500 transition-colors hover:text-slate-700"
-          >
-            <ChevronLeft size={14} /> Back to Passenger Details
-          </button>
+        {/* Trust strip */}
+        <div className="relative z-10 grid grid-cols-2 gap-3 border-t border-white/50 bg-white/30 px-4 py-4 backdrop-blur-md sm:grid-cols-4 sm:px-6">
+          <TrustItem icon={ShieldCheck} label="Safe & Secure" iconBg="bg-blue-500/10" iconColor="text-blue-600" />
+          <TrustItem icon={UserRound} label="Professional Drivers" iconBg="bg-emerald-500/10" iconColor="text-emerald-600" />
+          <TrustItem icon={BadgeIndianRupee} label="No Hidden Charges" iconBg="bg-violet-500/10" iconColor="text-violet-600" />
+          <TrustItem icon={Headset} label="24/7 Support" iconBg="bg-orange-500/10" iconColor="text-orange-600" />
+        </div>
+
+        {confirmOpen && (
+          <ConfirmModal summary={buildSummary()} onClose={() => setConfirmOpen(false)} onConfirm={openWhatsApp} />
         )}
-      </div>
-
-      <TripSummarySidebar trip={trip} vehicle={vehicle} distanceKm={distanceKm} minutes={minutes} total={pricing.total} />
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------------- */
-/*  Root wizard                                                            */
-/* ---------------------------------------------------------------------- */
-
-export default function BookingWizard({ vehicleId }: BookingWizardProps) {
-  const [stepIndex, setStepIndex] = useState(0);
-  const [trip, setTrip] = useState<TripDetails>(makeDefaultTrip);
-  const [selectedVehicleId, setSelectedVehicleId] = useState<string | undefined>(vehicleId);
-  const [passenger, setPassenger] = useState<PassengerDetails>(makeDefaultPassenger);
-  const [bookingId, setBookingId] = useState(makeBookingId());
-  const [confirmed, setConfirmed] = useState(false);
-
-  const [mapRoute, setMapRoute] = useState<{ distanceKm: number; minutes: number } | null>(null);
-
-  const [pickupCoords, setPickupCoords] = useState<GeoPoint | null>(null);
-  const [dropCoords, setDropCoords] = useState<GeoPoint | null>(null);
-
-  const vehicle = useMemo(() => VEHICLES.find((v) => v.id === selectedVehicleId) ?? null, [selectedVehicleId]);
-
-  const fallbackEstimate = useMemo(() => estimateRoute(trip.pickup, trip.drop), [trip.pickup, trip.drop]);
-
-  useEffect(() => {
-    setMapRoute(null);
-  }, [trip.pickup, trip.drop]);
-
-  const distanceKm = mapRoute?.distanceKm ?? fallbackEstimate.distanceKm;
-  const minutes = mapRoute?.minutes ?? fallbackEstimate.minutes;
-
-  const pricing = useMemo(() => {
-    if (!vehicle || !distanceKm) return { base: 0, gst: 0, total: 0 };
-    const base = Math.round(vehicle.ratePerKm * distanceKm);
-    const gst = Math.round(base * 0.05);
-    return { base, gst, total: base + gst };
-  }, [vehicle, distanceKm]);
-
-  function goTo(index: number) {
-    setStepIndex(Math.max(0, Math.min(STEPS.length - 1, index)));
-  }
-
-  function handleClose() {
-    // Reset for next time this wizard is opened.
-    setStepIndex(0);
-    setTrip(makeDefaultTrip());
-    setSelectedVehicleId(vehicleId);
-    setPassenger(makeDefaultPassenger());
-    setConfirmed(false);
-    setBookingId(makeBookingId());
-    setMapRoute(null);
-    setPickupCoords(null);
-    setDropCoords(null);
-  }
-
-  function handleConfirm() {
-    setConfirmed(true);
-  }
-
-  return (
-    <div className="w-full">
-      <style>{`
-        @keyframes bw-step-in {
-          from { opacity: 0; transform: translateY(6px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .bw-step-anim { animation: bw-step-in 0.32s cubic-bezier(0.16, 1, 0.3, 1); }
-        @media (prefers-reduced-motion: reduce) {
-          .bw-step-anim { animation: none; }
-        }
-      `}</style>
-      <div className="w-full px-3 py-4 sm:px-5 lg:px-8">
-        <div className="relative overflow-hidden rounded-[1.35rem] bg-white shadow-[0_8px_30px_rgba(15,23,42,0.08)] ring-1 ring-slate-100">
-          {/* Subtle top accent line for a premium, considered finish */}
-          <div className="h-0.75 w-full bg-linear-to-r from-primary/40 via-primary to-primary/40" />
-
-          <Stepper currentIndex={stepIndex} />
-
-          <div key={stepIndex} className="bw-step-anim p-4 sm:p-5">
-            {stepIndex === 0 && (
-              <StepTripDetails
-                trip={trip}
-                setTrip={setTrip}
-                distanceKm={distanceKm}
-                minutes={minutes}
-                pickupCoords={pickupCoords}
-                dropCoords={dropCoords}
-                onPickupCoords={setPickupCoords}
-                onDropCoords={setDropCoords}
-                onRouteComputed={setMapRoute}
-                onNext={() => goTo(1)}
-              />
-            )}
-            {stepIndex === 1 && (
-              <StepVehicle
-                trip={trip}
-                distanceKm={distanceKm}
-                minutes={minutes}
-                vehicle={vehicle}
-                setVehicleId={setSelectedVehicleId}
-                onBack={() => goTo(0)}
-                onNext={() => goTo(2)}
-              />
-            )}
-            {stepIndex === 2 && (
-              <StepPassenger
-                trip={trip}
-                vehicle={vehicle}
-                distanceKm={distanceKm}
-                minutes={minutes}
-                pricing={pricing}
-                passenger={passenger}
-                setPassenger={setPassenger}
-                onBack={() => goTo(1)}
-                onNext={() => goTo(3)}
-              />
-            )}
-            {stepIndex === 3 && (
-              <StepConfirm
-                trip={trip}
-                vehicle={vehicle}
-                passenger={passenger}
-                distanceKm={distanceKm}
-                minutes={minutes}
-                pricing={pricing}
-                bookingId={bookingId}
-                confirmed={confirmed}
-                onConfirm={handleConfirm}
-                onBack={() => goTo(2)}
-                onClose={handleClose}
-              />
-            )}
-          </div>
-        </div>
       </div>
     </div>
   );
