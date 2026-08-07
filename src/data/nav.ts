@@ -73,7 +73,7 @@ export const navLinks: NavLink[] = [
     { label: "Rajahmundry", href: "/outstation/vizag-to-rajahmundry-taxi" },
     { label: "Vizianagaram", href: "/outstation/vizag-to-vizianagaram-taxi" },
     { label: "Srikakulam", href: "/outstation/vizag-to-srikakulam-taxi" },
-    { label: "Amadalavalasa", href: "/outstation/vizag-to-amadalavalasa-taxi" },
+   
     { label: "Annavaram", href: "/outstation/vizag-to-annavaram-taxi" },
     { label: "Arasavalli", href: "/outstation/vizag-to-arasavalli-taxi" },
     { label: "Bangalore", href: "/outstation/vizag-to-bangalore-taxi" },
@@ -81,25 +81,25 @@ export const navLinks: NavLink[] = [
     { label: "Bhubaneswar", href: "/outstation/vizag-to-bhubaneswar-taxi" },
     { label: "Bobbili", href: "/outstation/vizag-to-bobbili-taxi" },
     { label: "Chennai", href: "/outstation/vizag-to-chennai-taxi" },
-    { label: "Eluru", href: "/outstation/vizag-to-eluru-taxi" },
+   
     { label: "Guntur", href: "/outstation/vizag-to-guntur-taxi" },
     { label: "Hyderabad", href: "/outstation/vizag-to-hyderabad-taxi" },
-    { label: "Ichchapuram", href: "/outstation/vizag-to-ichchapuram-taxi" },
+
     { label: "Jagdalpur", href: "/outstation/vizag-to-jagdalpur-taxi" },
-    { label: "Khammam", href: "/outstation/vizag-to-khammam-taxi" },
+   
     { label: "Kolkata", href: "/outstation/vizag-to-kolkata-taxi" },
-    { label: "Kurnool", href: "/outstation/vizag-to-kurnool-taxi" },
+   
     { label: "Lambasingi", href: "/outstation/vizag-to-lambasingi-taxi" },
-    { label: "Narasannapeta", href: "/outstation/vizag-to-narasannapeta-taxi" },
+   
     { label: "Nellore", href: "/outstation/vizag-to-nellore-taxi" },
     { label: "Palakollu", href: "/outstation/vizag-to-palakollu-taxi" },
     { label: "Palakonda", href: "/outstation/vizag-to-palakonda-taxi" },
     { label: "Palasa", href: "/outstation/vizag-to-palasa-taxi" },
     { label: "Parvathipuram", href: "/outstation/vizag-to-parvathipuram-taxi" },
     { label: "Raipur", href: "/outstation/vizag-to-raipur-taxi" },
-    { label: "Ravulapalem", href: "/outstation/vizag-to-ravulapalem-taxi" },
+    
     { label: "Razam", href: "/outstation/vizag-to-razam-taxi" },
-    { label: "Sompeta", href: "/outstation/vizag-to-sompeta-taxi" },
+   
     { label: "Srimukhalingam", href: "/outstation/vizag-to-srimukhalingam-taxi" },
     { label: "Tirupati", href: "/outstation/vizag-to-tirupati-taxi" },
     { label: "Tuni", href: "/outstation/vizag-to-tuni-taxi" },
