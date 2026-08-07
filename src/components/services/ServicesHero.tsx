@@ -84,8 +84,8 @@ export default function ServicesHero() {
        {" "}
   <a
   href="/destinations/vizag-airport?type=airport-taxi"
-  title="Vizag to Araku Valley Taxi Service - BSH Taxi Services"
-  aria-label="Vizag to Araku Valley Taxi Service - BSH Taxi Services"
+  title="Vizag to airport Taxi Service - BSH Taxi Services"
+  aria-label="Vizag to airport Taxi Service - BSH Taxi Services"
   className="hover:underline"
 >
   airport taxi service,
