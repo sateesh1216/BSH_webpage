@@ -39,7 +39,7 @@ import TempoTravellerImg from "../../assets/icons_cars/17-seater-tempo-traveller
 const CAR_TYPES = [
   {
     id: "sedan",
-    name: "Dzire, Etios",
+    name: "Sedan (Dzire)",
     subtitle: "Comfortable city rides",
     image: DzireImg,
     seats: 4,
@@ -47,7 +47,7 @@ const CAR_TYPES = [
   },
   {
     id: "suv",
-    name: "SUV (Ertiga, Innova)",
+    name: "SUV (Ertiga)",
     subtitle: "Spacious for families & groups",
     image: ErtigaImg,
     seats: 7,
@@ -86,17 +86,12 @@ type LocalPackageId = (typeof LOCAL_PACKAGES)[number]["id"];
 const LOCAL_FARES: Record<CarId, Record<LocalPackageId, number>> = {
   sedan: { pkg8_80: 2500, pkg10_100: 3000 },
   suv: { pkg8_80: 3200, pkg10_100: 3800 },
-  innova_crysta: { pkg8_80: 4000, pkg10_100: 4700 },
+  innova_crysta: { pkg8_80: 3500, pkg10_100: 4000 },
   tempo_traveller: { pkg8_80: 5500, pkg10_100: 6500 },
 };
 
 // ---- FIXED airport fares: [carId] -> price. Edit freely. ----
-const AIRPORT_FARES: Record<CarId, number> = {
-  sedan: 549,
-  suv: 799,
-  innova_crysta: 999,
-  tempo_traveller: 1799,
-};
+
 
 const POPULAR_PICKUP_PLACES = [
   "RTC Complex, Vizag",
@@ -128,11 +123,20 @@ const POPULAR_DROP_PLACES = [
 const TOUR_PACKAGES = [
   {
     id: "araku_1d",
-    name: "Araku Valley Day Trip",
+    name: "Araku Valley 1Day Trip",
     days: 1,
     nights: 0,
     description: "Coffee plantations, Borra Caves & scenic ghats",
-    highlights: ["Borra Caves", "Coffee Museum", "Tribal Museum", "Katiki Waterfalls"],
+    highlights: [
+      "damuku view point",
+      "Borra Caves", 
+      "Katika waterfalls (Only car parking)",
+      "Galikonda viewponit",
+      "Coffee Plantation",
+      "Coffee Museum", 
+      "Tribal Museum", 
+      "Coffee House",
+      "padmapuram gardens"    ],
   },
   {
     id: "araku_2d",
@@ -140,31 +144,139 @@ const TOUR_PACKAGES = [
     days: 2,
     nights: 1,
     description: "Overnight stay with sunrise viewpoint",
-    highlights: ["Padmapuram Gardens", "Sunrise Viewpoint", "Borra Caves", "Local stay"],
+    highlights: [
+      "damuku view point",
+      "Borra Caves", 
+      "Katika waterfalls (Only car parking)",
+      "Galikonda viewponit",
+      "Coffee Plantation",
+      "Coffee Museum", 
+      "Tribal Museum", 
+      "Coffee House",
+      "padmapuram gardens",
+      "madagada view point",
+      "chaparai waterfalls",
+      "Ranajilleda waterfalls"          
+      
+       ],
   },
   {
-    id: "lambasingi_2d",
-    name: "Lambasingi 2D/1N",
+    id: "araku & lambasingi_2d",
+    name: "Araku & Lambasingi 2D/1N",
     days: 2,
     nights: 1,
     description: "'Kashmir of Andhra' — misty hills getaway",
-    highlights: ["Lambasingi hills", "Valley viewpoints", "Apple orchards", "Bonfire evening"],
+    highlights: [
+      "damuku view point",
+      "Borra Caves", 
+      "Katika waterfalls (Only car parking)",
+      "Galikonda viewponit",
+      "Coffee Plantation",
+      "Coffee Museum", 
+      "Tribal Museum", 
+      "Coffee House",
+      "padmapuram gardens",
+      "madagada view point",
+      "chaparai waterfalls",
+      "Kothapalli waterfalls",
+      "strawberry plantation",
+      "Lambasingi"          
+      
+       ],
   },
   {
-    id: "vizag_city",
-    name: "Vizag City Full Day",
+    id: "vizag_local_tour_package",
+    name: "Vizag City 1 Day",
     days: 1,
     nights: 0,
     description: "Beaches, temples & submarine museum",
-    highlights: ["RK Beach", "Kailasagiri", "INS Kurusura Museum", "Simhachalam Temple"],
+    highlights: [
+      "RK Beach", 
+      "Visakha museum", 
+      "Vuda park", 
+      "Fishing harbour",
+      "Simhachalam Temple",
+      "Kailasagiri",
+      "Zoo park",
+      "TTD temple",
+      "Rushikonda beach",
+      "Thotla konda",
+      "Ramanaidu studioes",
+      "Submarine(INS Kurusura Museum)",
+      "Aircraft museum"
+       ],
   },
   {
     id: "vizag_araku_3d",
-    name: "Vizag + Araku 3D/2N",
+    name: "Vizag 2D/1N + Araku 1D",
     days: 3,
     nights: 2,
     description: "Full city & valley combo package",
-    highlights: ["City sightseeing", "Araku Valley", "Borra Caves", "2 nights stay"],
+    highlights: [
+      "RK Beach", 
+      "Visakha museum", 
+      "Vuda park",
+      "Fishing harbour", 
+      "Fishing harbour",
+      "Simhachalam Temple",
+      "Kailasagiri",
+      "Zoo park",
+      "TTD temple",
+      "Rushikonda beach",
+      "Thotla konda",
+      "Ramanaidu studioes",
+      "Submarine(INS Kurusura Museum)",
+      "Aircraft museum",
+      "yarada beach",
+      "light house",
+      "damuku view point",
+      "Borra Caves", 
+      "Katika waterfalls (Only car parking)",
+      "Galikonda viewponit",
+      "Coffee Plantation",
+      "Coffee Museum", 
+      "Tribal Museum", 
+      "Coffee House",
+      "padmapuram gardens"
+       ],
+  },
+  {
+    id: "vizag_araku_4d",
+    name: "Vizag 2D/1N + Araku 1D/1N + Lambasingi 1D",
+    days: 3,
+    nights: 2,
+    description: "Full city & valley combo package",
+    highlights: ["RK Beach", 
+      "Visakha museum", 
+      "Vuda park",
+      "Fishing harbour", 
+      "Fishing harbour",
+      "Simhachalam Temple",
+      "Kailasagiri",
+      "Zoo park",
+      "TTD temple",
+      "Rushikonda beach",
+      "Thotla konda",
+      "Ramanaidu studioes",
+      "Submarine(INS Kurusura Museum)",
+      "Aircraft museum",
+      "yarada beach",
+      "light house",
+      "damuku view point",
+      "Borra Caves", 
+      "Katika waterfalls (Only car parking)",
+      "Galikonda viewponit",
+      "Coffee Plantation",
+      "Coffee Museum", 
+      "Tribal Museum", 
+      "Coffee House",
+      "padmapuram gardens",
+      "madagada view point",
+      "chaparai waterfalls",
+      "Kothapalli waterfalls",
+      "strawberry plantation",
+      "Lambasingi" 
+    ],
   },
 ] as const;
 
@@ -172,11 +284,12 @@ type TourId = (typeof TOUR_PACKAGES)[number]["id"];
 
 // ---- FIXED tour fares: [tourId][carId] -> price. Edit freely. ----
 const TOUR_FARES: Record<TourId, Record<CarId, number>> = {
-  araku_1d: { sedan: 3499, suv: 4899, innova_crysta: 5999, tempo_traveller: 8499 },
-  araku_2d: { sedan: 6499, suv: 8999, innova_crysta: 10999, tempo_traveller: 15999 },
-  lambasingi_2d: { sedan: 6999, suv: 9499, innova_crysta: 11499, tempo_traveller: 16999 },
-  vizag_city: { sedan: 2499, suv: 3499, innova_crysta: 4299, tempo_traveller: 6499 },
-  vizag_araku_3d: { sedan: 10999, suv: 14999, innova_crysta: 17999, tempo_traveller: 25999 },
+  araku_1d: { sedan: 5000, suv: 6500, innova_crysta: 8000, tempo_traveller: 12000 },
+  araku_2d: { sedan: 10000, suv: 12000, innova_crysta: 15000, tempo_traveller: 18999 },
+  "araku & lambasingi_2d": { sedan: 10000, suv: 12000, innova_crysta: 15000, tempo_traveller: 18999 },
+  vizag_local_tour_package: { sedan: 3000, suv: 3500, innova_crysta: 4000, tempo_traveller: 6500 },
+  vizag_araku_3d: { sedan: 11000, suv: 14000, innova_crysta: 16000, tempo_traveller: 25000 },
+  vizag_araku_4d: { sedan: 15000, suv: 18000, innova_crysta: 20000, tempo_traveller: 30000 },
 };
 
 function formatCurrency(amount: number | null | undefined) {
@@ -682,7 +795,7 @@ export default function BookingCard() {
 
   // ---- FIXED fares — pure lookups by [car] and [package], no math ----
   const localFare = LOCAL_FARES[carId][localPackageId];
-  const airportFare = AIRPORT_FARES[carId];
+
   const tourFare = TOUR_FARES[tourId][carId];
 
   function switchTab(tab: TabId) {
@@ -759,7 +872,7 @@ export default function BookingCard() {
           { label: "Car", value: car.name },
         ],
         fareLabel: "Airport Fare",
-        fare: airportFare,
+        fare: null,
       };
     }
     return {
@@ -1029,7 +1142,7 @@ export default function BookingCard() {
               <StepField index={3} label="Select Car" icon={Car}>
                 <div className="space-y-3">
                   <CarSelect car={car} onChange={setCarId} />
-                  <FareSummary amount={airportFare} />
+                 
                 </div>
               </StepField>
 
