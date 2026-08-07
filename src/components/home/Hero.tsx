@@ -215,27 +215,6 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* driver + fare row — turns the sketch into a real booking preview */}
-            <div className="flex items-center justify-between gap-3 border-t border-slate-100 px-5 py-4">
-              <div className="flex items-center gap-3">
-                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-amber-50 text-sm font-bold text-amber-600">
-                  RK
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-slate-800">Rakesh K.</p>
-                  <div className="flex items-center gap-1 text-xs text-slate-500">
-                    <span>Swift Dzire · White</span>
-                    <span className="mx-0.5">·</span>
-                    <Star size={11} className="text-amber-400" fill="currentColor" />
-                    <span>4.9</span>
-                  </div>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-base font-bold text-slate-900">₹249</p>
-                <p className="text-[11px] text-slate-400">est. fare</p>
-              </div>
-            </div>
           </div>
 
           {/* Floating rating card */}
