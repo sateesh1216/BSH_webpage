@@ -25,7 +25,7 @@ import {
   vehicleOptions,
   type VehicleOption,
 } from "../data/Outstationtaxidata";
-import { getOutstationFare, type VehicleSlug } from "../data/Outstationprices";
+import { getOutstationPricing, type VehicleSlug } from "../data/Outstationprices";
 import { useBooking } from "../components/booking/BookingContext";
 import SEO from "../components/seo/SEO";
 import { pageMeta } from "../data/pageMeta";
@@ -146,6 +146,11 @@ export default function OutstationDetail() {
   const waMessage = encodeURIComponent(
     `Hi BSH Taxi Services, I'd like to book a Vizag to ${name} outstation taxi.`
   );
+
+  // If every vehicle on this route is priced per-km, the footer note and
+  // section copy switch to per-km wording instead of "fixed round-trip".
+  const isPerKmRoute =
+    getOutstationPricing(outstation.slug, vehicleOptions[0].slug as VehicleSlug).mode === "perKm";
 
   return (
     <>
@@ -281,15 +286,20 @@ export default function OutstationDetail() {
                 Choose Your Ride to {name}
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-slate-600">
-                Pick a vehicle below to see the round-trip fare for the {distanceFromVizag.toLowerCase()} —
-                every package includes a driver, fuel, and standard toll allowance for the base kilometers.
+                {isPerKmRoute ? (
+                  <>Pick a vehicle below to see the per-km rate for the {distanceFromVizag.toLowerCase()} —
+                  every package includes a driver, fuel, and standard toll allowance.</>
+                ) : (
+                  <>Pick a vehicle below to see the round-trip fare for the {distanceFromVizag.toLowerCase()} —
+                  every package includes a driver, fuel, and standard toll allowance for the base kilometers.</>
+                )}
               </p>
             </div>
 
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {vehicleOptions.map((vehicle) => {
                 const VIcon = VEHICLE_ICON[vehicle.category];
-                const fare = getOutstationFare(outstation.slug, vehicle.slug as VehicleSlug);
+                const pricing = getOutstationPricing(outstation.slug, vehicle.slug as VehicleSlug);
                 const isFeatured = vehicle.category === "MUV";
 
                 return (
@@ -335,16 +345,34 @@ export default function OutstationDetail() {
                       </div>
 
                       <div className="mt-5">
-                        <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
-                          Round-trip fare
-                        </p>
-                        <p className="font-mono-route mt-1 flex items-baseline gap-0.5 text-[28px] font-bold leading-none text-slate-900">
-                          <IndianRupee size={20} strokeWidth={2.5} className="translate-y-[1px]" />
-                          {fare.toLocaleString("en-IN")}
-                        </p>
-                        <p className="mt-1.5 text-[11px] text-slate-500">
-                          Extra km ₹{vehicle.extraKmRate} · Extra hr ₹{vehicle.extraHourRate}
-                        </p>
+                        {pricing.mode === "fixed" ? (
+                          <>
+                            <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+                              Round-trip fare
+                            </p>
+                            <p className="font-mono-route mt-1 flex items-baseline gap-0.5 text-[28px] font-bold leading-none text-slate-900">
+                              <IndianRupee size={20} strokeWidth={2.5} className="translate-y-[1px]" />
+                              {pricing.price.toLocaleString("en-IN")}
+                            </p>
+                            <p className="mt-1.5 text-[11px] text-slate-500">
+                              Extra km ₹{vehicle.extraKmRate} · Extra hr ₹{vehicle.extraHourRate}
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+                              Per KM rate
+                            </p>
+                            <p className="font-mono-route mt-1 flex items-baseline gap-0.5 text-[28px] font-bold leading-none text-slate-900">
+                              <IndianRupee size={20} strokeWidth={2.5} className="translate-y-[1px]" />
+                              {pricing.rate}
+                              <span className="text-sm font-semibold text-slate-500">/km</span>
+                            </p>
+                            <p className="mt-1.5 text-[11px] text-slate-500">
+                              Extra hr ₹{vehicle.extraHourRate} · Fare = distance × rate
+                            </p>
+                          </>
+                        )}
                       </div>
 
                       <p className="mt-4 flex-1 text-[13px] leading-relaxed text-slate-500">{vehicle.bestFor}</p>
@@ -373,8 +401,14 @@ export default function OutstationDetail() {
             </div>
 
             <p className="mx-auto mt-6 max-w-2xl text-center text-xs text-slate-400">
-              Fares shown are fixed round-trip package rates for the {distanceFromVizag.toLowerCase()}. Final fare may vary
-              with tolls, entry fees, waiting time, and driver night halt where applicable.
+              {isPerKmRoute ? (
+                <>Fares shown are per-km running rates for the {distanceFromVizag.toLowerCase()}. Final fare depends on
+                actual distance travelled and may vary with tolls, entry fees, waiting time, and driver night halt
+                where applicable.</>
+              ) : (
+                <>Fares shown are fixed round-trip package rates for the {distanceFromVizag.toLowerCase()}. Final fare
+                may vary with tolls, entry fees, waiting time, and driver night halt where applicable.</>
+              )}
             </p>
           </div>
 

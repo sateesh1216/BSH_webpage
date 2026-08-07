@@ -707,78 +707,7 @@ export const outstations: Outstation[] = [
   // New destinations
   // ---------------------------------------------------------------------------
 
-  {
-    slug: "vizag-to-amadalavalasa-taxi",
-    name: "Vizag to Amadalavalasa",
-    distanceFromVizag: "260 KM Round Trip from Vizag",
-    distanceKm: 130,
-    driveTime: "2.5-3 hrs",
-    sources: ["AP Tourism", "Srikakulam District Govt."],
-    category: "City",
-    description:
-      "Book a Vizag to Amadalavalasa outstation taxi with BSH Taxi Services for business trips and pilgrimage visits in this Srikakulam district trading town.",
-    seoTitle: "Vizag to Amadalavalasa Taxi | Outstation Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Amadalavalasa taxi with BSH Taxi Services. Affordable outstation cab booking, AC cabs, 24/7 service.",
-    keywords: [
-      "vizag to amadalavalasa taxi",
-      "amadalavalasa outstation cab",
-      "vizag to amadalavalasa cab booking",
-      "visakhapatnam to amadalavalasa taxi fare",
-    ],
-    tagline: "A Trading Town on the Nagavali",
-    costPerDay: 4000,
-    highlights: [
-      "A key agricultural trading centre in Srikakulam district",
-      "Close to the Arasavalli Sun Temple and Srikakulam town",
-      "Sits along the Nagavali river's fertile farming belt",
-      "A convenient stop-off point on the Vizag–Srikakulam corridor",
-    ],
-    quickFacts: [
-      { label: "District", value: "Srikakulam" },
-      { label: "Distance", value: "130 KM" },
-      { label: "Known For", value: "Agri Trade" },
-      { label: "Best Time", value: "Oct – Feb" },
-    ],
-    history:
-      "Amadalavalasa grew as a market town serving the paddy and cash-crop farms of the Nagavali river belt, and it remains one of Srikakulam district's busiest agricultural trading points. Its everyday economy still runs on the produce markets that line the town, rather than any single monument or dynasty.\n\nBecause it sits just off the main Vizag–Srikakulam road, the town has long functioned as a convenient stop for travellers heading further north, and its identity is tied closely to the surrounding villages it trades with rather than to the town itself.",
-    bestTimeToVisit:
-      "October to February offers the most comfortable weather for travelling through this stretch of north coastal Andhra.",
-    howToReach:
-      "Amadalavalasa is around 130 KM from Visakhapatnam via NH16, roughly a 2.5 to 3 hour drive. BSH Taxi Services can combine this trip with a stop at the Arasavalli Sun Temple nearby.",
-    funFact:
-      "The town's weekly agricultural market (santha) is one of the largest in the district, drawing farmers from dozens of surrounding villages.",
-    places: [
-      {
-        name: "Arasavalli Sun Temple",
-        tag: "Pilgrimage",
-        description:
-          "A short drive away in Srikakulam, this rare Surya temple is a common add-on for visitors passing through Amadalavalasa.",
-      },
-      {
-        name: "Nagavali River Belt",
-        tag: "Nature",
-        description:
-          "The fertile farmland along the Nagavali river surrounding the town, worth a slow drive for its rural coastal-Andhra scenery.",
-      },
-      {
-        name: "Local Weekly Market",
-        tag: "Culture",
-        description:
-          "A bustling agricultural market where farmers from nearby villages trade produce — a genuine slice of everyday small-town Andhra.",
-      },
-      {
-        name: "Srikakulam Town",
-        tag: "City",
-        description:
-          "The district headquarters is a short 20-minute drive away, useful for combining errands, shopping, or further sightseeing.",
-      },
-    ],
-    importantNotes: [
-      "The above prices do not include tolls, entry fees, parking fees and driver food.",
-      "Works well as a stop-off on a longer Vizag–Srikakulam route rather than a standalone day trip.",
-    ],
-  },
+
   {
     slug: "vizag-to-annavaram-taxi",
     name: "Vizag to Annavaram",
@@ -1283,78 +1212,7 @@ export const outstations: Outstation[] = [
       "Given the distance, confirm fare and halt charges directly with BSH Taxi Services before booking.",
     ],
   },
-  {
-    slug: "vizag-to-eluru-taxi",
-    name: "Vizag to Eluru",
-    distanceFromVizag: "580 KM Round Trip from Vizag",
-    distanceKm: 290,
-    driveTime: "5.5-6 hrs",
-    sources: ["AP Tourism", "West Godavari District Govt."],
-    category: "City",
-    description:
-      "Book a Vizag to Eluru outstation taxi with BSH Taxi Services for business trips or visits to Kolleru Lake, one of Asia's largest freshwater lakes.",
-    seoTitle: "Vizag to Eluru Taxi | Outstation Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Eluru taxi with BSH Taxi Services. Affordable outstation cab packages, AC cabs, 24/7 service.",
-    keywords: [
-      "vizag to eluru taxi",
-      "eluru outstation cab",
-      "vizag to eluru cab booking",
-      "kolleru lake taxi from vizag",
-    ],
-    tagline: "Gateway to Kolleru Lake",
-    costPerDay: 6500,
-    highlights: [
-      "District headquarters of West Godavari",
-      "Close to Kolleru Lake, one of Asia's largest freshwater lakes",
-      "Known for its carpet-weaving and lacquerware craft traditions",
-      "A convenient stop on the Vizag–Vijayawada corridor",
-    ],
-    quickFacts: [
-      { label: "District", value: "West Godavari" },
-      { label: "Distance", value: "290 KM" },
-      { label: "Known For", value: "Kolleru Lake" },
-      { label: "Best Time", value: "Nov – Feb" },
-    ],
-    history:
-      "Eluru has been a regional trading centre for centuries, benefiting from its position between the Krishna and Godavari deltas, two of Andhra's most productive agricultural belts. Its old name, Ellore, appears in colonial-era trade records tied to the carpet-weaving industry the town became known for, using techniques with roots in Persian carpet-making traditions brought in centuries ago.\n\nToday Eluru functions primarily as the administrative headquarters of West Godavari district and a hub for the paddy, aquaculture, and craft industries that define the surrounding delta region.",
-    bestTimeToVisit:
-      "November to February is best, particularly for visiting Kolleru Lake when migratory birds are present in the largest numbers.",
-    howToReach:
-      "Eluru is around 290 KM from Visakhapatnam via NH16, roughly a 5.5 to 6 hour drive. BSH Taxi Services can route via Kolleru Lake if bird-watching is part of your plan.",
-    funFact:
-      "Kolleru Lake, near Eluru, is a Ramsar-designated wetland and one of the largest freshwater lakes in Asia, hosting tens of thousands of migratory birds each winter.",
-    places: [
-      {
-        name: "Kolleru Bird Sanctuary",
-        tag: "Nature",
-        description:
-          "A vast freshwater wetland between the Krishna and Godavari deltas, a major migratory bird habitat and Ramsar wetland site.",
-      },
-      {
-        name: "Eluru Carpet Weaving Units",
-        tag: "Culture",
-        description:
-          "Local workshops continuing a centuries-old hand-knotted carpet tradition, a distinctive local craft.",
-      },
-      {
-        name: "Jamiah Masjid, Eluru",
-        tag: "Heritage",
-        description:
-          "A historic mosque in the old town reflecting the city's long-standing multi-community trading history.",
-      },
-      {
-        name: "Denduluru",
-        tag: "Nearby",
-        description:
-          "A nearby town with its own temples and a quieter, more rural West Godavari character.",
-      },
-    ],
-    importantNotes: [
-      "The above prices do not include tolls, entry fees, parking fees and driver food.",
-      "Kolleru Lake's bird population varies by season — check ahead if wildlife viewing is your main goal.",
-    ],
-  },
+
   {
     slug: "vizag-to-guntur-taxi",
     name: "Vizag to Guntur",
@@ -1499,78 +1357,7 @@ export const outstations: Outstation[] = [
       "Old city traffic around Charminar can be heavy — plan sightseeing time accordingly.",
     ],
   },
-  {
-    slug: "vizag-to-ichchapuram-taxi",
-    name: "Vizag to Ichchapuram",
-    distanceFromVizag: "360 KM Round Trip from Vizag",
-    distanceKm: 180,
-    driveTime: "3.5-4 hrs",
-    sources: ["AP Tourism", "Srikakulam District Govt."],
-    category: "City",
-    description:
-      "Book a Vizag to Ichchapuram outstation taxi with BSH Taxi Services for a trip to Andhra Pradesh's northernmost coastal town, near the Odisha border.",
-    seoTitle: "Vizag to Ichchapuram Taxi | Outstation Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Ichchapuram taxi with BSH Taxi Services. Affordable outstation cab packages, AC cabs.",
-    keywords: [
-      "vizag to ichchapuram taxi",
-      "ichchapuram outstation cab",
-      "vizag to ichchapuram cab booking",
-      "visakhapatnam to ichchapuram taxi fare",
-    ],
-    tagline: "Andhra Pradesh's Northern Gateway",
-    costPerDay: 4500,
-    highlights: [
-      "Andhra Pradesh's northernmost coastal town, on the Odisha border",
-      "Close to Sompeta's paddy fields and coastal wetlands",
-      "A quiet, less-visited stretch of the north coastal Andhra shoreline",
-      "A useful stopover point for onward trips into Odisha",
-    ],
-    quickFacts: [
-      { label: "District", value: "Srikakulam" },
-      { label: "Distance", value: "180 KM" },
-      { label: "Known For", value: "Border Town" },
-      { label: "Best Time", value: "Oct – Feb" },
-    ],
-    history:
-      "Ichchapuram sits right at the edge of Andhra Pradesh, where the state's Telugu-speaking coastline gives way to Odisha's Odia-speaking districts — a border-town position that has shaped its role as a transit point for centuries of trade and travel along the eastern coast. Its everyday character is a blend of both states' influences, from language to food.\n\nThe surrounding area is largely agricultural, with paddy and cashew cultivation dominating the landscape, and the town's importance has traditionally come more from its position on the coastal highway than from any single monument.",
-    bestTimeToVisit:
-      "October to February offers the most comfortable weather for travelling this stretch of the coast.",
-    howToReach:
-      "Ichchapuram is around 180 KM from Visakhapatnam via NH16, roughly a 3.5 to 4 hour drive. BSH Taxi Services can route this as part of a longer trip into Odisha if needed.",
-    funFact:
-      "Ichchapuram is one of the last towns on NH16 before it crosses into Odisha, making it a natural checkpoint for travellers heading further up the East Coast.",
-    places: [
-      {
-        name: "Ichchapuram Beach",
-        tag: "Beach",
-        description:
-          "A quiet, uncrowded stretch of coastline, less developed than the beaches further south around Vizag.",
-      },
-      {
-        name: "Sompeta Wetlands",
-        tag: "Nature",
-        description:
-          "Nearby paddy fields and coastal wetlands, home to a variety of local and migratory birdlife in season.",
-      },
-      {
-        name: "Andhra–Odisha Border",
-        tag: "Landmark",
-        description:
-          "A short drive further north brings you to the state border, a useful reference point for onward travel.",
-      },
-      {
-        name: "Srikakulam & Arasavalli",
-        tag: "Nearby",
-        description:
-          "Both are within reach for combining a temple visit with this northern coastal trip.",
-      },
-    ],
-    importantNotes: [
-      "The above prices do not include tolls, entry fees, parking fees and driver food.",
-      "Works well as a stopover if you're continuing further north into Odisha.",
-    ],
-  },
+
   {
     slug: "vizag-to-jagdalpur-taxi",
     name: "Vizag to Jagdalpur",
@@ -1649,78 +1436,7 @@ export const outstations: Outstation[] = [
       "This is a long outstation trip; plan for a full day on the road each way, or an overnight halt.",
     ],
   },
-  {
-    slug: "vizag-to-khammam-taxi",
-    name: "Vizag to Khammam",
-    distanceFromVizag: "740 KM Round Trip from Vizag",
-    distanceKm: 370,
-    driveTime: "7-7.5 hrs",
-    sources: ["Telangana Tourism", "Google Maps"],
-    category: "Industrial City",
-    description:
-      "Book a Vizag to Khammam outstation taxi with BSH Taxi Services for business travel to this coal and industrial hub in Telangana.",
-    seoTitle: "Vizag to Khammam Taxi | Outstation Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Khammam taxi with BSH Taxi Services. Long-distance outstation cab packages, AC cars.",
-    keywords: [
-      "vizag to khammam taxi",
-      "khammam outstation cab",
-      "vizag to khammam cab booking",
-      "visakhapatnam to khammam taxi fare",
-    ],
-    tagline: "Telangana's Coal Country",
-    costPerDay: 8000,
-    highlights: [
-      "A major coal-mining and industrial hub of Telangana",
-      "Home to the historic Khammam Fort",
-      "Gateway to the Kinnerasani Wildlife Sanctuary",
-      "Close to Bhadrachalam for combined pilgrimage trips",
-    ],
-    quickFacts: [
-      { label: "State", value: "Telangana" },
-      { label: "Distance", value: "370 KM" },
-      { label: "Known For", value: "Coal & Industry" },
-      { label: "Nearby", value: "Bhadrachalam" },
-    ],
-    history:
-      "Khammam's fort, perched on a rocky hill overlooking the town, dates back several centuries and passed through the hands of various regional rulers before the British era, giving the town a longer history than its modern industrial identity might suggest. Its old core still centres around this hill and the bazaars beneath it.\n\nIn more recent decades, Khammam has become known chiefly for the coal reserves of the surrounding Godavari valley coalfields, which turned the district into one of Telangana's key industrial and mining regions, alongside its continuing role as an agricultural trading centre.",
-    bestTimeToVisit:
-      "October to February brings the most comfortable weather for exploring the fort and nearby wildlife sanctuary.",
-    howToReach:
-      "Khammam is around 370 KM from Visakhapatnam via NH16 and NH365, roughly a 7 to 7.5 hour drive. BSH Taxi Services can combine this trip with a visit to Bhadrachalam nearby.",
-    funFact:
-      "Khammam Fort's hill perch means it doubles as a viewpoint over the town — a short but rewarding climb for those wanting a panoramic look at the city.",
-    places: [
-      {
-        name: "Khammam Fort",
-        tag: "Heritage",
-        description:
-          "A hilltop fort overlooking the town, with roots going back several centuries through multiple regional dynasties.",
-      },
-      {
-        name: "Kinnerasani Wildlife Sanctuary",
-        tag: "Nature",
-        description:
-          "A forested sanctuary around 40 KM from the city, home to deer, sloth bears, and a scenic reservoir.",
-      },
-      {
-        name: "Lakaram Lake",
-        tag: "Nature",
-        description:
-          "A lake within the city, popular for evening walks and a quieter break from the town centre.",
-      },
-      {
-        name: "Bhadrachalam Temple",
-        tag: "Nearby",
-        description:
-          "The Sita Ramachandraswamy Temple is within a reasonable drive, making it easy to combine with a Khammam trip.",
-      },
-    ],
-    importantNotes: [
-      "This is a long outstation trip; plan for a full day on the road each way.",
-      "Ask BSH Taxi Services about combining this trip with Bhadrachalam if pilgrimage is part of your plan.",
-    ],
-  },
+
   {
     slug: "vizag-to-kolkata-taxi",
     name: "Vizag to Kolkata",
@@ -1793,78 +1509,7 @@ export const outstations: Outstation[] = [
       "Given the distance, confirm fare and halt charges directly with BSH Taxi Services before booking.",
     ],
   },
-  {
-    slug: "vizag-to-kurnool-taxi",
-    name: "Vizag to Kurnool",
-    distanceFromVizag: "1420 KM Round Trip from Vizag",
-    distanceKm: 710,
-    driveTime: "12-13 hrs",
-    sources: ["AP Tourism", "Google Maps"],
-    category: "City",
-    description:
-      "Book a Vizag to Kurnool outstation taxi with BSH Taxi Services for a long-distance trip to the gateway of the Rayalaseema region.",
-    seoTitle: "Vizag to Kurnool Taxi | Outstation Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Kurnool taxi with BSH Taxi Services. Long-distance outstation cab packages, AC cars.",
-    keywords: [
-      "vizag to kurnool taxi",
-      "kurnool outstation cab",
-      "vizag to kurnool cab booking",
-      "visakhapatnam to kurnool taxi fare",
-    ],
-    tagline: "Gateway to Rayalaseema",
-    costPerDay: 14000,
-    highlights: [
-      "Former capital of Andhra State before Hyderabad",
-      "Gateway to the Rayalaseema region and Srisailam temple",
-      "Sits at the confluence of the Tungabhadra and Hundri rivers",
-      "Home to the historic Kurnool Fort and Konda Reddy Fort",
-    ],
-    quickFacts: [
-      { label: "Region", value: "Rayalaseema" },
-      { label: "Distance", value: "710 KM" },
-      { label: "Known For", value: "Gateway to Srisailam" },
-      { label: "River", value: "Tungabhadra" },
-    ],
-    history:
-      "Kurnool briefly served as the capital of Andhra State from 1953 to 1956, before the capital moved to Hyderabad following the formation of a unified Andhra Pradesh — a short but significant chapter that still comes up in local civic pride. Long before that, the town had been a fort city under various regional dynasties, benefiting from its position at the confluence of the Tungabhadra and Hundri rivers.\n\nToday Kurnool functions as a key gateway to the Rayalaseema region and to Srisailam, one of South India's most important Shiva temples, drawing both pilgrims and travellers passing through en route further south.",
-    bestTimeToVisit:
-      "October to February is most comfortable, avoiding the hot, dry Rayalaseema summers.",
-    howToReach:
-      "Kurnool is around 710 KM from Visakhapatnam, roughly a 12 to 13 hour drive. Given the distance, BSH Taxi Services recommends a driver night halt, typically around Vijayawada or Guntur.",
-    funFact:
-      "Kurnool is sometimes called the \"Gateway of Rayalaseema\" because most road and rail routes into the region from the north and east pass through it.",
-    places: [
-      {
-        name: "Kurnool Fort",
-        tag: "Heritage",
-        description:
-          "A riverside fort with roots going back centuries, reflecting the town's long history as a regional stronghold.",
-      },
-      {
-        name: "Konda Reddy Fort",
-        tag: "Heritage",
-        description:
-          "An older hilltop fort near the town, associated with local Reddy chieftains who ruled the area before later dynasties.",
-      },
-      {
-        name: "Srisailam Temple",
-        tag: "Pilgrimage",
-        description:
-          "One of the twelve Jyotirlinga shrines dedicated to Shiva, located in the forested Nallamala hills a few hours from Kurnool.",
-      },
-      {
-        name: "Rollapadu Wildlife Sanctuary",
-        tag: "Nature",
-        description:
-          "A grassland sanctuary near Kurnool, known as a habitat for the endangered Great Indian Bustard.",
-      },
-    ],
-    importantNotes: [
-      "This is a very long outstation trip; an overnight driver halt is recommended.",
-      "Srisailam can be added as an extension from Kurnool — mention this in advance when booking.",
-    ],
-  },
+
   {
     slug: "vizag-to-lambasingi-taxi",
     name: "Vizag to Lambasingi",
@@ -1937,71 +1582,7 @@ export const outstations: Outstation[] = [
       "Ghat roads mean the drive takes longer than the raw distance suggests; carry warm clothing in winter.",
     ],
   },
-  {
-    slug: "vizag-to-narasannapeta-taxi",
-    name: "Vizag to Narasannapeta",
-    distanceFromVizag: "210 KM Round Trip from Vizag",
-    distanceKm: 105,
-    driveTime: "2.5-3 hrs",
-    sources: ["AP Tourism", "Srikakulam District Govt."],
-    category: "City",
-    description:
-      "Book a Vizag to Narasannapeta outstation taxi with BSH Taxi Services for business trips or visits to this Srikakulam district town.",
-    seoTitle: "Vizag to Narasannapeta Taxi | Outstation Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Narasannapeta taxi with BSH Taxi Services. Affordable outstation cab packages, AC cabs.",
-    keywords: [
-      "vizag to narasannapeta taxi",
-      "narasannapeta outstation cab",
-      "vizag to narasannapeta cab booking",
-    ],
-    tagline: "A Quiet Town in Srikakulam District",
-    costPerDay: 3800,
-    highlights: [
-      "A regional trading and mandal headquarters in Srikakulam district",
-      "Close to Srikakulam town and the Arasavalli Sun Temple",
-      "Surrounded by paddy and cashew farmland",
-      "A convenient stop on the north coastal Andhra route",
-    ],
-    quickFacts: [
-      { label: "District", value: "Srikakulam" },
-      { label: "Distance", value: "105 KM" },
-      { label: "Known For", value: "Agri Trade" },
-      { label: "Best Time", value: "Oct – Feb" },
-    ],
-    history:
-      "Narasannapeta functions primarily as a mandal headquarters and local trading centre for the surrounding agricultural villages of Srikakulam district, without a single dominant historical monument defining it. Its everyday rhythm follows the farming calendar of the paddy and cashew belt around it, much like several other small towns in this part of coastal Andhra.\n\nIts position just off the main coastal highway has made it a practical stop for travellers moving between Vizag and Srikakulam, more than a destination in its own right.",
-    bestTimeToVisit:
-      "October to February offers the most comfortable weather for travelling this stretch of the coast.",
-    howToReach:
-      "Narasannapeta is around 105 KM from Visakhapatnam via NH16, roughly a 2.5 to 3 hour drive. BSH Taxi Services can combine this with a Srikakulam or Arasavalli visit.",
-    funFact:
-      "The town's cashew processing units supply a meaningful share of the raw cashew that moves through Srikakulam district's trading network.",
-    places: [
-      {
-        name: "Local Cashew Processing Units",
-        tag: "Culture",
-        description:
-          "Small-scale cashew processing operations that reflect the district's agricultural economy.",
-      },
-      {
-        name: "Srikakulam Town",
-        tag: "Nearby",
-        description:
-          "A short drive away, useful for combining this trip with the Arasavalli Sun Temple or district shopping.",
-      },
-      {
-        name: "Surrounding Paddy Fields",
-        tag: "Nature",
-        description:
-          "The farmland around the town offers a quiet, rural look at north coastal Andhra's agricultural landscape.",
-      },
-    ],
-    importantNotes: [
-      "The above prices do not include tolls, entry fees, parking fees and driver food.",
-      "Best combined with a Srikakulam or Arasavalli visit rather than as a standalone trip.",
-    ],
-  },
+
   {
     slug: "vizag-to-nellore-taxi",
     name: "Vizag to Nellore",
@@ -2420,77 +2001,7 @@ export const outstations: Outstation[] = [
       "This is a long outstation trip; plan for a full day on the road each way, or an overnight halt.",
     ],
   },
-  {
-    slug: "vizag-to-ravulapalem-taxi",
-    name: "Vizag to Ravulapalem",
-    distanceFromVizag: "380 KM Round Trip from Vizag",
-    distanceKm: 190,
-    driveTime: "3.5-4 hrs",
-    sources: ["AP Tourism", "East Godavari District Govt."],
-    category: "City",
-    description:
-      "Book a Vizag to Ravulapalem outstation taxi with BSH Taxi Services for a trip to this Godavari delta junction town and gateway to Konaseema.",
-    seoTitle: "Vizag to Ravulapalem Taxi | Outstation Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Ravulapalem taxi with BSH Taxi Services. Affordable outstation cab packages, AC cabs.",
-    keywords: [
-      "vizag to ravulapalem taxi",
-      "ravulapalem outstation cab",
-      "vizag to ravulapalem cab booking",
-    ],
-    tagline: "Gateway to Konaseema",
-    costPerDay: 5000,
-    highlights: [
-      "A key road junction town for reaching Konaseema's backwaters",
-      "Sits on the banks of the Godavari river",
-      "Surrounded by coconut groves and delta farmland",
-      "A convenient stop-off for a longer East Godavari itinerary",
-    ],
-    quickFacts: [
-      { label: "District", value: "East Godavari" },
-      { label: "Distance", value: "190 KM" },
-      { label: "Known For", value: "Konaseema Gateway" },
-      { label: "River", value: "Godavari" },
-    ],
-    history:
-      "Ravulapalem has grown mainly as a road junction town, positioned where routes into the Konaseema region branch off from the main Godavari district highway — a role that has shaped its identity more than any single historical monument. Its bridge over the Godavari river has long been a key crossing point for traffic heading into the delta's inner backwater villages.\n\nThe surrounding countryside is classic Konaseema landscape: dense coconut groves, paddy fields, and a network of canals fed by the Godavari, supporting an agricultural economy that has continued largely unchanged for generations.",
-    bestTimeToVisit:
-      "October to February is best for exploring the surrounding delta villages and backwaters comfortably.",
-    howToReach:
-      "Ravulapalem is around 190 KM from Visakhapatnam via NH16, roughly a 3.5 to 4 hour drive. BSH Taxi Services can route this as a gateway stop for a deeper Konaseema exploration.",
-    funFact:
-      "Ravulapalem's bridge over the Godavari is one of the main entry points into Konaseema, a region often called the \"Kerala of Andhra Pradesh\" for its dense backwater canal network.",
-    places: [
-      {
-        name: "Godavari Bridge, Ravulapalem",
-        tag: "Landmark",
-        description:
-          "The main crossing point into the Konaseema region, with river views along the way.",
-      },
-      {
-        name: "Konaseema Backwaters",
-        tag: "Nature",
-        description:
-          "The wider delta region beyond Ravulapalem, known for its coconut-lined canals and boat rides.",
-      },
-      {
-        name: "Local Coconut Groves",
-        tag: "Nature",
-        description:
-          "The farmland surrounding the town is dense with coconut plantations, characteristic of the Konaseema landscape.",
-      },
-      {
-        name: "Amalapuram",
-        tag: "Nearby",
-        description:
-          "A larger Konaseema town further along the delta, useful for extending the trip deeper into the backwaters.",
-      },
-    ],
-    importantNotes: [
-      "The above prices do not include tolls, entry fees, parking fees and driver food.",
-      "Best used as a gateway stop for a longer Konaseema backwaters itinerary.",
-    ],
-  },
+
   {
     slug: "vizag-to-razam-taxi",
     name: "Vizag to Razam",
@@ -2556,71 +2067,7 @@ export const outstations: Outstation[] = [
       "Best combined with a nearby destination such as Parvathipuram rather than as a standalone trip.",
     ],
   },
-  {
-    slug: "vizag-to-sompeta-taxi",
-    name: "Vizag to Sompeta",
-    distanceFromVizag: "330 KM Round Trip from Vizag",
-    distanceKm: 165,
-    driveTime: "3.5-4 hrs",
-    sources: ["AP Tourism", "Srikakulam District Govt."],
-    category: "City",
-    description:
-      "Book a Vizag to Sompeta outstation taxi with BSH Taxi Services for a trip to this paddy-farming town in far north coastal Andhra.",
-    seoTitle: "Vizag to Sompeta Taxi | Outstation Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Sompeta taxi with BSH Taxi Services. Affordable outstation cab packages, AC cabs.",
-    keywords: [
-      "vizag to sompeta taxi",
-      "sompeta outstation cab",
-      "vizag to sompeta cab booking",
-    ],
-    tagline: "Paddy Country of North Andhra",
-    costPerDay: 4400,
-    highlights: [
-      "A major paddy-growing belt in Srikakulam district",
-      "Home to coastal wetlands that draw local and migratory birds",
-      "Close to Ichchapuram and the Odisha border",
-      "A quiet, agricultural stretch of the far north coast",
-    ],
-    quickFacts: [
-      { label: "District", value: "Srikakulam" },
-      { label: "Distance", value: "165 KM" },
-      { label: "Known For", value: "Paddy Farming" },
-      { label: "Best Time", value: "Oct – Feb" },
-    ],
-    history:
-      "Sompeta sits in one of Srikakulam district's most fertile paddy-growing tracts, with its economy long centred on rice cultivation feeding into regional and national supply chains. The wetlands surrounding the town, fed by local streams and monsoon rains, have also made it a modest hub for local birdlife over the seasons.\n\nAs with much of this stretch of the far north coast, Sompeta's character comes from its everyday agricultural rhythm rather than any single historic monument, making it a genuine look at rural coastal Andhra life.",
-    bestTimeToVisit:
-      "October to February is most comfortable for visiting; the paddy fields are especially green just after the monsoon.",
-    howToReach:
-      "Sompeta is around 165 KM from Visakhapatnam via NH16, roughly a 3.5 to 4 hour drive. BSH Taxi Services can combine this with a stop at Ichchapuram or Palasa.",
-    funFact:
-      "The wetlands around Sompeta have drawn conservation attention over the years for their role as a local and migratory bird habitat within the district's paddy landscape.",
-    places: [
-      {
-        name: "Sompeta Wetlands",
-        tag: "Nature",
-        description:
-          "Paddy-adjacent wetlands that support local and seasonal migratory bird populations.",
-      },
-      {
-        name: "Surrounding Paddy Fields",
-        tag: "Nature",
-        description:
-          "Some of Srikakulam district's most productive rice-growing land, especially scenic just after the monsoon.",
-      },
-      {
-        name: "Ichchapuram",
-        tag: "Nearby",
-        description:
-          "A short drive north, useful for combining a visit to the state's northernmost coastal stretch.",
-      },
-    ],
-    importantNotes: [
-      "The above prices do not include tolls, entry fees, parking fees and driver food.",
-      "Best combined with Ichchapuram or Palasa on the same trip given the modest distances between them.",
-    ],
-  },
+
   {
     slug: "vizag-to-srimukhalingam-taxi",
     name: "Vizag to Srimukhalingam",
