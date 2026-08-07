@@ -120,21 +120,20 @@ export default function HomePage() {
           {JSON.stringify(localBusinessSchema)}
         </script>
       </Helmet>
-          <section className="relative z-20 hidden px-4 pt-6 md:block lg:px-8">
+          <section className="relative z-10 hidden px-4 pt-6 md:block lg:px-8">
       <Hero />
 </section>
       {/* Quick search bar — default destinations + WhatsApp booking.
           Shown on every screen size, at the top of the page. */}
-     <section className="relative z-30 mt-6 sm:mt-8 md:mt-0 px-4 md:px-6 lg:px-8">
-  <div className="mx-auto w-full md:max-w-3xl">
-    <MobileSearchBar />
-  </div>
-</section>
+
 
       {/* Desktop / tablet: full multi-step booking wizard, further down the page */}
-      <section className="relative z-20  px-4 pt-6 md:block lg:px-8">
-        <BookingWizard />
-      </section>
+    {/* Desktop: Booking Wizard overlaps Hero */}
+<section className="relative z-30  md:block md:-mt-20 lg:-mt-24 xl:-mt-15 px-4 lg:px-8">
+  <div className="mx-auto max-w-7xl">
+    <BookingWizard />
+  </div>
+</section>
 
       <TrustBar />
 
