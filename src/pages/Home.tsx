@@ -7,7 +7,6 @@ import TrustBar from "../components/home/TrustBar";
 import { CTA, ContactUs } from "../components/home/CTA";
 import Review from "../components/home/Review";
 import BookingWizard from "../components/booking/BookingWizard";
-import MobileSearchBar from "../components/home/MobileSearchBar";
 import FloatingContactButtons from "../components/home/FloatingContactButtons";
 
 const localBusinessSchema = {
