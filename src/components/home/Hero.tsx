@@ -57,15 +57,21 @@ export default function Hero() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(taxiServiceSchema) }}
       />
 
-      {/* Ambient glow — adds depth without a photo, keeps LCP light */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-24 -top-32 z-0 h-72 w-72 rounded-full bg-[#2997FF]/20 blur-3xl sm:h-96 sm:w-96"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-20 bottom-0 z-0 h-64 w-64 rounded-full bg-[#2997FF]/15 blur-3xl sm:h-80 sm:w-80"
-      />
+      {/* Premium Background Blur */}
+<div
+  aria-hidden="true"
+  className="pointer-events-none absolute -left-40 -top-20 z-0 h-[420px] w-[420px] rounded-full bg-primary/15 blur-[140px]"
+/>
+
+<div
+  aria-hidden="true"
+  className="pointer-events-none absolute right-[-120px] top-10 z-0 h-[500px] w-[500px] rounded-full bg-sky-300/25 blur-[160px]"
+/>
+
+<div
+  aria-hidden="true"
+  className="pointer-events-none absolute bottom-[-120px] left-1/2 z-0 h-[360px] w-[360px] -translate-x-1/2 rounded-full bg-primary/10 blur-[130px]"
+/>
 
       {/* Vizag coastline silhouette anchoring the bottom of the hero */}
       <svg
@@ -78,12 +84,12 @@ export default function Hero() {
         <path
           d="M0 160 C 180 90, 320 130, 480 100 C 640 70, 760 140, 960 110 C 1140 85, 1280 130, 1440 100 L1440 220 L0 220 Z"
           fill="#2997FF"
-          fillOpacity="0.06"
+          fillOpacity="0.01"
         />
         <path
           d="M0 190 C 220 170, 360 200, 600 180 C 840 160, 1020 200, 1440 175 L1440 220 L0 220 Z"
           fill="#0f172a"
-          fillOpacity="0.05"
+          fillOpacity="0.01"
         />
       </svg>
 
