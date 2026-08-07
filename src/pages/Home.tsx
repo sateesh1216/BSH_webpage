@@ -6,6 +6,7 @@ import TravelSections from "../components/home/TravelSections";
 import TrustBar from "../components/home/TrustBar";
 import { CTA, ContactUs } from "../components/home/CTA";
 import Review from "../components/home/Review";
+import MobileSearchBar from "../components/home/MobileSearchBar";
 import BookingWizard from "../components/booking/BookingWizard";
 import FloatingContactButtons from "../components/home/FloatingContactButtons";
 
@@ -119,16 +120,21 @@ export default function HomePage() {
           {JSON.stringify(localBusinessSchema)}
         </script>
       </Helmet>
-          <section className="relative z-10 hidden px-4 pt-6 md:block lg:px-8">
-      <Hero />
+<section className="relative z-10 hidden px-4 pt-6 md:block lg:px-8">
+  <Hero />
 </section>
-      {/* Quick search bar — default destinations + WhatsApp booking.
-          Shown on every screen size, at the top of the page. */}
 
+{/* Quick search bar — mobile only. Sits right below the (hidden-on-mobile)
+    hero area, so give it its own top spacing instead of relying on Hero's. */}
+<section className="px-4 pt-4 pb-2 sm:px-5 md:hidden">
+  <div className="mx-auto w-full max-w-md">
+    <MobileSearchBar />
+  </div>
+</section>
 
-      {/* Desktop / tablet: full multi-step booking wizard, further down the page */}
-    {/* Desktop: Booking Wizard overlaps Hero */}
-<section className="relative z-30  md:block md:-mt-20 lg:-mt-24 xl:-mt-15 px-4 lg:px-8">
+{/* Desktop / tablet: full multi-step booking wizard, further down the page */}
+{/* Desktop: Booking Wizard overlaps Hero */}
+<section className="relative z-30 mt-2 md:mt-0 md:block md:-mt-20 lg:-mt-24 xl:-mt-15 px-4 lg:px-8">
   <div className="mx-auto max-w-7xl">
     <BookingWizard />
   </div>
