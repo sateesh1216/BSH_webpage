@@ -39,7 +39,7 @@ import TempoTravellerImg from "../../assets/icons_cars/17-seater-tempo-traveller
 const CAR_TYPES = [
   {
     id: "sedan",
-    name: "Sedan (Dzire)",
+    name: "Dzire, Etios",
     subtitle: "Comfortable city rides",
     image: DzireImg,
     seats: 4,
@@ -47,7 +47,7 @@ const CAR_TYPES = [
   },
   {
     id: "suv",
-    name: "SUV (Ertiga)",
+    name: "SUV (Ertiga, Innova)",
     subtitle: "Spacious for families & groups",
     image: ErtigaImg,
     seats: 7,
@@ -90,7 +90,11 @@ const LOCAL_FARES: Record<CarId, Record<LocalPackageId, number>> = {
   tempo_traveller: { pkg8_80: 5500, pkg10_100: 6500 },
 };
 
-// ---- FIXED airport fares: [carId] -> price. Edit freely. ----
+// ---- Airport fares: kept for reference only — no longer shown in the UI.
+// Airport now works like Outstation ("Fare confirmed on call / WhatsApp").
+// If you want fixed airport pricing back, restore the `airportFare` lookup
+// and swap `<OnCallFare />` back to `<FareSummary amount={airportFare} />`
+// in the Airport tab below. ----
 
 
 const POPULAR_PICKUP_PLACES = [
@@ -303,6 +307,15 @@ function todayISO() {
 
 /* =============================================================================
    LOCATION AUTOCOMPLETE (plain text + suggestion list, no distance/coords)
+   ----------------------------------------------------------------------------
+   FIX: the suggestion list now renders through a React portal into
+   document.body (same pattern as CarSelect below). Previously it was an
+   absolutely-positioned <ul> nested inside the booking card, and the card
+   has `overflow-hidden` for its rounded corners — so the dropdown was being
+   silently clipped/hidden behind the card edge on desktop. Portaling it out
+   fixes that, and a full-screen invisible overlay (z-[999], list at
+   z-[1000]) handles "click outside to close" instead of a mousedown
+   listener, so clicks on list items are never swallowed.
    ============================================================================= */
 
 function LocationAutocomplete({
@@ -324,15 +337,36 @@ function LocationAutocomplete({
 }) {
   const [open, setOpen] = useState(false);
   const [locating, setLocating] = useState(false);
+  const [coords, setCoords] = useState({ top: 0, left: 0, width: 0 });
   const wrapRef = useRef<HTMLDivElement>(null);
 
+  function updateCoords() {
+    if (!wrapRef.current) return;
+    const rect = wrapRef.current.getBoundingClientRect();
+    setCoords({
+      top: rect.bottom + window.scrollY + 6,
+      left: rect.left + window.scrollX,
+      width: rect.width,
+    });
+  }
+
+  function openDropdown() {
+    updateCoords();
+    setOpen(true);
+  }
+
   useEffect(() => {
-    function onClickOutside(e: MouseEvent) {
-      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);
+    if (!open) return;
+    function reposition() {
+      updateCoords();
     }
-    document.addEventListener("mousedown", onClickOutside);
-    return () => document.removeEventListener("mousedown", onClickOutside);
-  }, []);
+    window.addEventListener("scroll", reposition, true);
+    window.addEventListener("resize", reposition);
+    return () => {
+      window.removeEventListener("scroll", reposition, true);
+      window.removeEventListener("resize", reposition);
+    };
+  }, [open]);
 
   const filtered = (() => {
     const q = value.trim().toLowerCase();
@@ -364,8 +398,11 @@ function LocationAutocomplete({
           id={id}
           type="text"
           value={value}
-          onFocus={() => setOpen(true)}
-          onChange={(e) => onChange(e.target.value)}
+          onFocus={openDropdown}
+          onChange={(e) => {
+            onChange(e.target.value);
+            if (!open) openDropdown();
+          }}
           placeholder={placeholder}
           className="w-full min-w-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
         />
@@ -381,25 +418,39 @@ function LocationAutocomplete({
         )}
       </div>
 
-      {open && filtered.length > 0 && (
-        <ul className="absolute left-0 right-0 top-full z-50 mt-1.5 max-h-56 overflow-y-auto rounded-xl border border-white/70 bg-white/95 py-1 shadow-xl backdrop-blur-xl">
-          {filtered.map((place) => (
-            <li key={place}>
-              <button
-                type="button"
-                onClick={() => {
-                  onChange(place);
-                  setOpen(false);
-                }}
-                className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-700 hover:bg-blue-50"
-              >
-                <MapPin size={13} className="shrink-0 text-slate-300" />
-                <span className="truncate">{place}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      {open &&
+        filtered.length > 0 &&
+        createPortal(
+          <>
+            <div className="fixed inset-0 z-[999]" onClick={() => setOpen(false)} />
+            <ul
+              style={{
+                position: "absolute",
+                top: coords.top,
+                left: coords.left,
+                width: coords.width,
+              }}
+              className="z-[1000] max-h-56 overflow-y-auto rounded-xl border border-white/70 bg-white/95 py-1 shadow-xl backdrop-blur-xl"
+            >
+              {filtered.map((place) => (
+                <li key={place}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onChange(place);
+                      setOpen(false);
+                    }}
+                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-700 hover:bg-blue-50"
+                  >
+                    <MapPin size={13} className="shrink-0 text-slate-300" />
+                    <span className="truncate">{place}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </>,
+          document.body
+        )}
     </div>
   );
 }
@@ -679,6 +730,14 @@ function ProceedButtons({
 
 /* =============================================================================
    CONFIRM MODAL
+   ----------------------------------------------------------------------------
+   FIX: rendered through createPortal into document.body. The booking card
+   wrapper uses `backdrop-blur-2xl`, and any ancestor with a CSS filter /
+   backdrop-filter creates a new containing block for `position: fixed`
+   descendants — so this modal was being positioned/clipped relative to the
+   card (which also has `overflow-hidden`) instead of the viewport, hiding
+   part of it (e.g. the Confirm button) depending on scroll position.
+   Portaling to document.body escapes that entirely.
    ============================================================================= */
 
 function ConfirmModal({
@@ -695,7 +754,7 @@ function ConfirmModal({
   onClose: () => void;
   onConfirm: () => void;
 }) {
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[1000] flex items-end justify-center bg-slate-900/40 p-4 backdrop-blur-sm sm:items-center">
       <div className="w-full max-w-md rounded-2xl border border-white/70 bg-white/90 p-4 shadow-2xl backdrop-blur-xl sm:max-w-sm sm:p-5">
         <div className="mb-3 flex items-center justify-between">
@@ -745,7 +804,8 @@ function ConfirmModal({
           Edit Details
         </button>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -794,8 +854,9 @@ export default function BookingCard() {
   const airportDropLabel = airportDirection === "fromAirport" ? airportOther : "Visakhapatnam Airport (VTZ)";
 
   // ---- FIXED fares — pure lookups by [car] and [package], no math ----
+  // Note: Airport fares are intentionally NOT looked up/displayed anymore —
+  // Airport now behaves like Outstation (fare confirmed on call/WhatsApp).
   const localFare = LOCAL_FARES[carId][localPackageId];
-
   const tourFare = TOUR_FARES[tourId][carId];
 
   function switchTab(tab: TabId) {
@@ -872,7 +933,7 @@ export default function BookingCard() {
           { label: "Car", value: car.name },
         ],
         fareLabel: "Airport Fare",
-        fare: null,
+        fare: null, // confirmed on call/WhatsApp — same as Outstation
       };
     }
     return {
@@ -1142,7 +1203,7 @@ export default function BookingCard() {
               <StepField index={3} label="Select Car" icon={Car}>
                 <div className="space-y-3">
                   <CarSelect car={car} onChange={setCarId} />
-                 
+                  <OnCallFare />
                 </div>
               </StepField>
 
