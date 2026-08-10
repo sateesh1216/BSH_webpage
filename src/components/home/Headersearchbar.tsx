@@ -11,7 +11,7 @@ import {
 import { FaWhatsapp } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-import { destinations } from "../../data/destinationsData";
+import { destinations } from "../../data/DestinationsData";
 import { VEHICLES, SUPPORT_PHONE } from "../../data/bookingConfig";
 import { FIXED_PRICES } from "../../data/fixedPrices";
 

@@ -15,7 +15,7 @@ import {
   Plane,
   CalendarCheck,
 } from "lucide-react";
-import { destinations } from "../data/destinationsData";
+import { destinations } from "../data/DestinationsData";
 import { useBooking } from "../components/booking/BookingContext";
 import SEO from "../components/seo/SEO";
 import { pageMeta } from "../data/pageMeta";

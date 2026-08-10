@@ -17,6 +17,7 @@ import Coffeemuseum  from "../assets/Destinations/Araku/araku-Coffee_Museum-taxi
 import Tribalmuseum  from "../assets/Destinations/Araku/Araku-Tribal_Museum-taxi-services-bshtaxiservices.webp";
 import Padmapuramgardens  from "../assets/Destinations/Araku/Araku-Padmapuram_Gardens-taxi-services-bshtaxiservices.webp";
 import Damukuviewpoint  from "../assets/Destinations/Araku/Araku-Damuku_View_Point-taxi-services-bshtaxiservices.webp";
+import type { ReactNode } from "react";
 
 
 // import Coffeehouse  from "../assets/Destinations/Araku/araku-coffee house-taxi-services-bshtaxiservices.png"; --- IGNORE ---
@@ -24,7 +25,7 @@ export type DestinationPlace = {
   name: string;
   image: string;
   tag?: string;
-  description?: string;
+  description: ReactNode;
 };
 
 export type QuickFact = {
@@ -43,7 +44,7 @@ export type Destination = {
   driveTime?: string;
   sources?: string[];
 
-  description: string;
+  description: ReactNode;
   seoTitle: string;
   seoDescription: string;
   keywords: string[];
@@ -81,8 +82,15 @@ export const destinations: Destination[] = [
     driveTime: "10 hrs",
     sources: ["AP Tourism", "Wikipedia"],
     category: "Hill Station",
-    description:
-      "Book the best Vizag to Araku Valley taxi service with BSH Taxi Services. Enjoy a comfortable journey through the Eastern Ghats, visit Borra Caves, coffee plantations, waterfalls, and scenic viewpoints with experienced drivers, clean vehicles, and affordable taxi fares.",
+description: (
+  <>
+    Book the best<strong>Vizag to Araku Valley taxi service</strong> with{" "}
+    <strong>BSH Taxi Services</strong>. Enjoy a comfortable journey through
+    the Eastern Ghats, visit Borra Caves, coffee plantations, waterfalls, and
+    scenic viewpoints with experienced drivers, clean vehicles, and affordable
+    taxi fares.
+  </>
+),
     seoTitle: "Vizag to Araku Valley Cab Service | Taxi Booking | BSH Taxi",    
     seoDescription:
       "Book Vizag to Araku Valley taxi service with BSH Taxi Services. Affordable cab booking, one-day Araku tour packages, Borra Caves sightseeing, AC cabs, experienced drivers, and 24/7 taxi service.",
@@ -521,9 +529,14 @@ export const destinations: Destination[] = [
     driveTime: "10-12 hrs",
     sources: ["Outlook Traveller", "Yovizag"],
     category: "Hill Station",
-    description:
-      "Book your trip with BSH Taxi Services and witness the magical sunrise at Vanjangi Hills, famous for its Sea of Clouds, misty mountains, and breathtaking natural beauty near Visakhapatnam.",
-    seoTitle: "Vizag to Vanjangi Hills Taxi | Sea of Clouds Sunrise Trip | BSH Taxi Services",
+ description: (
+    <>
+      Book your trip with <strong>BSH Taxi Services</strong> and witness the
+      magical sunrise at Vanjangi Hills, famous for its Sea of Clouds, misty
+      mountains, and breathtaking natural beauty near Visakhapatnam.
+    </>
+  ),
+      seoTitle: "Vizag to Vanjangi Hills Taxi | Sea of Clouds Sunrise Trip | BSH Taxi Services",
     seoDescription:
       "Book a Vizag to Vanjangi taxi with BSH Taxi Services for the famous Sea of Clouds sunrise. Night-drive & early morning cab packages, AC cabs, 24/7 booking.",
     keywords: [

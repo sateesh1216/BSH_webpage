@@ -6,7 +6,7 @@
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
-
+import type { ReactNode } from "react";
 export type OutstationPlace = {
   name: string;
   tag?: string;
@@ -45,9 +45,9 @@ export type Outstation = {
   distanceFromVizag: string;
   distanceKm: number;
   driveTime?: string;
-  sources?: string[];
 
-  description: string;
+
+  description: ReactNode;
   seoTitle: string;
   seoDescription: string;
   keywords: string[];
@@ -149,12 +149,18 @@ export const outstations: Outstation[] = [
   distanceFromVizag: "350 KM Round Trip from Vizag",
   distanceKm: 350,
   driveTime: "3-3.5 hrs",
-  sources: ["AP Tourism", "Incredible India", "Trawell"],
+
   category: "City",
 
-  description:
-    "Book Vizag to Kakinada taxi service with BSH Taxi Services. Reliable one-way and round-trip outstation cabs from Visakhapatnam to Kakinada at affordable, transparent fares — AC vehicles, experienced drivers, and 24/7 support for business trips, family travel, sightseeing, and temple visits.",
-
+  description: (
+  <>
+    Book Vizag to Kakinada taxi service with{" "}
+    <strong>BSH Taxi Services</strong>. Reliable one-way and round-trip
+    outstation cabs from Visakhapatnam to Kakinada at affordable, transparent
+    fares — AC vehicles, experienced drivers, and 24/7 support for business
+    trips, family travel, sightseeing, and temple visits.
+  </>
+),
   seoTitle: "Vizag to Kakinada Taxi | Outstation Cab Booking",
   seoDescription:
     "Book Vizag to Kakinada taxi with BSH Taxi Services. Affordable one-way & round-trip cabs, AC vehicles, transparent fares, 24/7 support.",
@@ -257,7 +263,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "300 KM Round Trip from Vizag",
     distanceKm: 300,
     driveTime: "3-4 hrs",
-    sources: ["AP Tourism", "Holidify"],
+    
     category: "City",
     description:
       "Book an outstation taxi from Vizag to Araku with BSH Taxi Services for a comfortable journey through the Eastern Ghats, past coffee estates, waterfalls, and the Borra Caves.",
@@ -355,7 +361,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "870 KM Round Trip from Vizag",
     distanceKm: 350,
     driveTime: "7-8 hrs",
-    sources: ["AP Tourism", "Trawell", "Krishna District Govt."],
+
     category: "Business Hub",
     description:
       "Book Vizag to Vijayawada outstation taxi with BSH Taxi Services for business travel, pilgrimage, or family trips to the Kanaka Durga temple on the Krishna river.",
@@ -447,7 +453,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "480 KM Round Trip from Vizag",
     distanceKm: 240,
     driveTime: "4-4.5 hrs",
-    sources: ["AP Tourism", "Incredible India"],
+    
     category: "City",
     description:
       "Book Vizag to Rajahmundry outstation taxi with BSH Taxi Services, on the banks of the Godavari river and gateway to Papikondalu's boat cruises.",
@@ -539,7 +545,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "130 KM Round Trip from Vizag",
     distanceKm: 65,
     driveTime: "1.5 hrs",
-    sources: ["AP Tourism", "Vizianagaram District Govt."],
+
     category: "City",
     description:
       "Book Vizag to Vizianagaram outstation taxi with BSH Taxi Services for business, pilgrimage, or a quick day trip to the Vizianagaram Fort and Pydithalli Ammavaru Temple.",
@@ -630,7 +636,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "226 KM Round Trip from Vizag",
     distanceKm: 113,
     driveTime: "2.5-3 hrs",
-    sources: ["AP Tourism"],
+   
     category: "City",
     description:
       "Book Vizag to Srikakulam outstation taxi with BSH Taxi Services for business, pilgrimage, or sightseeing trips to the Arasavalli Sun Temple and nearby coast.",
@@ -714,7 +720,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "240 KM Round Trip from Vizag",
     distanceKm: 120,
     driveTime: "2.5-3 hrs",
-    sources: ["AP Tourism", "Endowments Dept."],
+ 
     category: "Pilgrimage",
     description:
       "Book a Vizag to Annavaram taxi with BSH Taxi Services for a comfortable pilgrimage trip to the Sri Veera Venkata Satyanarayana Swamy Temple.",
@@ -786,7 +792,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "230 KM Round Trip from Vizag",
     distanceKm: 115,
     driveTime: "2.5-3 hrs",
-    sources: ["AP Tourism", "Endowments Dept."],
+    
     category: "Pilgrimage",
     description:
       "Book a Vizag to Arasavalli taxi with BSH Taxi Services for a pilgrimage visit to the historic Sun Temple, one of the very few Surya shrines in India.",
@@ -858,7 +864,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "1980 KM Round Trip from Vizag",
     distanceKm: 990,
     driveTime: "16-18 hrs",
-    sources: ["Google Maps", "AP Tourism"],
+
     category: "Business Hub",
     description:
       "Book a Vizag to Bangalore outstation taxi with BSH Taxi Services for long-distance business travel or relocation trips across South India.",
@@ -930,7 +936,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "660 KM Round Trip from Vizag",
     distanceKm: 330,
     driveTime: "6.5-7.5 hrs",
-    sources: ["Telangana Tourism", "Endowments Dept."],
+
     category: "Pilgrimage",
     description:
       "Book a Vizag to Bhadrachalam taxi with BSH Taxi Services for a pilgrimage trip to the Sita Ramachandraswamy Temple on the banks of the Godavari.",
@@ -1002,7 +1008,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "910 KM Round Trip from Vizag",
     distanceKm: 455,
     driveTime: "8-9 hrs",
-    sources: ["Odisha Tourism", "Google Maps"],
+    
     category: "Business Hub",
     description:
       "Book a Vizag to Bhubaneswar outstation taxi with BSH Taxi Services for business travel or a temple-city trip to Odisha's capital.",
@@ -1074,7 +1080,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "290 KM Round Trip from Vizag",
     distanceKm: 145,
     driveTime: "3-3.5 hrs",
-    sources: ["Vizianagaram District Govt.", "AP Tourism"],
+
     category: "City",
     description:
       "Book a Vizag to Bobbili outstation taxi with BSH Taxi Services for a visit to the historic Bobbili Fort and its famous handcrafted veena workshops.",
@@ -1146,7 +1152,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "1590 KM Round Trip from Vizag",
     distanceKm: 795,
     driveTime: "14-15 hrs",
-    sources: ["Google Maps", "Tamil Nadu Tourism"],
+
     category: "Business Hub",
     description:
       "Book a Vizag to Chennai outstation taxi with BSH Taxi Services for long-distance business travel or relocation trips down the East Coast.",
@@ -1219,7 +1225,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "830 KM Round Trip from Vizag",
     distanceKm: 415,
     driveTime: "7.5-8 hrs",
-    sources: ["AP Tourism", "Guntur District Govt."],
+
     category: "Business Hub",
     description:
       "Book a Vizag to Guntur outstation taxi with BSH Taxi Services for business travel to one of Andhra Pradesh's leading agricultural and trade centres.",
@@ -1291,7 +1297,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "1306 KM Round Trip from Vizag",
     distanceKm: 653,
     driveTime: "11-12 hrs",
-    sources: ["Telangana Tourism", "Google Maps"],
+  
     category: "Business Hub",
     description:
       "Book a Vizag to Hyderabad outstation taxi with BSH Taxi Services for business travel, IT-corridor trips, or family visits to the City of Nizams.",
@@ -1364,7 +1370,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "660 KM Round Trip from Vizag",
     distanceKm: 330,
     driveTime: "7.5-8.5 hrs",
-    sources: ["Chhattisgarh Tourism", "Google Maps"],
+   
     category: "City",
     description:
       "Book a Vizag to Jagdalpur outstation taxi with BSH Taxi Services for a scenic drive through the Eastern Ghats to Chhattisgarh's waterfall country.",
@@ -1443,7 +1449,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "1790 KM Round Trip from Vizag",
     distanceKm: 895,
     driveTime: "16-17 hrs",
-    sources: ["Google Maps", "West Bengal Tourism"],
+   
     category: "Business Hub",
     description:
       "Book a Vizag to Kolkata outstation taxi with BSH Taxi Services for long-distance business or relocation travel to India's cultural capital.",
@@ -1516,7 +1522,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "200 KM Round Trip from Vizag",
     distanceKm: 100,
     driveTime: "3-3.5 hrs",
-    sources: ["AP Tourism"],
+  
     category: "City",
     description:
       "Book a Vizag to Lambasingi taxi with BSH Taxi Services for a scenic ghat drive to Andhra Pradesh's coldest village, often called the Kashmir of AP.",
@@ -1589,7 +1595,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "1280 KM Round Trip from Vizag",
     distanceKm: 640,
     driveTime: "11-12 hrs",
-    sources: ["AP Tourism", "Google Maps"],
+
     category: "Business Hub",
     description:
       "Book a Vizag to Nellore outstation taxi with BSH Taxi Services for long-distance business travel along the southern Andhra coast.",
@@ -1661,7 +1667,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "460 KM Round Trip from Vizag",
     distanceKm: 230,
     driveTime: "4.5-5 hrs",
-    sources: ["AP Tourism", "West Godavari District Govt."],
+   
     category: "City",
     description:
       "Book a Vizag to Palakollu outstation taxi with BSH Taxi Services for a trip to this Godavari delta town, known for its ancient temples and coir industry.",
@@ -1733,7 +1739,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "300 KM Round Trip from Vizag",
     distanceKm: 150,
     driveTime: "3-3.5 hrs",
-    sources: ["AP Tourism", "Srikakulam District Govt."],
+    
     category: "City",
     description:
       "Book a Vizag to Palakonda outstation taxi with BSH Taxi Services for a trip to this hilly Srikakulam district town near the Odisha border.",
@@ -1798,7 +1804,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "340 KM Round Trip from Vizag",
     distanceKm: 170,
     driveTime: "3.5-4 hrs",
-    sources: ["AP Tourism", "Srikakulam District Govt."],
+
     category: "City",
     description:
       "Book a Vizag to Palasa outstation taxi with BSH Taxi Services for a trip to this coastal cashew-trading town in north Srikakulam district.",
@@ -1870,7 +1876,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "320 KM Round Trip from Vizag",
     distanceKm: 160,
     driveTime: "3.5-4 hrs",
-    sources: ["AP Tourism", "Vizianagaram District Govt."],
+   
     category: "City",
     description:
       "Book a Vizag to Parvathipuram outstation taxi with BSH Taxi Services for a trip to this hill-fringed town in Vizianagaram district.",
@@ -1935,7 +1941,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "1100 KM Round Trip from Vizag",
     distanceKm: 550,
     driveTime: "10-11 hrs",
-    sources: ["Chhattisgarh Tourism", "Google Maps"],
+
     category: "Business Hub",
     description:
       "Book a Vizag to Raipur outstation taxi with BSH Taxi Services for long-distance business travel to the capital of Chhattisgarh.",
@@ -2008,7 +2014,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "300 KM Round Trip from Vizag",
     distanceKm: 150,
     driveTime: "3-3.5 hrs",
-    sources: ["Vizianagaram District Govt."],
+
     category: "City",
     description:
       "Book a Vizag to Razam outstation taxi with BSH Taxi Services for a trip to this small Vizianagaram district town.",
@@ -2074,7 +2080,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "310 KM Round Trip from Vizag",
     distanceKm: 155,
     driveTime: "3.5-4 hrs",
-    sources: ["AP Tourism", "Endowments Dept."],
+  
     category: "Pilgrimage",
     description:
       "Book a Vizag to Srimukhalingam taxi with BSH Taxi Services for a pilgrimage trip to one of the oldest temple complexes in coastal Andhra.",
@@ -2145,7 +2151,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "1540 KM Round Trip from Vizag",
     distanceKm: 770,
     driveTime: "13-14 hrs",
-    sources: ["TTD", "AP Tourism"],
+
     category: "Pilgrimage",
     description:
       "Book a Vizag to Tirupati outstation taxi with BSH Taxi Services for a long-distance pilgrimage trip to the Sri Venkateswara Temple.",
@@ -2217,7 +2223,7 @@ export const outstations: Outstation[] = [
     distanceFromVizag: "200 KM Round Trip from Vizag",
     distanceKm: 100,
     driveTime: "2-2.5 hrs",
-    sources: ["AP Tourism", "East Godavari District Govt."],
+   
     category: "City",
     description:
       "Book a Vizag to Tuni outstation taxi with BSH Taxi Services for a quick business trip or pilgrimage stop on the way to the Godavari districts.",
