@@ -154,8 +154,8 @@ export const outstations: Outstation[] = [
 
   description: (
   <>
-    Book Vizag to Kakinada taxi service with{" "}
-    <strong>BSH Taxi Services</strong>. Reliable one-way and round-trip
+    Book <strong>Vizag to Kakinada taxi</strong> service with 
+    BSH Taxi Services. Reliable one-way and round-trip
     outstation cabs from Visakhapatnam to Kakinada at affordable, transparent
     fares — AC vehicles, experienced drivers, and 24/7 support for business
     trips, family travel, sightseeing, and temple visits.
@@ -179,12 +179,13 @@ export const outstations: Outstation[] = [
   tagline: "The Pearl City of Andhra Pradesh",
   costPerDay: 5000,
 
-  highlights: [
-    "Known as the Pearl City of Andhra Pradesh",
-    "Major port and industrial hub on the Bay of Bengal",
-    "Gateway to Konaseema's backwaters and the Godavari delta",
-    "Home to some of the oldest Shiva temples in coastal Andhra",
-  ],
+ highlights: [
+  "Popularly known as the Pearl City of Andhra Pradesh",
+  "Important port and industrial hub on the Bay of Bengal",
+  "Gateway to Konaseema, the Godavari Delta, and nearby coastal attractions",
+  "Known for historic Shiva temples and important pilgrimage destinations",
+  "Popular destination for sightseeing, family trips, and pilgrimage travel from Vizag",
+],
 
   // quickFacts: [
   //   { label: "District", value: "Kakinada" },
@@ -194,7 +195,8 @@ export const outstations: Outstation[] = [
   // ],
 
   history:
-    "Kakinada has been a working port on the Bay of Bengal since well before colonial times, with trade along this coastline dating back to around the 2nd century BCE. Successive dynasties used its harbour to move goods along the eastern seaboard, and the town grew into one of the best-planned commercial centres in the Godavari delta.\n\nToday the city is nicknamed the \"Pearl City\" for its clean, orderly layout, and it doubles as a hub for fertiliser, natural gas, and petrochemical industries — earning it the nickname \"Fertilizer City\" too. None of that industrial growth has crowded out its older identity as a pilgrimage town, and temples that predate the port by centuries still draw devotees from across the state.",
+    
+  "Kakinada is a historic coastal city in Andhra Pradesh, located along the Bay of Bengal and known for its port, industries, temples, and well-planned city layout. With a long history of maritime trade along the eastern coast, Kakinada has grown into an important commercial and industrial centre in the Godavari region.\n\nToday, Kakinada is popularly known as the \"Pearl City\" for its clean and organised layout and coastal atmosphere. The city is also an important industrial hub, with major fertiliser, natural gas, and petrochemical industries contributing to its economy. Along with its industrial importance, Kakinada attracts visitors to historic temples and nearby pilgrimage destinations, making it a popular choice for sightseeing, family trips, business travel, and pilgrimage journeys from Vizag.\n\nFor travellers planning a comfortable journey, booking a Vizag to Kakinada taxi is a convenient option for exploring the city and nearby attractions. BSH Taxi Services provides reliable Kakinada cab services from Vizag for one-way and round-trip travel, family trips, business visits, sightseeing, and temple journeys.",
 
   // bestTimeToVisit:
   //   "October to February is the best time to visit Kakinada, when coastal humidity eases and the weather stays pleasant for beach visits, temple hopping, and day trips into Konaseema.",
@@ -265,8 +267,24 @@ export const outstations: Outstation[] = [
     driveTime: "3-4 hrs",
     
     category: "City",
-    description:
-      "Book an outstation taxi from Vizag to Araku with BSH Taxi Services for a comfortable journey through the Eastern Ghats, past coffee estates, waterfalls, and the Borra Caves.",
+    description:(
+    <>
+    Book a reliable <strong>Vizag to Araku taxi</strong> with BSH Taxi Services for a comfortable outstation trip from Visakhapatnam to Araku Valley. Enjoy a scenic journey through the Eastern Ghats with convenient stops at coffee plantations, waterfalls, viewpoints, and the famous 
+    {" "}
+  <a
+    href="https://visakhapatnam.ap.gov.in/forest-tourism/"
+    target="_blank"
+    rel="noopener noreferrer"
+	title="Airport Taxi - BSH Taxi Services" 
+	aria-label="Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <strong>Borra Caves.</strong>
+  </a>{" "}
+    </>
+    ),
+    
+ 
     seoTitle: "Vizag to Araku Outstation Taxi | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Araku outstation taxi with BSH Taxi Services. Affordable packages, AC cabs, experienced ghat-road drivers.",
@@ -280,11 +298,12 @@ export const outstations: Outstation[] = [
     tagline: "Scenic Hills of the Eastern Ghats",
     costPerDay: 5000,
     highlights: [
-      "A hill station in the Eastern Ghats known for coffee plantations",
-      "Home to the million-year-old Borra Caves",
-      "Rich Dhimsa tribal culture across 17+ local communities",
-      "One of the most scenic ghat drives in South India",
-    ],
+  "Scenic hill station in the Eastern Ghats, known for coffee plantations",
+  "Home to the famous Borra Caves, one of the region's top attractions",
+  "Rich in Dhimsa tribal culture and traditional hill communities",
+  "Popular for scenic ghat roads, waterfalls, viewpoints, and valley landscapes",
+  "Ideal destination for Vizag to Araku sightseeing and outstation taxi trips",
+],
     quickFacts: [
       { label: "Best Time", value: "Aug – Mar" },
       { label: "Distance", value: "120 KM" },
@@ -292,7 +311,7 @@ export const outstations: Outstation[] = [
       { label: "Elevation", value: "~1,300 m" },
     ],
     history:
-      "Araku Valley sits deep in the Eastern Ghats and has long been home to tribal communities practising terrace farming across its hills. The Borra Caves nearby, carved into karstic limestone, were discovered in 1807 by a British geologist and later found to contain Paleolithic tools — evidence that the region was inhabited long before it became a hill station.\n\nCoffee cultivation took root here in the 1950s, when the forest department worked with the Girijan Cooperative Corporation to bring tribal farmers into organised coffee growing. That partnership is why Araku coffee is grown today, and it's a big part of why the valley draws visitors beyond just its scenery.",
+  "Araku Valley is a scenic hill destination in the Eastern Ghats, long home to tribal communities practising terrace farming across the surrounding hills. The nearby Borra Caves, formed in karstic limestone, were discovered in 1807 by a British geologist and later found to contain Paleolithic tools, showing that the region was inhabited long before Araku developed as a popular hill station.\n\nCoffee cultivation became an important part of Araku's identity in the 1950s, when the forest department worked with the Girijan Cooperative Corporation to introduce organised coffee growing among tribal farmers. Today, Araku coffee plantations are one of the region's major attractions, drawing visitors beyond the valley's scenic landscapes and making a Vizag to Araku trip popular for coffee, nature, sightseeing, and cultural experiences.",
     bestTimeToVisit:
       "August to March is ideal for Araku — the monsoon leaves the valley lush and green, waterfalls are at their fullest, and winter mornings bring a light hill-station chill.",
     howToReach:
@@ -363,8 +382,11 @@ export const outstations: Outstation[] = [
     driveTime: "7-8 hrs",
 
     category: "Business Hub",
-    description:
-      "Book Vizag to Vijayawada outstation taxi with BSH Taxi Services for business travel, pilgrimage, or family trips to the Kanaka Durga temple on the Krishna river.",
+    description:(
+    <>
+    Book a reliable <strong>Vizag to Vijayawada taxi</strong> with BSH Taxi Services for comfortable outstation travel from Visakhapatnam to Vijayawada. Ideal for business trips, family travel, sightseeing, and pilgrimage visits to the famous <strong>Kanaka Durga Temple</strong> on the Krishna River.
+    </>
+    ),
     seoTitle: "Vizag to Vijayawada Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book a reliable Vizag to Vijayawada taxi. Round-trip and one-way outstation cab packages, 24/7 booking.",
@@ -377,12 +399,13 @@ export const outstations: Outstation[] = [
     ],
     tagline: "The Business Capital on the Krishna",
     costPerDay: 6000,
-    highlights: [
-      "Home to the Kanaka Durga Temple, one of India's major Shakti Peethas",
-      "Second-largest city in Andhra Pradesh and a key business hub",
-      "Sits on the banks of the Krishna river, framed by the Indrakeeladri hills",
-      "Well connected by the Prakasam Barrage, one of the longest across the Krishna",
-    ],
+   highlights: [
+  "Home to the famous Kanaka Durga Temple, a major pilgrimage destination in Andhra Pradesh",
+  "Important business, commercial, and cultural hub on the banks of the Krishna River",
+  "Surrounded by the Indrakeeladri Hills and known for scenic river and city views",
+  "Popular for the Prakasam Barrage, temples, heritage sites, and family sightseeing",
+  "Convenient destination for Vizag to Vijayawada business trips, family travel, and pilgrimage tours",
+],
     quickFacts: [
       { label: "Best Time", value: "Oct – Feb" },
       { label: "Known For", value: "Kanaka Durga Temple" },
@@ -390,7 +413,7 @@ export const outstations: Outstation[] = [
       { label: "River", value: "Krishna" },
     ],
     history:
-      "Vijayawada was formerly known as Bezawada, a name locals connect to the Krishna river carving its way through the Indrakeeladri hills via natural tunnels or \"bejjam.\" The city's spiritual identity centres on the Kanaka Durga Temple, perched on those hills, which finds mention in Vedic-era texts and is counted among the significant Shakti Peethas in the country.\n\nBeyond its religious pull, Vijayawada grew into Andhra Pradesh's commercial engine — the second-largest city in the state — thanks to its position on the Krishna and its road, rail, and river connectivity. The Prakasam Barrage, built across the river, remains central to both the city's irrigation network and its skyline.",
+  "Vijayawada, formerly known as Bezawada, is a historic city on the banks of the Krishna River, surrounded by the Indrakeeladri Hills. The city is best known for the famous Kanaka Durga Temple, an important pilgrimage destination that attracts devotees from across Andhra Pradesh and neighbouring states.\n\nOver the years, Vijayawada has developed into an important commercial, business, and transport hub in Andhra Pradesh, supported by strong road and rail connectivity. The Prakasam Barrage across the Krishna River is one of the city's prominent landmarks and plays an important role in the region's irrigation network.\n\nToday, Vijayawada attracts visitors for pilgrimage, business travel, family trips, and sightseeing. Its combination of temples, riverfront attractions, heritage sites, and convenient connectivity makes it a popular destination for travellers booking a Vizag to Vijayawada taxi.",
     bestTimeToVisit:
       "October to February brings the most comfortable weather for temple visits and city sightseeing, avoiding the Krishna delta's peak summer heat.",
     howToReach:
@@ -455,26 +478,35 @@ export const outstations: Outstation[] = [
     driveTime: "4-4.5 hrs",
     
     category: "City",
-    description:
-      "Book Vizag to Rajahmundry outstation taxi with BSH Taxi Services, on the banks of the Godavari river and gateway to Papikondalu's boat cruises.",
+    description:(
+    <>
+    Book a reliable <strong>Vizag to Rajahmundry taxi</strong> with BSH Taxi Services for comfortable outstation travel from Visakhapatnam to Rajahmundry. Enjoy a scenic journey along the Godavari River, with convenient access to Papikondalu boat cruises, temples, sightseeing spots, and nearby attractions.
+    </>
+    ),
     seoTitle: "Vizag to Rajahmundry Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book a Vizag to Rajahmundry taxi with BSH Taxi Services. Affordable round trip and one-way cab packages.",
     keywords: [
-      "vizag to rajahmundry taxi",
-      "rajahmundry outstation cab",
-      "vizag to rajahmundry cab booking",
-      "vizag to rajahmundry taxi fare",
-      "papikondalu taxi from vizag",
-    ],
+  "vizag to rajahmundry taxi",
+  "vizag to rajahmundry cab",
+  "vizag to rajahmundry cab booking",
+  "vizag to rajahmundry taxi fare",
+  "rajahmundry outstation taxi",
+  "visakhapatnam to rajahmundry taxi",
+  "rajahmundry taxi service",
+  "papikondalu taxi from vizag",
+  "rajahmundry sightseeing taxi",
+  "rajahmundry one way taxi",
+],
     tagline: "The Cultural Capital on the Godavari",
     costPerDay: 5500,
-    highlights: [
-      "Regarded as the birthplace of the Telugu language",
-      "Gateway to Papikondalu's river-and-hill boat cruises",
-      "Home to India's third-largest rail-cum-road bridge over the Godavari",
-      "Anchored by Dowleswaram Barrage, built by Sir Arthur Cotton",
-    ],
+   highlights: [
+  "Historic city on the banks of the Godavari River and an important cultural centre of Andhra Pradesh",
+  "Gateway to Papikondalu, known for scenic Godavari River and hill boat cruises",
+  "Home to the iconic Godavari rail-cum-road bridge and scenic riverfront views",
+  "Close to Dowleswaram Barrage, a major landmark of the Godavari Delta",
+  "Popular destination for Rajahmundry sightseeing, temple visits, family trips, and Godavari tourism",
+],
     quickFacts: [
       { label: "River", value: "Godavari" },
       { label: "Distance", value: "240 KM" },
@@ -482,8 +514,8 @@ export const outstations: Outstation[] = [
       { label: "Best Time", value: "Oct – Mar" },
     ],
     history:
-      "Rajahmundry, formally Rajamahendravaram, traces its name to Raja Raja Narendra of the Eastern Chalukya dynasty and is considered one of the oldest cities in Andhra Pradesh. It holds a special place in Telugu culture as the city where the language's literary tradition took root, and its old streets and bookshops still carry that literary identity.\n\nThe Godavari river shapes daily life here — its ghats see morning rituals and evening walks, and the Dowleswaram Barrage built by Sir Arthur Cotton in the 19th century transformed irrigation across the delta. The city is also linked to social reformer Kandukuri Veeresalingam, whose work is still remembered locally.",
-    bestTimeToVisit:
+  "Rajahmundry, officially known as Rajamahendravaram, is one of the historic cities of Andhra Pradesh, located on the banks of the Godavari River. The city has strong connections with Telugu literature and culture, making it an important cultural destination in the region. Its historic streets, riverfront ghats, and traditional markets continue to reflect its rich heritage.\n\nThe Godavari River plays an important role in Rajahmundry's identity, with scenic ghats, riverfront views, and boat journeys attracting visitors throughout the year. The nearby Dowleswaram Barrage, associated with Sir Arthur Cotton, played a major role in the development of irrigation across the Godavari Delta. Rajahmundry is also a convenient gateway to Papikondalu, making it popular for river cruises, temple visits, sightseeing, and family trips.\n\nToday, Rajahmundry is a popular destination for travellers from Vizag looking for comfortable outstation travel. Booking a Vizag to Rajahmundry taxi is a convenient option for sightseeing, pilgrimage trips, family travel, business visits, and exploring the Godavari region.",
+  bestTimeToVisit:
       "October to March is best for Rajahmundry, when the Godavari is in full flow, river cruises to Papikondalu run smoothly, and daytime temperatures stay comfortable.",
     howToReach:
       "Rajahmundry is around 240 KM from Visakhapatnam, roughly a 4 to 4.5 hour drive via NH16. BSH Taxi Services can also plan a stop at Draksharamam or Kotipalli en route if you'd like to combine temples with the trip.",
@@ -547,25 +579,46 @@ export const outstations: Outstation[] = [
     driveTime: "1.5 hrs",
 
     category: "City",
-    description:
-      "Book Vizag to Vizianagaram outstation taxi with BSH Taxi Services for business, pilgrimage, or a quick day trip to the Vizianagaram Fort and Pydithalli Ammavaru Temple.",
+    description:(
+    <>
+    Book a reliable <strong>Vizag to Vizianagaram taxi</strong> with BSH Taxi Services for comfortable outstation travel from Visakhapatnam to Vizianagaram. Ideal for business trips, pilgrimage visits, family travel, and sightseeing at Vizianagaram Fort and 
+    {" "}
+  <a
+    href="https://vizianagaram.ap.gov.in/tourist-place/pydithalli-temple/"
+    target="_blank"
+    rel="noopener noreferrer"
+	title="Best Taxi Service in Vizag - BSH Taxi Services" 
+	aria-label="Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <strong>Pydithalli Ammavaru Temple.</strong>
+  </a>{" "}
+    </>
+    ),
     seoTitle: "Vizag to Vizianagaram Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book a Vizag to Vizianagaram taxi with BSH Taxi Services. Quick and affordable outstation cab packages.",
     keywords: [
-      "vizag to vizianagaram taxi",
-      "vizianagaram outstation cab",
-      "vizag to vizianagaram cab booking",
-      "vizag to vizianagaram taxi fare",
-    ],
+  "vizag to vizianagaram taxi",
+  "vizag to vizianagaram cab",
+  "vizag to vizianagaram cab booking",
+  "vizag to vizianagaram taxi fare",
+  "vizianagaram outstation taxi",
+  "visakhapatnam to vizianagaram taxi",
+  "vizianagaram taxi service",
+  "vizianagaram one way taxi",
+  "vizianagaram sightseeing taxi",
+  "vizianagaram fort taxi from vizag",
+],
     tagline: "Home of the Pydithalli Ammavaru Temple",
     costPerDay: 3000,
     highlights: [
-      "Home to the 18th-century Vizianagaram Fort",
-      "Site of the Pydithalli Ammavaru Temple, the city's presiding deity",
-      "Close enough to Vizag for an easy half-day or full-day trip",
-      "Known for the colonial-era clock tower modelled on Big Ben",
-    ],
+  "Home to the historic Vizianagaram Fort, an important heritage landmark",
+  "Home to the Pydithalli Ammavaru Temple, a major pilgrimage destination",
+  "Convenient half-day or full-day destination from Vizag for outstation travel",
+  "Known for the historic Ganta Stambham (Clock Tower) in the city centre",
+  "Popular for Vizianagaram sightseeing, temple visits, heritage tours, and family trips",
+],
     quickFacts: [
       { label: "Distance", value: "65 KM" },
       { label: "Known For", value: "Fort & Temples" },
@@ -573,7 +626,7 @@ export const outstations: Outstation[] = [
       { label: "Drive Time", value: "1.5 hrs" },
     ],
     history:
-      "Vizianagaram grew up around its 18th-century fort, built by the Gajapati kings and later reinforced during the French and British periods — it still stands surrounded by its original moat. The city's name itself comes from the Telugu words for \"victory\" and \"city,\" tied to the region's history of resisting rival kingdoms.\n\nThe Pydithalli Ammavaru Temple is central to that history: local legend holds that a princess of the Vizianagaram royal family was martyred in an 18th-century battle with the neighbouring Bobbili kingdom, and the temple was built after her idol was discovered on Vijayadashami in 1757. The clock tower in the city centre was added later, styled after London's Big Ben by the ruling Rajahs.",
+  "Vizianagaram is a historic city in Andhra Pradesh that grew around the 18th-century Vizianagaram Fort. The fort was built by the Gajapati rulers and later strengthened during the French and British periods, with its historic moat still adding to the character of the landmark. The city's history is closely connected with the region's royal heritage and the historic rivalry between Vizianagaram and neighbouring Bobbili.\n\nThe Pydithalli Ammavaru Temple is an important religious and cultural landmark in Vizianagaram. Local traditions connect the temple with the royal family and an 18th-century battle with Bobbili, while Vijayadashami celebrations remain an important part of the city's cultural identity. The historic clock tower, or Ganta Stambham, is another well-known landmark in the city centre.\n\nToday, Vizianagaram attracts visitors for its historic fort, temples, cultural heritage, and local sightseeing. Its close proximity to Visakhapatnam also makes a Vizag to Vizianagaram taxi a convenient option for family trips, pilgrimage visits, heritage tours, and day trips.",
     bestTimeToVisit:
       "October to February offers the most comfortable weather for exploring the fort and temple complex without the coastal humidity of peak summer.",
     howToReach:

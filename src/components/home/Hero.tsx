@@ -127,7 +127,63 @@ export default function Hero() {
               fontWeight: 400,
             }}
           >
-            Airport Taxi | Local Cab | Outstation Cabs | One Way Taxi | Round Trips
+           {" "}
+  <a
+    href="/services/airport-transfer?type=airport-taxi"
+    target="_blank"
+    rel="noopener noreferrer"
+	title="Airport Taxi - BSH Taxi Services" 
+	aria-label="Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <strong>Airport Taxi</strong>
+  </a>{" "}
+             | 
+
+             {" "}
+  <a
+    href="/services/local-taxi/10hr-100km?type=local-taxi-services"
+    target="_blank"
+    rel="noopener noreferrer"
+	title="Local Taxi - BSH Taxi Services" 
+	aria-label="Local Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <strong>Local Cab</strong>
+  </a>{" "}| 
+             {" "}
+  <a
+    href="/services/outstation-taxi?type=outstation-taxi-services"
+    target="_blank"
+    rel="noopener noreferrer"
+	title="Outstation Cabs - BSH Taxi Services" 
+	aria-label="Outstation Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <strong>Outstation Cabs</strong>
+  </a>{" "}| 
+             {" "}
+  <a
+    href="/services/corporate-travel?type=corporate-cab-services&pkg=one-way"
+    target="_blank"
+    rel="noopener noreferrer"
+	title="One Way Taxi - BSH Taxi Services" 
+	aria-label="One Way Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <strong>One Way Taxi</strong>
+  </a>{" "}| 
+             {" "}
+  <a
+    href="/services/corporate-travel?type=corporate-cab-services&pkg=round-trip"
+    target="_blank"
+    rel="noopener noreferrer"
+	title="Round Trip Cabs - BSH Taxi Services" 
+	aria-label="Round Trip Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <strong>Round Trips</strong>
+  </a>
           </p>
 
           <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-500 sm:mt-5 sm:max-w-lg sm:text-base lg:text-base">
