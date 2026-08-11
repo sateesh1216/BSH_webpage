@@ -59,7 +59,7 @@ export type Outstation = {
 
   category: "City" | "Pilgrimage" | "Business Hub" | "Industrial City";
 
-  history?: string;
+  history: ReactNode;
   highlights?: string[];
   quickFacts?: OutstationQuickFact[];
   bestTimeToVisit?: string;
@@ -194,9 +194,11 @@ export const outstations: Outstation[] = [
   //   { label: "Distance", value: "175 KM (one way)" },
   // ],
 
-  history:
-    
-  "Kakinada is a historic coastal city in Andhra Pradesh, located along the Bay of Bengal and known for its port, industries, temples, and well-planned city layout. With a long history of maritime trade along the eastern coast, Kakinada has grown into an important commercial and industrial centre in the Godavari region.\n\nToday, Kakinada is popularly known as the \"Pearl City\" for its clean and organised layout and coastal atmosphere. The city is also an important industrial hub, with major fertiliser, natural gas, and petrochemical industries contributing to its economy. Along with its industrial importance, Kakinada attracts visitors to historic temples and nearby pilgrimage destinations, making it a popular choice for sightseeing, family trips, business travel, and pilgrimage journeys from Vizag.\n\nFor travellers planning a comfortable journey, booking a Vizag to Kakinada taxi is a convenient option for exploring the city and nearby attractions. BSH Taxi Services provides reliable Kakinada cab services from Vizag for one-way and round-trip travel, family trips, business visits, sightseeing, and temple journeys.",
+  history:  
+  (
+  <>
+  Kakinada is a historic coastal city in Andhra Pradesh, located along the Bay of Bengal and known for its port, industries, temples, and well-planned city layout. With a long history of maritime trade along the eastern coast, Kakinada has grown into an important commercial and industrial centre in the Godavari region.\n\nToday, Kakinada is popularly known as the \"Pearl City\" for its clean and organised layout and coastal atmosphere. The city is also an important industrial hub, with major fertiliser, natural gas, and petrochemical industries contributing to its economy. Along with its industrial importance, Kakinada attracts visitors to historic temples and nearby pilgrimage destinations, making it a popular choice for sightseeing, family trips, business travel, and pilgrimage journeys from Vizag.\n\nFor travellers planning a comfortable journey, booking a Vizag to Kakinada taxi is a convenient option for exploring the city and nearby attractions. BSH Taxi Services provides reliable Kakinada cab services from Vizag for one-way and round-trip travel, family trips, business visits, sightseeing, and temple journeys.
+  </>),
 
   // bestTimeToVisit:
   //   "October to February is the best time to visit Kakinada, when coastal humidity eases and the weather stays pleasant for beach visits, temple hopping, and day trips into Konaseema.",
@@ -587,7 +589,7 @@ export const outstations: Outstation[] = [
     href="https://vizianagaram.ap.gov.in/tourist-place/pydithalli-temple/"
     target="_blank"
     rel="noopener noreferrer"
-	title="Best Taxi Service in Vizag - BSH Taxi Services" 
+	title=">Vizag to Vizianagaram taxi service - BSH Taxi Services" 
 	aria-label="Taxi Service in Vizag - BSH Taxi Services" 
     className="hover:underline"
   >
@@ -692,7 +694,23 @@ export const outstations: Outstation[] = [
    
     category: "City",
     description:
-      "Book Vizag to Srikakulam outstation taxi with BSH Taxi Services for business, pilgrimage, or sightseeing trips to the Arasavalli Sun Temple and nearby coast.",
+      (
+      <>
+      Book a reliable<strong> Vizag to Srikakulam outstation taxi with BSH Taxi Services</strong> for business, pilgrimage, and sightseeing trips to 
+      {" "}
+  <a
+    href="https://www.srisuryatemple.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+	title="Vizag to Srikakulam taxi service - BSH Taxi Services" 
+	aria-label="Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <strong>Arasavalli Sun Temple</strong>
+  </a>
+  {" "} and nearby coastal attractions.
+      </>
+      ),
     seoTitle: "Vizag to Srikakulam Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book a Vizag to Srikakulam taxi with BSH Taxi Services. Affordable round trip and one-way cab packages.",

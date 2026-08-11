@@ -128,9 +128,7 @@ export default function OutstationDetail() {
     places,
     history,
     highlights,
-    
 
-    sources,
   } = outstation;
 
   const distanceKm = outstation.distanceKm ?? 0;
@@ -413,28 +411,26 @@ export default function OutstationDetail() {
           </div>
 
           {/* ------------------------------------------------------------ */}
-          {/* History                                                       */}
-          {/* ------------------------------------------------------------ */}
-          {history && (
-            <div className="mx-auto mt-20 max-w-3xl">
-              <h2 className="section-heading text-center text-3xl font-semibold tracking-tight text-slate-900">
-                The Story of {name}
-              </h2>
-              <div className={`mx-auto mt-3 mb-8 h-1 w-14 rounded-full ${theme.accent}`} />
-              {history.split("\n\n").map((para, i) => (
-                <p key={i} className={`mb-5 text-[15.5px] leading-[1.85] text-slate-700 sm:text-base ${i === 0 ? "drop-cap" : ""}`}>
-                  {para}
-                </p>
-              ))}
-              {sources && sources.length > 0 && (
-                <p className="mt-2 text-xs italic text-slate-400">Sourced from {sources.join(", ")}.</p>
-              )}
-            </div>
-          )}
+      
 
+{history && (
+  <div className="mx-auto mt-20 max-w-3xl">
+    <h2 className="section-heading text-center text-3xl font-semibold tracking-tight text-slate-900">
+      The Story of {name}
+    </h2>
 
+    <div
+      className={`mx-auto mt-3 mb-8 h-1 w-14 rounded-full ${theme.accent}`}
+    />
 
-
+    <div className="drop-cap text-[15.5px] leading-[1.85] text-slate-700 sm:text-base">
+      {history}
+    </div>
+  </div>
+)}
+          
+           
+    
 
           {/* ------------------------------------------------------------ */}
           {/* Places you'll visit                                           */}
