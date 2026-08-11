@@ -793,33 +793,50 @@ export const outstations: Outstation[] = [
     driveTime: "2.5-3 hrs",
  
     category: "Pilgrimage",
-    description:
-      "Book a Vizag to Annavaram taxi with BSH Taxi Services for a comfortable pilgrimage trip to the Sri Veera Venkata Satyanarayana Swamy Temple.",
-    seoTitle: "Vizag to Annavaram Taxi | Pilgrimage Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Annavaram taxi with BSH Taxi Services. Comfortable pilgrimage cab packages, AC cars, early-morning departures.",
-    keywords: [
-      "vizag to annavaram taxi",
-      "annavaram temple taxi from vizag",
-      "annavaram outstation cab",
-      "vizag to annavaram cab booking",
-    ],
+    description: (
+  <>
+  Book a reliable <strong>Vizag to Annavaram taxi</strong> with BSH Taxi Services for comfortable pilgrimage travel from Visakhapatnam to Annavaram. Ideal for devotees visiting{" "}
+
+<a
+  href="https://annavaramdevasthanam.nic.in/"
+  target="_blank"
+  rel="noopener noreferrer"
+  title="Sri Veera Venkata Satyanarayana Swamy Temple in Annavaram"
+  aria-label="Sri Veera Venkata Satyanarayana Swamy Temple in Annavaram"
+  className="hover:underline"
+>
+  <strong>Sri Veera Venkata Satyanarayana Swamy Temple</strong>
+</a>
+{" "}and nearby attractions.
+  </>
+  ),
+seoTitle: "Vizag to Annavaram Taxi | Temple Cab Booking | BSH Taxi Services",
+
+seoDescription:
+  "Book a reliable Vizag to Annavaram taxi with BSH Taxi Services. Comfortable AC cabs for pilgrimage trips, temple visits, and convenient travel from Visakhapatnam to Annavaram.",
+
+keywords: [
+  "vizag to annavaram taxi",
+  "annavaram temple taxi from vizag",
+  "vizag to annavaram cab",
+  "vizag to annavaram taxi booking",
+],
     tagline: "Home of Sri Satyanarayana Swamy",
     costPerDay: 4500,
-    highlights: [
-      "One of Andhra Pradesh's most visited pilgrimage temples",
-      "Perched on Ratnagiri hill overlooking the Pampa river",
-      "Famous for its Satyanarayana Vratam rituals",
-      "A popular day-trip combination with Kakinada and Rajahmundry",
-    ],
+   highlights: [
+  "One of Andhra Pradesh's popular pilgrimage destinations",
+  "Located on Ratnagiri Hill overlooking the Pampa River",
+  "Famous for Sri Satyanarayana Swamy Vratam and temple rituals",
+  "A convenient day-trip destination from Vizag, with Kakinada and Rajahmundry nearby",
+],
     quickFacts: [
       { label: "District", value: "East Godavari" },
       { label: "Distance", value: "120 KM" },
       { label: "Known For", value: "Satyanarayana Temple" },
       { label: "Hill", value: "Ratnagiri" },
     ],
-    history:
-      "The Sri Veera Venkata Satyanarayana Swamy Temple at Annavaram sits atop Ratnagiri hill and traces its current form to a 19th-century zamindar of Pithapuram, who is credited with commissioning the temple after an inscription associated with the site was uncovered. The deity is worshipped as a combined form of Vishnu and Shiva, which is part of what makes the temple distinctive within the region.\n\nOver the 20th century, Annavaram grew from a local shrine into one of Andhra's most heavily visited pilgrimage centres, particularly known for the Satyanarayana Vratam puja that devotees perform here in large numbers, especially on full-moon days.",
+   history:
+  "The Sri Veera Venkata Satyanarayana Swamy Temple in Annavaram is located on Ratnagiri Hill overlooking the Pampa River. The temple's present form dates back to the 19th century and is associated with the Pithapuram zamindar family, who are traditionally credited with developing the shrine after the discovery of a sacred site inscription.\n\nThe temple is distinctive for worshipping Sri Satyanarayana Swamy as a combined form of Vishnu and Shiva. Over the 20th century, Annavaram grew into one of Andhra Pradesh's important pilgrimage destinations, becoming especially renowned for the Satyanarayana Vratam puja performed by devotees throughout the year, with large gatherings on full-moon days.",
     bestTimeToVisit:
       "October to February is pleasant for the hill climb and darshan queues; purnima (full moon) days draw the largest crowds if you'd rather avoid them.",
     howToReach:
@@ -865,17 +882,36 @@ export const outstations: Outstation[] = [
     driveTime: "2.5-3 hrs",
     
     category: "Pilgrimage",
-    description:
-      "Book a Vizag to Arasavalli taxi with BSH Taxi Services for a pilgrimage visit to the historic Sun Temple, one of the very few Surya shrines in India.",
-    seoTitle: "Vizag to Arasavalli Sun Temple Taxi | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Arasavalli taxi with BSH Taxi Services. Comfortable pilgrimage cab packages for the Sun Temple.",
-    keywords: [
-      "vizag to arasavalli taxi",
-      "arasavalli sun temple taxi from vizag",
-      "arasavalli outstation cab",
-      "vizag to arasavalli cab booking",
-    ],
+    description: (
+  <>
+    Book a reliable <strong>Vizag to Arasavalli taxi</strong> with BSH Taxi Services for a
+    comfortable pilgrimage trip to the historic{" "}
+
+    <a
+      href="https://srikakulam.ap.gov.in/tourist-place/arasavilli/"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Arasavalli Sun Temple in Srikakulam"
+      aria-label="Arasavalli Sun Temple in Srikakulam"
+      className="hover:underline"
+    >
+      <strong>Arasavalli Sun Temple</strong>
+    </a>
+    {" "}, one of India's renowned Surya temples.
+  </>
+),
+
+seoTitle: "Vizag to Arasavalli Taxi | Arasavalli Sun Temple Cab",
+
+seoDescription:
+  "Book a reliable Vizag to Arasavalli taxi with BSH Taxi Services. Comfortable AC cabs for pilgrimage trips, temple visits, family travel, and convenient travel to Arasavalli Sun Temple.",
+
+keywords: [
+  "vizag to arasavalli taxi",
+  "arasavalli sun temple taxi from vizag",
+  "vizag to arasavalli cab",
+  "vizag to arasavalli taxi booking",
+],
     tagline: "India's Rare Sun Temple",
     costPerDay: 4500,
     highlights: [
@@ -890,8 +926,8 @@ export const outstations: Outstation[] = [
       { label: "Known For", value: "Sun Temple" },
       { label: "Best Time", value: "Oct – Feb" },
     ],
-    history:
-      "The Arasavalli Sun Temple, dedicated to Surya, dates back over a thousand years and is one of only a handful of surviving sun temples in India — most famously alongside Konark in Odisha. Inscriptions and temple records point to patronage from several regional dynasties over the centuries, each adding to its structure.\n\nWhat sets Arasavalli apart architecturally is a design detail built into the sanctum: during the Ratha Saptami festival each year, the sun's rays are engineered to fall directly on the deity's feet — a precise alignment that has held for centuries and remains a major draw for pilgrims and architecture enthusiasts alike.",
+   history:
+  "The Arasavalli Sun Temple near Srikakulam is one of Andhra Pradesh's important historic temples dedicated to Lord Surya, the Sun God. The shrine has a long association with Surya worship and is regarded as one of the significant Sun temples in India. Over the centuries, the temple has remained an important pilgrimage destination for devotees from across coastal Andhra Pradesh.\n\nThe temple is especially known for its unique architectural orientation, through which sunlight enters the sanctum and illuminates the deity on specific occasions. Ratha Saptami is one of the temple's major festivals and attracts large numbers of devotees. Today, the Arasavalli Sun Temple continues to be a popular pilgrimage and heritage destination for visitors travelling from Vizag, Vizianagaram, Srikakulam, and nearby regions.",
     bestTimeToVisit:
       "October to February is best for a comfortable visit; the Ratha Saptami festival (usually January–February) is the most significant time to visit but also the most crowded.",
     howToReach:
@@ -937,17 +973,26 @@ export const outstations: Outstation[] = [
     driveTime: "16-18 hrs",
 
     category: "Business Hub",
-    description:
-      "Book a Vizag to Bangalore outstation taxi with BSH Taxi Services for long-distance business travel or relocation trips across South India.",
-    seoTitle: "Vizag to Bangalore Taxi | Long Distance Outstation Cab | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Bangalore taxi with BSH Taxi Services. Long-distance outstation cab packages with driver night halt.",
-    keywords: [
-      "vizag to bangalore taxi",
-      "vizag to bangalore outstation cab",
-      "visakhapatnam to bangalore taxi fare",
-      "vizag to bangalore cab booking",
-    ],
+  description: (
+  <>
+    Book a reliable <strong>Vizag to Bangalore outstation taxi</strong> with BSH Taxi Services
+    for comfortable long-distance travel, business trips, family travel, or
+    relocation across South India.
+  </>
+),
+
+seoTitle:
+  "Vizag to Bangalore Taxi | Outstation Cab Booking | BSH Taxi Services",
+
+seoDescription:
+  "Book a reliable Vizag to Bangalore taxi with BSH Taxi Services. Comfortable outstation cabs for long-distance travel, business trips, family travel, and relocation.",
+
+keywords: [
+  "vizag to bangalore taxi",
+  "vizag to bangalore outstation cab",
+  "visakhapatnam to bangalore taxi",
+  "vizag to bangalore cab booking",
+],
     tagline: "India's Tech Capital",
     costPerDay: 20000,
     highlights: [
@@ -963,8 +1008,8 @@ export const outstations: Outstation[] = [
       { label: "Drive Time", value: "16-18 hrs" },
     ],
     history:
-      "Bangalore grew from a modest fort town founded in the 16th century into a major administrative centre under the Wadiyar and later British-influenced Mysore state, prized early on for its cooler climate compared to the plains. That reputation as a comfortable, garden-filled city stuck through the 20th century, giving it the old nickname \"Garden City.\"\n\nIts transformation into \"India's Silicon Valley\" began in the 1980s and 90s as public-sector research institutions and, later, private IT companies set up shop, drawing talent from across the country. Today it's one of India's largest and most diverse metros, though its older green spaces and colonial-era buildings still sit alongside the tech campuses.",
-    bestTimeToVisit:
+  "Bangalore, officially Bengaluru, grew from a 16th-century fortified settlement into an important administrative and commercial centre under the Wadiyar rulers and later the Mysore State. Its pleasant climate and extensive green spaces earned it the enduring nickname \"Garden City of India,\" while landmarks such as Cubbon Park and Lalbagh remain part of the city's historic character.\n\nFrom the 1980s onward, Bangalore developed rapidly as India's technology and IT hub, attracting major companies, startups, professionals, and students from across the country. Today, Bengaluru is one of India's leading metropolitan cities, known for its technology industry, business opportunities, parks, cultural attractions, and vibrant urban lifestyle.",
+  bestTimeToVisit:
       "Bangalore's pleasant climate makes it comfortable most of the year, though October to February avoids both the summer warmth and peak monsoon rain.",
     howToReach:
       "Bangalore is around 990 KM from Visakhapatnam, roughly a 16 to 18 hour drive. Given the distance, BSH Taxi Services recommends splitting this into a two-day trip with an overnight halt — flying is often the more practical option for this route.",
@@ -1009,25 +1054,48 @@ export const outstations: Outstation[] = [
     driveTime: "6.5-7.5 hrs",
 
     category: "Pilgrimage",
-    description:
-      "Book a Vizag to Bhadrachalam taxi with BSH Taxi Services for a pilgrimage trip to the Sita Ramachandraswamy Temple on the banks of the Godavari.",
-    seoTitle: "Vizag to Bhadrachalam Taxi | Pilgrimage Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Bhadrachalam taxi with BSH Taxi Services. Comfortable pilgrimage cab packages for the Rama Temple.",
-    keywords: [
-      "vizag to bhadrachalam taxi",
-      "bhadrachalam temple taxi from vizag",
-      "vizag to bhadrachalam cab booking",
-      "bhadrachalam outstation cab",
-    ],
-    tagline: "The Ayodhya of the South",
-    costPerDay: 7000,
-    highlights: [
-      "Home to the Sita Ramachandraswamy Temple, revered across South India",
-      "Set on the banks of the Godavari river",
-      "Linked to the 17th-century devotee-poet Bhakta Ramadasu",
-      "A major pilgrimage destination during Sri Rama Navami",
-    ],
+    description: (
+  <>
+    Book a reliable <strong>Vizag to Bhadrachalam taxi</strong> with BSH Taxi Services for
+    comfortable pilgrimage travel to the historic{" "}
+
+    <a
+      href="https://bhadrachalaramadasu.com/bhadrachalam/"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Sita Ramachandraswamy Temple in Bhadrachalam"
+      aria-label="Sita Ramachandraswamy Temple in Bhadrachalam"
+      className="hover:underline"
+    >
+      <strong>Sita Ramachandraswamy Temple</strong>
+    </a>
+    {" "}on the banks of the Godavari River.
+  </>
+),
+
+seoTitle:
+  "Vizag to Bhadrachalam Taxi | Temple Cab Booking | BSH Taxi Services",
+
+seoDescription:
+  "Book a reliable Vizag to Bhadrachalam taxi with BSH Taxi Services. Comfortable AC cabs for pilgrimage trips, temple visits, family travel, and long-distance travel.",
+
+keywords: [
+  "vizag to bhadrachalam taxi",
+  "bhadrachalam temple taxi from vizag",
+  "vizag to bhadrachalam cab",
+  "vizag to bhadrachalam taxi booking",
+],
+
+tagline: "The Ayodhya of the South",
+
+costPerDay: 7000,
+
+highlights: [
+  "Home to the revered Sita Ramachandraswamy Temple",
+  "Located on the banks of the Godavari River",
+  "Closely associated with Bhakta Ramadasu and the temple's history",
+  "A major pilgrimage destination during Sri Rama Navami",
+],
     quickFacts: [
       { label: "State", value: "Telangana" },
       { label: "Distance", value: "330 KM" },
@@ -1035,7 +1103,7 @@ export const outstations: Outstation[] = [
       { label: "River", value: "Godavari" },
     ],
     history:
-      "Bhadrachalam's temple town identity is closely tied to Bhakta Ramadasu, a 17th-century tax official who used government funds to build the Sita Ramachandraswamy Temple, was imprisoned for it, and — according to popular tradition — was freed after Rama and Lakshmana themselves repaid the debt. That story is still told across Telugu-speaking pilgrimage circles and is central to why the temple carries such devotion.\n\nThe town takes its name from Bhadra, a sage said to have performed penance on the hill where the temple now stands, on the banks of the Godavari. Bhadrachalam has since grown into one of the most significant Rama temples in South India, often referred to as the region's own Ayodhya.",
+  "Bhadrachalam is one of the most important Rama pilgrimage destinations in South India, with its history closely associated with the revered Sita Ramachandraswamy Temple and the devotion of Bhakta Ramadasu, a 17th-century devotee of Lord Rama. According to popular tradition, Ramadasu used revenue funds for the development of the temple and was imprisoned as a result. The well-known legend says that Lord Rama and Lakshmana later appeared before the ruler and repaid the amount, leading to Ramadasu's release. This story remains an important part of Bhadrachalam's religious tradition.\n\nThe name Bhadrachalam is traditionally associated with Bhadra, a sage who is believed to have performed penance for Lord Rama on the hill where the temple stands. Located on the banks of the Godavari River, Bhadrachalam gradually developed into a major pilgrimage centre and is often described as the \"Ayodhya of the South.\" The temple continues to attract devotees throughout the year, with particularly large gatherings during Sri Rama Navami and other important religious occasions.",
     bestTimeToVisit:
       "October to February is comfortable for travel and darshan; Sri Rama Navami (usually March–April) is the temple's biggest festival but also its most crowded time.",
     howToReach:
@@ -1081,17 +1149,21 @@ export const outstations: Outstation[] = [
     driveTime: "8-9 hrs",
     
     category: "Business Hub",
-    description:
-      "Book a Vizag to Bhubaneswar outstation taxi with BSH Taxi Services for business travel or a temple-city trip to Odisha's capital.",
+    description: (
+      <>
+      Book a Vizag to Bhubaneswar outstation taxi with BSH Taxi Services for business travel or a temple-city trip to Odisha's capital.
+      </>
+    ),
     seoTitle: "Vizag to Bhubaneswar Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
-      "Book Vizag to Bhubaneswar taxi with BSH Taxi Services. Long-distance outstation cab packages, AC cars.",
-    keywords: [
-      "vizag to bhubaneswar taxi",
-      "vizag to bhubaneswar outstation cab",
-      "visakhapatnam to bhubaneswar taxi fare",
-      "vizag to bhubaneswar cab booking",
-    ],
+  "Book a reliable <strong>Vizag to Bhubaneswar taxi</strong> with BSH Taxi Services. Comfortable AC cabs for long-distance travel, business trips, family travel, and outstation journeys.",
+
+keywords: [
+  "vizag to bhubaneswar taxi",
+  "vizag to bhubaneswar outstation cab",
+  "visakhapatnam to bhubaneswar taxi",
+  "vizag to bhubaneswar cab booking",
+],
     tagline: "The Temple City of India",
     costPerDay: 10000,
     highlights: [
@@ -1107,7 +1179,7 @@ export const outstations: Outstation[] = [
       { label: "Drive Time", value: "8-9 hrs" },
     ],
     history:
-      "Bhubaneswar's temple-building history stretches back over a thousand years, with the Kalinga architectural style developing here under successive dynasties between roughly the 7th and 13th centuries. The city is said to have once had thousands of temples, and while many were lost over time, hundreds still survive across the old town, giving Bhubaneswar its enduring \"Temple City\" identity.\n\nIn the 20th century, the city was chosen as independent Odisha's new planned capital, designed by German architect Otto Königsberger — making it one of India's earlier examples of post-independence urban planning, distinct from its much older temple quarter.",
+  "Bhubaneswar is one of India's oldest temple cities, with a rich architectural history shaped by the Kalinga style of temple construction. Many of its historic temples date from between the 7th and 13th centuries, reflecting the influence of successive dynasties that ruled the region. The city was once known for having thousands of temples, and several important shrines still stand today, giving Bhubaneswar its enduring identity as the \"Temple City of India.\"\n\nIn the 20th century, Bhubaneswar took on a new role as the planned capital of Odisha after independence. The modern city was designed by German architect Otto Königsberger, creating a distinctive contrast between its planned urban areas and the ancient temple quarter of Old Bhubaneswar. Today, the city combines historic temples, cultural landmarks, modern business districts, and important transport connections, making it a major destination in Odisha.",
     bestTimeToVisit:
       "October to February brings the most comfortable weather for temple visits and day trips to Puri and Konark.",
     howToReach:
@@ -1153,8 +1225,24 @@ export const outstations: Outstation[] = [
     driveTime: "3-3.5 hrs",
 
     category: "City",
-    description:
-      "Book a Vizag to Bobbili outstation taxi with BSH Taxi Services for a visit to the historic Bobbili Fort and its famous handcrafted veena workshops.",
+    description: (
+  <>
+    Book a reliable <strong>Vizag to Bobbili outstation taxi</strong> with BSH Taxi Services
+    for comfortable travel to historic 
+    {" "}
+  <a
+    href="https://vizianagaram.ap.gov.in/tourist-place/bobbili-fort//"
+    target="_blank"
+    rel="noopener noreferrer"
+	title="Vizag to Bobbili Taxi - BSH Taxi Services" 
+	aria-label="Taxi Service in Vizag - BSH Taxi Services" 
+    className="hover:underline"
+  >
+    <strong>Bobbili Fort</strong>
+  </a>{" "} and the town's famous
+    handcrafted veena workshops.
+  </>
+),
     seoTitle: "Vizag to Bobbili Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Bobbili taxi with BSH Taxi Services. Affordable outstation cab packages, AC cabs.",
@@ -1225,8 +1313,13 @@ export const outstations: Outstation[] = [
     driveTime: "14-15 hrs",
 
     category: "Business Hub",
-    description:
-      "Book a Vizag to Chennai outstation taxi with BSH Taxi Services for long-distance business travel or relocation trips down the East Coast.",
+   description: (
+  <>
+    Book a reliable <strong>Vizag to Chennai outstation taxi</strong> with BSH Taxi Services
+    for comfortable long-distance travel, business trips, family travel, or
+    relocation along the East Coast.
+  </>
+),
     seoTitle: "Vizag to Chennai Taxi | Long Distance Outstation Cab | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Chennai taxi with BSH Taxi Services. Long-distance outstation cab packages with driver night halt option.",
@@ -1251,7 +1344,7 @@ export const outstations: Outstation[] = [
       { label: "Drive Time", value: "14-15 hrs" },
     ],
     history:
-      "Chennai, formerly Madras, developed around Fort St. George, established by the British East India Company in 1639 as one of their earliest footholds on the subcontinent. That fort settlement grew steadily into a major administrative and trading centre through the colonial period, laying the groundwork for the sprawling metropolis it is today.\n\nSince independence, Chennai has become one of South India's largest industrial and business centres, particularly known for its automobile manufacturing and, more recently, its IT sector — while still holding onto a strong Tamil cultural identity, from its classical music (Carnatic) season to its film industry.",
+  "Chennai, formerly known as Madras, grew around Fort St. George, established by the British East India Company in 1639. The settlement gradually developed into an important centre for trade, administration, and commerce along the Coromandel Coast, laying the foundation for the modern city.\n\nAfter independence, Chennai grew into one of South India's major industrial and business centres, with strong automobile, manufacturing, and IT sectors. At the same time, the city has preserved its rich Tamil cultural identity through Carnatic music, traditional arts, temples, cuisine, and the Tamil film industry. Today, Chennai is a major metropolitan destination combining historic landmarks, business districts, cultural attractions, and a vibrant coastal lifestyle.",
     bestTimeToVisit:
       "November to February is the most comfortable time to visit, avoiding both the intense summer heat and the northeast monsoon.",
     howToReach:
@@ -1298,8 +1391,13 @@ export const outstations: Outstation[] = [
     driveTime: "7.5-8 hrs",
 
     category: "Business Hub",
-    description:
-      "Book a Vizag to Guntur outstation taxi with BSH Taxi Services for business travel to one of Andhra Pradesh's leading agricultural and trade centres.",
+   description: (
+  <>
+    Book a reliable <strong>Vizag to Guntur outstation taxi</strong> with BSH Taxi Services
+    for comfortable business travel, family trips, and visits to Guntur, one
+    of Andhra Pradesh's important agricultural and commercial centres.
+  </>
+),
     seoTitle: "Vizag to Guntur Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Guntur taxi with BSH Taxi Services. Long-distance outstation cab packages, AC cars.",
@@ -1323,8 +1421,8 @@ export const outstations: Outstation[] = [
       { label: "Best Time", value: "Oct – Feb" },
       { label: "Nearby", value: "Amaravati" },
     ],
-    history:
-      "Guntur rose to commercial prominence during the colonial period as a centre for cotton and tobacco trade, and it's held onto that agricultural-trade identity ever since — today it's home to one of Asia's largest chilli markets, drawing traders from across the country during peak season. The city's growth was closely tied to the fertile black-soil farmland surrounding it.\n\nJust outside the city, Amaravati carries a much older history: it was once a major centre of Buddhist learning and art under the Satavahana dynasty, roughly two thousand years ago, and its stupa remains one of the most significant Buddhist archaeological sites in South India.",
+   history:
+  "Guntur developed into an important commercial and agricultural centre during the colonial period, particularly through its cotton and tobacco trade. The fertile agricultural lands surrounding the city helped shape its economy and continue to support Guntur's importance in Andhra Pradesh. Today, the city is especially known for its chilli trade and one of India's major chilli markets, attracting traders and businesses from across the country.\n\nGuntur's historical importance is also closely connected with nearby Amaravati, an ancient centre of Buddhist art, culture, and learning. The region flourished under the Satavahana dynasty nearly two thousand years ago, and the historic Amaravati Stupa remains an important Buddhist archaeological site in South India. Together, Guntur's agricultural heritage and Amaravati's ancient history make the region an important destination in Andhra Pradesh.",
     bestTimeToVisit:
       "October to February is most comfortable for city visits and the Amaravati day trip, and coincides with the peak chilli trading season if you're curious to see the market in action.",
     howToReach:
@@ -1370,25 +1468,35 @@ export const outstations: Outstation[] = [
     driveTime: "11-12 hrs",
   
     category: "Business Hub",
-    description:
-      "Book a Vizag to Hyderabad outstation taxi with BSH Taxi Services for business travel, IT-corridor trips, or family visits to the City of Nizams.",
+    description: (
+  <>
+    Book a reliable <strong>Vizag to Hyderabad outstation taxi</strong> with BSH Taxi Services
+    for comfortable business travel, IT-corridor trips, family visits, and
+    long-distance journeys to Hyderabad, the City of Nizams.
+  </>
+),
     seoTitle: "Vizag to Hyderabad Taxi | Outstation Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Hyderabad taxi with BSH Taxi Services. Long-distance outstation cab packages, AC cars, driver night halt available.",
-    keywords: [
-      "vizag to hyderabad taxi",
-      "vizag to hyderabad outstation cab",
-      "visakhapatnam to hyderabad taxi fare",
-      "vizag to hyderabad cab booking",
-    ],
-    tagline: "The City of Nizams",
-    costPerDay: 13000,
-    highlights: [
-      "Capital of Telangana and a major South Indian IT hub",
-      "Home to the iconic Charminar and Golconda Fort",
-      "Famous across India for its Hyderabadi biryani",
-      "A well-connected long-distance route via NH16 and NH65",
-    ],
+
+seoDescription:
+  "Book a reliable Vizag to Hyderabad taxi with BSH Taxi Services. Comfortable AC cabs for long-distance travel, business trips, family visits, and outstation journeys.",
+
+keywords: [
+  "vizag to hyderabad taxi",
+  "vizag to hyderabad outstation cab",
+  "visakhapatnam to hyderabad taxi",
+  "vizag to hyderabad cab booking",
+],
+
+tagline: "The City of Nizams",
+
+costPerDay: 13000,
+
+highlights: [
+  "A major South Indian city and leading IT and business hub",
+  "Home to iconic landmarks including Charminar and Golconda Fort",
+  "Famous for Hyderabadi biryani and rich Deccan cuisine",
+  "A popular long-distance route for business, family, and outstation travel",
+],
     quickFacts: [
       { label: "State", value: "Telangana" },
       { label: "Distance", value: "653 KM" },
@@ -1396,7 +1504,7 @@ export const outstations: Outstation[] = [
       { label: "Drive Time", value: "11-12 hrs" },
     ],
     history:
-      "Hyderabad was founded in 1591 by Muhammad Quli Qutb Shah, who built the Charminar to mark the site — the city grew from there into the capital of the Qutb Shahi and later Nizam-ruled Hyderabad State, one of the largest and wealthiest princely states in colonial-era India. That Nizam-era history is why the city's food, architecture, and Deccani-Persian cultural blend still feel distinct from the rest of Telugu-speaking South India.\n\nSince the 1990s, Hyderabad has also become one of India's biggest technology hubs, with HITEC City drawing major global tech companies alongside the older city's centuries of layered history — a mix that gives Hyderabad a genuinely dual identity between old and new.",
+  "Hyderabad was founded in 1591 by Muhammad Quli Qutb Shah and developed around the iconic Charminar. The city became the capital of the Qutb Shahi dynasty and later the Nizam-ruled Hyderabad State, leaving behind a rich heritage of Deccan, Persian, and Telugu cultural influences. This history can still be seen in Hyderabad's historic architecture, monuments, traditional cuisine, and cultural traditions.\n\nSince the late 20th century, Hyderabad has developed into one of India's leading technology and business hubs, with HITEC City and other modern business districts attracting major companies and professionals. Today, the city combines historic landmarks such as Charminar and Golconda Fort with a thriving IT sector, modern infrastructure, and a vibrant urban lifestyle, giving Hyderabad its distinctive blend of old and new.",
     bestTimeToVisit:
       "October to February offers the most comfortable weather for exploring both the old city and the newer business districts.",
     howToReach:
@@ -1443,24 +1551,36 @@ export const outstations: Outstation[] = [
     driveTime: "7.5-8.5 hrs",
    
     category: "City",
-    description:
-      "Book a Vizag to Jagdalpur outstation taxi with BSH Taxi Services for a scenic drive through the Eastern Ghats to Chhattisgarh's waterfall country.",
-    seoTitle: "Vizag to Jagdalpur Taxi | Outstation Cab Booking | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Jagdalpur taxi with BSH Taxi Services. Long-distance outstation cab packages via the Eastern Ghats.",
-    keywords: [
-      "vizag to jagdalpur taxi",
-      "jagdalpur outstation cab",
-      "vizag to jagdalpur cab booking",
-      "chitrakoot falls taxi from vizag",
-    ],
-    tagline: "Gateway to Chitrakoot Falls",
-    costPerDay: 7500,
-    highlights: [
-      "Gateway to Chitrakoot Falls, often called the Niagara of India",
-      "Rich Bastar tribal art and culture",
-      "A scenic ghat-road drive through the Eastern Ghats and Araku region",
-      "Known for its Dussehra festival, one of India's longest",
+    description: (
+  <>
+    Book a reliable Vizag to Jagdalpur outstation taxi with BSH Taxi Services
+    for comfortable long-distance travel through the scenic Eastern Ghats to
+    Jagdalpur and the natural attractions of Bastar.
+  </>
+),
+
+seoTitle:
+  "Vizag to Jagdalpur Taxi | Outstation Cab Booking | BSH Taxi Services",
+
+seoDescription:
+  "Book a reliable Vizag to Jagdalpur taxi with BSH Taxi Services. Comfortable AC cabs for long-distance travel, sightseeing, family trips, and visits to Chitrakoot Falls and Bastar.",
+
+keywords: [
+  "vizag to jagdalpur taxi",
+  "vizag to jagdalpur outstation cab",
+  "vizag to jagdalpur cab booking",
+  "chitrakoot falls taxi from vizag",
+],
+
+tagline: "Gateway to Chitrakoot Falls",
+
+costPerDay: 7500,
+
+highlights: [
+  "Gateway to Chitrakoot Falls, one of Bastar's famous natural attractions",
+  "Known for Bastar's rich tribal art, culture, and traditions",
+  "A scenic long-distance route through the Eastern Ghats",
+  "Popular for sightseeing, family trips, and nature-focused travel",
     ],
     quickFacts: [
       { label: "State", value: "Chhattisgarh" },
@@ -1469,7 +1589,7 @@ export const outstations: Outstation[] = [
       { label: "Region", value: "Bastar" },
     ],
     history:
-      "Jagdalpur is the headquarters of the historic Bastar region, once ruled by its own line of kings for centuries before merging into independent India. That royal history is still visible in the city's palace and in the Bastar Dussehra festival, an unusually long, 75-day celebration rooted in local tribal tradition rather than the Ramayana story told elsewhere in India.\n\nThe wider Bastar region is known for its dense forests, waterfalls, and a strong tribal artistic tradition — including Dhokra metal casting and terracotta work — that has made Jagdalpur a draw for travellers interested in both nature and indigenous culture.",
+  "Jagdalpur is the administrative centre of the historic Bastar region in Chhattisgarh, an area with a long royal and tribal heritage. Bastar was traditionally ruled by its own line of kings, and traces of this history can still be seen in Jagdalpur's historic landmarks and cultural traditions. The region is especially known for Bastar Dussehra, a unique festival with deep roots in local tribal customs and traditions.\n\nThe wider Bastar region is known for its dense forests, scenic waterfalls, and rich tribal culture. Traditional crafts such as Dhokra metalwork, terracotta, wood carving, and other forms of indigenous art remain an important part of the region's cultural identity. Today, Jagdalpur attracts travellers interested in nature, waterfalls, tribal heritage, local crafts, and the unique cultural landscape of Bastar.",
     bestTimeToVisit:
       "October to February is ideal, and post-monsoon months (October–November) are especially good for seeing Chitrakoot Falls at full flow.",
     howToReach:
@@ -1522,25 +1642,38 @@ export const outstations: Outstation[] = [
     driveTime: "16-17 hrs",
    
     category: "Business Hub",
-    description:
-      "Book a Vizag to Kolkata outstation taxi with BSH Taxi Services for long-distance business or relocation travel to India's cultural capital.",
-    seoTitle: "Vizag to Kolkata Taxi | Long Distance Outstation Cab | BSH Taxi Services",
-    seoDescription:
-      "Book Vizag to Kolkata taxi with BSH Taxi Services. Long-distance outstation cab packages with driver night halt.",
-    keywords: [
-      "vizag to kolkata taxi",
-      "vizag to kolkata outstation cab",
-      "visakhapatnam to kolkata taxi fare",
-      "vizag to kolkata cab booking",
-    ],
-    tagline: "India's City of Joy",
-    costPerDay: 18000,
-    highlights: [
-      "Former capital of British India and a major cultural hub",
-      "Home to the iconic Howrah Bridge and Victoria Memorial",
-      "A long East Coast drive best split across two days",
-      "Rich in colonial-era architecture and Bengali culture",
-    ],
+   
+description: (
+  <>
+    Book a reliable Vizag to Kolkata outstation taxi with BSH Taxi Services
+    for comfortable long-distance travel, business trips, family travel, or
+    relocation to Kolkata, the City of Joy.
+  </>
+),
+
+seoTitle:
+  "Vizag to Kolkata Taxi | Long Distance Outstation Cab | BSH Taxi Services",
+
+seoDescription:
+  "Book a reliable Vizag to Kolkata taxi with BSH Taxi Services. Comfortable AC cabs for long-distance travel, business trips, family travel, and relocation.",
+
+keywords: [
+  "vizag to kolkata taxi",
+  "vizag to kolkata outstation cab",
+  "visakhapatnam to kolkata taxi",
+  "vizag to kolkata cab booking",
+],
+
+tagline: "India's City of Joy",
+
+costPerDay: 18000,
+
+highlights: [
+  "A major cultural and commercial centre of eastern India",
+  "Home to iconic landmarks including Howrah Bridge and Victoria Memorial",
+  "A popular long-distance route for business, family, and relocation travel",
+  "Known for colonial-era architecture, Bengali culture, and rich culinary traditions",
+],
     quickFacts: [
       { label: "State", value: "West Bengal" },
       { label: "Distance", value: "895 KM" },
@@ -1548,7 +1681,7 @@ export const outstations: Outstation[] = [
       { label: "Drive Time", value: "16-17 hrs" },
     ],
     history:
-      "Kolkata grew from three villages consolidated by the British East India Company in the late 17th century into the capital of British India, a position it held until 1911. That century-plus as the seat of colonial power left the city with a dense concentration of Victorian and Indo-Saracenic architecture, much of which still stands along and around the Hooghly river.\n\nBeyond its colonial history, Kolkata has long been regarded as one of India's foremost centres of literature, art, and political thought, home to Nobel laureates and a continuing tradition of intellectual and cultural life that locals often point to with real pride.",
+  "Kolkata developed from a group of villages that came under the influence of the British East India Company in the late 17th century. The city later became the capital of British India, a position it held until 1911. This colonial period shaped much of Kolkata's architectural character, with historic Victorian, Gothic, and Indo-Saracenic buildings still visible across areas of the city and along the Hooghly River.\n\nBeyond its colonial heritage, Kolkata has long been one of India's important centres of literature, art, education, music, and intellectual life. The city has been associated with influential writers, artists, thinkers, and cultural movements, giving it a distinctive identity as a major cultural centre of eastern India. Today, Kolkata combines its historic architecture and Bengali traditions with a modern business, transport, and tourism landscape.",
     bestTimeToVisit:
       "October to February offers the most comfortable weather, avoiding both the intense pre-monsoon heat and the humid monsoon months.",
     howToReach:
@@ -1595,8 +1728,13 @@ export const outstations: Outstation[] = [
     driveTime: "3-3.5 hrs",
   
     category: "City",
-    description:
-      "Book a Vizag to Lambasingi taxi with BSH Taxi Services for a scenic ghat drive to Andhra Pradesh's coldest village, often called the Kashmir of AP.",
+   description: (
+  <>
+    Book a reliable <strong>Vizag to Lambasingi taxi</strong> with BSH Taxi Services for a
+    comfortable scenic drive through the Eastern Ghats to Lambasingi, a popular
+    hill station known for its cool climate, misty valleys, and natural beauty.
+  </>
+),
     seoTitle: "Vizag to Lambasingi Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Lambasingi taxi with BSH Taxi Services. Scenic ghat-road cab packages to the Kashmir of Andhra Pradesh.",
@@ -1621,7 +1759,7 @@ export const outstations: Outstation[] = [
       { label: "Best Time", value: "Dec – Jan" },
     ],
     history:
-      "Lambasingi is a small tribal village in the Eastern Ghats that remained largely unknown outside its immediate region until photographs of frost on its winter mornings began circulating more widely, earning it the popular nickname \"Kashmir of Andhra Pradesh.\" It sits at a high enough elevation, and in a cold-air pocket, that December and January mornings can dip close to freezing — unusual for coastal Andhra.\n\nThe village and surrounding hills are home to Adivasi communities who have long cultivated coffee, pepper, and other hill crops on these slopes, a tradition that continues alongside the recent rise in tourist interest.",
+  "Lambasingi is a scenic hill village in the Eastern Ghats of Andhra Pradesh, known for its cool climate, misty mornings, and surrounding forested hills. The village became increasingly popular with travellers as its winter temperatures and occasional frost attracted attention, leading to the popular nickname \"Kashmir of Andhra Pradesh.\"\n\nThe surrounding hills are home to Adivasi communities whose traditional livelihoods include cultivating coffee, pepper, and other hill crops. Today, Lambasingi combines its natural beauty and local hill culture with growing tourism, making it a popular destination for visitors travelling from Vizag and exploring the Eastern Ghats.",
     bestTimeToVisit:
       "December and January are best if you want a chance at seeing frost on the grass at sunrise; the wider October–March window is pleasant for the hills more generally.",
     howToReach:
@@ -1668,8 +1806,13 @@ export const outstations: Outstation[] = [
     driveTime: "11-12 hrs",
 
     category: "Business Hub",
-    description:
-      "Book a Vizag to Nellore outstation taxi with BSH Taxi Services for long-distance business travel along the southern Andhra coast.",
+    description: (
+  <>
+    Book a reliable <strong>Vizag to Nellore outstation taxi</strong> with BSH Taxi Services
+    for comfortable long-distance travel, business trips, family travel, and
+    journeys along the southern Andhra coast.
+  </>
+),
     seoTitle: "Vizag to Nellore Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Nellore taxi with BSH Taxi Services. Long-distance outstation cab packages, AC cars.",
@@ -1694,7 +1837,7 @@ export const outstations: Outstation[] = [
       { label: "Nearby", value: "Pulicat Lake" },
     ],
     history:
-      "Nellore has been a significant town on the southern Andhra coast for centuries, historically tied to rice cultivation along the Penna river delta and, more recently, to large-scale shrimp aquaculture that has made the district one of India's leading exporters of farmed shrimp. This shift from rice to aquaculture reshaped much of the district's coastal economy over the last few decades.\n\nThe city's Sri Ranganatha Swamy Temple, dedicated to Vishnu, has long anchored its identity as a pilgrimage stop as well, drawing devotees travelling this stretch of the coast toward Tirupati further south.",
+  "Nellore is a historic city in southern Andhra Pradesh, with its development closely connected to agriculture along the Penna River and the fertile lands of the surrounding region. Rice cultivation has long been an important part of the local economy, while the coastal areas of Nellore district later became well known for shrimp aquaculture and seafood production.\n\nNellore also has a strong religious and cultural heritage, with the historic Sri Ranganatha Swamy Temple dedicated to Lord Vishnu serving as an important pilgrimage landmark. Its location along the southern Andhra coast makes Nellore a notable stop for travellers continuing towards Tirupati and other destinations in Andhra Pradesh.",
     bestTimeToVisit:
       "October to February is most comfortable, avoiding the region's hot, humid summers.",
     howToReach:
@@ -1740,8 +1883,13 @@ export const outstations: Outstation[] = [
     driveTime: "4.5-5 hrs",
    
     category: "City",
-    description:
-      "Book a Vizag to Palakollu outstation taxi with BSH Taxi Services for a trip to this Godavari delta town, known for its ancient temples and coir industry.",
+    description: (
+  <>
+    Book a reliable <strong>Vizag to Palakollu outstation taxi</strong> with BSH Taxi Services
+    for comfortable travel to this Godavari delta town, known for its historic
+    temples, traditional culture, and coir industry.
+  </>
+),
     seoTitle: "Vizag to Palakollu Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Palakollu taxi with BSH Taxi Services. Affordable outstation cab packages, AC cabs.",
@@ -1766,7 +1914,7 @@ export const outstations: Outstation[] = [
       { label: "Industry", value: "Coir" },
     ],
     history:
-      "Palakollu is home to the Kshirarama Temple, one of the five Pancharama Kshetras — a set of ancient Shiva temples in the Godavari delta linked by regional legend to a shared mythological origin story. This makes the town a meaningful stop on pilgrimage circuits that cover all five Pancharama sites.\n\nBeyond its temple history, Palakollu developed a distinct coir and coconut-fibre rope industry, drawing on the dense coconut groves that line this part of the delta — a craft tradition that still employs many households in and around the town.",
+  "Palakollu is an important pilgrimage town in the Godavari delta and is home to the historic Kshirarama Temple, one of the five Pancharama Kshetras dedicated to Lord Shiva. The temple is an important part of regional religious traditions and attracts devotees travelling across Andhra Pradesh as part of Pancharama pilgrimage circuits.\n\nBeyond its religious heritage, Palakollu has a strong connection with the coconut-rich landscape of the Godavari delta. The town and surrounding villages are known for traditional coir and coconut-fibre products, with the industry forming an important part of the local economy and cultural identity. Today, Palakollu combines its historic temple heritage with the traditional crafts and agricultural character of the Godavari region.",
     bestTimeToVisit:
       "October to February brings comfortable weather for temple visits and exploring the surrounding delta villages.",
     howToReach:
@@ -1812,8 +1960,13 @@ export const outstations: Outstation[] = [
     driveTime: "3-3.5 hrs",
     
     category: "City",
-    description:
-      "Book a Vizag to Palakonda outstation taxi with BSH Taxi Services for a trip to this hilly Srikakulam district town near the Odisha border.",
+    description: (
+  <>
+    Book a reliable <strong>Vizag to Palakonda outstation taxi</strong> with BSH Taxi Services
+    for comfortable travel to this scenic hill town in Srikakulam district,
+    near the Odisha border.
+  </>
+),
     seoTitle: "Vizag to Palakonda Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Palakonda taxi with BSH Taxi Services. Affordable outstation cab packages, AC cabs.",
@@ -1837,7 +1990,7 @@ export const outstations: Outstation[] = [
       { label: "Best Time", value: "Oct – Feb" },
     ],
     history:
-      "Palakonda sits in the hillier, forested part of Srikakulam district, close to where Andhra Pradesh borders Odisha, and its name — roughly \"milk hill\" in Telugu — reflects its hilly geography. The town has historically served as a local administrative centre for the surrounding tribal and agricultural villages tucked into these hills.\n\nA small hilltop fort in the area points to a longer regional history of local chieftains controlling this border zone, though much of that history survives mainly in local memory rather than detailed records.",
+  "Palakonda is a historic town in Srikakulam district, located in the hilly and forested region of northern Andhra Pradesh near the Odisha border. Its surrounding landscape includes hills, agricultural villages, and forest areas, giving the town a distinct character compared with the coastal parts of the district. Palakonda has traditionally served as an important local centre for the surrounding rural and tribal communities.\n\nThe region also has a history connected with local chieftains and hill settlements, with small historic structures and fortifications reflecting its strategic location near the Andhra Pradesh–Odisha border. Today, Palakonda remains an important town for the surrounding villages and offers travellers an opportunity to explore the less-visited hill landscapes and cultural heritage of northern Andhra Pradesh.",
     bestTimeToVisit:
       "October to February is most comfortable for exploring the surrounding hills and forest tracts.",
     howToReach:
@@ -1877,8 +2030,13 @@ export const outstations: Outstation[] = [
     driveTime: "3.5-4 hrs",
 
     category: "City",
-    description:
-      "Book a Vizag to Palasa outstation taxi with BSH Taxi Services for a trip to this coastal cashew-trading town in north Srikakulam district.",
+    description: (
+  <>
+    Book a reliable <strong>Vizag to Palasa outstation taxi</strong> with BSH Taxi Services
+    for comfortable travel to this coastal town in northern Srikakulam, known
+    for its cashew trade and nearby beaches.
+  </>
+),
     seoTitle: "Vizag to Palasa Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Palasa taxi with BSH Taxi Services. Affordable outstation cab packages, AC cabs.",
@@ -1903,7 +2061,7 @@ export const outstations: Outstation[] = [
       { label: "Best Time", value: "Oct – Feb" },
     ],
     history:
-      "Palasa grew into one of India's most significant cashew processing hubs over the 20th century, with the surrounding coastal sandy soil proving well suited to cashew cultivation. Its twin town, Kasibugga, functions almost as a single urban unit with Palasa, and together they process and export a large share of the region's cashew crop.\n\nThe town's coastal stretch, including nearby Mansarovar and Baruva beaches, has stayed relatively undeveloped compared to Vizag's beaches further south, giving this part of the coast a quieter, more local character.",
+  "Palasa is a well-known coastal town in Srikakulam district with a long-standing connection to the cashew industry. Over the 20th century, the town developed into an important centre for cashew processing and trade, supported by the region's coastal landscape and agricultural activity. Palasa and nearby Kasibugga form a closely connected urban area and remain important commercial centres for the cashew trade in northern Andhra Pradesh.\n\nPalasa is also surrounded by coastal attractions, including Baruva and other nearby beaches, offering a quieter seaside experience compared with the more developed beaches around Vizag. The combination of its cashew-trading heritage, coastal setting, and nearby beaches gives Palasa a distinctive character within Srikakulam district.",
     bestTimeToVisit:
       "October to February brings the most comfortable weather for visiting the coast and surrounding cashew belt.",
     howToReach:
@@ -1949,8 +2107,13 @@ export const outstations: Outstation[] = [
     driveTime: "3.5-4 hrs",
    
     category: "City",
-    description:
-      "Book a Vizag to Parvathipuram outstation taxi with BSH Taxi Services for a trip to this hill-fringed town in Vizianagaram district.",
+    description: (
+  <>
+    Book a reliable <strong>Vizag to Parvathipuram outstation taxi</strong> with BSH Taxi
+    Services for comfortable travel to this scenic hill-fringed town in
+    Parvathipuram Manyam district.
+  </>
+),
     seoTitle: "Vizag to Parvathipuram Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Parvathipuram taxi with BSH Taxi Services. Affordable outstation cab packages, AC cabs.",
@@ -1973,8 +2136,8 @@ export const outstations: Outstation[] = [
       { label: "Known For", value: "Hill Gateway" },
       { label: "Best Time", value: "Oct – Feb" },
     ],
-    history:
-      "Parvathipuram has long served as a market and administrative centre for the hilly, forested tracts of northern Vizianagaram district, an area that transitions into the Eastern Ghats' higher hill country toward Odisha. Its position made it a natural trading link between the coastal plains and the tribal hill villages further inland.\n\nThe wider region carries strong Adivasi cultural roots, and Parvathipuram functions as a gateway for both local trade and onward travel toward Odisha's Jeypore hill tracts.",
+   history:
+  "Parvathipuram is an important town in northern Andhra Pradesh, located near the foothills of the Eastern Ghats in the Parvathipuram Manyam region. Historically, it developed as a local administrative and trading centre serving the surrounding hill, forest, agricultural, and tribal communities. Its location between the coastal plains and the Eastern Ghats made it an important link for local commerce and travel.\n\nThe wider Parvathipuram Manyam region is known for its rich Adivasi heritage, forested landscapes, and hill country extending towards the Odisha border. Today, Parvathipuram continues to serve as an important regional centre and a gateway for travellers exploring the Eastern Ghats, northern Andhra Pradesh, and nearby parts of Odisha.",
     bestTimeToVisit:
       "October to February offers pleasant weather for travelling through this hillier stretch of Vizianagaram district.",
     howToReach:
@@ -2014,8 +2177,13 @@ export const outstations: Outstation[] = [
     driveTime: "10-11 hrs",
 
     category: "Business Hub",
-    description:
-      "Book a Vizag to Raipur outstation taxi with BSH Taxi Services for long-distance business travel to the capital of Chhattisgarh.",
+    description: (
+  <>
+    Book a reliable <strong>Vizag to Raipur outstation taxi</strong> with BSH Taxi Services
+    for comfortable long-distance travel, business trips, family travel, and
+    journeys to Raipur, the capital of Chhattisgarh.
+  </>
+),
     seoTitle: "Vizag to Raipur Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Raipur taxi with BSH Taxi Services. Long-distance outstation cab packages, AC cars.",
@@ -2040,7 +2208,7 @@ export const outstations: Outstation[] = [
       { label: "Drive Time", value: "10-11 hrs" },
     ],
     history:
-      "Raipur has been a centre of rice cultivation and trade for centuries, giving Chhattisgarh its long-standing reputation as India's rice bowl — a legacy that continues to shape the region's agricultural economy today. The city grew under the Kalachuri and later Maratha rulers before passing into British administration.\n\nSince Chhattisgarh's formation as a separate state in 2000, Raipur has been developed as its capital, adding a wave of industrial and infrastructural growth — particularly in steel and power — to its older identity as an agricultural trading hub.",
+  "Raipur is a historic city in central India with a long connection to rice cultivation, agriculture, and regional trade. The fertile plains of Chhattisgarh helped the city develop as an important agricultural market, contributing to the state's reputation as a major rice-producing region. Raipur's history also includes periods of Kalachuri and Maratha rule before the region came under British administration.\n\nAfter Chhattisgarh became a separate state in 2000, Raipur was established as its capital and experienced rapid urban and economic development. The city expanded its role beyond agriculture into industries such as steel, power, manufacturing, and commerce. Today, Raipur is an important business and transport centre of central India, combining its agricultural heritage with a growing modern economy.",
     bestTimeToVisit:
       "October to February brings the most comfortable weather for this long-distance route through central India's plains.",
     howToReach:
@@ -2087,8 +2255,13 @@ export const outstations: Outstation[] = [
     driveTime: "3-3.5 hrs",
 
     category: "City",
-    description:
-      "Book a Vizag to Razam outstation taxi with BSH Taxi Services for a trip to this small Vizianagaram district town.",
+    description: (
+  <>
+    Explore <strong>Razam to Vizag </strong>with BSH Taxi Services, offering comfortable
+    outstation taxi travel to this important regional town in Srikakulam
+    district and its surrounding areas.
+  </>
+),
     seoTitle: "Vizag to Razam Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Razam taxi with BSH Taxi Services. Affordable outstation cab packages, AC cabs.",
@@ -2112,7 +2285,7 @@ export const outstations: Outstation[] = [
       { label: "Best Time", value: "Oct – Feb" },
     ],
     history:
-      "Razam is a modest mandal town serving the farming villages of northern Vizianagaram district, without a major historical landmark of its own. Its role has always been practical — a local market and administrative point for the surrounding agricultural belt.\n\nThe town sits in the broader corridor that connects the coastal plains to the hillier Parvathipuram–Jeypore stretch of the Eastern Ghats, giving it a quieter, more rural character than the coastal towns further south.",
+  "Razam is a regional town in northern Andhra Pradesh with strong connections to the surrounding agricultural communities. Its development has traditionally been linked to local farming, trade, markets, and everyday services for nearby villages, giving the town an important role in the rural economy of the region.\n\nLocated along the route connecting the coastal plains with the hillier areas of northern Andhra Pradesh, Razam provides access to surrounding towns, villages, and the Eastern Ghats. Today, the town continues to serve as a practical regional centre for local commerce, agriculture, and travel across the Srikakulam region.",
     bestTimeToVisit:
       "October to February offers the most comfortable weather for travelling through this part of Vizianagaram district.",
     howToReach:
@@ -2153,8 +2326,13 @@ export const outstations: Outstation[] = [
     driveTime: "3.5-4 hrs",
   
     category: "Pilgrimage",
-    description:
-      "Book a Vizag to Srimukhalingam taxi with BSH Taxi Services for a pilgrimage trip to one of the oldest temple complexes in coastal Andhra.",
+    description: (
+  <>
+    Book a <strong>Vizag to Srimukhalingam taxi</strong> with BSH Taxi Services for a
+    comfortable pilgrimage journey to the historic Srimukhalingeswara Temple,
+    one of the important Shaivite temples in Srikakulam district.
+  </>
+),
     seoTitle: "Vizag to Srimukhalingam Temple Taxi | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Srimukhalingam taxi with BSH Taxi Services. Comfortable pilgrimage cab packages for this historic temple complex.",
@@ -2178,7 +2356,7 @@ export const outstations: Outstation[] = [
       { label: "Dynasty", value: "Eastern Ganga" },
     ],
     history:
-      "Srimukhalingam served as an early capital of the Eastern Ganga dynasty, well before the dynasty later moved its centre to Kalinga and built the famous Konark Sun Temple in Odisha. That royal patronage left behind a cluster of three Shiva temples here — Mukhalingeswara, Bhimeswara, and Someswara — considered among the oldest surviving temple architecture in this part of Andhra Pradesh.\n\nBecause it sits somewhat off the main pilgrimage circuits, Srimukhalingam has retained a quieter, more contemplative atmosphere than many of coastal Andhra's larger temple towns, even as its historical importance is significant.",
+  "Srimukhalingam is a historic temple town in Srikakulam district, known for its ancient Shaivite heritage and association with the Eastern Ganga dynasty. The region developed as an important centre of religious and architectural activity, leaving behind a remarkable group of historic Shiva temples, including the Srimukhalingeswara, Bhimeswara, and Someswara temples.\n\nThe distinctive temple architecture and detailed stone carvings make Srimukhalingam an important heritage destination in northern Andhra Pradesh. Located away from the busier pilgrimage routes, the temple complex retains a peaceful atmosphere while attracting devotees, history enthusiasts, and travellers interested in the ancient cultural heritage of the region.",
     bestTimeToVisit:
       "October to February is most comfortable for visiting the temple complex and surrounding hills.",
     howToReach:
@@ -2224,8 +2402,24 @@ export const outstations: Outstation[] = [
     driveTime: "13-14 hrs",
 
     category: "Pilgrimage",
-    description:
-      "Book a Vizag to Tirupati outstation taxi with BSH Taxi Services for a long-distance pilgrimage trip to the Sri Venkateswara Temple.",
+   description: (
+  <>
+    Book a <strong>Vizag to Tirupati outstation taxi</strong> with BSH Taxi Services for a
+    comfortable long-distance pilgrimage journey to the famous{" "}
+
+    <a
+      href="https://tirumala.org/"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Sri Venkateswara Temple at Tirumala"
+      aria-label="Sri Venkateswara Temple at Tirumala"
+      className="hover:underline"
+    >
+      <strong>Sri Venkateswara Temple</strong>
+    </a>
+    {" "}and Tirumala.
+  </>
+),
     seoTitle: "Vizag to Tirupati Taxi | Pilgrimage Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Tirupati taxi with BSH Taxi Services. Long-distance pilgrimage cab packages, driver night halt available.",
@@ -2250,7 +2444,7 @@ export const outstations: Outstation[] = [
       { label: "Drive Time", value: "13-14 hrs" },
     ],
     history:
-      "The Sri Venkateswara Temple at Tirumala has been a major pilgrimage site for well over a thousand years, with inscriptions and temple records showing continuous patronage from a succession of South Indian dynasties, including the Pallavas, Cholas, and Vijayanagara emperors. That long, unbroken history of devotion is part of what makes it one of the most visited religious sites in the world today.\n\nTirupati town itself, at the base of the seven hills, grew as the support town for this pilgrimage traffic, and today it's administered by the Tirumala Tirupati Devasthanams (TTD), one of the wealthiest and best-organised temple trusts in the country.",
+  "Tirupati and Tirumala are among the most important pilgrimage destinations in Andhra Pradesh and are closely associated with the Sri Venkateswara Temple, one of India's most revered Hindu temples. The temple is dedicated to Lord Venkateswara, a form of Lord Vishnu, and stands on the sacred Tirumala Hills. For centuries, devotees from across India have travelled to the seven hills to seek the blessings of Lord Venkateswara, making Tirumala an enduring centre of faith, tradition, and pilgrimage.\n\nThe history of the Sri Venkateswara Temple extends back many centuries. Historical inscriptions and temple records provide evidence of patronage and donations from several South Indian dynasties, including the Pallavas, Cholas, and Vijayanagara rulers. These periods of royal patronage contributed to the development of the temple complex, its architecture, religious institutions, and traditions. The Vijayanagara period was particularly important in the expansion and enrichment of the temple, with rulers and nobles making significant contributions to its development.\n\nTirumala is traditionally regarded as one of the seven sacred hills, collectively known as Saptagiri. The temple's location among these hills gives the pilgrimage a distinctive spiritual and geographical character. Devotees traditionally climb the Tirumala hills on foot through established walking routes, while many others travel by road from Tirupati to the hilltop temple. The journey itself has become an important part of the pilgrimage experience for visitors.\n\nTirupati developed at the foothills of Tirumala as the principal town serving the growing number of pilgrims travelling to the temple. Over time, the town expanded with accommodation, transport, markets, religious institutions, and other services supporting visitors. Today, Tirupati is one of Andhra Pradesh's major pilgrimage and tourism centres, connecting devotees travelling from cities across South India and from other parts of the country.\n\nThe Sri Venkateswara Temple is renowned for its elaborate daily rituals, traditional ceremonies, and large annual festivals. Brahmotsavam is among the most significant celebrations at Tirumala, attracting large numbers of devotees for several days of religious ceremonies and processions. Other important occasions throughout the year also bring pilgrims to the temple, making Tirumala a continuously active centre of worship rather than a destination visited only during major festivals.\n\nOne of the most distinctive traditions associated with Tirumala is the offering of hair by devotees. Many pilgrims fulfil personal vows by offering their hair at the temple after reaching Tirumala. This long-standing practice has become an important part of the pilgrimage experience and reflects the devotion and personal commitments of visitors. The temple is also known for its prasadam, particularly the famous Tirupati Laddu, which is traditionally distributed to devotees after worship.\n\nThe temple's administration has played an important role in managing the enormous number of pilgrims who visit Tirumala. The Tirumala Tirupati Devasthanams, commonly known as TTD, oversees the administration of the Sri Venkateswara Temple and related religious and visitor facilities. Its responsibilities include temple services, accommodation, pilgrim facilities, transport arrangements, charitable activities, and the preservation of religious traditions associated with Tirumala.\n\nBeyond the temple itself, Tirupati and Tirumala are surrounded by places of religious and natural interest. Visitors can explore other temples and sacred sites in the Tirupati region, while the Tirumala Hills offer forested landscapes and scenic viewpoints. The combination of pilgrimage, heritage, architecture, and natural surroundings makes the region an important destination for both religious travellers and visitors interested in the cultural heritage of Andhra Pradesh.\n\nFor travellers coming from Vizag, a trip to Tirupati and Tirumala is a long-distance pilgrimage journey that can be planned as a dedicated temple visit or combined with other destinations in Andhra Pradesh. Travelling by private outstation taxi can provide flexibility for families and groups, particularly when planning early departures, multiple stops, temple visits, and return journeys according to their itinerary.\n\nToday, Tirupati and Tirumala continue to hold a unique place in India's religious landscape. The ancient traditions of the Sri Venkateswara Temple, centuries of royal and devotional patronage, the sacred Saptagiri hills, and the constant movement of pilgrims have shaped the identity of the region. For devotees travelling from Vizag and other parts of South India, a journey to Tirumala is not simply a visit to a historic temple but an opportunity to experience one of Andhra Pradesh's most enduring centres of faith, culture, and pilgrimage.",
     bestTimeToVisit:
       "The temple can be visited year-round; October to February brings the most comfortable weather, while weekdays generally see shorter darshan queues than weekends.",
     howToReach:
@@ -2296,8 +2490,13 @@ export const outstations: Outstation[] = [
     driveTime: "2-2.5 hrs",
    
     category: "City",
-    description:
-      "Book a Vizag to Tuni outstation taxi with BSH Taxi Services for a quick business trip or pilgrimage stop on the way to the Godavari districts.",
+    description: (
+  <>
+    Planning a trip from <strong>Vizag to Tuni</strong> BSH Taxi Services provides comfortable
+    outstation cabs for business travel, family journeys, and pilgrimage visits
+    to Tuni and nearby destinations along the Godavari route.
+  </>
+),
     seoTitle: "Vizag to Tuni Taxi | Outstation Cab Booking | BSH Taxi Services",
     seoDescription:
       "Book Vizag to Tuni taxi with BSH Taxi Services. Quick and affordable outstation cab packages.",
@@ -2322,7 +2521,7 @@ export const outstations: Outstation[] = [
       { label: "Drive Time", value: "2-2.5 hrs" },
     ],
     history:
-      "Tuni has functioned for generations as a trading town on the route connecting Visakhapatnam to the Godavari delta, particularly known for jaggery and agricultural produce moving through its local markets. Its position on the coastal highway has made it a natural halfway stop for travellers heading further south.\n\nThe town's identity has stayed closely tied to this transit-and-trade role rather than any single historical landmark, much like several other mid-sized towns along this stretch of NH16.",
+  "Tuni is a historic trading town in the coastal region of Andhra Pradesh, with its growth closely connected to agriculture, local markets, and travel between Visakhapatnam and the Godavari districts. The town has traditionally been known for the trade of agricultural produce, including jaggery, serving the surrounding villages and farming communities.\n\nIts location along the coastal highway has also made Tuni an important transit point for travellers heading towards Kakinada, Rajahmundry, and other destinations in the Godavari region. Today, Tuni continues to serve as a regional commercial and transport centre, combining its traditional market-town character with its role on the busy coastal travel route.",
     bestTimeToVisit:
       "October to February offers the most comfortable weather for this short coastal drive.",
     howToReach:
