@@ -115,7 +115,7 @@ const { openBooking } = useBooking();
     bestTimeToVisit,
     howToReach,
     funFact,
-    sources,
+
   } = destination;
 
   const distanceKm = destination.distanceKm ?? 0;
@@ -299,11 +299,7 @@ const { openBooking } = useBooking();
                   {para}
                 </p>
               ))}
-              {sources && sources.length > 0 && (
-                <p className="mt-2 text-xs italic text-slate-400">
-                  Sourced from {sources.join(", ")}.
-                </p>
-              )}
+            
             </div>
           )}
 

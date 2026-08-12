@@ -42,7 +42,7 @@ export type Destination = {
   distanceFromVizag: string;
   distanceKm: number;        // was optional — now required
   driveTime?: string;
-  sources?: string[];
+ 
 
   description: ReactNode;
   seoTitle: string;
@@ -80,7 +80,7 @@ export const destinations: Destination[] = [
     distanceFromVizag: "250 KM from vizag to araku round trip",
     distanceKm: 250,
     driveTime: "10 hrs",
-    sources: ["AP Tourism", "Wikipedia"],
+   
     category: "Hill Station",
 description: (
   <>
@@ -190,7 +190,7 @@ description: (
     distanceFromVizag: "350 KM from vizag to lambasingi round trip",
     distanceKm: 350,
     driveTime: "10 hrs",
-    sources: ["AP Tourism", "Wikipedia", "Trawell"],
+   
     category: "Hill Station",
     description:
       "Lambasingi, known as the \"Kashmir of Andhra Pradesh,\" is famous for its cool climate, misty mornings, lush greenery, and breathtaking landscapes. It's one of the top weekend getaway destinations near Visakhapatnam (Vizag).",
@@ -248,7 +248,7 @@ description: (
     distanceFromVizag: "10-Hour Local Sightseeing Package in Vizag",
     distanceKm: 100,
     driveTime: "10 hrs",
-    sources: ["AP Tourism", "Wikipedia"],
+
     category: "Beach",
     description:
       "Explore the best of Visakhapatnam (Vizag) with BSH Taxi Services. Our 10-hour local sightseeing package covers popular attractions like RK Beach, Kailasagiri, Rushikonda Beach, INS Kurusura Submarine Museum, Tenneti Park, and Simhachalam Temple. Enjoy safe, comfortable, and affordable taxi services with professional drivers. Call +91 8886803322 to book your Vizag local tour.",
@@ -302,7 +302,7 @@ description: (
     distanceFromVizag: "20 KM from Vizag",
     distanceKm: 20,
     driveTime: "25 mins",
-    sources: ["AP Tourism", "Wikipedia"],
+  
     category: "Temple",
     description:
       "One of the most famous temples in Visakhapatnam, dedicated to Lord Varaha Lakshmi Narasimha Swamy, known for its rich history, stunning architecture, and spiritual significance.",
@@ -358,7 +358,6 @@ description: (
     distanceFromVizag: "780 KM Round Trip from Vizag",
     distanceKm: 780,
     driveTime: "12-13 hrs",
-    sources: ["TTD", "Incredible India", "Wikipedia"],
     category: "Temple",
     description:
       "Visit the world-renowned Sri Venkateswara Swamy Temple in Tirupati with BSH Taxi Services. Enjoy a safe, comfortable, and hassle-free pilgrimage from Vizag.",
@@ -415,7 +414,7 @@ description: (
     distanceFromVizag: "250 KM Round Trip from Vizag",
     distanceKm: 110,
     driveTime: "2.5 to 3hrs",
-    sources: ["Trawell", "Wikipedia"],
+
     category: "Temple",
     description:
       "Travel from Vizag to the sacred Annavaram Temple, dedicated to Sri Veera Venkata Satyanarayana Swamy, for a peaceful and memorable spiritual journey.",
@@ -472,7 +471,7 @@ description: (
     distanceFromVizag: "226 KM Round Trip from Vizag",
     distanceKm: 226,
     driveTime: "2.5-3 hrs",
-    sources: ["Wikipedia", "Srikakulam District Govt.", "Go2India"],
+
     category: "Temple",
     description:
       "Travel from Vizag to the sacred Arasavalli Sri Suryanarayana Swamy Temple with BSH Taxi Services. Experience one of India's oldest Sun Temples, renowned for its spiritual significance and divine atmosphere.",
@@ -527,7 +526,7 @@ description: (
     distanceFromVizag: "220 KM Round Trip from Vizag",
     distanceKm: 220,
     driveTime: "10-12 hrs",
-    sources: ["Outlook Traveller", "Yovizag"],
+  
     category: "Hill Station",
  description: (
     <>
@@ -590,7 +589,7 @@ description: (
   distanceFromVizag: "20 KM from Vizag City Center",
   distanceKm: 20,
   driveTime: "25 mins",
-  sources: ["AAI", "Wikipedia"],
+ 
   category: "Transit",
   description: "Choose BSH Taxi Services for 24/7 airport pickup and drop services at Visakhapatnam International Airport. Enjoy punctual, comfortable, and affordable taxi services for business and leisure travel.",
   seoTitle: "Vizag Airport Taxi Service | 24/7 Airport Transfers | BSH Taxi Services",

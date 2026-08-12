@@ -44,14 +44,8 @@ export default function App() {
                 (e.g. /services/outstation-taxi/one-way) resolve. */}
             <Route path="/services/:slug" element={<ServiceDetails />} />
             <Route path="/services/:slug/:pkg" element={<ServiceDetails />} />
-            <Route path="/outstation/:slug" element={<OutstationTaxi />}
-                          />
-
-
-<Route
-  path="/outstation/:slug"
-  element={<OutstationTaxi />}
-/>
+            <Route path="/outstation/:slug" element={<OutstationTaxi />} />
+           
 
           </Routes>
         </Suspense>
