@@ -102,6 +102,7 @@ const { openBooking } = useBooking();
     const {
     name,
     image,
+    imageAlt,
     distanceFromVizag,
     driveTime,
     description,
@@ -184,7 +185,7 @@ const { openBooking } = useBooking();
   <div className="absolute inset-0 overflow-hidden">
     <img
       src={image}
-      alt={name}
+      alt={imageAlt}
       className="hero-zoom h-full w-full object-cover"
     />
     <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-black/10" />
@@ -283,25 +284,22 @@ const { openBooking } = useBooking();
           )}
 
           {/* History — editorial column */}
-          {history && (
-            <div className="mx-auto mt-16 max-w-3xl">
-              <h2 className="font-display text-center text-3xl font-semibold tracking-tight text-slate-900">
-                The Story of {name}
-              </h2>
-              <div className={`mx-auto mt-3 mb-8 h-1 w-14 rounded-full ${theme.accent}`} />
-              {history.split("\n\n").map((para, i) => (
-                <p
-                  key={i}
-                  className={`mb-5 text-[15.5px] leading-[1.85] text-slate-700 sm:text-base ${
-                    i === 0 ? "drop-cap" : ""
-                  }`}
-                >
-                  {para}
-                </p>
-              ))}
-            
-            </div>
-          )}
+   
+{history && (
+  <div className="mx-auto mt-20 max-w-3xl">
+    <h2 className="section-heading text-center text-3xl font-semibold tracking-tight text-slate-900">
+      History of {name.replace("Vizag to ", "")}
+    </h2>
+
+    <div
+      className={`mx-auto mt-3 mb-8 h-1 w-14 rounded-full ${theme.accent}`}
+    />
+
+    <div className="drop-cap text-[15.5px] leading-[1.85] text-slate-700 sm:text-base">
+      {history}
+    </div>
+  </div>
+)}
 
           {/* Best time / How to reach */}
           {(bestTimeToVisit || howToReach) && (
@@ -396,7 +394,7 @@ const { openBooking } = useBooking();
                     <div className="lift-on-hover flex flex-1 gap-4 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
                       <img
                         src={place.image}
-                        alt={place.name}
+                        alt={place.imageAlt}
                         className="h-28 w-28 shrink-0 object-cover sm:h-32 sm:w-32"
                       />
                       <div className="flex flex-col justify-center py-3 pr-4">

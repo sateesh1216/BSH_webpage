@@ -1,5 +1,3 @@
-
-
 import Aruku from "../assets/Destinations/araku-taxi-services-bshtaxiservices.webp";
 import lambasingi from "../assets/Destinations/Lambasingi-taxi-services-bshtaxiservices.webp";
 import VizagLocal from "../assets/Destinations/Vizag_local-taxi-services-bshtaxiservices.webp";
@@ -24,6 +22,7 @@ import type { ReactNode } from "react";
 export type DestinationPlace = {
   name: string;
   image: string;
+  imageAlt: string;
   tag?: string;
   description: ReactNode;
 };
@@ -38,6 +37,7 @@ export type Destination = {
   slug: string;
   name: string;
   image: string;
+  imageAlt: string;
 
   distanceFromVizag: string;
   distanceKm: number;        // was optional — now required
@@ -63,7 +63,7 @@ export type Destination = {
     | "Heritage & Buddhist Site"
     | "Pilgrimage";
 
-  history?: string;
+  history?: ReactNode;
   highlights?: string[];
   quickFacts?: QuickFact[];
   bestTimeToVisit?: string;
@@ -77,6 +77,7 @@ export const destinations: Destination[] = [
     slug: "araku-valley",
     name: "Araku Valley",
     image: Aruku, // replace with "../assets/destinations/araku-valley.jpg"
+    imageAlt: "Vizag to Araku taxi service by BSH Taxi Services with misty Eastern Ghats hills in the background",
     distanceFromVizag: "250 KM from vizag to araku round trip",
     distanceKm: 250,
     driveTime: "10 hrs",
@@ -109,7 +110,7 @@ description: (
     tagline: "Book the Best Vizag to Araku Valley Taxi Service",
     costPerDay: 5000,
     history:
-      "Tucked into the Eastern Ghats near the Odisha border, Araku Valley has been home to indigenous Adivasi communities for centuries, long before it appeared on any tourist map. Surrounded by the Ananthagiri and Sunkarimetta reserve forests and ringed by the Raktakonda, Chitamogondi, Galikonda and Sunkarimetta hills, the valley sits at an average elevation of roughly 900–1,300 metres. Galikonda is the tallest hill in Andhra Pradesh, giving the valley some of its most dramatic viewpoints.\n\nModern tourism took off in the early 1960s when the South Central Railway carved out the Kirandul–Araku line, an engineering feat of dozens of tunnels and bridges through the Eastern Ghats that turned the journey itself into an attraction. Coffee arrived a little earlier: the Andhra Pradesh Forest Department introduced Arabica cultivation in the 1950s to give tribal farmers a sustainable livelihood, growing the beans in the shade of silver oak trees exactly as it's still done today. In 2007, tribal growers launched Araku Emerald, India's first organic coffee brand from indigenous farmers, which has since earned a GI tag and international recognition.\n\nBeyond coffee, Araku's culture is built around its tribal roots — the Dhimsa folk dance, weekly tribal shandies (markets) selling bamboo crafts and jewellery, and festivals like Itika Pongal keep that heritage very much alive.",
+  "Araku Valley, located in the Eastern Ghats of Andhra Pradesh near the Odisha border, has been home to Adivasi communities for generations. Surrounded by forested hills and valleys, the region is known for its scenic landscapes, cool climate, and rich tribal heritage. The valley lies among important hill ranges including Galikonda, Raktakonda, Chitamogondi, and Sunkarimetta, making it one of the most distinctive hill destinations in Andhra Pradesh.\n\nAraku's connection with coffee began in the mid-20th century when Arabica coffee cultivation was introduced in the region to support tribal communities and develop sustainable livelihoods. The coffee plantations gradually became an important part of the valley's identity, with coffee traditionally grown under the shade of trees in the Eastern Ghats. Today, Araku coffee is widely recognised for its distinctive flavour and connection with the region's tribal farming communities.\n\nThe railway connection through the Eastern Ghats also played an important role in opening Araku Valley to visitors. The route towards Araku passes through numerous tunnels, bridges, forests, and mountain landscapes, making the journey itself a memorable part of travelling to the valley. Improved road and rail connectivity later helped Araku develop into one of Andhra Pradesh's popular hill and nature destinations.\n\nAraku's cultural identity remains closely connected to its tribal communities and traditions. Dhimsa, a traditional tribal dance, is an important part of local cultural celebrations, while weekly markets offer visitors an opportunity to see bamboo crafts, traditional jewellery, agricultural products, and other locally made goods. Festivals and community gatherings continue to preserve the region's distinctive heritage.\n\nToday, Araku Valley attracts travellers for its natural beauty, coffee plantations, tribal culture, scenic viewpoints, forests, and pleasant hill climate. For visitors travelling from Vizag, the journey to Araku is itself an important part of the experience, passing through the Eastern Ghats before reaching one of the most scenic destinations in northern Andhra Pradesh.",
     highlights: [
       "GI-tagged organic Araku Emerald coffee",
       "Home to Andhra Pradesh's tallest hill, Galikonda",
@@ -136,45 +137,54 @@ description: (
          {
         name: "Damuku View Point",
         image: Damukuviewpoint,
-        description: "Damuku View Point is one of the best viewpoints in Araku Valley, offering breathtaking panoramic views of lush green valleys and rolling hills. A perfect destination near Vizag for photography, nature lovers, and scenic sightseeing.",
-      },
+        imageAlt: "Vizag to Araku taxi service visiting Damuku View Point with scenic Eastern Ghats valley views",
+        description:
+      "Damuku View Point is one of the best viewpoints in Araku Valley, offering panoramic views of lush green valleys and rolling hills. A popular stop on Vizag to Araku sightseeing trips for photography, nature lovers, and scenic travel.",
+  },
       {
         name: "Borra Caves",
         image: Borracaves,
+        imageAlt: "Borra Caves limestone stalactite and stalagmite formations near Araku Valley",
         description:
           "Borra Caves is one of the most famous tourist attractions near Araku Valley, known for its million-year-old limestone formations, stunning stalactites, and stalagmites. A must-visit destination on your Vizag to Araku trip with BSH Taxi Services.",
       },
       {
         name: "Katika Waterfalls",
         image: Katikawaterfalls,
+        imageAlt: "Katiki Waterfalls cascading through lush green forest near Borra Caves, Araku Valley",
         tag: "Only Car Parking",
         description: "Katiki Waterfalls, located near Borra Caves in Araku Valley, is a beautiful natural waterfall surrounded by lush forests. This scenic attraction is perfect for adventure lovers and nature enthusiasts visiting from Vizag.",
       },
       {
         name: "Galikonda Viewpoint",
         image: Galikondaviewpoint,
+        imageAlt: "Galikonda Viewpoint sunrise over misty mountains, the highest viewpoint in Andhra Pradesh",
         description: "Galikonda Viewpoint, one of the highest viewpoints in Andhra Pradesh, offers spectacular sunrise views, mist-covered mountains, and breathtaking landscapes. It's a must-visit attraction on your Vizag to Araku Valley tour.",
       },
       {
         name: "Coffee Plantation",
         image: Coffeeplantation,
+        imageAlt: "Araku Valley organic Arabica coffee plantation with wooden bridge and green landscape",
         description: "Explore the famous Araku Valley Coffee Plantations, known for their premium organic Arabica coffee and picturesque green landscapes. A visit to these plantations offers an authentic experience of Andhra Pradesh's coffee culture near Vizag.",
       },
       {
         name: "Coffee Museum",
         image: Coffeemuseum,
+        imageAlt: "Araku Coffee Museum showcasing the history and culture of Araku's organic coffee",
         description: "Visit the Araku Coffee Museum and experience the story of India's famous Araku Coffee. Enjoy coffee tastings, handcrafted chocolates, and explore the rich coffee culture of Araku Valley with BSH Taxi Services from Vizag.",
       },
       {
         name: "Tribal Museum",
         image: Tribalmuseum,
+        imageAlt: "Araku Tribal Museum exhibits of tribal handicrafts and Eastern Ghats heritage",
         description: "Explore the Araku Tribal Museum, one of the best cultural attractions in Araku Valley, showcasing tribal traditions, handicrafts, art, and the unique heritage of the Eastern Ghats in Andhra Pradesh.",
       },
       {
         name: "Padmapuram Gardens",
         image: Padmapuramgardens,
+        imageAlt: "Padmapuram Gardens in Araku Valley with botanical gardens and tree-top cottages",
         description: "Discover the beauty of Padmapuram Gardens in Araku Valley, featuring lush botanical gardens, tree-top cottages, colorful flowers, and a toy train. A must-visit tourist destination near Vizag for families and nature lovers.",
-      },
+      },  
    
       // {
       //   name: "Coffee House",
@@ -187,6 +197,7 @@ description: (
     slug: "lambasingi",
     name: "Lambasingi",
     image: lambasingi, // replace with "../assets/destinations/lambasingi.jpg"
+    imageAlt: "Vizag to Lambasingi taxi service through the scenic Eastern Ghats hills",
     distanceFromVizag: "350 KM from vizag to lambasingi round trip",
     distanceKm: 350,
     driveTime: "10 hrs",
@@ -214,7 +225,7 @@ description: (
     tagline: "Where South India Feels Like the Himalayas!",
     costPerDay: 5500,
     history:
-      "Locally known as \"Korra Bayalu\" — meaning that anyone left out in the open overnight would freeze stiff by morning — Lambasingi is a small hamlet in the Chintapalle mandal of the Alluri Sitharama Raju district, perched at around 1,000–1,025 metres in the Eastern Ghats. What makes it famous is something almost unheard of in a tropical state: on winter mornings, temperatures here can fall close to, and occasionally below, freezing point, making it the only place in South India known to see frost-like conditions and, rarely, snowfall.\n\nFor years Lambasingi stayed a quiet farming village, its slopes given over to coffee, pepper, strawberries, dragon fruit and other orchard crops grown in the cool micro-climate. Word of its unusual winter chill spread mostly by travellers' accounts, and the village has only recently grown into an organised weekend getaway, still refreshingly free of the crowds and commercial sprawl found at bigger hill stations. Nearby attractions like Thajangi Reservoir and Kothapalli Waterfalls have since turned the region into a fuller weekend circuit rather than just a sunrise stopover.",
+  "Lambasingi, locally known as \"Korra Bayalu,\" is a small hill village in the Chintapalle area of Alluri Sitharama Raju district, Andhra Pradesh. Located at an elevation of around 1,000 metres in the Eastern Ghats, the village is known for its unusually cool winter climate, misty mornings, and occasional frost-like conditions. This distinctive weather has earned Lambasingi the popular nickname \"Kashmir of Andhra Pradesh\" and made it a well-known hill destination for travellers from Vizag and across Andhra Pradesh.\n\nFor many years, Lambasingi remained a quiet agricultural village, with local communities cultivating coffee, pepper, strawberries, dragon fruit, and other hill crops suited to its cool climate. As awareness of its winter weather and scenic surroundings grew, Lambasingi gradually developed into a popular weekend getaway. Nearby attractions such as Thajangi Reservoir and Kothapalli Waterfalls have further expanded the area into a scenic Eastern Ghats circuit, making Lambasingi suitable for sightseeing, nature trips, and short outstation journeys from Vizag.",
     highlights: [
       "The only place in South India with near-freezing winters",
       "Coffee, pepper, strawberry & dragon fruit farms",
@@ -245,6 +256,7 @@ description: (
     slug: "vizag-local",
     name: "Vizag Local Sightseeing",
     image: VizagLocal, // replace with "../assets/destinations/rushikonda-beach.jpg"
+    imageAlt: "Vizag local sightseeing taxi and tour package covering RK Beach, Kailasagiri and Rushikonda Beach",
     distanceFromVizag: "10-Hour Local Sightseeing Package in Vizag",
     distanceKm: 100,
     driveTime: "10 hrs",
@@ -272,7 +284,7 @@ description: (
     tagline: "Discover the City by the Bay, One Stop at a Time!",
     costPerDay: 3000,
     history:
-      "\"Rushikonda\" translates to \"Hill of the Sage\" in Telugu, tied to local legend that holds this stretch of coast was once a site where sages performed penance. For most of its history it was a quiet fishing shoreline; recognition as a tourist spot only began building in the 1980s, and the real transformation came in the early 2000s when the Andhra Pradesh Tourism Development Corporation invested in resorts, water-sports infrastructure and restaurants along the shore.\n\nToday Rushikonda is one of only a handful of Indian beaches to hold the international Blue Flag certification, recognising its clean sands and high environmental and safety standards. It has grown into the region's main hub for water sports and adventure tourism, while still keeping the hillside backdrop and comparatively uncrowded feel that first drew visitors in.\n\nBeyond Rushikonda, Vizag's local circuit has grown around the city's port heritage and hilltop views — from the INS Kursura Submarine Museum, decommissioned in 2001 after decades of active service, to the hilltop statues of Shiva and Parvati at Kailasagiri, which has become the city's most recognisable skyline landmark.",
+  "Visakhapatnam, commonly known as Vizag, has a long coastal history shaped by its natural harbour, maritime trade, fishing communities, and strategic importance along the Bay of Bengal. Over time, the city developed from a coastal settlement into an important port and industrial centre, while its beaches, hills, and coastline helped shape its identity as a major tourist destination in Andhra Pradesh.\n\nRushikonda Beach is one of Vizag's best-known coastal attractions. The name \"Rushikonda\" is traditionally associated with local legends of sages performing penance in the area. Once a quieter fishing shoreline, Rushikonda gradually became a popular tourism destination as Vizag's beach and water-sports infrastructure developed. Today, its sandy beach, surrounding hills, and water-based activities make it an important stop on Vizag local sightseeing tours.\n\nVizag's local sightseeing circuit also includes major landmarks such as RK Beach, Kailasagiri, and the INS Kurusura Submarine Museum. Kailasagiri is known for its hilltop views of the coastline and the large Shiva and Parvati statues, while the submarine museum preserves the history of India's naval service and has become one of the city's popular attractions.\n\nTogether, Vizag's beaches, hill viewpoints, museums, temples, and maritime landmarks form a diverse local sightseeing circuit. Visitors can explore these attractions through a Vizag local sightseeing taxi or tour package, making it convenient to cover the city's major coastal and cultural destinations in a single day.",
     highlights: [
       "Blue Flag certified — one of only a few beaches in India",
       "Vizag's main hub for water sports and adventure tourism",
@@ -299,6 +311,7 @@ description: (
     slug: "simhachalam-temple",
     name: "Simhachalam Temple",
     image: Simhachalam, // replace with "../assets/destinations/simhachalam-temple.jpg"
+    imageAlt: "Simhachalam Temple taxi service in Vizag for Sri Varaha Lakshmi Narasimha Swamy Temple",
     distanceFromVizag: "20 KM from Vizag",
     distanceKm: 20,
     driveTime: "25 mins",
@@ -326,7 +339,7 @@ description: (
     tagline: "A Sacred Hilltop Where Faith Meets History!",
     costPerDay: 1800,
     history:
-      "Simhachalam — literally \"Lion's Hill\" — is one of 32 Narasimha temples in Andhra Pradesh and one of the state's most important Vaishnavite pilgrimage sites. According to temple legend, Lord Vishnu appeared here in a unique combined form, Varaha-Narasimha (part boar, part lion), to protect his devotee Prahlada from his father, the demon king Hiranyakashipu. To this day the deity is kept covered year-round in sandalwood paste, resembling a lingam, and is revealed in its true form only once a year during the Chandanotsavam festival on Akshaya Tritiya.\n\nInscriptions on the temple walls date back to 1098 CE, from the reign of the Chola king Kulottunga I, making its documented history nearly a thousand years old. It was later expanded and patronised by the Eastern Ganga dynasty, the Chalukyas, and the Vijayanagara Empire — Krishnadevaraya himself is said to have donated gold and a victory pillar that still stands on the grounds. Architecturally, the temple resembles a fortress, with three enclosing courtyards, five gateways, and a blend of Kalinga, Chalukya and Chola styles culminating in a five-tiered rajagopuram.",
+  "Simhachalam Temple, also known as Sri Varaha Lakshmi Narasimha Swamy Temple, is one of the most important Hindu pilgrimage sites in Visakhapatnam. The name Simhachalam means \"Lion's Hill,\" reflecting the temple's association with Lord Narasimha. According to temple tradition, the presiding deity is worshipped in the unique Varaha Narasimha form, combining aspects of Lord Varaha and Lord Narasimha. The temple is closely associated with the story of Prahlada and Lord Narasimha and remains an important centre of Vaishnavite worship in Andhra Pradesh.\n\nThe temple has a long documented history, with inscriptions dating back to the 11th century. Over the centuries, Simhachalam received patronage from several South Indian dynasties, including the Cholas, Eastern Gangas, Chalukyas, and Vijayanagara rulers. These successive periods of patronage contributed to the temple's distinctive architecture, elaborate stone carvings, large courtyards, gateways, and imposing gopuram.\n\nOne of the most distinctive traditions at Simhachalam is the sandalwood covering of the main deity. Throughout most of the year, the idol is covered with sandalwood paste, giving it a distinctive appearance. During the annual Chandanotsavam festival, the sandalwood covering is removed and devotees are given an opportunity to see the deity in its traditional form. The festival attracts large numbers of pilgrims from Visakhapatnam and other parts of Andhra Pradesh.\n\nThe temple's architecture reflects a combination of regional South Indian styles and features developed under different ruling dynasties. Its fortified appearance, stone pillars, detailed carvings, multiple courtyards, gateways, and tall rajagopuram give Simhachalam Temple a distinctive architectural character. The hilltop setting also provides views over parts of Visakhapatnam and the surrounding landscape.\n\nToday, Simhachalam Temple remains one of the most visited pilgrimage destinations in Visakhapatnam. Its combination of ancient religious traditions, historic inscriptions, distinctive Varaha Narasimha worship, Chandanotsavam celebrations, and impressive architecture makes it an important religious and heritage landmark. For visitors exploring Vizag, a trip to Simhachalam is a popular pilgrimage and sightseeing experience that can be easily included in a local sightseeing or temple tour.",
     highlights: [
       "One of 32 Narasimha temples in Andhra Pradesh",
       "Inscriptions dating back to 1098 CE (Chola era)",
@@ -355,6 +368,7 @@ description: (
     slug: "tirupati",
     name: "Tirupati",
     image: Tirupati, // replace with "../assets/destinations/tirupati-temple.jpg"
+    imageAlt: "Vizag to Tirupati taxi service for Sri Venkateswara Temple pilgrimage",
     distanceFromVizag: "780 KM Round Trip from Vizag",
     distanceKm: 780,
     driveTime: "12-13 hrs",
@@ -381,7 +395,7 @@ description: (
     tagline: "A Sacred Journey to the Seven Hills!",
     costPerDay: 23000,
     history:
-      "Tirupati's Sri Venkateswara Temple, perched on the seventh peak of the Tirumala hills (the Seshachalam range, said to symbolise the seven hoods of the serpent Adishesha), is dedicated to Lord Venkateswara — a form of Vishnu believed to save devotees from the trials of Kali Yuga, earning the temple the title \"Kaliyuga Vaikuntha.\" Its earliest roots stretch back to around 300 CE under a Thondaman king, with a mention even appearing in the Tamil Sangam epic Silappathikaram, dated to roughly the 2nd century CE.\n\nOver the following centuries the temple was steadily expanded and endowed by the Pallavas, Cholas, Pandyas and, most significantly, the Vijayanagara Empire, whose emperors — including Krishnadevaraya — funded much of its gold-plated architecture and towering gopurams. A recorded endowment by the Pallava queen Samavai dates to 966 CE. Today it is managed by the Tirumala Tirupati Devasthanams (TTD) and draws an estimated 50,000-plus pilgrims a day through its Vaikuntam Queue Complex, making it one of the most visited religious sites in the world.",
+  "Tirupati is one of the most important pilgrimage destinations in Andhra Pradesh and is closely associated with the famous Sri Venkateswara Temple at Tirumala. The temple stands on the seventh peak of the Seshachalam Hills and is dedicated to Lord Venkateswara, a revered form of Lord Vishnu. Devotees traditionally regard Tirumala as a sacred destination and often refer to the temple as \"Kaliyuga Vaikuntha,\" reflecting its importance in Hindu religious tradition.\n\nThe history of the Sri Venkateswara Temple extends back many centuries, with ancient literary references, inscriptions, and historical records documenting its religious importance. The temple received patronage from several South Indian dynasties, including the Pallavas, Cholas, Pandyas, and Vijayanagara rulers. The Vijayanagara period was particularly significant, with rulers such as Krishnadevaraya making substantial contributions to the temple's development and religious institutions. An inscription associated with the Pallava queen Samavai from 966 CE is among the important early records connected with the temple.\n\nOver the centuries, the Tirumala temple complex expanded into a major pilgrimage centre with elaborate architecture, towering gopurams, sacred shrines, traditional rituals, and extensive facilities for devotees. The temple's religious traditions have continued through generations, attracting pilgrims from across India and from around the world.\n\nToday, the Sri Venkateswara Temple is administered by the Tirumala Tirupati Devasthanams (TTD), which manages the temple's religious activities, pilgrim facilities, accommodation, and other services across Tirumala and Tirupati. The enormous number of visitors throughout the year has made Tirupati one of India's best-known pilgrimage cities.\n\nFor travellers from Vizag, a trip to Tirupati and Tirumala is a significant long-distance pilgrimage journey. Visitors can combine the temple visit with other religious and cultural attractions around Tirupati, making the city an important destination for devotees, families, and travellers exploring the spiritual heritage of Andhra Pradesh.",
     highlights: [
       "One of the world's richest and most-visited temples",
       "History tracing back to c. 300 CE, expanded by Pallavas, Cholas & Vijayanagara rulers",
@@ -411,6 +425,7 @@ description: (
     slug: "annavaram-temple",
     name: "Annavaram (Sri Satyanarayana Swamy Temple)",
     image: Annavaram, // replace with "../assets/destinations/annavaram-temple.jpg"
+    imageAlt: "Vizag to Annavaram taxi service for Sri Satyanarayana Swamy Temple on Ratnagiri Hill",
     distanceFromVizag: "250 KM Round Trip from Vizag",
     distanceKm: 110,
     driveTime: "2.5 to 3hrs",
@@ -437,8 +452,8 @@ description: (
     ],
     tagline: "Where Every Wish Finds Its Boon!",
     costPerDay: 5000,
-    history:
-      "Annavaram's temple traces back to 1891, when a modest shed was first built on Ratnagiri hill to house the deity's idol, discovered by a local landholder guided, as legend has it, by a dream. The shrine grew through community support into a full temple, was substantially rebuilt in stone during 1933–34, and renovated again in 2011–12. The name itself reflects the belief the temple embodies — \"Anna\" (what is desired) and \"varam\" (boon) — the idea that Sri Satyanarayana grants devotees whatever they ask for. It has since become the second most-visited pilgrimage site in Andhra Pradesh after Tirupati, especially for the Satyanarayana Swamy Vratham, a ritual performed here for family prosperity.\n\nThe Pampa River encircles the base of Ratnagiri hill, and local legend holds that Krishnadevaraya of Vijayanagara once used secret underground passages in these hills during his Kalinga campaign — passages later said to have been used again by the revolutionary Alluri Sitarama Raju against the British.",
+   history:
+  "The Sri Veera Venkata Satyanarayana Swamy Temple at Annavaram is one of the important pilgrimage destinations in Andhra Pradesh. The temple stands on Ratnagiri Hill and has a long association with Sri Satyanarayana Swamy worship. The present shrine developed over time from an earlier place of worship, with the temple complex undergoing major construction and renovation during the 20th and early 21st centuries.\n\nAnnavaram is especially famous for the Satyanarayana Swamy Vratam, a traditional puja performed by devotees throughout the year. Families visit the temple to perform the vratam on important occasions and to seek blessings for prosperity, health, and well-being. This strong religious tradition has made Annavaram an important pilgrimage centre for devotees travelling from Vizag, Kakinada, Rajahmundry, and other parts of Andhra Pradesh.\n\nThe temple's hilltop location on Ratnagiri Hill adds to its distinctive character, with the Pampa River flowing around the surrounding landscape. Annavaram has developed into a well-known pilgrimage and cultural destination while retaining its traditional temple atmosphere. Today, visitors travelling from Vizag can easily plan Annavaram as a one-day pilgrimage trip or combine it with nearby destinations in the Godavari region.",
     highlights: [
       "Second most-visited pilgrimage site in Andhra Pradesh",
       "Home to the famous Satyanarayana Swamy Vratham ritual",
@@ -468,6 +483,7 @@ description: (
     slug: "arasavalli-temple",
     name: "Arasavalli (Sri Suryanarayana Swamy Vari Devasthanam)",
     image: Arasavalli, // replace with "../assets/destinations/arasavalli-temple.jpg"
+    imageAlt: "Vizag to Arasavalli taxi service for Sri Suryanarayana Swamy Temple in Srikakulam",
     distanceFromVizag: "226 KM Round Trip from Vizag",
     distanceKm: 226,
     driveTime: "2.5-3 hrs",
@@ -493,7 +509,7 @@ description: (
     tagline: "Where the Sun Himself Chose to Dwell!",
     costPerDay: 5000,
     history:
-      "The Sri Suryanarayana Swamy Temple at Arasavalli — originally called Harshavalli, meaning \"abode of joy\" — is one of only two ancient temples in India dedicated to the Sun God, the other being Konark, which was left unfinished. Inscriptions credit its construction to King Devendra Varma of the Eastern Ganga (Kalinga) dynasty in the 7th century CE, built in the Kalinga/Odisha architectural style. Temple legend holds that the deity Indra, after being struck by Nandi for trying to force his way in on Lord Shiva, was told in a dream that installing an idol of the Sun God here would heal him — and so Sage Kashyapa is said to have consecrated the Surya idol at this very spot, making the Sun of \"Kasyapasa Gotra.\"\n\nThe temple's five gateways were deliberately aligned so that, during Rathasapthami in the month of Magha, the sun's rays fall directly on the deity's feet at sunrise — an architectural feat still observed by devotees today. Located just a kilometre from Srikakulam town, the temple remains one of the most visited pilgrimage sites in North Coastal Andhra Pradesh, drawing devotees who believe prayers here can heal ailments of the eyes and skin.",
+  "The Sri Suryanarayana Swamy Temple at Arasavalli, near Srikakulam, is one of the important historic Sun temples in Andhra Pradesh. The temple is traditionally associated with the worship of Lord Surya and has a long religious history in the region. Historical traditions and inscriptions connect the temple with the Eastern Ganga dynasty and the Kalinga architectural style, reflecting the cultural links between northern Andhra Pradesh and Odisha.\n\nOne of the most distinctive features of the Arasavalli Sun Temple is its carefully planned orientation. During specific solar occasions, including Ratha Saptami, sunlight enters through the temple's gateways and falls on the deity in the sanctum. This unusual relationship between the temple's architecture and the movement of sunlight is an important reason why Arasavalli attracts both pilgrims and visitors interested in India's traditional temple architecture.\n\nThe temple is especially significant during Ratha Saptami, an important festival dedicated to Lord Surya. Large numbers of devotees visit Arasavalli during the festival and throughout the year to offer prayers and participate in religious rituals. Located close to Srikakulam town, the temple remains an important pilgrimage and heritage destination in North Coastal Andhra Pradesh.",
     highlights: [
       "One of only two ancient Sun temples in India",
       "7th-century Kalinga-style architecture",
@@ -523,6 +539,7 @@ description: (
     slug: "vanjangi-hills",
     name: "Vanjangi Hills",
     image: Vanjangi, // replace with "../assets/destinations/vanjangi-sunrise.jpg"
+    imageAlt: "Vizag to Vanjangi Hills taxi service for the Sea of Clouds sunrise near Paderu",
     distanceFromVizag: "220 KM Round Trip from Vizag",
     distanceKm: 220,
     driveTime: "10-12 hrs",
@@ -555,7 +572,7 @@ description: (
     tagline: "Where Sunrise Rises Above a Sea of Clouds!",
     costPerDay: 5500,
     history:
-      "Vanjangi (also spelled Vanajangi) is a small tribal hamlet in the Alluri Sitharama Raju district's Eastern Ghats, near Paderu, sitting at roughly 3,400 feet above sea level. For most of its history it was simply a quiet forest village — its rise to fame is remarkably recent. Around 2019–2020, trekkers and nature photographers began sharing images of its winter sunrise, where thick banks of cloud settle in the valley below and the sun breaks over them like a rising tide, earning the spot the nickname \"Megha Samudram\" (Ocean of Clouds).\n\nWord spread rapidly on social media, and Vanjangi went from an unknown hamlet to one of Andhra Pradesh's most talked-about sunrise destinations within a single tourist season — following in the footsteps of nearby Lambasingi, which had earned its own reputation as the state's coldest hill spot only a few years earlier. Unlike more developed viewpoints, Vanjangi remains genuinely remote: there's no direct road to the summit, and reaching it still requires a forest trek in the dark, which is part of what keeps the experience feeling undiscovered.",
+  "Vanjangi, also known as Vanajangi, is a scenic tribal village in the Eastern Ghats of Alluri Sitharama Raju district near Paderu. Located at a high elevation, the area is surrounded by forested hills and valleys and is known for its cool climate, misty landscapes, and spectacular sunrise views. For many years, Vanjangi remained a quiet hill settlement before gaining popularity among travellers and nature enthusiasts.\n\nVanjangi became widely known for its winter sunrise, when clouds often fill the valleys below the viewpoint, creating the spectacular sight popularly called \"Megha Samudram,\" or Ocean of Clouds. The destination has since become a popular sunrise and nature sightseeing spot for visitors exploring the Paderu and Eastern Ghats region. Its relatively remote setting and early-morning trek add to the unique experience, making Vanjangi a popular destination for travellers looking for scenic hill landscapes and offbeat places near Vizag.",
     highlights: [
       "Famous 'Sea of Clouds' (Megha Samudram) sunrise phenomenon",
       "One of Andhra Pradesh's most recently discovered viewpoints",
@@ -586,6 +603,7 @@ description: (
   slug: "vizag-airport",
   name: "Vizag Airport",
   image: vizagairport, // replace with "../assets/destinations/vizag-airport.jpg"
+  imageAlt: "Vizag Airport taxi service for 24/7 pickup and drop at Visakhapatnam International Airport",
   distanceFromVizag: "20 KM from Vizag City Center",
   distanceKm: 20,
   driveTime: "25 mins",
@@ -610,7 +628,7 @@ description: (
   tagline: "Land, Relax, We'll Handle the Ride!",
   costPerDay: 1500,
   history:
-    "Visakhapatnam Airport (IATA: VTZ) operates as a civil enclave inside INS Dega, an Indian Navy air station, reflecting the city's long-standing role as home to the Eastern Naval Command. Civilian flights began modestly in 1981 with a single daily service on a short 1,800-metre runway.\n\nThe real transformation came in the 2000s: a new 10,500-foot runway capable of handling wide-body aircraft was inaugurated in June 2007, night-landing capability followed soon after, and a modern integrated terminal with aerobridges opened in March 2009. These upgrades earned the airport international status, with direct flights launched to Dubai, Singapore and Kuala Lumpur. It has run 24-hour operations since 2014 and even added a 2-megawatt solar power plant in 2016 to lower its carbon footprint — reflecting Visakhapatnam's growth into a major industrial, IT and port city.",
+  "Visakhapatnam Airport (IATA: VTZ) is an important air gateway for Visakhapatnam and the wider North Coastal Andhra region. The airport operates as a civil enclave within INS Dega, reflecting Visakhapatnam's long-standing importance as a major naval, industrial, and port city. Civil aviation services began in the early 1980s and gradually expanded as passenger demand and the city's economy grew.\n\nThe airport underwent major development during the 2000s, including runway improvements, night-landing facilities, and a modern integrated terminal with passenger facilities and aerobridges. These upgrades helped Visakhapatnam Airport handle increasing domestic and international air traffic and strengthened its role as a key transport hub for the region.\n\nToday, Visakhapatnam Airport connects the city with major destinations across India and supports travel for business, tourism, pilgrimage, and family visits. For passengers arriving at or departing from the airport, Vizag airport taxi services provide convenient road connectivity to Visakhapatnam city, hotels, railway stations, and nearby destinations such as Araku Valley and other parts of Andhra Pradesh.",
   highlights: [
     "Civil enclave within the Indian Navy's INS Dega airbase",
     "International flights to Dubai, Singapore & Kuala Lumpur",
