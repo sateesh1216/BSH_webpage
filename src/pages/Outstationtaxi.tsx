@@ -95,9 +95,9 @@ const VEHICLE_ICON: Record<VehicleOption["category"], typeof Car> = {
 const CONTACT_PHONE = "+918886803322";
 const CONTACT_PHONE_DISPLAY = "+91 8886803322";
 
-function formatINR(amount: number): string {
-  return `₹${amount.toLocaleString("en-IN")}`;
-}
+// function formatINR(amount: number): string {
+//   return `₹${amount.toLocaleString("en-IN")}`;
+// }
 
 export default function OutstationDetail() {
   const { slug } = useParams<{ slug?: string }>();
@@ -139,7 +139,7 @@ export default function OutstationDetail() {
 
   const otherOutstations = outstations
     .filter((o) => o.slug !== outstation.slug)
-    .slice(0, 4);
+    // .slice(0, 4);
 
   const waMessage = encodeURIComponent(
     `Hi BSH Taxi Services, I'd like to book a Vizag to ${name} outstation taxi.`
@@ -200,7 +200,7 @@ export default function OutstationDetail() {
 
             {/* Heading */}
             <h1 className="mt-4 text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
-              {name}
+              {name} Taxi Service
             </h1>
 
             {/* Description */}
@@ -281,7 +281,7 @@ export default function OutstationDetail() {
             <div className="text-center">
               <p className={`eyebrow text-xs font-bold uppercase ${theme.accentText}`}>Transparent Pricing</p>
               <h2 className="section-heading mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-                Choose Your Ride to {name}
+                {name} Taxi Fare & Vehicle Options 
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-slate-600">
                 {isPerKmRoute ? (
@@ -312,13 +312,13 @@ export default function OutstationDetail() {
                     {/* Accent bar */}
                     <div className={`h-1.5 w-full ${theme.accent}`} />
 
-                    {isFeatured && (
+                    {/* {isFeatured && (
                       <span
                         className={`absolute right-5 top-6 rounded-full ${theme.accent} px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-md`}
                       >
                         Best Value
                       </span>
-                    )}
+                    )} */}
 
                     <div className="flex flex-1 flex-col p-7">
                       <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${theme.accentSoft} ${theme.accentText}`}>
@@ -367,13 +367,20 @@ export default function OutstationDetail() {
                               <span className="text-sm font-semibold text-slate-500">/km</span>
                             </p>
                             <p className="mt-1.5 text-[11px] text-slate-500">
-                              Extra hr ₹{vehicle.extraHourRate} · Fare = distance × rate
-                            </p>
+                                  Minimum billing: 300 KM
+                                </p>
                           </>
                         )}
+                        <div className="mt-4 border-t border-slate-100 pt-3">
+                            <p className="text-[11px] leading-5 text-slate-500">
+                              <span className="font-semibold text-slate-600">Note:</span><br></br>
+                              {" "}1.The above prices exclude tolls, entry fees, parking fees, and driver food.
+                              2.During standby and on ghat roads, the A/C will be turned off.
+                            </p>
+                          </div>
                       </div>
 
-                      <p className="mt-4 flex-1 text-[13px] leading-relaxed text-slate-500">{vehicle.bestFor}</p>
+                      {/* <p className="mt-4 flex-1 text-[13px] leading-relaxed text-slate-500">{vehicle.bestFor}</p> */}
 
                       <div className="mt-6 flex flex-col gap-2.5">
                         <button
@@ -416,7 +423,7 @@ export default function OutstationDetail() {
 {history && (
   <div className="mx-auto mt-20 max-w-3xl">
     <h2 className="section-heading text-center text-3xl font-semibold tracking-tight text-slate-900">
-      The Story of {name}
+      History of {name.replace("Vizag to ", "")}
     </h2>
 
     <div
@@ -438,7 +445,7 @@ export default function OutstationDetail() {
           {places && places.length > 0 && (
             <div className="mx-auto mt-20 max-w-3xl">
               <h2 className="section-heading text-center text-3xl font-semibold tracking-tight text-slate-900">
-                Places You'll Visit
+                Places to Visit in {name.replace("Vizag to ", "")}
               </h2>
               <div className={`mx-auto mt-3 mb-10 h-1 w-14 rounded-full ${theme.accent}`} />
               <ol className="relative">
@@ -478,52 +485,68 @@ export default function OutstationDetail() {
           {/* Cross-sell: other outstation destinations                    */}
           {/* ------------------------------------------------------------ */}
           {otherOutstations.length > 0 && (
-            <div className="mx-auto mt-20 max-w-6xl">
-              <div className="text-center">
-                <p className={`eyebrow text-xs font-bold uppercase ${theme.accentText}`}>Go Further</p>
-                <h2 className="section-heading mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-                  Explore More Outstation Destinations
-                </h2>
-                <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-slate-600">
-                  Planning a longer trip? Here's what our outstation cabs from Vizag typically cost to other
-                  popular destinations.
-                </p>
-              </div>
+  <div className="mx-auto mt-20 max-w-6xl">
+    <div className="text-center">
+      <p className={`eyebrow text-xs font-bold uppercase ${theme.accentText}`}>
+        Go Further
+      </p>
 
-              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {otherOutstations.map((dest) => {
-                  const destTheme = CATEGORY_THEME[dest.category as keyof typeof CATEGORY_THEME] ?? CATEGORY_THEME.City;
-                  return (
-                    <Link
-                      key={dest.slug}
-                      to={`/services/outstation-taxi/${dest.slug}`}
-                      className="lift-on-hover group flex flex-col rounded-2xl border border-slate-100 bg-white p-5 shadow-sm"
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className={`inline-flex items-center gap-1.5 rounded-full ${destTheme.accentSoft} ${destTheme.accentText} px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest`}>
-                          <destTheme.Icon size={12} />
-                          {destTheme.label}
-                        </span>
-                        <ArrowRight
-                          size={16}
-                          className={`${destTheme.accentText} transition-transform group-hover:translate-x-1`}
-                        />
-                      </div>
-                      <p className="mt-4 text-lg font-bold text-slate-900">{dest.name}</p>
-                      <p className="mt-1 flex items-center gap-1.5 text-xs text-slate-500">
-                        <MapPin size={12} /> {dest.distanceKm} KM · {dest.driveTime}
-                      </p>
-                      {dest.costPerDay && (
-                        <p className="mt-3 font-mono-route text-sm font-semibold text-slate-900">
-                          From {formatINR(dest.costPerDay)}
-                        </p>
-                      )}
-                    </Link>
-                  );
-                })}
-              </div>
+      <h2 className="section-heading mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+        Explore More Outstation Destinations
+      </h2>
+
+      <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-slate-600">
+        Planning a longer trip? Here's what our outstation cabs from Vizag typically cost to other
+        popular destinations.
+      </p>
+    </div>
+
+    <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {otherOutstations.map((dest) => {
+        const destTheme =
+          CATEGORY_THEME[dest.category as keyof typeof CATEGORY_THEME] ??
+          CATEGORY_THEME.City;
+
+        return (
+          <Link
+            key={dest.slug}
+            to={`/outstation/${dest.slug}`}
+            className="lift-on-hover group flex flex-col rounded-2xl border border-slate-100 bg-white p-5 shadow-sm"
+          >
+            <div className="flex items-center justify-between">
+              <span
+                className={`inline-flex items-center gap-1.5 rounded-full ${destTheme.accentSoft} ${destTheme.accentText} px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest`}
+              >
+                <destTheme.Icon size={12} />
+                {destTheme.label}
+              </span>
+
+              <ArrowRight
+                size={16}
+                className={`${destTheme.accentText} transition-transform group-hover:translate-x-1`}
+              />
             </div>
-          )}
+
+            <p className="mt-4 text-lg font-bold text-slate-900">
+              {dest.name}
+            </p>
+
+            {/* <p className="mt-1 flex items-center gap-1.5 text-xs text-slate-500">
+              <MapPin size={12} />
+              {dest.distanceKm} KM · {dest.driveTime}
+            </p> */}
+
+            {/* {dest.costPerDay && (
+              <p className="mt-3 font-mono-route text-sm font-semibold text-slate-900">
+                Starting From {formatINR(dest.costPerDay)}
+              </p>
+            )} */}
+          </Link>
+        );
+      })}
+    </div>
+  </div>
+)}
 
           {/* ------------------------------------------------------------ */}
           {/* Final CTA                                                     */}
