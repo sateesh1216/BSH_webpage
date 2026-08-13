@@ -5,6 +5,7 @@ import Footer from "./components/layout/Footer";
 import MobileBottomNav from "./components/layout/MobileBottomNav";
 import ScrollToTop from "./components/ScrollToTop";
 import FloatingContactButtons from "./components/home/FloatingContactButtons";
+import GoogleReviews from "./pages/GoogleReviews";
 
 import Home from "./pages/Home";
 import ServiceDetails from "./pages/ServiceDetails";
@@ -45,8 +46,9 @@ export default function App() {
             <Route path="/services/:slug" element={<ServiceDetails />} />
             <Route path="/services/:slug/:pkg" element={<ServiceDetails />} />
             <Route path="/outstation/:slug" element={<OutstationTaxi />} />
+            {/* Google Reviews */}
+            <Route path="/google-reviews" element={<GoogleReviews />} /> 
            
-
           </Routes>
         </Suspense>
         <Footer />

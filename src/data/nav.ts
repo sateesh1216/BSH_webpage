@@ -228,4 +228,10 @@ export const navLinks: NavLink[] = [
     label: "Contact Us",
     href: "/contact",
   },
+
+  {
+  label: "Google Reviews",
+  href: "/google-reviews",
+},
+
 ];

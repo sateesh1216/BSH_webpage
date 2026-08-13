@@ -78,9 +78,9 @@ export default function Header() {
         {/* Top hairline highlight for glass depth */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/70 to-transparent" />
 
-        <div ref={shellRef} className="mx-auto w-[92%] max-w-5xl">
+        <div ref={shellRef} className="mx-auto w-[92%] max-w-7xl">
           {/* Main row: logo + nav + call button. */}
-          <div className="flex h-14 items-center justify-between gap-2 lg:gap-3 xl:gap-4">
+          <div className="flex h-16 items-center justify-between gap-4 lg:gap-6 xl:gap-10">
             {/* Logo */}
             <Link to="/" className="group flex shrink-0 items-center gap-2">
               <div className="relative">
@@ -110,10 +110,12 @@ export default function Header() {
                 </span>
               </span>
             </Link>
+
+            {/* Nav pill — centered, with its own breathing room from logo & button */}
             <div className="hidden min-w-0 flex-1 items-center justify-center lg:flex">
               <nav
                 ref={navPillRef}
-                className="flex shrink-0 items-center gap-0.5 rounded-full border border-white/60 bg-white/45 p-1 shadow-[inset_0_1px_2px_rgba(255,255,255,0.7),inset_0_-1px_3px_rgba(15,23,42,0.06)] lg:mx-6 xl:mx-10"
+                className="flex shrink-0 items-center gap-1 rounded-full border border-white/60 bg-white/45 p-1.5 shadow-[inset_0_1px_2px_rgba(255,255,255,0.7),inset_0_-1px_3px_rgba(15,23,42,0.06)]"
               >
                 {navLinks.map((link) => {
                   const active = location.pathname === link.href;
@@ -132,7 +134,7 @@ export default function Header() {
                         }}
                       >
                         <button
-                          className="flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-1.5 text-[12px] font-semibold text-slate-700 outline-none transition-colors duration-200 hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/40 xl:px-3 xl:text-[13px]"
+                          className="flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold text-slate-700 outline-none transition-colors duration-200 hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/40 xl:px-4 xl:text-[13px]"
                           aria-expanded={openDropdown === link.label}
                         >
                           {link.label}
@@ -256,7 +258,7 @@ export default function Header() {
                     <Link
                       key={link.label}
                       to={link.href}
-                      className={`group relative whitespace-nowrap rounded-full px-2 py-1.5 text-[12px] font-semibold outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary/40 xl:px-3 xl:text-[13px] ${
+                      className={`group relative whitespace-nowrap rounded-full px-3 py-2 text-[12px] font-semibold outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary/40 xl:px-4 xl:text-[13px] ${
                         active ? "text-primary" : "text-slate-700 hover:text-primary"
                       }`}
                     >
@@ -280,11 +282,11 @@ export default function Header() {
               <a
                 href="tel:+918886803322"
                 aria-label="Call +91 8886803322"
-                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-primary py-1.5 pl-1.5 pr-1.5 text-[13px] font-semibold text-white shadow-lg shadow-blue-600/20 outline-none transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-blue-600/30 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 xl:pr-5"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-primary py-2 pl-2 pr-2 text-[13px] font-semibold text-white shadow-lg shadow-blue-600/20 outline-none transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-blue-600/30 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 xl:pr-6"
               >
                 <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-                <span className="relative grid h-6 w-6 shrink-0 place-items-center rounded-full bg-white/15">
-                  <Phone size={13} className="animate-[pulse_2.5s_ease-in-out_infinite]" />
+                <span className="relative grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/15">
+                  <Phone size={14} className="animate-[pulse_2.5s_ease-in-out_infinite]" />
                 </span>
                 <span className="relative hidden flex-col leading-tight xl:flex">
                   <span className="text-[9px] font-medium uppercase tracking-wider text-white/70">
@@ -325,7 +327,7 @@ export default function Header() {
           </div>
           {/* /Main row */}
 
-          <div className="hidden border-t border-white/30 pb-2 pt-2 lg:block">
+          <div className="hidden border-t border-white/30 pb-3 pt-3 lg:block">
             <div
               style={
                 pillBounds
@@ -342,10 +344,11 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         <nav
-          className={`overflow-hidden border-t transition-all duration-300 lg:hidden ${
+          style={{ WebkitOverflowScrolling: "touch" }}
+          className={`overscroll-contain border-t transition-all duration-300 lg:hidden ${
             menuOpen
-              ? "max-h-175 overflow-y-auto border-slate-100 opacity-100"
-              : "max-h-0 border-transparent opacity-0 pointer-events-none"
+              ? "max-h-[calc(100dvh-3.5rem)] overflow-y-auto overflow-x-hidden border-slate-100 opacity-100"
+              : "max-h-0 overflow-hidden border-transparent opacity-0 pointer-events-none"
           }`}
         >
           <div
@@ -436,7 +439,7 @@ export default function Header() {
                               <div
                                 className={`overflow-hidden transition-all duration-300 ${
                                   openMobileNested === child.label
-                                    ? "max-h-96 opacity-100"
+                                    ? "max-h-[999px] opacity-100"
                                     : "max-h-0 opacity-0"
                                 }`}
                               >
@@ -496,7 +499,7 @@ export default function Header() {
         </nav>
       </header>
 
-      <div className="h-14 lg:h-22" />
+      <div className="h-16 lg:h-24" />
     </>
   );
 }
