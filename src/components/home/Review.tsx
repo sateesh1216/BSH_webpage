@@ -27,35 +27,42 @@ interface Review {
 
 const reviews: Review[] = [
   {
-    initials: "AV",
+    initials: "MK",
     location: "Vizag \u2192 Araku Valley trip",
     rating: 5,
-    text: "Our Araku Valley trip was unforgettable, and a lot of that came down to our driver \u2014 professional, careful, and skilled on the ghat roads, which made the whole journey feel safe and comfortable.",
+    text: "Our trip to Vizag and Araku Valley was truly unforgettable! From the beautiful beaches of Vizag to the breathtaking hills, lush greenery, and peaceful atmosphere of Araku, every moment was filled with wonderful memories. A heartfelt thank you to Annayya Bandaru Sateesh for his exceptional driving skills, professionalism, and friendly nature. The roads to Araku can be challenging, but he drove with great care, making our journey safe, smooth, and comfortable. Thank you for making this trip so enjoyable. Highly recommended!",
   },
   {
-    initials: "GU",
+    initials: "SK",
     location: "Visakhapatnam",
     rating: 5,
-    text: "One of the best cab experiences we've had \u2014 affordable, genuinely comfortable, and the driver was polite from start to finish. Would recommend without hesitation.",
+    text: "It was a wonderful journey with Sateesh. We travelled from Visakhapatnam airport to Araku and back to Vizag. He is a very cordial, helpful and nice person. Will recommend BSH cab/taxi to everyone. They have a very professional, timely and efficient service and behavior is excellent. Would like to come back and have their service again.",
   },
   {
-    initials: "GU",
+    initials: "DB",
     location: "Visakhapatnam",
     rating: 5,
-    text: "Great hospitality paired with careful driving. The driver picked up on our pace and mood and matched it perfectly \u2014 no complaints at all.",
+    text: "Best cab service in town... Would highly recommend anyone who is planning an affordable and luxury cab service... Man's behaviour is extremely polite and hospitality is top notch. No complaints regarding anything.. would highly recommend experiencing this cab service.",
   },
   {
-    initials: "GU",
+    initials: "BT",
     location: "Araku Valley",
     rating: 5,
-    text: "A smooth, safe drive through the valley from start to finish \u2014 exactly what we needed for a relaxed trip.",
+    text: "Today, 22nd Aug, 2025I took the cab service and felt happy with communication and reasonable price as I compared with other Services. Services expected on time, drives safely and return safety. Car is very neatness. Please contact satish for this Bsh taxi service.",
   },
   {
-    initials: "GU",
+    initials: "SP",
     location: "Visakhapatnam",
     rating: 5,
-    text: "A superb ride overall \u2014 the driver was friendly and clearly looked out for us throughout the trip.",
+    text: "BSH taxi services...good for safe journey...the services in vizag was soo good than other taxi services...Driver have an punctual on time...The destination is reached in time... reasonable prices, Good receiving of customers.",
   },
+  {
+    initials: "PC",
+    location: "Visakhapatnam",
+    rating: 5,
+    text: "I have talked sateesh at 9 30 night and next day he has provided excellent service. His car was neat and clean and driver venkat is very polite and loving boy. Sateesh ji is also a person of gem",
+  },
+  
 ];
 
 const GOOGLE_REVIEWS_URL =

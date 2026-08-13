@@ -22,40 +22,40 @@ const WHATSAPP_NUMBER = "918886803322";
 
 const reviews = [
   {
-    name: "Your Customer",
-    initial: "C",
+    name: "Manshi Kumari",
+    initial: "MK",
     date: "Google Review",
-    text: "Your real Google review will appear here. Replace this sample text with an actual customer review.",
+    text: "Our trip to Vizag and Araku Valley was truly unforgettable! From the beautiful beaches of Vizag to the breathtaking hills, lush greenery, and peaceful atmosphere of Araku, every moment was filled with wonderful memories. A heartfelt thank you to Annayya Bandaru Sateesh for his exceptional driving skills, professionalism, and friendly nature. The roads to Araku can be challenging, but he drove with great care, making our journey safe, smooth, and comfortable. Thank you for making this trip so enjoyable. Highly recommended!",
   },
   {
-    name: "Happy Customer",
-    initial: "H",
+    name: "Suparno Karmakar",
+    initial: "SK",
     date: "Google Review",
-    text: "Add one of your genuine customer reviews here. Keeping the reviews authentic builds more trust with new customers.",
+    text: "It was a wonderful journey with Sateesh. We travelled from Visakhapatnam airport to Araku and back to Vizag. He is a very cordial, helpful and nice person. Will recommend BSH cab/taxi to everyone. They have a very professional, timely and efficient service and behavior is excellent. Would like to come back and have their service again.",
   },
   {
-    name: "BSH Customer",
-    initial: "B",
+    name: "Dhrub Basak",
+    initial: "DB",
     date: "Google Review",
-    text: "Add another genuine Google review here after receiving it from your customer.",
+    text: "Best cab service in town... Would highly recommend anyone who is planning an affordable and luxury cab service... Man's behaviour is extremely polite and hospitality is top notch. No complaints regarding anything.. would highly recommend experiencing this cab service.",
   },
   {
-    name: "Verified Customer",
-    initial: "V",
+    name: "Balaji Tharigonda",
+    initial: "BT",
     date: "Google Review",
-    text: "Replace this sample card with a real review from your BSH Taxi Services Google Business Profile.",
+    text: "Today, 22nd Aug, 2025I took the cab service and felt happy with communication and reasonable price as I compared with other Services. Services expected on time, drives safely and return safety. Car is very neatness. Please contact satish for this Bsh taxi service.",
   },
   {
-    name: "Happy Traveller",
-    initial: "T",
+    name: "Surya Pavan Nandyala",
+    initial: "SP",
     date: "Google Review",
-    text: "Real customer feedback about punctual pickup, clean vehicles and professional service can be displayed here.",
+    text: "BSH taxi services...good for safe journey...the services in vizag was soo good than other taxi services...Driver have an punctual on time...The destination is reached in time... reasonable prices, Good receiving of customers",
   },
   {
-    name: "BSH Traveller",
-    initial: "B",
+    name: "Pankaj Caturvedi",
+    initial: "PC",
     date: "Google Review",
-    text: "Use genuine customer feedback only. Customers can submit their review directly using the button above.",
+    text: "I have talked sateesh at 9 30 night and next day he has provided excellent service. His car was neat and clean and driver venkat is very polite and loving boy. Sateesh ji is also a person of gem",
   },
 ];
 
@@ -533,22 +533,6 @@ export default function GoogleReviews() {
         </section>
       </div>
 
-      {/* ================================================================
-          FLOATING WHATSAPP BUTTON
-          (position: fixed — always overlays the page regardless of source
-          order, so `order-*` doesn't apply/matter here)
-      ================================================================ */}
-      <a
-        href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-          "Hi! I'd like to book a taxi with BSH Taxi Services.",
-        )}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat with us on WhatsApp"
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-emerald-500/30 transition hover:scale-110 hover:shadow-xl"
-      >
-        <MessageCircle className="h-7 w-7" />
-      </a>
     </main>
   );
 }

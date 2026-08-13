@@ -488,13 +488,13 @@ export default function Header() {
               );
             })}
 
-            <a
+            {/* <a
               href="tel:+918886803322"
               className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-primary to-[#0F4FD8] px-4 py-2.5 text-[13px] font-semibold text-white shadow-[0_8px_20px_-6px_rgba(21,94,239,0.5)] outline-none transition-all duration-200 hover:shadow-[0_10px_24px_-6px_rgba(21,94,239,0.6)] focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 active:scale-[0.98]"
             >
               <Phone size={16} />
               +91 8886803322
-            </a>
+            </a> */}
           </div>
         </nav>
       </header>
