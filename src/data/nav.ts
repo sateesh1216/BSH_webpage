@@ -67,43 +67,35 @@ export const navLinks: NavLink[] = [
   label: "Outstation Taxi",
   href: "/services/outstation-taxi?type=outstation-taxi-services",
   children: [
-    { label: "Kakinada", href: "/outstation/vizag-to-kakinada-taxi" },
-    { label: "Araku", href: "/outstation/vizag-to-araku-taxi" },
-    { label: "Vijayawada", href: "/outstation/vizag-to-vijayawada-taxi" },
-    { label: "Rajahmundry", href: "/outstation/vizag-to-rajahmundry-taxi" },
-    { label: "Vizianagaram", href: "/outstation/vizag-to-vizianagaram-taxi" },
-    { label: "Srikakulam", href: "/outstation/vizag-to-srikakulam-taxi" },
-   
-    { label: "Annavaram", href: "/outstation/vizag-to-annavaram-taxi" },
-    { label: "Arasavalli", href: "/outstation/vizag-to-arasavalli-taxi" },
-    { label: "Bangalore", href: "/outstation/vizag-to-bangalore-taxi" },
-    { label: "Bhadrachalam", href: "/outstation/vizag-to-bhadrachalam-taxi" },
-    { label: "Bhubaneswar", href: "/outstation/vizag-to-bhubaneswar-taxi" },
-    { label: "Bobbili", href: "/outstation/vizag-to-bobbili-taxi" },
-    { label: "Chennai", href: "/outstation/vizag-to-chennai-taxi" },
-   
-    { label: "Guntur", href: "/outstation/vizag-to-guntur-taxi" },
-    { label: "Hyderabad", href: "/outstation/vizag-to-hyderabad-taxi" },
-
-    { label: "Jagdalpur", href: "/outstation/vizag-to-jagdalpur-taxi" },
-   
-    { label: "Kolkata", href: "/outstation/vizag-to-kolkata-taxi" },
-   
-    { label: "Lambasingi", href: "/outstation/vizag-to-lambasingi-taxi" },
-   
-    { label: "Nellore", href: "/outstation/vizag-to-nellore-taxi" },
-    { label: "Palakollu", href: "/outstation/vizag-to-palakollu-taxi" },
-    { label: "Palakonda", href: "/outstation/vizag-to-palakonda-taxi" },
-    { label: "Palasa", href: "/outstation/vizag-to-palasa-taxi" },
-    { label: "Parvathipuram", href: "/outstation/vizag-to-parvathipuram-taxi" },
-    { label: "Raipur", href: "/outstation/vizag-to-raipur-taxi" },
-    
-    { label: "Razam", href: "/outstation/vizag-to-razam-taxi" },
-   
-    { label: "Srimukhalingam", href: "/outstation/vizag-to-srimukhalingam-taxi" },
-    { label: "Tirupati", href: "/outstation/vizag-to-tirupati-taxi" },
-    { label: "Tuni", href: "/outstation/vizag-to-tuni-taxi" },
-  ],
+  { label: "Annavaram", href: "/outstation/vizag-to-annavaram-taxi" },
+  { label: "Araku", href: "/outstation/vizag-to-araku-taxi" },
+  { label: "Arasavalli", href: "/outstation/vizag-to-arasavalli-taxi" },
+  { label: "Bangalore", href: "/outstation/vizag-to-bangalore-taxi" },
+  { label: "Bhadrachalam", href: "/outstation/vizag-to-bhadrachalam-taxi" },
+  { label: "Bhubaneswar", href: "/outstation/vizag-to-bhubaneswar-taxi" },
+  { label: "Bobbili", href: "/outstation/vizag-to-bobbili-taxi" },
+  { label: "Chennai", href: "/outstation/vizag-to-chennai-taxi" },
+  { label: "Guntur", href: "/outstation/vizag-to-guntur-taxi" },
+  { label: "Hyderabad", href: "/outstation/vizag-to-hyderabad-taxi" },
+  { label: "Jagdalpur", href: "/outstation/vizag-to-jagdalpur-taxi" },
+  { label: "Kakinada", href: "/outstation/vizag-to-kakinada-taxi" },
+  { label: "Kolkata", href: "/outstation/vizag-to-kolkata-taxi" },
+  { label: "Lambasingi", href: "/outstation/vizag-to-lambasingi-taxi" },
+  { label: "Nellore", href: "/outstation/vizag-to-nellore-taxi" },
+  { label: "Palakollu", href: "/outstation/vizag-to-palakollu-taxi" },
+  { label: "Palakonda", href: "/outstation/vizag-to-palakonda-taxi" },
+  { label: "Palasa", href: "/outstation/vizag-to-palasa-taxi" },
+  { label: "Parvathipuram", href: "/outstation/vizag-to-parvathipuram-taxi" },
+  { label: "Raipur", href: "/outstation/vizag-to-raipur-taxi" },
+  { label: "Rajahmundry", href: "/outstation/vizag-to-rajahmundry-taxi" },
+  { label: "Razam", href: "/outstation/vizag-to-razam-taxi" },
+  { label: "Srikakulam", href: "/outstation/vizag-to-srikakulam-taxi" },
+  { label: "Srimukhalingam", href: "/outstation/vizag-to-srimukhalingam-taxi" },
+  { label: "Tirupati", href: "/outstation/vizag-to-tirupati-taxi" },
+  { label: "Tuni", href: "/outstation/vizag-to-tuni-taxi" },
+  { label: "Vijayawada", href: "/outstation/vizag-to-vijayawada-taxi" },
+  { label: "Vizianagaram", href: "/outstation/vizag-to-vizianagaram-taxi" },
+],
 },
       {
         label: "Airport Transfers",
@@ -112,7 +104,7 @@ export const navLinks: NavLink[] = [
 
       {
         label: "Tour Packages",
-        href: "/services/tour-packages?type=tour-packages",
+        href: "/services/tour-packages?type=vizaglocal-tour-packages",
         children: [
           {
             label: "Half Day Tour",

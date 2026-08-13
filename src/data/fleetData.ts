@@ -42,7 +42,7 @@ export const vehicles: Vehicle[] = [
   },
   {
     slug: "toyota-innova",
-    name: "Innova Crysta",
+    name: "Toyota Innova ",
     category: "MUV",
     image: innova,
     seats: 7,
