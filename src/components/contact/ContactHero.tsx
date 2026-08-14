@@ -24,10 +24,37 @@ export default function ContactHero() {
 
         {/* Description */}
         <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
-          Need help booking the <strong>best taxi service in Vizag</strong>?
+          Need help booking the 
+          {" "}
+          <a
+          href="/destinations/vizag-local?type=taxi-services-in-vizag"
+          title="Vizag local Taxi Service - BSH Taxi Services"
+          aria-label="Vizag local Taxi Service - BSH Taxi Services"
+          className="hover:underline"
+        >
+          best taxi service in Vizag?
+        </a>{" "} 
+          
           Contact <strong>BSH Taxi Services</strong> for
-          <strong> airport taxi service</strong>,
-          <strong> local cab service</strong>,
+          {" "}
+            <a
+            href="/destinations/vizag-airport?type=airport-taxi"
+            title="Vizag to airport Taxi Service - BSH Taxi Services"
+            aria-label="Vizag to airport Taxi Service - BSH Taxi Services"
+            className="hover:underline"
+          >
+            airport taxi service,
+          </a>{" "} 
+          {" "}
+          <a
+          href="/destinations/vizag-local?type=taxi-services-in-vizag"
+          title="Vizag local cab Service - BSH Taxi Services"
+          aria-label="Vizag local cab Service - BSH Taxi Services"
+          className="hover:underline"
+        >
+          local cab service in Vizag,
+        </a>{" "}
+
           <strong> outstation taxi service</strong>,
           one-way taxi bookings, round trips, corporate travel, and Vizag tour packages.
           Our friendly support team is available <strong>24/7</strong> to assist you with bookings and travel inquiries.

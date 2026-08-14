@@ -80,7 +80,17 @@ export default function ServicesHero() {
         {/* Subtitle */}
             <p className="fade-3 mx-auto mt-6 max-w-3xl text-center text-lg leading-8 text-slate-600">
       Looking for the <strong>best taxi service in Visakhapatnam (Vizag)</strong>?
-      BSH Taxi Services provides reliable <strong>local taxi service in Vizag</strong>,
+      BSH Taxi Services provides reliable 
+      {" "}
+          <a
+          href="/destinations/vizag-local?type=taxi-services-in-vizag"
+          title="Vizag local Taxi Service - BSH Taxi Services"
+          aria-label="Vizag local Taxi Service - BSH Taxi Services"
+          className="hover:underline"
+        >
+          local taxi service in Vizag,
+        </a>{" "} 
+      
        {" "}
   <a
   href="/destinations/vizag-airport?type=airport-taxi"
@@ -100,7 +110,7 @@ export default function ServicesHero() {
   aria-label="Vizag to Araku Valley Taxi Service - BSH Taxi Services"
   className="hover:underline"
 >
-  <strong>Vizag to Araku Valley taxi service</strong>
+  Vizag to Araku Valley taxi service
 </a>{" "} 
        and comfortable
       transportation across Andhra Pradesh with professional drivers,
