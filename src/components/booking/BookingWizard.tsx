@@ -20,6 +20,9 @@ import {
   BadgeIndianRupee,
   Headset,
   UserRound,
+  Lock,
+  Send,
+  LogOut,
 } from "lucide-react";
 import { createPortal } from "react-dom";
 
@@ -133,14 +136,15 @@ const TOUR_PACKAGES = [
     description: "Coffee plantations, Borra Caves & scenic ghats",
     highlights: [
       "damuku view point",
-      "Borra Caves", 
+      "Borra Caves",
       "Katika waterfalls (Only car parking)",
       "Galikonda viewponit",
       "Coffee Plantation",
-      "Coffee Museum", 
-      "Tribal Museum", 
+      "Coffee Museum",
+      "Tribal Museum",
       "Coffee House",
-      "padmapuram gardens"    ],
+      "padmapuram gardens",
+    ],
   },
   {
     id: "araku_2d",
@@ -150,19 +154,18 @@ const TOUR_PACKAGES = [
     description: "Overnight stay with sunrise viewpoint",
     highlights: [
       "damuku view point",
-      "Borra Caves", 
+      "Borra Caves",
       "Katika waterfalls (Only car parking)",
       "Galikonda viewponit",
       "Coffee Plantation",
-      "Coffee Museum", 
-      "Tribal Museum", 
+      "Coffee Museum",
+      "Tribal Museum",
       "Coffee House",
       "padmapuram gardens",
       "madagada view point",
       "chaparai waterfalls",
-      "Ranajilleda waterfalls"          
-      
-       ],
+      "Ranajilleda waterfalls",
+    ],
   },
   {
     id: "araku & lambasingi_2d",
@@ -172,21 +175,20 @@ const TOUR_PACKAGES = [
     description: "'Kashmir of Andhra' — misty hills getaway",
     highlights: [
       "damuku view point",
-      "Borra Caves", 
+      "Borra Caves",
       "Katika waterfalls (Only car parking)",
       "Galikonda viewponit",
       "Coffee Plantation",
-      "Coffee Museum", 
-      "Tribal Museum", 
+      "Coffee Museum",
+      "Tribal Museum",
       "Coffee House",
       "padmapuram gardens",
       "madagada view point",
       "chaparai waterfalls",
       "Kothapalli waterfalls",
       "strawberry plantation",
-      "Lambasingi"          
-      
-       ],
+      "Lambasingi",
+    ],
   },
   {
     id: "vizag_local_tour_package",
@@ -195,9 +197,9 @@ const TOUR_PACKAGES = [
     nights: 0,
     description: "Beaches, temples & submarine museum",
     highlights: [
-      "RK Beach", 
-      "Visakha museum", 
-      "Vuda park", 
+      "RK Beach",
+      "Visakha museum",
+      "Vuda park",
       "Fishing harbour",
       "Simhachalam Temple",
       "Kailasagiri",
@@ -207,8 +209,8 @@ const TOUR_PACKAGES = [
       "Thotla konda",
       "Ramanaidu studioes",
       "Submarine(INS Kurusura Museum)",
-      "Aircraft museum"
-       ],
+      "Aircraft museum",
+    ],
   },
   {
     id: "vizag_araku_3d",
@@ -217,10 +219,10 @@ const TOUR_PACKAGES = [
     nights: 2,
     description: "Full city & valley combo package",
     highlights: [
-      "RK Beach", 
-      "Visakha museum", 
+      "RK Beach",
+      "Visakha museum",
       "Vuda park",
-      "Fishing harbour", 
+      "Fishing harbour",
       "Fishing harbour",
       "Simhachalam Temple",
       "Kailasagiri",
@@ -234,15 +236,15 @@ const TOUR_PACKAGES = [
       "yarada beach",
       "light house",
       "damuku view point",
-      "Borra Caves", 
+      "Borra Caves",
       "Katika waterfalls (Only car parking)",
       "Galikonda viewponit",
       "Coffee Plantation",
-      "Coffee Museum", 
-      "Tribal Museum", 
+      "Coffee Museum",
+      "Tribal Museum",
       "Coffee House",
-      "padmapuram gardens"
-       ],
+      "padmapuram gardens",
+    ],
   },
   {
     id: "vizag_araku_4d",
@@ -250,10 +252,11 @@ const TOUR_PACKAGES = [
     days: 3,
     nights: 2,
     description: "Full city & valley combo package",
-    highlights: ["RK Beach", 
-      "Visakha museum", 
+    highlights: [
+      "RK Beach",
+      "Visakha museum",
       "Vuda park",
-      "Fishing harbour", 
+      "Fishing harbour",
       "Fishing harbour",
       "Simhachalam Temple",
       "Kailasagiri",
@@ -267,19 +270,19 @@ const TOUR_PACKAGES = [
       "yarada beach",
       "light house",
       "damuku view point",
-      "Borra Caves", 
+      "Borra Caves",
       "Katika waterfalls (Only car parking)",
       "Galikonda viewponit",
       "Coffee Plantation",
-      "Coffee Museum", 
-      "Tribal Museum", 
+      "Coffee Museum",
+      "Tribal Museum",
       "Coffee House",
       "padmapuram gardens",
       "madagada view point",
       "chaparai waterfalls",
       "Kothapalli waterfalls",
       "strawberry plantation",
-      "Lambasingi" 
+      "Lambasingi",
     ],
   },
 ] as const;
@@ -296,6 +299,36 @@ const TOUR_FARES: Record<TourId, Record<CarId, number>> = {
   vizag_araku_4d: { sedan: 15000, suv: 18000, innova_crysta: 20000, tempo_traveller: 30000 },
 };
 
+// ---- Terms & Conditions — shown in the confirm modal and appended to every
+// WhatsApp booking message. Edit freely; each string becomes one numbered line. ----
+const TERMS_AND_CONDITIONS = [
+  "Toll charges and parking fees and Driver food and entry fees are not included.",
+  "Driver Batta is optional.",
+  "During standby and ghat roads, AC will be switched off.",
+];
+
+// =============================================================================
+// ADMIN ACCESS
+// ----------------------------------------------------------------------------
+// Visiting the site with ?admin=1 in the URL unlocks admin-only controls
+// (currently: "Send Quotation to Customer"). Once unlocked, the flag is
+// saved to this browser's localStorage so the admin doesn't need to keep
+// adding ?admin=1 every visit, and the query param is stripped from the
+// visible URL right away so it isn't accidentally shared/bookmarked/seen
+// by a customer looking over someone's shoulder.
+//
+// This is a simple "secret URL" gate, not real authentication — anyone who
+// knows/guesses the URL can unlock it. Good enough to hide the control from
+// ordinary customers; if you ever need real security, put this behind a
+// proper login.
+//
+// To change the secret, edit ADMIN_QUERY_VALUE below (e.g. to something
+// less guessable than "1").
+// =============================================================================
+const ADMIN_PATH = "/admin1216";
+const ADMIN_STORAGE_KEY = "bsh_admin_access";
+
+
 function formatCurrency(amount: number | null | undefined) {
   if (amount === null || amount === undefined) return "—";
   return `₹${Math.round(amount).toLocaleString("en-IN")}`;
@@ -303,6 +336,16 @@ function formatCurrency(amount: number | null | undefined) {
 
 function todayISO() {
   return new Date().toISOString().split("T")[0];
+}
+
+// Turns a loosely-typed Indian phone number into wa.me format (91XXXXXXXXXX).
+// Returns null if it doesn't look like a valid number.
+function normalizeIndianWhatsAppNumber(raw: string): string | null {
+  const digits = raw.replace(/\D/g, "");
+  if (digits.length === 10) return `91${digits}`;
+  if (digits.length === 11 && digits.startsWith("0")) return `91${digits.slice(1)}`;
+  if (digits.length === 12 && digits.startsWith("91")) return digits;
+  return null;
 }
 
 /* =============================================================================
@@ -738,6 +781,10 @@ function ProceedButtons({
    card (which also has `overflow-hidden`) instead of the viewport, hiding
    part of it (e.g. the Confirm button) depending on scroll position.
    Portaling to document.body escapes that entirely.
+
+   UPDATE: now also shows the Terms & Conditions (same list that gets
+   appended to the WhatsApp message) so the customer sees them before
+   confirming, not just after.
    ============================================================================= */
 
 function ConfirmModal({
@@ -756,7 +803,7 @@ function ConfirmModal({
 }) {
   return createPortal(
     <div className="fixed inset-0 z-[1000] flex items-end justify-center bg-slate-900/40 p-4 backdrop-blur-sm sm:items-center">
-      <div className="w-full max-w-md rounded-2xl border border-white/70 bg-white/90 p-4 shadow-2xl backdrop-blur-xl sm:max-w-sm sm:p-5">
+      <div className="max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl border border-white/70 bg-white/90 p-4 shadow-2xl backdrop-blur-xl sm:max-w-sm sm:p-5">
         <div className="mb-3 flex items-center justify-between">
           <h3 className="text-base font-bold text-slate-800">{summary.title}</h3>
           <button
@@ -772,7 +819,7 @@ function ConfirmModal({
         <div className="space-y-2 rounded-xl bg-slate-50/80 p-3">
           {summary.rows.map((row) => (
             <div key={row.label} className="flex items-start justify-between gap-3 text-sm">
-              <span className="text-slate-500">{row.label}</span>
+              <span className="shrink-0 text-slate-500">{row.label}</span>
               <span className="text-right font-medium text-slate-800">{row.value}</span>
             </div>
           ))}
@@ -783,6 +830,20 @@ function ConfirmModal({
           <span className="text-xl font-bold text-blue-600">
             {summary.fare !== null ? formatCurrency(summary.fare) : "On call"}
           </span>
+        </div>
+
+        <div className="mt-3 rounded-xl border border-slate-200/70 bg-slate-50/60 p-3">
+          <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+            Terms &amp; Conditions
+          </p>
+          <ol className="space-y-1 text-[11px] leading-snug text-slate-500">
+            {TERMS_AND_CONDITIONS.map((term, i) => (
+              <li key={term} className="flex gap-1.5">
+                <span className="shrink-0 font-semibold text-slate-400">{i + 1}.</span>
+                <span>{term}</span>
+              </li>
+            ))}
+          </ol>
         </div>
 
         <p className="mt-3 text-center text-[11px] text-slate-400">
@@ -809,6 +870,144 @@ function ConfirmModal({
   );
 }
 
+/* =============================================================================
+   QUOTATION MODAL (ADMIN ONLY)
+   ----------------------------------------------------------------------------
+   Lets an admin send the currently-configured trip (whichever tab/options
+   are selected) as a quotation directly to a CUSTOMER's WhatsApp number —
+   as opposed to the normal booking flow, which always messages the
+   business's own WhatsApp number. The admin can override the price shown
+   to the customer (handy for Outstation/Airport, which are normally
+   "confirmed on call") and add a short note.
+   ============================================================================= */
+
+function QuotationModal({
+  summary,
+  onClose,
+  onSend,
+}: {
+  summary: {
+    title: string;
+    rows: { label: string; value: string }[];
+    fareLabel: string;
+    fare: number | null;
+  };
+  onClose: () => void;
+  onSend: (data: { customerName: string; customerPhone: string; amount: string; note: string }) => string | null;
+}) {
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const [amount, setAmount] = useState(summary.fare !== null ? String(summary.fare) : "");
+  const [note, setNote] = useState("");
+  const [formError, setFormError] = useState<string | null>(null);
+
+  function handleSend() {
+    const err = onSend({ customerName, customerPhone, amount, note });
+    if (err) {
+      setFormError(err);
+      return;
+    }
+    setFormError(null);
+  }
+
+  return createPortal(
+    <div className="fixed inset-0 z-[1000] flex items-end justify-center bg-slate-900/40 p-4 backdrop-blur-sm sm:items-center">
+      <div className="max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl border border-white/70 bg-white/90 p-4 shadow-2xl backdrop-blur-xl sm:max-w-sm sm:p-5">
+        <div className="mb-3 flex items-center justify-between">
+          <h3 className="flex items-center gap-1.5 text-base font-bold text-slate-800">
+            <Send size={16} className="text-blue-600" /> Send Quotation to Customer
+          </h3>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="flex h-7 w-7 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100"
+          >
+            <X size={16} />
+          </button>
+        </div>
+
+        <div className="mb-3 space-y-2 rounded-xl bg-slate-50/80 p-3">
+          <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+            {summary.title.replace("Confirm ", "").replace(" Booking", "")}
+          </p>
+          {summary.rows.map((row) => (
+            <div key={row.label} className="flex items-start justify-between gap-3 text-sm">
+              <span className="shrink-0 text-slate-500">{row.label}</span>
+              <span className="text-right font-medium text-slate-800">{row.value || "—"}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="space-y-3">
+          <div>
+            <label className="mb-1.5 block text-[11px] font-medium text-slate-500">Customer Name (optional)</label>
+            <input
+              type="text"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              placeholder="e.g. Ramesh"
+              className="w-full rounded-lg border border-white/70 bg-white/60 px-3 py-2 text-sm text-slate-700 outline-none backdrop-blur-md focus:border-blue-400 focus:bg-white/80"
+            />
+          </div>
+          <div>
+            <label className="mb-1.5 block text-[11px] font-medium text-slate-500">Customer WhatsApp Number</label>
+            <input
+              type="tel"
+              value={customerPhone}
+              onChange={(e) => setCustomerPhone(e.target.value)}
+              placeholder="10-digit number, e.g. 9876543210"
+              className="w-full rounded-lg border border-white/70 bg-white/60 px-3 py-2 text-sm text-slate-700 outline-none backdrop-blur-md focus:border-blue-400 focus:bg-white/80"
+            />
+          </div>
+          <div>
+            <label className="mb-1.5 block text-[11px] font-medium text-slate-500">Quoted Fare (₹)</label>
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="Enter amount to quote"
+              className="w-full rounded-lg border border-white/70 bg-white/60 px-3 py-2 text-sm text-slate-700 outline-none backdrop-blur-md focus:border-blue-400 focus:bg-white/80"
+            />
+          </div>
+          <div>
+            <label className="mb-1.5 block text-[11px] font-medium text-slate-500">Note (optional)</label>
+            <textarea
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              placeholder="Anything extra to add to the message"
+              rows={2}
+              className="w-full resize-none rounded-lg border border-white/70 bg-white/60 px-3 py-2 text-sm text-slate-700 outline-none backdrop-blur-md focus:border-blue-400 focus:bg-white/80"
+            />
+          </div>
+        </div>
+
+        {formError && (
+          <p className="mt-3 flex items-start gap-1.5 text-[11px] font-medium text-red-500">
+            <AlertCircle size={13} className="mt-0.5 shrink-0" /> {formError}
+          </p>
+        )}
+
+        <button
+          type="button"
+          onClick={handleSend}
+          className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-[#25D366] py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition-transform hover:scale-[1.01] active:scale-[0.99] sm:py-3 sm:text-sm"
+        >
+          <MessageCircle size={16} /> Send Quotation via WhatsApp
+        </button>
+        <button
+          type="button"
+          onClick={onClose}
+          className="mt-2 w-full rounded-xl py-2.5 text-sm font-medium text-slate-500 hover:bg-slate-50"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
 const TABS = [
   { id: "local", label: "Local", icon: Car },
   { id: "outstation", label: "Outstation", icon: Navigation },
@@ -825,6 +1024,10 @@ export default function BookingCard() {
 
   const [error, setError] = useState<string | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
+
+  // ---- Admin state ----
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
 
   // ---- Local tab state ----
   const [localPickup, setLocalPickup] = useState("");
@@ -858,6 +1061,34 @@ export default function BookingCard() {
   // Airport now behaves like Outstation (fare confirmed on call/WhatsApp).
   const localFare = LOCAL_FARES[carId][localPackageId];
   const tourFare = TOUR_FARES[tourId][carId];
+
+  // ---- Detect admin access via ?admin=1 (see ADMIN ACCESS block above) ----
+ useEffect(() => {
+  try {
+    if (window.location.pathname === ADMIN_PATH) {
+      window.localStorage.setItem(ADMIN_STORAGE_KEY, "1");
+      setIsAdmin(true);
+      // Redirect off the secret path immediately so it isn't left sitting
+      // in the address bar, bookmarked, shared, or seen by a customer.
+      window.history.replaceState({}, "", "/" + window.location.search + window.location.hash);
+    } else if (window.localStorage.getItem(ADMIN_STORAGE_KEY) === "1") {
+      setIsAdmin(true);
+    }
+  } catch {
+    // localStorage may be blocked (private browsing, etc.) — admin mode
+    // just won't persist across visits in that case.
+  }
+}, []);
+
+  function exitAdminMode() {
+    try {
+      window.localStorage.removeItem(ADMIN_STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+    setIsAdmin(false);
+    setQuoteModalOpen(false);
+  }
 
   function switchTab(tab: TabId) {
     setActiveTab(tab);
@@ -959,15 +1190,38 @@ export default function BookingCard() {
     setConfirmOpen(true);
   }
 
+  // ---- Build the WhatsApp message ----
+  // Includes: greeting, booking type + summary rows, tour place list
+  // (tour tab only), fare, and Terms & Conditions on every booking type.
   function openWhatsApp() {
     const summary = buildSummary();
+
     const lines = [
       "Hi BSH Taxi Services! I'd like to book a cab.",
       "",
       `*${summary.title.replace("Confirm ", "").replace(" Booking", "")}*`,
       ...summary.rows.map((r) => `${r.label}: ${r.value}`),
-      `${summary.fareLabel}: ${summary.fare !== null ? formatCurrency(summary.fare) : "Please confirm on call"}`,
     ];
+
+    // Tour packages: list every place covered, numbered for readability.
+    if (activeTab === "tour") {
+      lines.push("", "*Places Covered:*");
+      tourPkg.highlights.forEach((place, i) => {
+        lines.push(`${i + 1}. ${place}`);
+      });
+    }
+
+    lines.push(
+      "",
+      `${summary.fareLabel}: ${summary.fare !== null ? formatCurrency(summary.fare) : "Please confirm on call"}`
+    );
+
+    // Terms & Conditions — appended to every booking type.
+    lines.push("", "*Terms & Conditions:*");
+    TERMS_AND_CONDITIONS.forEach((term, i) => {
+      lines.push(`${i + 1}. ${term}`);
+    });
+
     const message = encodeURIComponent(lines.join("\n"));
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank", "noopener,noreferrer");
     setConfirmOpen(false);
@@ -983,6 +1237,62 @@ export default function BookingCard() {
     openWhatsApp();
   }
 
+  // ---- ADMIN ONLY: send the current trip as a quotation to a customer's
+  // own WhatsApp number, with an optional price override and note. ----
+  function handleSendQuotation(data: {
+    customerName: string;
+    customerPhone: string;
+    amount: string;
+    note: string;
+  }): string | null {
+    const normalizedPhone = normalizeIndianWhatsAppNumber(data.customerPhone);
+    if (!normalizedPhone) {
+      return "Please enter a valid 10-digit WhatsApp number.";
+    }
+
+    const summary = buildSummary();
+    const trimmedAmount = data.amount.trim();
+    const amountNumber = trimmedAmount ? Number(trimmedAmount) : null;
+    if (trimmedAmount && (Number.isNaN(amountNumber) || amountNumber! <= 0)) {
+      return "Please enter a valid fare amount.";
+    }
+
+    const lines = [
+      `Hello${data.customerName.trim() ? ` ${data.customerName.trim()}` : ""}, this is BSH Taxi Services. Here's your quotation:`,
+      "",
+      `*${summary.title.replace("Confirm ", "").replace(" Booking", "")}*`,
+      ...summary.rows.map((r) => `${r.label}: ${r.value || "—"}`),
+    ];
+
+    if (activeTab === "tour") {
+      lines.push("", "*Places Covered:*");
+      tourPkg.highlights.forEach((place, i) => {
+        lines.push(`${i + 1}. ${place}`);
+      });
+    }
+
+    lines.push(
+      "",
+      `${summary.fareLabel}: ${amountNumber !== null ? formatCurrency(amountNumber) : "Please confirm"}`
+    );
+
+    if (data.note.trim()) {
+      lines.push("", `Note: ${data.note.trim()}`);
+    }
+
+    lines.push("", "*Terms & Conditions:*");
+    TERMS_AND_CONDITIONS.forEach((term, i) => {
+      lines.push(`${i + 1}. ${term}`);
+    });
+
+    lines.push("", "Reply here on WhatsApp if you'd like to confirm this booking. Thank you!");
+
+    const message = encodeURIComponent(lines.join("\n"));
+    window.open(`https://wa.me/${normalizedPhone}?text=${message}`, "_blank", "noopener,noreferrer");
+    setQuoteModalOpen(false);
+    return null;
+  }
+
   return (
     <div className="relative mx-auto w-full max-w-6xl">
       <div
@@ -991,6 +1301,31 @@ export default function BookingCard() {
       />
 
       <div className="relative overflow-hidden rounded-[24px] border border-white/60 bg-white/45 shadow-2xl shadow-blue-900/10 backdrop-blur-2xl sm:rounded-[28px] lg:rounded-[32px]">
+        {/* Admin-only strip — only ever rendered when isAdmin is true */}
+        {isAdmin && (
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 border-b border-amber-200/60 bg-amber-50/80 px-4 py-2 backdrop-blur-md sm:px-6">
+            <span className="flex items-center gap-1.5 text-[11px] font-semibold text-amber-700">
+              <Lock size={12} /> Admin mode
+            </span>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setQuoteModalOpen(true)}
+                className="flex items-center gap-1.5 rounded-full bg-amber-600 px-3 py-1.5 text-[11px] font-semibold text-white shadow-sm transition-colors hover:bg-amber-700"
+              >
+                <Send size={12} /> Send Quotation to Customer
+              </button>
+              <button
+                type="button"
+                onClick={exitAdminMode}
+                className="flex items-center gap-1 text-[11px] font-medium text-amber-700 hover:text-amber-900"
+              >
+                <LogOut size={12} /> Exit
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="relative z-10">
           <div className="grid grid-cols-4 gap-1.5 p-3 sm:m-4 sm:mb-0 sm:flex sm:w-fit sm:gap-2 sm:rounded-2xl sm:border sm:border-white/60 sm:bg-white/50 sm:p-1.5 sm:backdrop-blur-md">
             {TABS.map(({ id, label, icon: Icon }) => {
@@ -1296,6 +1631,14 @@ export default function BookingCard() {
 
         {confirmOpen && (
           <ConfirmModal summary={buildSummary()} onClose={() => setConfirmOpen(false)} onConfirm={openWhatsApp} />
+        )}
+
+        {isAdmin && quoteModalOpen && (
+          <QuotationModal
+            summary={buildSummary()}
+            onClose={() => setQuoteModalOpen(false)}
+            onSend={handleSendQuotation}
+          />
         )}
       </div>
     </div>
