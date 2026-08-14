@@ -325,7 +325,8 @@ const TERMS_AND_CONDITIONS = [
 // To change the secret, edit ADMIN_QUERY_VALUE below (e.g. to something
 // less guessable than "1").
 // =============================================================================
-const ADMIN_PATH = "/admin1216";
+const ADMIN_QUERY_PARAM = "admin";
+const ADMIN_QUERY_VALUE = "1216";
 const ADMIN_STORAGE_KEY = "bsh_admin_access";
 
 
@@ -1063,23 +1064,23 @@ export default function BookingCard() {
   const tourFare = TOUR_FARES[tourId][carId];
 
   // ---- Detect admin access via ?admin=1 (see ADMIN ACCESS block above) ----
- useEffect(() => {
+useEffect(() => {
   try {
-    if (window.location.pathname === ADMIN_PATH) {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get(ADMIN_QUERY_PARAM) === ADMIN_QUERY_VALUE) {
       window.localStorage.setItem(ADMIN_STORAGE_KEY, "1");
       setIsAdmin(true);
-      // Redirect off the secret path immediately so it isn't left sitting
-      // in the address bar, bookmarked, shared, or seen by a customer.
-      window.history.replaceState({}, "", "/" + window.location.search + window.location.hash);
+      params.delete(ADMIN_QUERY_PARAM);
+      const newSearch = params.toString();
+      const newUrl = `${window.location.pathname}${newSearch ? `?${newSearch}` : ""}${window.location.hash}`;
+      window.history.replaceState({}, "", newUrl);
     } else if (window.localStorage.getItem(ADMIN_STORAGE_KEY) === "1") {
       setIsAdmin(true);
     }
   } catch {
-    // localStorage may be blocked (private browsing, etc.) — admin mode
-    // just won't persist across visits in that case.
+    // ignore
   }
 }, []);
-
   function exitAdminMode() {
     try {
       window.localStorage.removeItem(ADMIN_STORAGE_KEY);
