@@ -38,6 +38,33 @@ type ServiceDetailContent = {
 };
 
 const serviceDetailsContent: Record<string, ServiceDetailContent> = {
+  "local-taxi": {
+  tagline: "Affordable Local Taxi Service in Vizag",
+  longDescription: (
+    <p>
+      Need a taxi for city travel? BSH Taxi Services offers the best{" "}
+      <strong>local taxi service in Vizag</strong> for shopping trips, office
+      commutes, hospital visits, sightseeing, and everyday errands around
+      Visakhapatnam. Choose from flexible hourly packages with a fixed
+      kilometre allowance, so you get a comfortable ride without worrying
+      about surprise charges. Our local drivers know the city well and get
+      you there quickly and safely. Book your{" "}
+      <i>local taxi in Vizag</i> today for convenient, on-demand city
+      travel with BSH Taxi Services.
+    </p>
+  ),
+  highlights: [
+    "Flexible Hourly & KM Packages",
+    "On-Demand City Rides",
+    "Local Drivers Who Know Vizag Well",
+    "No Hidden Charges, Fixed Package Fares",
+  ],
+  notes: [
+    "Package includes a fixed number of hours and kilometres; extra usage is billed as per the rate card.",
+    "Waiting time beyond the package allowance is chargeable.",
+    "Driver allowance applies for late-night bookings.",
+  ],
+},
   "outstation-taxi": {
     tagline: "Reliable Outstation Taxi Service in Vizag",
     longDescription: (
@@ -308,6 +335,27 @@ type ServiceFareConfig = {
 };
 
 const serviceFareConfig: Record<string, ServiceFareConfig> = {
+  "local-taxi": {
+  tabs: ["8hr - 80km", "10hr - 100km"],
+  fleet: [
+    makeCar("Dzire", "Sedan", 4, 2, {
+      "8hr - 80km": { rate: "₹2,000", unit: "/pkg", note: "Extra km ₹13, extra hr ₹150" },
+      "10hr - 100km": { rate: "₹2,500", unit: "/pkg", note: "Extra km ₹13, extra hr ₹150" },
+    }),
+    makeCar("Ertiga", "MUV", 6, 3, {
+      "8hr - 80km": { rate: "₹2,400", unit: "/pkg", note: "Extra km ₹16, extra hr ₹180" },
+      "10hr - 100km": { rate: "₹3,000", unit: "/pkg", note: "Extra km ₹16, extra hr ₹180" },
+    }),
+    makeCar("Innova Crysta", "Premium SUV", 7, 4, {
+      "8hr - 80km": { rate: "₹2,900", unit: "/pkg", note: "Extra km ₹19, extra hr ₹220" },
+      "10hr - 100km": { rate: "₹3,600", unit: "/pkg", note: "Extra km ₹19, extra hr ₹220" },
+    }),
+    makeCar("Tempo Traveller", "Group Travel", 17, 10, {
+      "8hr - 80km": { rate: "₹4,800", unit: "/pkg", note: "Extra km ₹28, extra hr ₹300" },
+      "10hr - 100km": { rate: "₹5,800", unit: "/pkg", note: "Extra km ₹28, extra hr ₹300" },
+    }),
+  ],
+},
   /* ---------------- Outstation Taxi — One Way / Round Trip --------- */
   "outstation-taxi": {
     tabs: ["One Way", "Round Trip"],
@@ -436,6 +484,10 @@ const serviceFareConfig: Record<string, ServiceFareConfig> = {
 /* ------------------------------------------------------------------ */
 
 const packageParamToTab: Record<string, Record<string, string>> = {
+  "local-taxi": {
+  "8hr-80km": "8hr - 80km",
+  "10hr-100km": "10hr - 100km",
+},
   "outstation-taxi": {
     "one-way": "One Way",
     "round-trip": "Round Trip",
@@ -504,6 +556,7 @@ const serviceToTab = {
   "tour-packages": "Tour",
   "corporate-travel": "Local",
   "wedding-car-rentals": "Local",
+  "local-taxi": "Local",
 } as const;
 
 export default function ServiceDetails() {
