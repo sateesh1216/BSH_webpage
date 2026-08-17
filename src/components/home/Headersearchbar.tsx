@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { destinations } from "../../data/DestinationsData";
 import { VEHICLES, SUPPORT_PHONE } from "../../data/bookingConfig";
 import { FIXED_PRICES } from "../../data/fixedPrices";
+import type { HourlyPackages } from "../../data/fixedPrices";
 
 /* ---------------------------------------------------------------------- */
 /*  HeaderSearchBar — same booking logic as MobileSearchBar (home hero),   */
@@ -57,6 +58,15 @@ const PICKUP_CITY = "Visakhapatnam";
 type TripTypeKey = "One Way" | "Round Trip" | "Hourly" | "Package";
 const TRIP_TYPES: TripTypeKey[] = ["One Way", "Round Trip", "Hourly", "Package"];
 
+// Destinations that are hourly-package-only (no one-way / round-trip fares).
+// For these, the panel opens directly on the "Hourly" tab.
+const HOURLY_ONLY_SLUGS = new Set(["vizag-local"]);
+
+const HOURLY_PACKAGE_LABELS: { key: keyof HourlyPackages; label: string }[] = [
+  { key: "8hr80km", label: "8 Hr / 80 KM" },
+  { key: "10hr100km", label: "10 Hr / 100 KM" },
+];
+
 function waLink(message: string) {
   return `https://wa.me/${SUPPORT_PHONE}?text=${encodeURIComponent(message)}`;
 }
@@ -71,6 +81,14 @@ function lookupFare(
   if (tripType === "One Way") return vehiclePrices.oneWay ?? null;
   if (tripType === "Round Trip") return vehiclePrices.roundTrip ?? null;
   return null;
+}
+
+function lookupHourlyPackages(
+  destinationSlug: string,
+  vehicleId: string
+): HourlyPackages | null {
+  const vehiclePrices = FIXED_PRICES[destinationSlug]?.[vehicleId];
+  return vehiclePrices?.hourly ?? null;
 }
 
 export default function HeaderSearchBar() {
@@ -108,7 +126,9 @@ export default function HeaderSearchBar() {
   function selectLocation(loc: PopularLocation) {
     setSelected(loc);
     setQuery(loc.name);
-    setTripType("One Way");
+    // Hourly-only destinations (e.g. Vizag Local Sightseeing) open directly
+    // on the Hourly tab since they have no One Way / Round Trip pricing.
+    setTripType(HOURLY_ONLY_SLUGS.has(loc.slug) ? "Hourly" : "One Way");
     setDropdownOpen(false);
   }
 
@@ -298,7 +318,15 @@ export default function HeaderSearchBar() {
               {/* Fleet + pricing */}
               <div className="grid grid-cols-2 gap-2.5 px-3.5 pb-3.5 md:grid-cols-4 md:gap-3 md:px-5 md:pb-5">
                 {VEHICLES.map((vehicle) => {
-                  const fare = lookupFare(selected.slug, vehicle.id, tripType);
+                  const isHourly = tripType === "Hourly";
+                  const hourlyPackages = isHourly
+                    ? lookupHourlyPackages(selected.slug, vehicle.id)
+                    : null;
+                  const hasHourlyPricing =
+                    !!hourlyPackages &&
+                    HOURLY_PACKAGE_LABELS.some(({ key }) => hourlyPackages[key] != null);
+
+                  const fare = !isHourly ? lookupFare(selected.slug, vehicle.id, tripType) : null;
                   const message =
                     fare != null
                       ? `Hi BSH Taxi Services! I want to book a ${vehicle.name} (${tripType}) from ${PICKUP_CITY} to ${selected.name} (~${selected.distanceKm} km). Fare: ₹${fare.toLocaleString("en-IN")}. Please confirm availability.`
@@ -326,19 +354,96 @@ export default function HeaderSearchBar() {
                             <Briefcase size={10} /> {vehicle.bags}
                           </span>
                         </div>
-                        <p className="mt-0.5 text-xs font-extrabold text-primary md:text-sm">
-                          {fare != null ? `₹${fare.toLocaleString("en-IN")}` : "Contact for pricing"}
-                        </p>
-                        <a
-                          href={waLink(message)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`Book ${vehicle.name} on WhatsApp`}
-                          className="mt-1.5 flex items-center justify-center gap-1 rounded-lg bg-[#25D366] py-1.5 text-[11px] font-semibold text-white shadow-[0_3px_8px_-2px_rgba(37,211,102,0.5)] transition-all duration-150 hover:brightness-105 active:scale-95"
-                        >
-                          <FaWhatsapp size={12} />
-                          Book
-                        </a>
+
+                        {isHourly ? (
+                          hasHourlyPricing ? (
+                            /* Hourly packages — one price row + its own
+                               Book button per package (8Hr/80KM, 10Hr/100KM). */
+                            <div className="mt-1 space-y-1.5">
+                              {HOURLY_PACKAGE_LABELS.map(({ key, label }) => {
+                                const pkgFare = hourlyPackages?.[key];
+                                if (pkgFare == null) return null;
+                                const pkgMessage = `Hi BSH Taxi Services! I want to book a ${vehicle.name} (${label} package) from ${PICKUP_CITY} for ${selected.name}. Fare: ₹${pkgFare.toLocaleString(
+                                  "en-IN"
+                                )}. Please confirm availability.`;
+
+                                return (
+                                  <div
+                                    key={key}
+                                    className="flex items-center justify-between gap-1.5 rounded-lg bg-slate-50 px-1.5 py-1"
+                                  >
+                                    <span className="min-w-0">
+                                      <span className="block text-[9px] font-semibold uppercase tracking-wide text-slate-400 md:text-[10px]">
+                                        {label}
+                                      </span>
+                                      <span className="block text-xs font-extrabold text-primary md:text-sm">
+                                        ₹{pkgFare.toLocaleString("en-IN")}
+                                      </span>
+                                    </span>
+                                    <a
+                                      href={waLink(pkgMessage)}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      aria-label={`Book ${vehicle.name} ${label} on WhatsApp`}
+                                      className="flex shrink-0 items-center justify-center gap-1 rounded-lg bg-[#25D366] px-2 py-1 text-[10px] font-semibold text-white shadow-[0_3px_8px_-2px_rgba(37,211,102,0.5)] transition-all duration-150 hover:brightness-105 active:scale-95"
+                                    >
+                                      <FaWhatsapp size={11} />
+                                      Book
+                                    </a>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            <>
+                              <p className="mt-0.5 text-xs font-extrabold text-slate-500 md:text-sm">
+                                Contact for pricing
+                              </p>
+                              <a
+                                href={waLink(message)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`Book ${vehicle.name} on WhatsApp`}
+                                className="mt-1.5 flex items-center justify-center gap-1 rounded-lg bg-[#25D366] py-1.5 text-[11px] font-semibold text-white shadow-[0_3px_8px_-2px_rgba(37,211,102,0.5)] transition-all duration-150 hover:brightness-105 active:scale-95"
+                              >
+                                <FaWhatsapp size={12} />
+                                Book
+                              </a>
+                            </>
+                          )
+                        ) : (
+                          <>
+                            {/* Price label now shows which trip type the fare
+                                belongs to, or falls back to "Contact for
+                                pricing" when no fixed price exists for this
+                                destination/vehicle/tripType. */}
+                            {fare != null ? (
+                              <div className="mt-0.5">
+                                <span className="block text-[9px] font-semibold uppercase tracking-wide text-slate-400 md:text-[10px]">
+                                  {tripType} fare
+                                </span>
+                                <p className="text-xs font-extrabold text-primary md:text-sm">
+                                  ₹{fare.toLocaleString("en-IN")}
+                                </p>
+                              </div>
+                            ) : (
+                              <p className="mt-0.5 text-xs font-extrabold text-slate-500 md:text-sm">
+                                Contact for pricing
+                              </p>
+                            )}
+
+                            <a
+                              href={waLink(message)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`Book ${vehicle.name} on WhatsApp`}
+                              className="mt-1.5 flex items-center justify-center gap-1 rounded-lg bg-[#25D366] py-1.5 text-[11px] font-semibold text-white shadow-[0_3px_8px_-2px_rgba(37,211,102,0.5)] transition-all duration-150 hover:brightness-105 active:scale-95"
+                            >
+                              <FaWhatsapp size={12} />
+                              Book
+                            </a>
+                          </>
+                        )}
                       </div>
                     </div>
                   );

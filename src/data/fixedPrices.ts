@@ -2,17 +2,33 @@ import type { VehicleId } from "./bookingConfig";
 
 
 
+export type HourlyPackages = {
+  "8hr80km"?: number;
+  "10hr100km"?: number;
+};
+
 export type FixedPriceEntry = {
   oneWay?: number;
   roundTrip?: number;
+  hourly?: HourlyPackages;
 };
 
 export const FIXED_PRICES: Record<string, Partial<Record<VehicleId, FixedPriceEntry>>> = {
+  // "vizag-local" has no oneWay/roundTrip fixed prices (shows "Contact for
+  // pricing" for those tabs), but DOES have Hourly package pricing below.
   "vizag-local": {
-    dzire: { "oneWay": 2500, "roundTrip": 3000 },
-    ertiga: { "oneWay": 1700, "roundTrip": 3500 },
-    innova: { "oneWay": 2000, "roundTrip": 4000 },
-    tempo: { "oneWay": 3000, "roundTrip": 6000 },
+    dzire: {
+      hourly: { "8hr80km": 2500, "10hr100km": 3000 },
+    },
+    ertiga: {
+     hourly: { "8hr80km": 3000, "10hr100km": 3500 },
+    },
+    innova: {
+       hourly: { "8hr80km": 3500, "10hr100km": 4000 },
+    },
+    tempo: {
+ hourly: { "8hr80km": 8000, "10hr100km": 8000 },
+    },
   },
   "vizag-airport": {
     dzire: { oneWay: 1500, roundTrip: 2500 },
