@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import { useState } from "react";
-import { Phone, MapPin, Mail, Navigation } from "lucide-react";
+import { Phone, MapPin, Mail, Navigation, ChevronDown, HelpCircle } from "lucide-react";
 import { useBooking } from "../booking/BookingContext";
 
 interface ContactDetail { id: string; icon: LucideIcon; label: string; primary: string; secondary: string; href?: string; }
@@ -16,6 +16,70 @@ const businessLocation = {
   mapEmbedUrl: "https://www.google.com/maps?q=BSH+Taxi+Services+Kancharapalem+Visakhapatnam&output=embed",
   mapLinkUrl: "https://www.google.com/maps?q=BSH+Taxi+Services+Kancharapalem+Visakhapatnam",
 };
+
+// -------------------- FAQ DATA (SEO-focused) --------------------
+interface FAQItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+const faqItems: FAQItem[] = [
+  {
+    id: "faq-book",
+    question: "How can I book a taxi in Vizag?",
+    answer:
+      "You can book a taxi online through the BSH Taxi Services website, or contact our booking team directly by phone or WhatsApp at +91 8886803322. We confirm most bookings within a few minutes.",
+  },
+  {
+    id: "faq-airport",
+    question: "Do you provide airport pickup in Visakhapatnam?",
+    answer:
+      "Yes, BSH Taxi Services provides airport pickup and drop services in Visakhapatnam. We monitor your flight timing and arrange the pickup according to your scheduled arrival, including delayed flights.",
+  },
+  {
+    id: "faq-oneway",
+    question: "Do you provide one-way taxi services from Vizag?",
+    answer:
+      "Yes, we offer one-way and round-trip taxi services from Vizag for selected outstation routes, including Araku, Vizianagaram, Rajahmundry, Vijayawada, Hyderabad, and other destinations.",
+  },
+  {
+    id: "faq-outstation",
+    question: "Do you provide outstation taxi services from Vizag?",
+    answer:
+      "Yes, BSH Taxi Services provides outstation taxi services from Vizag to destinations across Andhra Pradesh and nearby states. One-way and round-trip taxi options are available depending on the route and vehicle type.",
+  },
+  {
+    id: "faq-araku",
+    question: "Can I book an Araku sightseeing taxi from Vizag?",
+    answer:
+      "Yes, you can book a taxi from Vizag for Araku Valley sightseeing. Popular stops can include Borra Caves, Tyda, coffee plantations, and other attractions, with flexible sightseeing packages based on your travel plan.",
+  },
+  {
+    id: "faq-fare",
+    question: "How is the taxi fare calculated in Vizag?",
+    answer:
+      "Taxi fares are calculated based on the distance, trip type such as local, outstation, or airport transfer, and vehicle category. BSH Taxi Services provides transparent pricing, and you can contact us for an exact fare quote for your trip.",
+  },
+  {
+    id: "faq-247",
+    question: "Is BSH Taxi Services available 24/7?",
+    answer:
+      "Yes, BSH Taxi Services is available 24/7 for taxi bookings and customer assistance, including early-morning and late-night airport transfers, subject to vehicle availability.",
+  },
+  {
+    id: "faq-payment",
+    question: "What payment methods do you accept?",
+    answer:
+      "We accept cash and UPI payments for taxi services. Payment details can be confirmed with our booking team when you make your reservation.",
+  },
+  {
+    id: "faq-safety",
+    question: "Are your taxi drivers verified and experienced?",
+    answer:
+      "BSH Taxi Services works with verified and licensed drivers who are experienced with local and outstation routes. Our aim is to provide safe, reliable, and comfortable taxi services in Visakhapatnam and nearby destinations.",
+  },
+];
 
 function RouteStyles() {
   return (
@@ -142,30 +206,33 @@ export function CTA() {
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Need a Taxi?</h2>
             <p className="mt-1 max-w-md text-sm text-[#D6E4FF] sm:text-base">
-              <strong>{" "}
-  <a
-    href="https://www.bshtaxiservices.com/services/airport-transfer?type=airport-taxi"
-    target="_blank"
-    rel="noopener noreferrer"
-	  title="Airport Taxi Service in Vizag | BSH Taxi Services"
-    aria-label="Airport Taxi Service in Vizag"
-    className="hover:underline"
-  >
-    <strong>Book your airport taxi, </strong>
-  </a>{" "} local cab, or outstation <em>taxi in Visakhapatnam (Vizag).</em> </strong>
+              <strong>
+                {" "}
+                <a
+                  href="https://www.bshtaxiservices.com/services/airport-transfer?type=airport-taxi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Airport Taxi Service in Vizag | BSH Taxi Services"
+                  aria-label="Airport Taxi Service in Vizag"
+                  className="hover:underline"
+                >
+                  <strong>Book your airport taxi, </strong>
+                </a>{" "}
+                local cab, or outstation <em>taxi in Visakhapatnam (Vizag).</em>
+              </strong>{" "}
               Call BSH Taxi Services for 24/7 reliable taxi booking at affordable prices.
             </p>
           </div>
         </div>
 
         <div className="flex shrink-0 items-center gap-3">
-        <a
-          href="tel:+918886803322"
-          className="flex items-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-bold text-[#1554B8] shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg sm:text-base"
-        >
-          <Phone size={18} />
-          +91 8886803322
-        </a>
+          <a
+            href="tel:+918886803322"
+            className="flex items-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-bold text-[#1554B8] shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg sm:text-base"
+          >
+            <Phone size={18} />
+            +91 8886803322
+          </a>
           <button
             type="button"
             onClick={() => openBooking({ resetTrip: true })}
@@ -174,8 +241,6 @@ export function CTA() {
             Book Taxi Now
           </button>
         </div>
-
-       
       </div>
     </section>
   );
@@ -203,11 +268,148 @@ export function ContactUs() {
   );
 }
 
+// -------------------- FAQ SECTION (restyled) --------------------
+function FAQAccordionItem({ item, index, isOpen, onToggle }: { item: FAQItem; index: number; isOpen: boolean; onToggle: () => void }) {
+  return (
+    <div
+      className={`group relative overflow-hidden rounded-2xl border bg-white shadow-sm transition-all duration-200 ${
+        isOpen ? "border-[#BFD6FF] shadow-lg shadow-[#1554B8]/10" : "border-[#E3ECFF] hover:border-[#BFD6FF] hover:shadow-md"
+      }`}
+    >
+      <span
+        className={`pointer-events-none absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-[#1554B8] to-[#2E6FEF] transition-opacity duration-200 ${
+          isOpen ? "opacity-100" : "opacity-0"
+        }`}
+        aria-hidden="true"
+      />
+      <h3 className="m-0">
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={isOpen}
+          aria-controls={`${item.id}-panel`}
+          id={`${item.id}-trigger`}
+          className="flex w-full items-center gap-4 px-5 py-4 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1554B8] sm:px-6 sm:py-5"
+        >
+          <span
+            className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl text-xs font-bold transition-colors duration-200 ${
+              isOpen ? "bg-linear-to-br from-[#1554B8] to-[#2E6FEF] text-white shadow-md shadow-[#1554B8]/25" : "bg-[#EAF1FF] text-[#1554B8]"
+            }`}
+          >
+            {String(index).padStart(2, "0")}
+          </span>
+          <span className={`flex-1 text-sm font-semibold sm:text-base ${isOpen ? "text-[#1554B8]" : "text-[#0A1F3D]"}`}>
+            {item.question}
+          </span>
+          <span
+            className={`grid h-8 w-8 shrink-0 place-items-center rounded-full transition-all duration-200 ${
+              isOpen ? "rotate-180 bg-[#1554B8] text-white" : "bg-[#EAF1FF] text-[#1554B8] group-hover:bg-[#DCE9FF]"
+            }`}
+          >
+            <ChevronDown size={16} />
+          </span>
+        </button>
+      </h3>
+      <div
+        id={`${item.id}-panel`}
+        role="region"
+        aria-labelledby={`${item.id}-trigger`}
+        className={`grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+      >
+        <div className="overflow-hidden">
+          <p className="border-t border-[#EEF3FF] px-5 py-4 pl-[4.25rem] text-sm leading-relaxed text-[#57647B] sm:px-6 sm:text-base">
+            {item.answer}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function FAQSection() {
+  const [openId, setOpenId] = useState<string | null>(faqItems[0].id);
+
+  // JSON-LD structured data — helps Google show FAQ rich snippets for this page
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+
+  return (
+    <section id="faq" className="relative mx-auto w-full max-w-310 overflow-hidden bg-[#F4F8FF] px-4 py-14" aria-labelledby="faq-heading">
+      <RouteStyles />
+      {/* eslint-disable-next-line react/no-danger */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
+      <div
+        className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-[#1554B8]/5 blur-3xl"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-[#FFB238]/10 blur-3xl"
+        aria-hidden="true"
+      />
+
+      <header className="relative mb-10 text-center">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-[#E3ECFF] px-4 py-1 text-xs font-semibold uppercase tracking-widest text-[#1554B8]">
+          <HelpCircle size={13} />
+          FAQs
+        </span>
+        <h2 id="faq-heading" className="mt-3 text-2xl font-extrabold tracking-tight text-[#0A1F3D] sm:text-3xl">
+          Frequently Asked Questions
+        </h2>
+        <p className="mx-auto mt-2 max-w-xl text-sm text-[#57647B] sm:text-base">
+          Everything you need to know about booking a taxi with BSH Taxi Services in Visakhapatnam.
+        </p>
+        <div className="mt-4 flex justify-center"><RouteDivider /></div>
+      </header>
+
+      <div className="relative mx-auto flex max-w-3xl flex-col gap-3">
+        {faqItems.map((item, i) => (
+          <FAQAccordionItem
+            key={item.id}
+            item={item}
+            index={i + 1}
+            isOpen={openId === item.id}
+            onToggle={() => setOpenId(openId === item.id ? null : item.id)}
+          />
+        ))}
+      </div>
+
+      <div className="relative mt-10 flex flex-col items-center justify-center gap-3 rounded-2xl border border-[#E3ECFF] bg-white px-6 py-6 text-center shadow-sm sm:flex-row sm:justify-between sm:text-left">
+        <div>
+          <p className="text-sm font-semibold text-[#0A1F3D] sm:text-base">Still have questions?</p>
+          <p className="text-sm text-[#57647B]">Our team is available 24/7 to help with your booking.</p>
+        </div>
+        <a
+          href="tel:+918886803322"
+          className="flex items-center gap-2 rounded-lg bg-linear-to-r from-[#1554B8] to-[#2E6FEF] px-5 py-3 text-sm font-bold text-white shadow-md shadow-[#1554B8]/25 transition-all hover:-translate-y-0.5 hover:shadow-lg"
+        >
+          <Phone size={16} />
+          Call +91 8886803322
+        </a>
+      </div>
+    </section>
+  );
+}
+
 export default function CTAContactSection() {
   return (
     <>
       <CTA />
       <ContactUs />
+      <FAQSection />
     </>
   );
 }
