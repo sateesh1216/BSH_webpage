@@ -339,20 +339,20 @@ const serviceFareConfig: Record<string, ServiceFareConfig> = {
   tabs: ["8hr - 80km", "10hr - 100km"],
   fleet: [
     makeCar("Dzire", "Sedan", 4, 2, {
-      "8hr - 80km": { rate: "₹2,000", unit: "/pkg", note: "Extra km ₹13, extra hr ₹150" },
-      "10hr - 100km": { rate: "₹2,500", unit: "/pkg", note: "Extra km ₹13, extra hr ₹150" },
+      "8hr - 80km": { rate: "₹2,000", unit: "/pkg", note: "Extra km ₹13, extra hr ₹300" },
+      "10hr - 100km": { rate: "₹2,500", unit: "/pkg", note: "Extra km ₹13, extra hr ₹300" },
     }),
     makeCar("Ertiga", "MUV", 6, 3, {
-      "8hr - 80km": { rate: "₹2,400", unit: "/pkg", note: "Extra km ₹16, extra hr ₹180" },
-      "10hr - 100km": { rate: "₹3,000", unit: "/pkg", note: "Extra km ₹16, extra hr ₹180" },
+      "8hr - 80km": { rate: "₹2,400", unit: "/pkg", note: "Extra km ₹17, extra hr ₹350" },
+      "10hr - 100km": { rate: "₹3,000", unit: "/pkg", note: "Extra km ₹17, extra hr ₹350" },
     }),
     makeCar("Innova Crysta", "Premium SUV", 7, 4, {
-      "8hr - 80km": { rate: "₹2,900", unit: "/pkg", note: "Extra km ₹19, extra hr ₹220" },
-      "10hr - 100km": { rate: "₹3,600", unit: "/pkg", note: "Extra km ₹19, extra hr ₹220" },
+      "8hr - 80km": { rate: "₹2,900", unit: "/pkg", note: "Extra km ₹20, extra hr ₹400" },
+      "10hr - 100km": { rate: "₹3,600", unit: "/pkg", note: "Extra km ₹20, extra hr ₹400" },
     }),
     makeCar("Tempo Traveller", "Group Travel", 17, 10, {
-      "8hr - 80km": { rate: "₹4,800", unit: "/pkg", note: "Extra km ₹28, extra hr ₹300" },
-      "10hr - 100km": { rate: "₹5,800", unit: "/pkg", note: "Extra km ₹28, extra hr ₹300" },
+      "8hr - 80km": { rate: "₹4,800", unit: "/pkg", note: "Extra km ₹30, extra hr ₹800" },
+      "10hr - 100km": { rate: "₹5,800", unit: "/pkg", note: "Extra km ₹30, extra hr ₹800" },
     }),
   ],
 },
@@ -457,20 +457,20 @@ const serviceFareConfig: Record<string, ServiceFareConfig> = {
     tabs: ["8 Hours", "10 Hours"],
     fleet: [
       makeCar("Dzire", "Sedan", 4, 2, {
-        "8 Hours": { rate: "₹2,400", unit: "/80hr", note: "Extra km ₹13" },
+        "8 Hours": { rate: "₹2,500", unit: "/80hr", note: "Extra km ₹13" },
         "10 Hours": { rate: "₹3,000", unit: "/10hr", note: "Extra km ₹13" },
       }),
       makeCar("Ertiga", "MUV", 6, 3, {
-        "8 Hours": { rate: "₹2,800", unit: "/80hr", note: "Extra km ₹17" },
+        "8 Hours": { rate: "₹3,000", unit: "/80hr", note: "Extra km ₹17" },
         "10 Hours": { rate: "₹3,500", unit: "/10hr", note: "Extra km ₹17" },
       }),
       makeCar("Innova Crysta", "Premium SUV", 7, 4, {
-        "8 Hours": { rate: "₹3,200", unit: "/80hr", note: "Extra km ₹20" },
+        "8 Hours": { rate: "₹3,500", unit: "/80hr", note: "Extra km ₹20" },
         "10 Hours": { rate: "₹4,000", unit: "/10hr", note: "Extra km ₹20" },
       }),
       makeCar("Tempo Traveller", "Group Travel", 17, 10, {
-        "8 Hours": { rate: "₹5,200", unit: "/80hr", note: "Extra km ₹30" },
-        "10 Hours": { rate: "₹6,500", unit: "/10hr", note: "Extra km ₹30" },
+        "8 Hours": { rate: "₹8,000", unit: "/80hr", note: "Extra km ₹30" },
+        "10 Hours": { rate: "₹8,000", unit: "/10hr", note: "Extra km ₹30" },
       }),
     ],
   },
