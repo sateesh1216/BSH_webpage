@@ -92,14 +92,14 @@ export default function ServicesHero() {
         </a>{" "} 
       
        {" "}
-  <a
-  href="/destinations/vizag-airport?type=airport-taxi"
-  title="Vizag to airport Taxi Service - BSH Taxi Services"
-  aria-label="Vizag to airport Taxi Service - BSH Taxi Services"
-  className="hover:underline"
->
-  airport taxi service,
-</a>{" "} 
+          <a
+          href="/destinations/vizag-airport?type=airport-taxi"
+          title="Vizag to airport Taxi Service - BSH Taxi Services"
+          aria-label="Vizag to airport Taxi Service - BSH Taxi Services"
+          className="hover:underline"
+        >
+          airport taxi service,
+        </a>{" "} 
         <strong> outstation taxi service </strong>, corporate taxi service,
        wedding car rentals, and  <strong> Vizag tour packages</strong> at affordable prices.
       We also offer <strong>Vizag local sightseeing cabs</strong>,

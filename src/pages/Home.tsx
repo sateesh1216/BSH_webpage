@@ -4,7 +4,7 @@ import Hero from "../components/home/Hero";
 import Features from "../components/home/Features";
 import TravelSections from "../components/home/TravelSections";
 import TrustBar from "../components/home/TrustBar";
-import { CTA, ContactUs } from "../components/home/CTA";
+import { CTA, ContactUs,FAQSection } from "../components/home/CTA";
 import Review from "../components/home/Review";
 import MobileSearchBar from "../components/home/MobileSearchBar";
 import BookingWizard from "../components/booking/BookingWizard";
@@ -151,7 +151,7 @@ export default function HomePage() {
       <CTA />
 
       <ContactUs />
-
+<FAQSection />
       {/* Floating Call & WhatsApp Buttons */}
       <FloatingContactButtons />
     </>
