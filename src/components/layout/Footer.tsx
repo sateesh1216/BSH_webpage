@@ -61,7 +61,7 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "TaxiService",
   name: "BSH Taxi Services",
-  image: "https://bshtaxiservices.com/logo.png",
+  image: "https://www.bshtaxiservices.com/logo.png",
   telephone: BUSINESS.phone,
   email: BUSINESS.email,
   address: {
@@ -72,7 +72,7 @@ const structuredData = {
   },
   areaServed: ["Visakhapatnam", "Araku Valley", "Lambasingi", "Tirupati", "Puri", "Hyderabad"],
   sameAs: socialLinks.map((s) => s.href),
-  url: "https://bshtaxiservices.com",
+  url: "https://www.bshtaxiservices.com",
 };
 
 export default function Footer() {
@@ -100,7 +100,7 @@ export default function Footer() {
 <p className="max-w-xs text-sm leading-relaxed text-slate-400">
   BSH Taxi Services is a trusted{" "}
   <a
-    href="https://bshtaxiservices.com/"
+    href="https://www.bshtaxiservices.com/"
     target="_blank"
     rel="noopener noreferrer"
     className="hover:underline"

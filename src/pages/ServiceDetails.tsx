@@ -75,7 +75,7 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
         nearby states. Whether you're traveling for business, family
         vacations, temple visits, or sightseeing,{" "}
         <a
-          href="https://bshtaxiservices.com/destinations/tirupati?type=outstation-taxi-services"
+          href="https://www.bshtaxiservices.com/destinations/tirupati?type=outstation-taxi-services"
           target="_blank"
           rel="noopener noreferrer"
           title="Outstation Taxi Service in Vizag - BSH Taxi Services"
@@ -115,7 +115,7 @@ const serviceDetailsContent: Record<string, ServiceDetailContent> = {
         Need a reliable <strong>airport taxi in Vizag</strong>? BSH Taxi Services
         provides safe, affordable, and 24/7{" "}
         <a
-          href="https://bshtaxiservices.com/destinations/vizag-airport?type=airport-taxi"
+          href="https://www.bshtaxiservices.com/destinations/vizag-airport?type=airport-taxi"
           target="_blank"
           rel="noopener noreferrer"
           title="Airport Taxi Service in Vizag - BSH Taxi Services"
