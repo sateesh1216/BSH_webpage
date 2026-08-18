@@ -15,8 +15,8 @@ export const contactInfoItems: ContactInfoItem[] = [
     icon: MapPin,
     title: "Our Office",
     lines: [
-      "36-92-242-532/1, Palanati Colony,",
-      "Kancharapalem, Visakhapatnam,",
+      "44-66, Palanati Colony,",
+      "Srinivasa Nagar, Kancharapalem, Visakhapatnam,",
       "Andhra Pradesh - 530008",
     ],
   },

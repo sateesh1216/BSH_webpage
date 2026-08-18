@@ -6,7 +6,7 @@ import { useBooking } from "../booking/BookingContext";
 interface ContactDetail { id: string; icon: LucideIcon; label: string; primary: string; secondary: string; href?: string; }
 
 const contactDetails: ContactDetail[] = [
-  { id: "location", icon: MapPin, label: "Our Location", primary: "36-92-242-532/1, Palanati Colony", secondary: "Kancharapalem, Visakhapatnam, Andhra Pradesh - 530008" },
+  { id: "location", icon: MapPin, label: "Our Location", primary: "44-66, Palanati Colony", secondary: " Srinivasa Nagar, Kancharapalem, Visakhapatnam, Andhra Pradesh - 530008" },
   { id: "phone", icon: Phone, label: "Call Us", primary: "+91 8886803322", secondary: "Mon - Sun : 24/7 Available", href: "tel:+918886803322" },
   { id: "email", icon: Mail, label: "Email Us", primary: "info.bshtaxiservices@gmail.com", secondary: "We reply within 30 minutes", href: "mailto:info.bshtaxiservices@gmail.com" },
 ];
