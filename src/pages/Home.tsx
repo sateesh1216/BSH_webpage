@@ -37,8 +37,8 @@ export default function HomePage() {
   return (
     <>
       <SEO
-          title="BSH Taxi Services | Outstation, Local & Airport Cabs in Vizag"
-          description="BSH Taxi Services offers reliable outstation cabs, local cabs and airport taxi services in Vizag, with one-way and round-trip bookings, corporate travel and 24/7 support."
+             title="Taxi, Outstation & Airport Cabs in Vizag"
+              description="BSH Taxi Services offers reliable taxi, local cab, outstation and airport cab services in Vizag, with one-way and round-trip bookings, corporate travel and 24/7 support."
         keywords={[
               // Core Taxi Keywords
               "taxi service in vizag",
