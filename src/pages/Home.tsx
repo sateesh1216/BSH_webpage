@@ -37,69 +37,74 @@ export default function HomePage() {
   return (
     <>
       <SEO
-             title="Taxi, Outstation & Airport Cabs in Vizag"
+          title="Airport, Local & Outstation Cabs in Vizag"
               description="BSH Taxi Services offers reliable taxi, local cab, outstation and airport cab services in Vizag, with one-way and round-trip bookings, corporate travel and 24/7 support."
-        keywords={[
-              // Core Taxi Keywords
-              "taxi service in vizag",
-              "best taxi service in vizag",
-              "vizag taxi service",
-              "taxi services in visakhapatnam",
-              "visakhapatnam taxi service",
-              "taxi in vizag",
-              "taxi in visakhapatnam",
-              "cabs in vizag",
-              "cab service in vizag",
-              "best cab service in vizag",
+           keywords={[
+                // Core Taxi Keywords
+                "taxi service in vizag",
+                "best taxi service in vizag",
+                "vizag taxi service",
+                "taxi services in visakhapatnam",
+                "visakhapatnam taxi service",
+                "taxi in vizag",
+                "taxi in visakhapatnam",
+                "cabs in vizag",
+                "cab service in vizag",
+                "best cab service in vizag",
 
-              // Local Cab Keywords
-              "local cabs in vizag",
-              "vizag local cabs",
-              "local taxi service in vizag",
-              "local cab service in visakhapatnam",
-              "vizag city cabs",
-              "city taxi service in vizag",
-              "cab booking in vizag",
-              "taxi booking in vizag",
-              "online cab booking in vizag",
+                // Local Taxi & Cab Keywords
+                "local taxi service in vizag",
+                "local cab service in vizag",
+                "local cab service in visakhapatnam",
+                "local cabs in vizag",
+                "vizag local cabs",
+                "vizag city cabs",
+                "city taxi service in vizag",
 
-              // Outstation Keywords
-              "outstation cabs in vizag",
-              "outstation taxi in vizag",
-              "vizag outstation taxi",
-              "outstation cab service in vizag",
-              "outstation cabs in visakhapatnam",
-              "outstation taxi from vizag",
-              "one way taxi from vizag",
-              "round trip taxi from vizag",
-              "intercity taxi in vizag",
+                // Taxi & Cab Booking Keywords
+                "taxi booking in vizag",
+                "cab booking in vizag",
+                "online cab booking in vizag",
+                "taxi booking in visakhapatnam",
+                "cab booking in visakhapatnam",
 
-              // Airport Keywords
-              "airport taxi in vizag",
-              "vizag airport taxi",
-              "visakhapatnam airport taxi",
-              "airport cab service in vizag",
-              "visakhapatnam airport cab service",
-              "vizag airport cabs",
-              "airport pickup and drop vizag",
+                // Outstation Taxi Keywords
+                "outstation taxi in vizag",
+                "outstation cabs in vizag",
+                "vizag outstation taxi",
+                "outstation cab service in vizag",
+                "outstation cabs in visakhapatnam",
+                "outstation taxi from vizag",
+                "one way taxi from vizag",
+                "round trip taxi from vizag",
+                "intercity taxi in vizag",
 
-              // Car Rental / Travel
-              "car rental in vizag",
-              "car rentals in visakhapatnam",
-              "innova car rental in vizag",
-              "tempo traveller rental in vizag",
-              "tour and travels in vizag",
-              "tours and travels in visakhapatnam",
-              "travel services in vizag",
+                // Airport Taxi Keywords
+                "airport taxi in vizag",
+                "vizag airport taxi",
+                "visakhapatnam airport taxi",
+                "airport cab service in vizag",
+                "visakhapatnam airport cab service",
+                "vizag airport cabs",
+                "airport pickup and drop vizag",
 
-              // Important Route Keywords
-              "vizag to hyderabad taxi",
-              "vizag to tirupati taxi",
-              "vizag to araku taxi",
-              "vizag to srikakulam taxi",
-              "vizag to kakinada taxi",
-              "vizag to rajahmundry taxi",
-            ]}
+                // Car Rental & Travel Keywords
+                "car rental in vizag",
+                "car rentals in visakhapatnam",
+                "innova car rental in vizag",
+                "tempo traveller rental in vizag",
+                "tour and travels in vizag",
+                "tours and travels in visakhapatnam",
+                "travel services in vizag",
+
+                // Important Route Keywords
+                "vizag to hyderabad taxi",
+                "vizag to tirupati taxi",
+                "vizag to araku taxi",
+                "vizag to srikakulam taxi",
+                "vizag to kakinada taxi",
+                "vizag to rajahmundry taxi",
+              ]}
         canonicalPath="/"
       />
 
