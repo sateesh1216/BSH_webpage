@@ -34,7 +34,7 @@ export const services: Service[] = [
   {
     slug: "airport-transfer",
     icon: Plane,
-    title: "Visakhapatnam Airport Taxi Service",
+    title: "Alluri sitarama raju international airport",
     description:
       "Book 24/7 airport taxi services in Visakhapatnam (Vizag) for airport pickup and drop. Our professional drivers ensure safe, punctual, and affordable transfers to and from Visakhapatnam Airport.",
     image: airport,

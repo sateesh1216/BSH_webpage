@@ -384,16 +384,16 @@ const serviceFareConfig: Record<string, ServiceFareConfig> = {
     tabs: [],
     fleet: [
       makeCar("Dzire", "Sedan", 4, 2, {
-        default: { rate: "₹1,000", unit: "/trip", note: "Starting fare, one-way" },
+        default: { rate: "₹2,500", unit: "/trip", note: "Starting fare, one-way" },
       }),
       makeCar("Ertiga", "MUV", 6, 3, {
-        default: { rate: "₹1,300", unit: "/trip", note: "Starting fare, one-way" },
+        default: { rate: "₹3,000", unit: "/trip", note: "Starting fare, one-way" },
       }),
       makeCar("Innova Crysta", "Premium SUV", 7, 4, {
-        default: { rate: "₹1,500", unit: "/trip", note: "Starting fare, one-way" },
+        default: { rate: "₹3,500", unit: "/trip", note: "Starting fare, one-way" },
       }),
       makeCar("Tempo Traveller", "Group Travel", 17, 10, {
-        default: { rate: "₹3,000", unit: "/trip", note: "Starting fare, one-way" },
+        default: { rate: "₹8,000", unit: "/trip", note: "Starting fare, one-way" },
       }),
     ],
   },

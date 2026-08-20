@@ -56,7 +56,7 @@ const FALLBACK_IMAGE =
 
 const vehicles: Vehicle[] = [
   { name: "Dzire", seats: 4 },
-  { name: "Maruti Ertiga", seats: 6 },
+  { name: "Ertiga", seats: 6 },
   { name: "Innova Crysta", seats: 7 },
   { name: "Tempo Traveller", seats: 17 },
 ];
@@ -68,7 +68,7 @@ const destinations: Destination[] = [
     image: arakuImg,
     prices: {
       "Dzire": 5000,
-      "Maruti Ertiga": 7000,
+      "Ertiga": 7000,
       "Innova Crysta": 8000,
       "Tempo Traveller": 12000,
     },
@@ -79,7 +79,7 @@ const destinations: Destination[] = [
     image: lambasingiImg,
     prices: {
       "Dzire": 5500,
-      "Maruti Ertiga": 7400,
+      "Ertiga": 7400,
       "Innova Crysta": 8500,
       "Tempo Traveller": 13000,
     },
@@ -91,7 +91,7 @@ const destinations: Destination[] = [
       Vanjangi,
     prices: {
        "Dzire": 5500,
-      "Maruti Ertiga": 7400,
+      "Ertiga": 7400,
       "Innova Crysta": 8500,
       "Tempo Traveller": 13000,
     },
@@ -102,7 +102,7 @@ const destinations: Destination[] = [
     image: RKbeach,
     prices: {
        "Dzire": 3000,
-      "Maruti Ertiga": 3500,
+      "Ertiga": 3500,
       "Innova Crysta": 4000,
       "Tempo Traveller": 7000,
     },
@@ -113,20 +113,20 @@ const destinations: Destination[] = [
     image: simhachalamImg,
     prices: {
       "Dzire": 1500,
-      "Maruti Ertiga": 2000,
+      "Ertiga": 2000,
       "Innova Crysta": 2500,
       "Tempo Traveller": 5000,
     },
   },
   {
-    title: "Vizag Airport",
+    title: "Alluri sitarama raju international airport",
     // distanceKm: 12,
     image: Airport,
     prices: {
-     "Dzire": 1500,
-      "Maruti Ertiga": 2000,
-      "Innova Crysta": 2500,
-      "Tempo Traveller": 5000,
+     "Dzire": 2500,
+      "Ertiga": 3000,
+      "Innova Crysta": 3500,
+      "Tempo Traveller": 8000,
     },
   },
 ];

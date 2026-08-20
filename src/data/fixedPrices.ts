@@ -31,10 +31,10 @@ export const FIXED_PRICES: Record<string, Partial<Record<VehicleId, FixedPriceEn
     },
   },
   "vizag-airport": {
-    dzire: { oneWay: 1500, roundTrip: 2500 },
-    ertiga: { oneWay: 1800, roundTrip: 2800 },
-    innova: { oneWay: 2000, roundTrip: 4000 },
-    tempo: { oneWay: 4000, roundTrip: 6000 },
+    dzire: { oneWay: 2500, roundTrip: 3000 },
+    ertiga: { oneWay: 3000, roundTrip: 3500 },
+    innova: { oneWay: 3500, roundTrip: 4000 },
+    tempo: { oneWay: 8000, roundTrip: 8000 },
   },
   "simhachalam-temple": {
     dzire: { oneWay: 1500, roundTrip: 2500 },
