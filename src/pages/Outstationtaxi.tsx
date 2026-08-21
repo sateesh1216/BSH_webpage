@@ -1,4 +1,4 @@
-import { useParams, Link, Navigate, useLocation } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import {
   MapPin,
   IndianRupee,
@@ -28,7 +28,6 @@ import {
 import { getOutstationPricing, type VehicleSlug } from "../data/Outstationprices";
 import { useBooking } from "../components/booking/BookingContext";
 import SEO from "../components/seo/SEO";
-import { pageMeta } from "../data/pageMeta";
 
 // Independent theme map — no relation to Destination categories
 type OutstationCategory = "City" | "Pilgrimage" | "Business Hub" | "Industrial City";
@@ -114,9 +113,6 @@ export default function OutstationDetail() {
   }
 
   const { openBooking } = useBooking();
-  const { pathname } = useLocation();
-  const meta = pageMeta[pathname];
-
   const {
     name,
     distanceFromVizag,
@@ -150,13 +146,24 @@ export default function OutstationDetail() {
   const isPerKmRoute =
     getOutstationPricing(outstation.slug, vehicleOptions[0].slug as VehicleSlug).mode === "perKm";
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.bshtaxiservices.com/" },
+      { "@type": "ListItem", position: 2, name: "Outstation Taxi", item: "https://www.bshtaxiservices.com/services/outstation-taxi" },
+      { "@type": "ListItem", position: 3, name, item: `https://www.bshtaxiservices.com/outstation/${outstation.slug}` },
+    ],
+  };
+
   return (
     <>
       <SEO
-        title={meta?.title ?? `${name} Taxi from Vizag | BSH Taxi Services`}
-        description={meta?.description}
-        keywords={meta?.keywords}
-        canonicalPath={pathname}
+        title={outstation.seoTitle}
+        description={outstation.seoDescription}
+        keywords={outstation.keywords}
+        canonicalPath={`/outstation/${outstation.slug}`}
+        schema={breadcrumbSchema}
       />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');

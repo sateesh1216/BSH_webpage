@@ -609,6 +609,16 @@ export default function ServiceDetails() {
         }
       : baseMeta);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.bshtaxiservices.com/" },
+      { "@type": "ListItem", position: 2, name: "Services", item: "https://www.bshtaxiservices.com/services" },
+      { "@type": "ListItem", position: 3, name: service.title, item: `https://www.bshtaxiservices.com/services/${service.slug}` },
+    ],
+  };
+
   const handleBookNow = () => {
     const tab = slug ? serviceToTab[slug as keyof typeof serviceToTab] : undefined;
     if (tab) setTripType(tab);
@@ -633,6 +643,7 @@ export default function ServiceDetails() {
         description={meta.description}
         keywords={meta.keywords}
         canonicalPath={pathname}
+        schema={breadcrumbSchema}
       />
       {/* ---------------------------------------------------------- */}
       {/* Hero                                                       */}

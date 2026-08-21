@@ -1,3 +1,5 @@
+import SEO from "../components/seo/SEO";
+import { pageMeta } from "../data/pageMeta";
 import ContactHero from "../components/contact/ContactHero";
 import GetInTouchCard from "../components/contact/GetInTouchCard";
 import ContactForm from "../components/contact/ContactForm";
@@ -5,8 +7,11 @@ import FindUsMap from "../components/contact/FindUsMap";
 import ContactTrustStrip from "../components/contact/ContactTrustStrip";
 
 export default function ContactPage() {
+  const meta = pageMeta["/contact"];
+
   return (
     <>
+      <SEO title={meta.title} description={meta.description} keywords={meta.keywords} canonicalPath="/contact" />
       <ContactHero />
 
       <section className="w-full px-6 py-16 sm:px-10 lg:px-16">

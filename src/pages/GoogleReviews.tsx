@@ -1,3 +1,4 @@
+import SEO from "../components/seo/SEO";
 import { useState } from "react";
 import {
   ArrowUpRight,
@@ -83,6 +84,14 @@ const faqs = [
 ];
 
 export default function GoogleReviews() {
+  const reviewSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "BSH Taxi Services",
+    url: "https://www.bshtaxiservices.com/google-reviews",
+    telephone: "+91-8886803322",
+  };
+
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const currentPageUrl =
@@ -118,6 +127,13 @@ export default function GoogleReviews() {
     // fixed/sticky, tell me its height (or paste the header code) and I'll set the exact
     // pt-* value instead of guessing.
     <main className="min-h-screen bg-white">
+      <SEO
+        title="Google Reviews for BSH Taxi Services"
+        description="Read customer reviews for BSH Taxi Services in Vizag and share your taxi, airport transfer, or outstation travel experience."
+        keywords={["bsh taxi services reviews", "vizag taxi reviews", "best taxi service vizag reviews"]}
+        canonicalPath="/google-reviews"
+        schema={reviewSchema}
+      />
       {/* ================================================================
           HERO
       ================================================================ */}

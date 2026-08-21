@@ -1,4 +1,4 @@
-import { useParams, Link, Navigate,useLocation } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import {
   MapPin,
   IndianRupee,
@@ -18,7 +18,6 @@ import {
 import { destinations } from "../data/DestinationsData";
 import { useBooking } from "../components/booking/BookingContext";
 import SEO from "../components/seo/SEO";
-import { pageMeta } from "../data/pageMeta";
 // Every category gets its own accent, drawn from the thing it's actually
 // known for — moss for the hills, wet stone for the caves, sea-teal for the
 // coast, sandalwood-rust for the temple, and instrument-panel blue for transit.
@@ -93,11 +92,8 @@ export default function DestinationDetail() {
   const { slug } = useParams<{ slug: string }>();
   const destination = destinations.find((d) => d.slug === slug);
 const { openBooking } = useBooking();
-  const { pathname } = useLocation();
-  const meta = pageMeta[pathname];
 
-
-  if (!destination) return <Navigate to="/Destinations" replace />;
+  if (!destination) return <Navigate to="/destinations" replace />;
 
     const {
     name,
@@ -129,14 +125,24 @@ const { openBooking } = useBooking();
 
   const routeFill = Math.min(100, Math.round((distanceKm / 130) * 100));
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.bshtaxiservices.com/" },
+      { "@type": "ListItem", position: 2, name: "Destinations", item: "https://www.bshtaxiservices.com/destinations" },
+      { "@type": "ListItem", position: 3, name, item: `https://www.bshtaxiservices.com/destinations/${destination.slug}` },
+    ],
+  };
+
   return (
     <>
      <SEO
-        title={meta?.title ?? `${name} Taxi from Vizag | BSH Taxi Services`}
-
-        description={meta.description}
-        keywords={meta.keywords}
-        canonicalPath={pathname}
+        title={destination.seoTitle}
+        description={destination.seoDescription}
+        keywords={destination.keywords}
+        canonicalPath={`/destinations/${destination.slug}`}
+        schema={breadcrumbSchema}
       />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
@@ -447,7 +453,7 @@ const { openBooking } = useBooking();
 
           <div className="mt-16 text-center">
             <Link
-              to="/Destinations"
+              to="/destinations"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:gap-2.5"
             >
               <ArrowLeft size={16} />

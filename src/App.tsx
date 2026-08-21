@@ -6,6 +6,7 @@ import MobileBottomNav from "./components/layout/MobileBottomNav";
 import ScrollToTop from "./components/ScrollToTop";
 import FloatingContactButtons from "./components/home/FloatingContactButtons";
 import GoogleReviews from "./pages/GoogleReviews";
+import LegalPage from "./pages/LegalPage";
 
 import Home from "./pages/Home";
 import ServiceDetails from "./pages/ServiceDetails";
@@ -35,8 +36,8 @@ export default function App() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/destinations/:slug" element={<DestinationDetail />} />
 
-            {/* Local Taxi has its own standalone page + styling */}
-            {/* <Route path="/services/local-taxi" element={<LocalTaxi />} /> */}
+            {/* Local Taxi has its own standalone page + package pages. */}
+            <Route path="/services/local-taxi" element={<LocalTaxi />} />
             <Route path="/services/local-taxi/:pkg" element={<LocalTaxi />} />
 
             {/* Every other service (outstation, airport, tours, corporate,
@@ -47,7 +48,9 @@ export default function App() {
             <Route path="/services/:slug/:pkg" element={<ServiceDetails />} />
             <Route path="/outstation/:slug" element={<OutstationTaxi />} />
             {/* Google Reviews */}
-            <Route path="/google-reviews" element={<GoogleReviews />} /> 
+            <Route path="/google-reviews" element={<GoogleReviews />} />
+            <Route path="/privacy-policy" element={<LegalPage />} />
+            <Route path="/terms" element={<LegalPage />} />
            
           </Routes>
         </Suspense>
