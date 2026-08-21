@@ -20,7 +20,7 @@ const localBusinessSchema = {
   email: "info.bshtaxiservices@gmail.com",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "36-92-242-532/1, Palanati Colony, Kancharapalem",
+    streetAddress: "44-66, Palanati Colony, Srinivasa Nagar, Kancharapalem",
     addressLocality: "Visakhapatnam",
     addressRegion: "Andhra Pradesh",
     postalCode: "530008",
