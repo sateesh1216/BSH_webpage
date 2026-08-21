@@ -92,23 +92,6 @@ export default function Header() {
                 />
               </div>
 
-              <span className="flex flex-col justify-center leading-none">
-                <span className="text-base font-extrabold tracking-tight sm:text-lg">
-                  <span className="text-slate-900">BSH </span>
-                  <span className="bg-linear-to-r from-yellow-400 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
-                    TAXI
-                  </span>
-                </span>
-
-                <span className="relative mt-1 flex items-center gap-1 text-[9px] font-semibold uppercase tracking-[0.25em] text-slate-500 transition-colors duration-300 group-hover:text-slate-800">
-                  Services
-                  <span className="relative flex h-1 w-1">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-1 w-1 rounded-full bg-emerald-500" />
-                  </span>
-                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-linear-to-r from-primary to-amber-400 transition-all duration-300 group-hover:w-full" />
-                </span>
-              </span>
             </Link>
 
             {/* Nav pill — centered, with its own breathing room from logo & button */}
