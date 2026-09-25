@@ -1,3 +1,4 @@
+import InternalLinks, { detailRelatedLinks } from "../components/seo/InternalLinks";
 import { useParams, Link, Navigate } from "react-router-dom";
 import {
   MapPin,
@@ -450,6 +451,8 @@ const { openBooking } = useBooking();
 </button>
             </div>
           </div>
+
+          <InternalLinks links={detailRelatedLinks} title={`Taxi Services for ${name} & Other Destinations`} className="px-0 py-12" />
 
           <div className="mt-16 text-center">
             <Link

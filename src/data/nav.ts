@@ -164,12 +164,12 @@ export const navLinks: NavLink[] = [
 
   {
     label: "Local & Outstation Taxi",
-    href: "/Destinations?type=taxi-in-vizag",
+    href: "/destinations?type=taxi-in-vizag",
 
     children: [
       {
         label: "All Destinations",
-        href: "/Destinations?type=cabs-in-vizag",
+        href: "/destinations?type=cabs-in-vizag",
       },
 
       {

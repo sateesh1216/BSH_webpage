@@ -1,3 +1,4 @@
+import InternalLinks, { detailRelatedLinks } from "../components/seo/InternalLinks";
 import { useEffect } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import {
@@ -697,6 +698,8 @@ export default function LocalTaxi() {
           </div>
         </div>
       </section>
+
+      <InternalLinks links={detailRelatedLinks} title="More Taxi Services in Vizag" className="px-0 py-12" />
 
       {/* ---------------------------------------------------------- */}
       {/* Fine print + final CTA                                      */}

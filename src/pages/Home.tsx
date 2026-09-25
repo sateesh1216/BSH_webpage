@@ -1,3 +1,4 @@
+import InternalLinks from "../components/seo/InternalLinks";
 import SEO from "../components/seo/SEO";
 import Hero from "../components/home/Hero";
 import Features from "../components/home/Features";
@@ -166,6 +167,8 @@ export default function HomePage() {
       <Features />
 
       <TravelSections />
+
+      <InternalLinks title="Explore Taxi Services in Vizag" />
 
       <Review />
 

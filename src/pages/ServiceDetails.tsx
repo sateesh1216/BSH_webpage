@@ -1,3 +1,4 @@
+import InternalLinks, { detailRelatedLinks } from "../components/seo/InternalLinks";
 import { useState, useEffect } from "react";
 import { useParams, Link, Navigate, useLocation } from "react-router-dom";
 /**
@@ -848,6 +849,8 @@ export default function ServiceDetails() {
           </div>
         </section>
       )}
+
+      <InternalLinks links={detailRelatedLinks} title="More Taxi Services in Vizag" className="px-0 py-12" />
 
       {/* ---------------------------------------------------------- */}
       {/* Notes / terms                                               */}

@@ -1,3 +1,4 @@
+import InternalLinks, { serviceRelatedLinks } from "../components/seo/InternalLinks";
 import SEO from "../components/seo/SEO";
 import { pageMeta } from "../data/pageMeta";
 import ServicesHero from "../components/services/ServicesHero";
@@ -16,6 +17,8 @@ export default function ServicesPage() {
       <ServicesGrid />
       <TrustBar />
       <HowItWorks />
+      <InternalLinks links={serviceRelatedLinks} title="Related Taxi Services in Vizag" />
+
       <div className="mb-6">
       <CTA />
       </div>

@@ -1,3 +1,4 @@
+import InternalLinks, { detailRelatedLinks } from "../components/seo/InternalLinks";
 import { useParams, Link, Navigate } from "react-router-dom";
 import {
   MapPin,
@@ -554,6 +555,8 @@ export default function OutstationDetail() {
     </div>
   </div>
 )}
+
+          <InternalLinks links={detailRelatedLinks} title="More Taxi Services from Vizag" className="px-0 py-12" />
 
           {/* ------------------------------------------------------------ */}
           {/* Final CTA                                                     */}

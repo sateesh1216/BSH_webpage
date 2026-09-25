@@ -1,3 +1,4 @@
+import InternalLinks, { serviceRelatedLinks } from "../components/seo/InternalLinks";
 import SEO from "../components/seo/SEO";
 import { pageMeta } from "../data/pageMeta";
 import ContactHero from "../components/contact/ContactHero";
@@ -22,6 +23,8 @@ export default function ContactPage() {
     
         </div>
       </section>
+
+      <InternalLinks links={serviceRelatedLinks} title="Popular Taxi Services in Vizag" />
 
       <ContactTrustStrip />
     </>

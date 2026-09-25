@@ -1,3 +1,4 @@
+import InternalLinks, { destinationRelatedLinks } from "../components/seo/InternalLinks";
 import SEO from "../components/seo/SEO";
 import { pageMeta } from "../data/pageMeta";
 import DestinationsHero from "../components/destinations/DestinationsHero";
@@ -17,6 +18,8 @@ export default function DestinationsPage() {
       
       <OutstationRoutesTable />
       <WhyTravelWithUs />
+      <InternalLinks links={destinationRelatedLinks} title="Popular Taxi Services & Destinations" />
+
       <div className="mb-6">
       <CTA />
       </div>

@@ -1,3 +1,4 @@
+import InternalLinks, { serviceRelatedLinks } from "../components/seo/InternalLinks";
 import SEO from "../components/seo/SEO";
 import { pageMeta } from "../data/pageMeta";
 import FleetHero from "../components/fleet/FleetHero";
@@ -14,6 +15,8 @@ export default function FleetPage() {
       <FleetHero />
       <FleetGrid />
       <TrustBar />
+      <InternalLinks links={serviceRelatedLinks} title="Book a Taxi in Vizag" />
+
       <div className="mb-6">
       <CTA />
       </div>

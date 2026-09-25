@@ -1,3 +1,4 @@
+import InternalLinks, { serviceRelatedLinks } from "../components/seo/InternalLinks";
 
 import AboutHero from "../components/about/AboutHero";
 import WhoWeAre from "../components/about/WhoWeAre";
@@ -19,6 +20,8 @@ export default function AboutPage() {
         <MissionVisionValues />
    
    
+        <InternalLinks links={serviceRelatedLinks} title="Explore BSH Taxi Services" />
+
         <Review />
         <div className="mb-6">
         <CTA />
