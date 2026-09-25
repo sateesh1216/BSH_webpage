@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Phone, Menu, X, ChevronDown } from "lucide-react";
 import { navLinks } from "../../data/nav";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../assets/Logo_bsh taxi services.webp";
+const logo = "/assets/Logo_bsh taxi services.webp";
 import HeaderSearchBar from "../home/Headersearchbar";
 
 export default function Header() {

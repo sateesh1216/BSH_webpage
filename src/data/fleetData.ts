@@ -1,7 +1,7 @@
-import dzire from "../assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
-import ertiga from "../assets/cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
-import innova from "../assets/cars/innova-crysta-in-vizag-bshtaxiservices.webp";
-import tempoTraveller from "../assets/cars/17-seater-tempo-traveller-bshtaxiservices.webp";
+const dzire = "/assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
+const ertiga = "/assets/cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
+const innova = "/assets/cars/innova-crysta-in-vizag-bshtaxiservices.webp";
+const tempoTraveller = "/assets/cars/17-seater-tempo-traveller-bshtaxiservices.webp";
 
 export type VehicleCategory = "Sedan" | "SUV" | "MUV" | "Tempo Traveller" | "Luxury Cars";
 

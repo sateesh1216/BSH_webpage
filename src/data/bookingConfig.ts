@@ -7,10 +7,10 @@
 /* ---------------------------------------------------------------------- */
 
 export type TabKey = "Outstation" | "Local" | "Airport" | "Tour";
-import dzireImg from "../assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
-import ertigaImg from "../assets/cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
-import innovaImg from "../assets/cars/innova-crysta-in-vizag-bshtaxiservices.webp";
-import tempoImg from "../assets/cars/17-seater-tempo-traveller-bshtaxiservices.webp";
+const dzireImg = "/assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
+const ertigaImg = "/assets/cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
+const innovaImg = "/assets/cars/innova-crysta-in-vizag-bshtaxiservices.webp";
+const tempoImg = "/assets/cars/17-seater-tempo-traveller-bshtaxiservices.webp";
 export interface TripDetails {
   tripType: TabKey;
   tripOption: string;

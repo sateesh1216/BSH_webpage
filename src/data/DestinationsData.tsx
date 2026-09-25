@@ -1,24 +1,24 @@
-import Aruku from "../assets/Destinations/araku-taxi-services-bshtaxiservices.webp";
-import lambasingi from "../assets/Destinations/Lambasingi-taxi-services-bshtaxiservices.webp";
-import VizagLocal from "../assets/Destinations/Vizag_local-taxi-services-bshtaxiservices.webp";
-import Simhachalam  from "../assets/Destinations/Simhachalam-Temple-taxi-services-bshtaxiservices.webp";
-import Tirupati  from "../assets/Destinations/Tirupati-taxi-service-Packages-bshtaxiservices.webp";
-import Annavaram  from "../assets/Destinations/Annavaram_Temple-taxi-services-bshtaxiservices.webp";
-import vizagairport  from "../assets/Destinations/Airport-taxi-services-bshtaxiservices.webp";
-import Vanjangi  from "../assets/Destinations/Vanjangi-taxi-services-bshtaxiservices.webp";
-import Arasavalli  from "../assets/Destinations/Arasavalli_Temple-taxi-services-bshtaxiservices.webp";
-import Borracaves  from "../assets/Destinations/Araku/Borra_Caves-taxi-services-bshtaxiservices.webp";
-import Katikawaterfalls  from "../assets/Destinations/Araku/Katika_Waterfalls-taxi-services-bshtaxiservices.webp";
-import Galikondaviewpoint  from "../assets/Destinations/Araku/araku-Galikonda_Viewpoint-taxi-services-bshtaxiservices.webp";
-import Coffeeplantation  from "../assets/Destinations/Araku/araku-coffee_plantation-wooden_bridge-taxi-services-bshtaxiservices.webp";
-import Coffeemuseum  from "../assets/Destinations/Araku/araku-Coffee_Museum-taxi-services-bshtaxiservices.webp";
-import Tribalmuseum  from "../assets/Destinations/Araku/Araku-Tribal_Museum-taxi-services-bshtaxiservices.webp";
-import Padmapuramgardens  from "../assets/Destinations/Araku/Araku-Padmapuram_Gardens-taxi-services-bshtaxiservices.webp";
-import Damukuviewpoint  from "../assets/Destinations/Araku/Araku-Damuku_View_Point-taxi-services-bshtaxiservices.webp";
+const Aruku = "/assets/Destinations/araku-taxi-services-bshtaxiservices.webp";
+const lambasingi = "/assets/Destinations/Lambasingi-taxi-services-bshtaxiservices.webp";
+const VizagLocal = "/assets/Destinations/Vizag_local-taxi-services-bshtaxiservices.webp";
+const Simhachalam = "/assets/Destinations/Simhachalam-Temple-taxi-services-bshtaxiservices.webp";
+const Tirupati = "/assets/Destinations/Tirupati-taxi-service-Packages-bshtaxiservices.webp";
+const Annavaram = "/assets/Destinations/Annavaram_Temple-taxi-services-bshtaxiservices.webp";
+const vizagairport = "/assets/Destinations/Airport-taxi-services-bshtaxiservices.webp";
+const Vanjangi = "/assets/Destinations/Vanjangi-taxi-services-bshtaxiservices.webp";
+const Arasavalli = "/assets/Destinations/Arasavalli_Temple-taxi-services-bshtaxiservices.webp";
+const Borracaves = "/assets/Destinations/Araku/Borra_Caves-taxi-services-bshtaxiservices.webp";
+const Katikawaterfalls = "/assets/Destinations/Araku/Katika_Waterfalls-taxi-services-bshtaxiservices.webp";
+const Galikondaviewpoint = "/assets/Destinations/Araku/araku-Galikonda_Viewpoint-taxi-services-bshtaxiservices.webp";
+const Coffeeplantation = "/assets/Destinations/Araku/araku-coffee_plantation-wooden_bridge-taxi-services-bshtaxiservices.webp";
+const Coffeemuseum = "/assets/Destinations/Araku/araku-Coffee_Museum-taxi-services-bshtaxiservices.webp";
+const Tribalmuseum = "/assets/Destinations/Araku/Araku-Tribal_Museum-taxi-services-bshtaxiservices.webp";
+const Padmapuramgardens = "/assets/Destinations/Araku/Araku-Padmapuram_Gardens-taxi-services-bshtaxiservices.webp";
+const Damukuviewpoint = "/assets/Destinations/Araku/Araku-Damuku_View_Point-taxi-services-bshtaxiservices.webp";
 import type { ReactNode } from "react";
 
 
-// import Coffeehouse  from "../assets/Destinations/Araku/araku-coffee house-taxi-services-bshtaxiservices.png"; --- IGNORE ---
+// const Coffeehouse = "/assets/Destinations/Araku/araku-coffee house-taxi-services-bshtaxiservices.png"; --- IGNORE ---
 export type DestinationPlace = {
   name: string;
   image: string;

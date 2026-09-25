@@ -15,10 +15,10 @@ import {
   Users,
 } from "lucide-react";
 
-import dzireImg from "../../assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
-import ertigaImg from "../../assets/cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
-import innovaImg from "../../assets/cars/innova-crysta-in-vizag-bshtaxiservices.webp";
-import tempoTravellerImg from "../../assets/cars/17-seater-tempo-traveller-bshtaxiservices.webp";
+const dzireImg = "/assets/cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
+const ertigaImg = "/assets/cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
+const innovaImg = "/assets/cars/innova-crysta-in-vizag-bshtaxiservices.webp";
+const tempoTravellerImg = "/assets/cars/17-seater-tempo-traveller-bshtaxiservices.webp";
 
 import { useBooking } from "../booking/BookingContext";
 

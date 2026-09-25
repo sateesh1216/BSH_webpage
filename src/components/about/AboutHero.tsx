@@ -1,6 +1,6 @@
 import { Clock, Users, Car } from "lucide-react";
 
-import About  from "../../assets/About/24-7-bshtaxiservices+91 8886803322.webp";
+const About = "/assets/About/24-7-bshtaxiservices+91 8886803322.webp";
 
 const heroStats = [
   { icon: Clock, value: "5+", label: "Years Experience" },

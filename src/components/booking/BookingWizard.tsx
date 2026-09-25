@@ -28,10 +28,10 @@ import { createPortal } from "react-dom";
 
 const WHATSAPP_NUMBER = "918886803322";
 
-import DzireImg from "../../assets/icons_cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
-import ErtigaImg from "../../assets/icons_cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
-import InnovaCrystaImg from "../../assets/icons_cars/innova-crysta-in-vizag-bshtaxiservices.webp";
-import TempoTravellerImg from "../../assets/icons_cars/17-seater-tempo-traveller-bshtaxiservices.webp";
+const DzireImg = "/assets/icons_cars/Dzire-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
+const ErtigaImg = "/assets/icons_cars/ertiga-taxi-services-in-visakhapatnam-bshtaxiservices.webp";
+const InnovaCrystaImg = "/assets/icons_cars/innova-crysta-in-vizag-bshtaxiservices.webp";
+const TempoTravellerImg = "/assets/icons_cars/17-seater-tempo-traveller-bshtaxiservices.webp";
 
 // =============================================================================
 // VEHICLE CATALOG

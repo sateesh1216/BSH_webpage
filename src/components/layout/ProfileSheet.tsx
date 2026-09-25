@@ -1,6 +1,6 @@
 import { Phone, Mail, MapPin, X } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
-import logo from "../../assets/Logo_bsh taxi services.webp";
+const logo = "/assets/Logo_bsh taxi services.webp";
 
 const PHONE_DISPLAY = "+91 8886803322";
 const PHONE_HREF = "tel:+918886803322";

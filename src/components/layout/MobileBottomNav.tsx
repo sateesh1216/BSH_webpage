@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import ProfileSheet from "./ProfileSheet";
 import SearchSheet from "./SearchSheet";
 // Path goes up 2 levels: layout/ -> components/ -> src/, then into assets/
-import logo from "../../assets/Logo_bsh taxi services.webp";
+const logo = "/assets/Logo_bsh taxi services.webp";
 
 const PHONE_NUMBER = "+918886803322";
 const WHATSAPP_NUMBER = "918886803322";
