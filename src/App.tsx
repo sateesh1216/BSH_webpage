@@ -18,10 +18,11 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 const DestinationDetail = lazy(() => import("./pages/DestinationDetail"));
 import LocalTaxi from "./pages/LocalTaxi";
 const OutstationTaxi  = lazy(() => import("./pages/Outstationtaxi"));
-
+// import ArakuPopup from "./components/home/ArakuPopup";
 export default function App() {
   return (
     <>
+    {/* <ArakuPopup /> */}
       <ScrollToTop />
       <Header />
       {/* pb-16 clears the fixed mobile bottom nav; desktop has no bottom nav */}
