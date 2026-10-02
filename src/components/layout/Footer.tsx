@@ -53,8 +53,8 @@ const socialLinks = [
 const BUSINESS = {
   phone: "+91 88868 03322",
   phoneHref: "tel:+918886803322",
-  email: "info@bshtaxiservices.com",
-  addressLine: "Visakhapatnam, Andhra Pradesh, India",
+  email: "info.bshtaxiservices@gmail.com",
+  addressLine: "44-66, Palnati Colony, Srinivasa Nagar, Kancharapalem, Visakhapatnam, Andhra Pradesh 530008",
 };
 
 const structuredData = {

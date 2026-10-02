@@ -2257,9 +2257,15 @@ highlights: [
     category: "City",
     description: (
   <>
-    Explore <strong>Razam to Vizag </strong>with BSH Taxi Services, offering comfortable
-    outstation taxi travel to this important regional town in Srikakulam
-    district and its surrounding areas.
+    Explore <strong>Razam to Vizag</strong> with BSH Taxi Services, offering comfortable{" "}
+    <a
+      href="https://www.nrktravels.in/"
+      title="Outstation Taxi Services - NRK Travels"
+      aria-label="Outstation Taxi Services by NRK Travels"
+    >
+      outstation taxi services
+    </a>{" "}
+     to this important regional town in Srikakulam district and its surrounding areas.
   </>
 ),
     seoTitle: "Vizag to Razam Taxi | Outstation Cab Booking | BSH Taxi Services",
