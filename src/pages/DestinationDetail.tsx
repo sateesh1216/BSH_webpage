@@ -23,7 +23,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import { destinations } from "../data/DestinationsData";
+import { destinations, FLEET_TYPES, type FleetName } from "../data/DestinationsData";
 import { useBooking } from "../components/booking/BookingContext";
 import SEO from "../components/seo/SEO";
 
@@ -33,7 +33,8 @@ type Category =
   | "Beach"
   | "Temple"
   | "Transit"
-  | "Heritage & Buddhist Site";
+  | "Heritage & Buddhist Site"
+  | "Pilgrimage";
 
 const CATEGORY_THEME: Record<
   Category,
@@ -78,6 +79,14 @@ const CATEGORY_THEME: Record<
     Icon: Landmark,
     label: "Temple",
   },
+  Pilgrimage: {
+    accent: "bg-[#A8472B]",
+    accentSoft: "bg-[#A8472B]/10",
+    accentText: "text-[#A8472B]",
+    ring: "ring-[#A8472B]/25",
+    Icon: Landmark,
+    label: "Pilgrimage",
+  },
   Transit: {
     accent: "bg-[#2F5C82]",
     accentSoft: "bg-[#2F5C82]/10",
@@ -96,33 +105,14 @@ const CATEGORY_THEME: Record<
   },
 };
 
-/**
- * BSH fleet is common to the website.
- *
- * IMPORTANT:
- * There are NO fixed prices here.
- * Each destination supplies its own prices through `fleetPrices`
- * in DestinationsData.ts.
- */
-const FLEET_TYPES = [
-  { name: "Swift Dzire", seats: 4 },
-  { name: "Ertiga", seats: 6 },
-  { name: "Innova Crysta", seats: 7 },
-  { name: "12 Seater", seats: 12 },
-  { name: "Tempo Traveller", seats: 17 },
-  { name: "Urbania", seats: 16 },
-] as const;
-
-type FleetName = (typeof FLEET_TYPES)[number]["name"];
+const formatPrice = (value: number) => `₹${value.toLocaleString("en-IN")}`;
 
 export default function DestinationDetail() {
   const { slug } = useParams<{ slug: string }>();
   const destination = destinations.find((d) => d.slug === slug);
   const { openBooking } = useBooking();
 
-  const [selectedVehicle, setSelectedVehicle] = useState<FleetName>(
-    FLEET_TYPES[0].name
-  );
+  const [selectedVehicle, setSelectedVehicle] = useState<FleetName | null>(null);
 
   if (!destination) return <Navigate to="/destinations" replace />;
 
@@ -144,29 +134,35 @@ export default function DestinationDetail() {
     howToReach,
     funFact,
     fleetPrices,
+    fleetPriceLabel,
   } = destination;
 
   const distanceKm = destination.distanceKm ?? 0;
 
-  const category: keyof typeof CATEGORY_THEME =
-    (destination.category as keyof typeof CATEGORY_THEME) ?? "Hill Station";
-
-  const theme = CATEGORY_THEME[category];
+  const category = (destination.category as Category) ?? "Hill Station";
+  const theme = CATEGORY_THEME[category] ?? CATEGORY_THEME["Hill Station"];
   const SelectedIcon = theme.Icon;
   const routeFill = Math.min(100, Math.round((distanceKm / 130) * 100));
 
+  // Vehicles shown = only those that have a price in THIS destination's data.
+  // If the destination has no fleetPrices at all, show every vehicle as "Price on request".
+  const hasPrices = !!fleetPrices && Object.keys(fleetPrices).length > 0;
+  const availableFleet = hasPrices
+    ? FLEET_TYPES.filter((v) => fleetPrices?.[v.name] != null)
+    : [...FLEET_TYPES];
+
   const selectedFleet =
-    FLEET_TYPES.find((vehicle) => vehicle.name === selectedVehicle) ??
-    FLEET_TYPES[0];
+    availableFleet.find((v) => v.name === selectedVehicle) ?? availableFleet[0];
 
   const selectedPrice = fleetPrices?.[selectedFleet.name];
 
-  const availableFleet =
-    fleetPrices && Object.keys(fleetPrices).length > 0
-      ? FLEET_TYPES.filter((vehicle) =>
-          Object.prototype.hasOwnProperty.call(fleetPrices, vehicle.name)
-        )
-      : [...FLEET_TYPES];
+  // "Starting from" = cheapest vehicle price of this destination (falls back to costPerDay)
+  const priceValues = hasPrices
+    ? Object.values(fleetPrices!).filter((p): p is number => typeof p === "number")
+    : [];
+  const startingPrice = priceValues.length > 0 ? Math.min(...priceValues) : costPerDay;
+
+  const priceLabel = fleetPriceLabel ?? "Total";
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -410,11 +406,9 @@ export default function DestinationDetail() {
             </div>
           )}
 
-          {/* MAIN CONTENT:
-              Desktop = history/content left + sticky booking/fleet right.
-              Mobile = normal single column. */}
+          {/* MAIN CONTENT */}
           <div className="mx-auto mt-16 grid max-w-7xl items-start gap-8 lg:grid-cols-[minmax(0,1fr)_390px] lg:gap-10">
-            {/* LEFT: History + destination content */}
+            {/* LEFT */}
             <div className="min-w-0">
               {history && (
                 <section className="rounded-3xl border border-black/5 bg-white/70 px-6 py-8 shadow-sm sm:px-9 sm:py-10">
@@ -436,7 +430,7 @@ export default function DestinationDetail() {
 
                   <div className={`mt-4 h-1 w-14 rounded-full ${theme.accent}`} />
 
-                  <div className="drop-cap mt-7 text-[15.5px] leading-[1.9] text-slate-700 sm:text-base">
+                  <div className="drop-cap mt-7 whitespace-pre-line text-[15.5px] leading-[1.9] text-slate-700 sm:text-base">
                     {history}
                   </div>
                 </section>
@@ -490,9 +484,9 @@ export default function DestinationDetail() {
               )}
 
               {/* Cost + Important notes */}
-              {(costPerDay || (importantNotes && importantNotes.length > 0)) && (
+              {(startingPrice || (importantNotes && importantNotes.length > 0)) && (
                 <div className="mt-8 grid gap-8 sm:grid-cols-2">
-                  {costPerDay && (
+                  {startingPrice != null && (
                     <div className="flex flex-col items-center justify-center rounded-3xl bg-emerald-900 px-8 py-10 text-center text-white shadow-lg ring-1 ring-black/10">
                       <p className="flex items-center gap-1 text-sm font-semibold uppercase tracking-widest text-emerald-200">
                         <IndianRupee size={16} />
@@ -500,11 +494,11 @@ export default function DestinationDetail() {
                       </p>
 
                       <p className="mt-3 text-5xl font-black text-yellow-400">
-                        ₹{costPerDay.toLocaleString("en-IN")}/-
+                        {formatPrice(startingPrice)}/-
                       </p>
 
                       <p className="mt-2 text-sm font-semibold uppercase tracking-widest text-emerald-200">
-                        Per Day Onwards
+                        {priceLabel} Onwards
                       </p>
                     </div>
                   )}
@@ -625,10 +619,11 @@ export default function DestinationDetail() {
                     </div>
                   </div>
 
-                  {/* Fleet list */}
+                  {/* Fleet list (prices come from this destination's fleetPrices) */}
                   <div className="fleet-scroll max-h-[590px] overflow-y-auto px-3 py-2 sm:px-4">
                     {availableFleet.map((vehicle) => {
-                      const isSelected = selectedVehicle === vehicle.name;
+                      const isSelected = selectedFleet.name === vehicle.name;
+                      const price = fleetPrices?.[vehicle.name];
 
                       return (
                         <button
@@ -665,14 +660,12 @@ export default function DestinationDetail() {
 
                           <span className="shrink-0 text-right">
                             <span className={`block text-sm font-bold ${theme.accentText}`}>
-                              {fleetPrices?.[vehicle.name] != null
-                                ? `₹${fleetPrices[vehicle.name].toLocaleString("en-IN")}`
-                                : "Price on request"}
+                              {price != null ? formatPrice(price) : "Price on request"}
                             </span>
 
-                            {fleetPrices?.[vehicle.name] != null && (
+                            {price != null && (
                               <span className="block text-[9px] text-slate-400">
-                                Total (2N/3D)
+                                {priceLabel}
                               </span>
                             )}
                           </span>
@@ -705,7 +698,7 @@ export default function DestinationDetail() {
 
                       <p className={`shrink-0 text-base font-bold ${theme.accentText}`}>
                         {selectedPrice != null
-                          ? `₹${selectedPrice.toLocaleString("en-IN")}`
+                          ? formatPrice(selectedPrice)
                           : "Price on request"}
                       </p>
                     </div>
@@ -721,8 +714,6 @@ export default function DestinationDetail() {
                     </button>
 
                     <p className="mt-2 text-center text-[10px] leading-relaxed text-slate-400">
-                      Prices are destination-specific and come from this
-                      destination's fleet data.
                       Final availability and fare are confirmed during booking.
                     </p>
                   </div>
@@ -792,7 +783,7 @@ export default function DestinationDetail() {
               </p>
               <p className={`font-mono-route text-base font-bold ${theme.accentText}`}>
                 {selectedPrice != null
-                  ? `₹${selectedPrice.toLocaleString("en-IN")}`
+                  ? formatPrice(selectedPrice)
                   : "Price on request"}
               </p>
             </div>
