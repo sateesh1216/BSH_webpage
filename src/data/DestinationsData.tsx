@@ -132,9 +132,9 @@ export const destinations: Destination[] = [
     fleetPrices: {
       "Swift Dzire": 5000,
       "Ertiga": 6500,
-      "Innova Crysta": 7500,
+      "Innova Crysta": 8000,
       "12 Seater": 9000,
-      "Tempo Traveller": 10500,
+      "Tempo Traveller": 11000,
       "Urbania": 12000,
     },
     history:
@@ -328,8 +328,8 @@ export const destinations: Destination[] = [
     fleetPriceLabel: "10 hrs package",
     fleetPrices: {
       "Swift Dzire": 3000,
-      "Ertiga": 4000,
-      "Innova Crysta": 4800,
+      "Ertiga": 3500,
+      "Innova Crysta": 4000,
       "12 Seater": 6000,
       "Tempo Traveller": 7500,
       "Urbania": 8500,
@@ -394,7 +394,7 @@ export const destinations: Destination[] = [
     fleetPrices: {
       "Swift Dzire": 1800,
       "Ertiga": 2400,
-      "Innova Crysta": 2800,
+      "Innova Crysta": 3000,
       "12 Seater": 3500,
       "Tempo Traveller": 4500,
       "Urbania": 5000,
@@ -525,7 +525,7 @@ export const destinations: Destination[] = [
     fleetPrices: {
       "Swift Dzire": 5000,
       "Ertiga": 6500,
-      "Innova Crysta": 7500,
+      "Innova Crysta": 8000,
       "12 Seater": 9000,
       "Tempo Traveller": 11000,
       "Urbania": 12000,
@@ -587,9 +587,9 @@ export const destinations: Destination[] = [
     costPerDay: 5000,
     fleetPriceLabel: "Per day",
     fleetPrices: {
-      "Swift Dzire": 5000,
+      "Swift Dzire": 4000,
       "Ertiga": 6500,
-      "Innova Crysta": 7500,
+      "Innova Crysta": 8000,
       "12 Seater": 9000,
       "Tempo Traveller": 11000,
       "Urbania": 12000,
