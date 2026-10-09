@@ -792,12 +792,6 @@ function ConfirmModal({
   summary,
   onClose,
   onConfirm,
-  customerName,
-  customerPhone,
-  onCustomerName,
-  onCustomerPhone,
-  submitting,
-  submitError,
 }: {
   summary: {
     title: string;
@@ -807,12 +801,6 @@ function ConfirmModal({
   };
   onClose: () => void;
   onConfirm: () => void;
-  customerName: string;
-  customerPhone: string;
-  onCustomerName: (value: string) => void;
-  onCustomerPhone: (value: string) => void;
-  submitting: boolean;
-  submitError: string | null;
 }) {
   return createPortal(
     <div className="fixed inset-0 z-[1000] flex items-end justify-center bg-slate-900/40 p-4 backdrop-blur-sm sm:items-center">
@@ -845,35 +833,6 @@ function ConfirmModal({
           </span>
         </div>
 
-        <div className="mt-3 space-y-3 rounded-xl border border-blue-100 bg-blue-50/50 p-3">
-          <div>
-            <label className="mb-1 block text-xs font-semibold text-slate-600">Your Name</label>
-            <input
-              type="text"
-              autoComplete="name"
-              value={customerName}
-              onChange={(e) => onCustomerName(e.target.value)}
-              placeholder="Enter your full name"
-              maxLength={100}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs font-semibold text-slate-600">Mobile Number *</label>
-            <input
-              type="tel"
-              inputMode="tel"
-              autoComplete="tel"
-              value={customerPhone}
-              onChange={(e) => onCustomerPhone(e.target.value)}
-              placeholder="10-digit mobile number"
-              maxLength={16}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-blue-400"
-            />
-          </div>
-          {submitError && <p role="alert" className="text-xs font-medium text-red-600">{submitError}</p>}
-        </div>
-
         <div className="mt-3 rounded-xl border border-slate-200/70 bg-slate-50/60 p-3">
           <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
             Terms &amp; Conditions
@@ -895,10 +854,9 @@ function ConfirmModal({
         <button
           type="button"
           onClick={onConfirm}
-          disabled={submitting}
-          className="mt-4 flex w-full disabled:cursor-not-allowed disabled:opacity-60 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-[#25D366] py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition-transform hover:scale-[1.01] active:scale-[0.99] sm:py-3 sm:text-sm"
+          className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-[#25D366] py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition-transform hover:scale-[1.01] active:scale-[0.99] sm:py-3 sm:text-sm"
         >
-          <MessageCircle size={16} /> {submitting ? "Saving booking..." : "Save Booking & Continue on WhatsApp"}
+          <MessageCircle size={16} /> Confirm &amp; Continue on WhatsApp
         </button>
         <button
           type="button"
@@ -1067,10 +1025,6 @@ export default function BookingCard() {
 
   const [error, setError] = useState<string | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [customerName, setCustomerName] = useState("");
-  const [customerPhone, setCustomerPhone] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
 
   // ---- Admin state ----
   const [isAdmin, setIsAdmin] = useState(false);
@@ -1240,87 +1194,11 @@ useEffect(() => {
   // ---- Build the WhatsApp message ----
   // Includes: greeting, booking type + summary rows, tour place list
   // (tour tab only), fare, and Terms & Conditions on every booking type.
-  async function openWhatsApp() {
-    if (submitting) return;
-    const normalizedCustomerPhone = normalizeIndianWhatsAppNumber(customerPhone);
-    if (!customerName.trim()) {
-      setSubmitError("Please enter your name.");
-      return;
-    }
-    if (!normalizedCustomerPhone) {
-      setSubmitError("Please enter a valid 10-digit mobile number.");
-      return;
-    }
-
-    setSubmitting(true);
-    setSubmitError(null);
+  function openWhatsApp() {
     const summary = buildSummary();
-    const rows = summary.rows;
-    const rowValue = (label: string) => rows.find((row) => row.label === label)?.value || "";
-    const isTourBooking = activeTab === "tour";
-    const isLocalBooking = activeTab === "local";
-    const serviceType =
-      activeTab === "local" ? "Local" :
-      activeTab === "outstation" ? "Outstation" :
-      activeTab === "airport" ? "Airport" : "Tour Package";
-    const pickupLocation =
-      activeTab === "local" ? localPickup :
-      activeTab === "outstation" ? outPickup :
-      activeTab === "airport" ? airportPickupLabel : "Visakhapatnam";
-    const dropLocation =
-      activeTab === "local" ? `${LOCAL_PACKAGES.find((p) => p.id === localPackageId)?.label || "Local package"} (local travel)` :
-      activeTab === "outstation" ? outDrop :
-      activeTab === "airport" ? airportDropLabel : tourPkg.name;
-    const travelDate =
-      activeTab === "local" ? localDate :
-      activeTab === "outstation" ? outDate :
-      activeTab === "airport" ? airportDate : tourDate;
-    const travelTime =
-      activeTab === "local" ? localTime :
-      activeTab === "outstation" ? outTime :
-      activeTab === "airport" ? airportTime : undefined;
-    const payload = {
-      customer_name: customerName.trim(),
-      mobile: normalizedCustomerPhone,
-      service_type: serviceType,
-      enquiry_type: isTourBooking ? "tour_package" : "service",
-      tour_package_type: isTourBooking ? tourPkg.name : undefined,
-      pickup_location: pickupLocation,
-      drop_location: dropLocation,
-      travel_date: travelDate,
-      travel_time: travelTime || undefined,
-      passengers: car.seats > 0 ? 1 : 1,
-      vehicle: car.name,
-      fixed_amount: summary.fare ?? undefined,
-      notes: [
-        `BSH website booking`,
-        activeTab === "outstation" ? `Trip type: ${tripType === "round" ? "Round Trip" : "One Way"}` : "",
-        isLocalBooking ? `Package: ${rowValue("Package")}` : "",
-        activeTab === "airport" ? `Direction: ${rowValue("Direction")}` : "",
-        isTourBooking ? `Tour duration: ${tourPkg.days}D/${tourPkg.nights}N` : "",
-      ].filter(Boolean).join(" | "),
-    };
-
-    try {
-      const response = await fetch("https://accountsdatabase.in/api/enquiries/website/bsh", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok || result?.success === false) {
-        throw new Error(result?.message || "Unable to save your booking. Please try again.");
-      }
-    } catch (err) {
-      setSubmitError(err instanceof Error ? err.message : "Unable to save your booking. Please try again.");
-      setSubmitting(false);
-      return;
-    }
 
     const lines = [
       "Hi BSH Taxi Services! I'd like to book a cab.",
-      `Name: ${customerName.trim()}`,
-      `Mobile: ${normalizedCustomerPhone}`,
       "",
       `*${summary.title.replace("Confirm ", "").replace(" Booking", "")}*`,
       ...summary.rows.map((r) => `${r.label}: ${r.value}`),
@@ -1348,7 +1226,6 @@ useEffect(() => {
     const message = encodeURIComponent(lines.join("\n"));
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank", "noopener,noreferrer");
     setConfirmOpen(false);
-    setSubmitting(false);
   }
 
   function handleQuickWhatsApp() {
@@ -1358,8 +1235,7 @@ useEffect(() => {
       return;
     }
     setError(null);
-    setSubmitError(null);
-    setConfirmOpen(true);
+    openWhatsApp();
   }
 
   // ---- ADMIN ONLY: send the current trip as a quotation to a customer's
@@ -1755,17 +1631,7 @@ useEffect(() => {
         </div>
 
         {confirmOpen && (
-          <ConfirmModal
-            summary={buildSummary()}
-            onClose={() => { if (!submitting) setConfirmOpen(false); }}
-            onConfirm={openWhatsApp}
-            customerName={customerName}
-            customerPhone={customerPhone}
-            onCustomerName={setCustomerName}
-            onCustomerPhone={setCustomerPhone}
-            submitting={submitting}
-            submitError={submitError}
-          />
+          <ConfirmModal summary={buildSummary()} onClose={() => setConfirmOpen(false)} onConfirm={openWhatsApp} />
         )}
 
         {isAdmin && quoteModalOpen && (
