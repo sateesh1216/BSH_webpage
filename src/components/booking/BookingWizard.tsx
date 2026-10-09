@@ -23,8 +23,12 @@ import {
   Lock,
   Send,
   LogOut,
+  CreditCard,
+  Loader2,
+  CheckCircle2,
 } from "lucide-react";
 import { createPortal } from "react-dom";
+import { submitEnquiry, startPayNow, type BookingPayload } from "../../lib/api";
 
 const WHATSAPP_NUMBER = "918886803322";
 
@@ -773,25 +777,80 @@ function ProceedButtons({
 }
 
 /* =============================================================================
-   CONFIRM MODAL
+   CONFIRM MODAL  (details + Pay Now + Send Enquiry + WhatsApp)
    ----------------------------------------------------------------------------
-   FIX: rendered through createPortal into document.body. The booking card
-   wrapper uses `backdrop-blur-2xl`, and any ancestor with a CSS filter /
-   backdrop-filter creates a new containing block for `position: fixed`
-   descendants — so this modal was being positioned/clipped relative to the
-   card (which also has `overflow-hidden`) instead of the viewport, hiding
-   part of it (e.g. the Confirm button) depending on scroll position.
-   Portaling to document.body escapes that entirely.
+   Rendered through createPortal into document.body. The booking card wrapper
+   uses `backdrop-blur-2xl`, and any ancestor with a CSS filter / backdrop-filter
+   creates a new containing block for `position: fixed` descendants - so the
+   modal was being positioned/clipped relative to the card instead of the
+   viewport. Portaling to document.body escapes that entirely.
 
-   UPDATE: now also shows the Terms & Conditions (same list that gets
-   appended to the WhatsApp message) so the customer sees them before
-   confirming, not just after.
+   The customer enters name / mobile / (optional) email here, then chooses:
+     - Pay Now        -> POST /api/payments/booking-now  -> payment gateway
+                         (only for fixed-fare trips: Local + Tour packages)
+     - Send Enquiry   -> POST /api/enquiries              -> our team calls back
+     - WhatsApp       -> opens WhatsApp with the booking message (as before)
    ============================================================================= */
+
+interface ContactInfo {
+  name: string;
+  mobile: string;
+  email: string;
+}
+
+type ActionResult = { ok: true; enquiryNumber?: string } | { ok: false; message: string };
+
+const CONTACT_STORAGE_KEY = "bsh_booking_contact";
+
+function loadSavedContact(): ContactInfo {
+  try {
+    const raw = window.localStorage.getItem(CONTACT_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<ContactInfo>;
+      return {
+        name: String(parsed.name ?? ""),
+        mobile: String(parsed.mobile ?? ""),
+        email: String(parsed.email ?? ""),
+      };
+    }
+  } catch {
+    // ignore
+  }
+  return { name: "", mobile: "", email: "" };
+}
+
+function saveContact(contact: ContactInfo) {
+  try {
+    window.localStorage.setItem(CONTACT_STORAGE_KEY, JSON.stringify(contact));
+  } catch {
+    // ignore
+  }
+}
+
+// Returns the 10-digit Indian mobile number, or null when it is not valid.
+function cleanIndianMobile(raw: string): string | null {
+  const digits = raw.replace(/\D/g, "");
+  const ten = digits.length > 10 ? digits.slice(-10) : digits;
+  return /^[6-9]\d{9}$/.test(ten) ? ten : null;
+}
+
+function validateContact(contact: ContactInfo): string | null {
+  if (contact.name.trim().length < 2) return "Please enter your name.";
+  if (!cleanIndianMobile(contact.mobile)) return "Please enter a valid 10-digit mobile number.";
+  const email = contact.email.trim();
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "Please enter a valid email address.";
+  return null;
+}
+
+const inputCls =
+  "w-full rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-sm text-slate-700 outline-none focus:border-blue-400 focus:bg-white";
 
 function ConfirmModal({
   summary,
   onClose,
-  onConfirm,
+  onWhatsApp,
+  onEnquiry,
+  onPayNow,
 }: {
   summary: {
     title: string;
@@ -800,74 +859,238 @@ function ConfirmModal({
     fare: number | null;
   };
   onClose: () => void;
-  onConfirm: () => void;
+  onWhatsApp: () => void;
+  onEnquiry: (contact: ContactInfo) => Promise<ActionResult>;
+  onPayNow: (contact: ContactInfo) => Promise<ActionResult>;
 }) {
-  return createPortal(
-    <div className="fixed inset-0 z-[1000] flex items-end justify-center bg-slate-900/40 p-4 backdrop-blur-sm sm:items-center">
-      <div className="max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl border border-white/70 bg-white/90 p-4 shadow-2xl backdrop-blur-xl sm:max-w-sm sm:p-5">
-        <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-base font-bold text-slate-800">{summary.title}</h3>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close"
-            className="flex h-7 w-7 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100"
-          >
-            <X size={16} />
-          </button>
-        </div>
+  const [contact, setContact] = useState<ContactInfo>(loadSavedContact);
+  const [busy, setBusy] = useState<null | "enquiry" | "pay">(null);
+  const [err, setErr] = useState<string | null>(null);
+  const [sentRef, setSentRef] = useState<string | null>(null);
 
-        <div className="space-y-2 rounded-xl bg-slate-50/80 p-3">
-          {summary.rows.map((row) => (
-            <div key={row.label} className="flex items-start justify-between gap-3 text-sm">
-              <span className="shrink-0 text-slate-500">{row.label}</span>
-              <span className="text-right font-medium text-slate-800">{row.value}</span>
-            </div>
-          ))}
-        </div>
+  const canPay = summary.fare !== null;
 
-        <div className="mt-3 flex items-center justify-between rounded-xl border border-blue-200/60 bg-blue-500/10 px-3 py-2.5">
-          <span className="text-sm font-medium text-slate-600">{summary.fareLabel}</span>
-          <span className="text-xl font-bold text-blue-600">
-            {summary.fare !== null ? formatCurrency(summary.fare) : "On call"}
-          </span>
-        </div>
+  function update(field: keyof ContactInfo, value: string) {
+    setContact((c) => ({ ...c, [field]: value }));
+    if (err) setErr(null);
+  }
 
-        <div className="mt-3 rounded-xl border border-slate-200/70 bg-slate-50/60 p-3">
-          <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
-            Terms &amp; Conditions
+  async function run(kind: "enquiry" | "pay") {
+    if (busy) return;
+    const problem = validateContact(contact);
+    if (problem) {
+      setErr(problem);
+      return;
+    }
+    setErr(null);
+    setBusy(kind);
+    saveContact(contact);
+
+    const result = kind === "pay" ? await onPayNow(contact) : await onEnquiry(contact);
+
+    if (!result.ok) {
+      setBusy(null);
+      setErr(result.message);
+      return;
+    }
+    if (kind === "enquiry") {
+      setBusy(null);
+      setSentRef(result.enquiryNumber ?? "");
+    }
+    // kind === "pay": the browser is being redirected to the payment page,
+    // so we intentionally keep the button in its "Redirecting..." state.
+  }
+
+  const shell = (children: React.ReactNode) =>
+    createPortal(
+      <div className="fixed inset-0 z-[1000] flex items-end justify-center bg-slate-900/40 p-4 backdrop-blur-sm sm:items-center">
+        <div className="max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl border border-white/70 bg-white/90 p-4 shadow-2xl backdrop-blur-xl sm:max-w-sm sm:p-5">
+          {children}
+        </div>
+      </div>,
+      document.body
+    );
+
+  // ---- Success screen after "Send Enquiry" ----
+  if (sentRef !== null) {
+    return shell(
+      <div className="py-4 text-center">
+        <CheckCircle2 size={52} className="mx-auto text-emerald-500" />
+        <h3 className="mt-3 text-lg font-bold text-slate-800">Enquiry Sent!</h3>
+        {sentRef && (
+          <p className="mt-1 text-sm text-slate-600">
+            Reference: <span className="font-semibold text-slate-800">{sentRef}</span>
           </p>
-          <ol className="space-y-1 text-[11px] leading-snug text-slate-500">
-            {TERMS_AND_CONDITIONS.map((term, i) => (
-              <li key={term} className="flex gap-1.5">
-                <span className="shrink-0 font-semibold text-slate-400">{i + 1}.</span>
-                <span>{term}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <p className="mt-3 text-center text-[11px] text-slate-400">
-          Fixed package fare. Tolls, parking &amp; waiting charges (if any) are extra.
+        )}
+        <p className="mt-2 text-sm text-slate-500">
+          Thank you, {contact.name.trim().split(" ")[0]}. Our team will call you very soon on{" "}
+          <span className="font-medium text-slate-700">{cleanIndianMobile(contact.mobile)}</span> to
+          confirm your booking.
         </p>
-
-        <button
-          type="button"
-          onClick={onConfirm}
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-[#25D366] py-3.5 text-base font-semibold text-white shadow-lg shadow-emerald-500/30 transition-transform hover:scale-[1.01] active:scale-[0.99] sm:py-3 sm:text-sm"
-        >
-          <MessageCircle size={16} /> Confirm &amp; Continue on WhatsApp
-        </button>
         <button
           type="button"
           onClick={onClose}
-          className="mt-2 w-full rounded-xl py-2.5 text-sm font-medium text-slate-500 hover:bg-slate-50"
+          className="mt-5 w-full rounded-xl bg-gradient-to-r from-indigo-600 via-blue-600 to-blue-500 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30"
         >
-          Edit Details
+          Done
+        </button>
+        <button
+          type="button"
+          onClick={onWhatsApp}
+          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-medium text-emerald-600 hover:bg-emerald-50"
+        >
+          <MessageCircle size={15} /> Also chat on WhatsApp
         </button>
       </div>
-    </div>,
-    document.body
+    );
+  }
+
+  return shell(
+    <>
+      <div className="mb-3 flex items-center justify-between">
+        <h3 className="text-base font-bold text-slate-800">{summary.title}</h3>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="flex h-7 w-7 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100"
+        >
+          <X size={16} />
+        </button>
+      </div>
+
+      <div className="space-y-2 rounded-xl bg-slate-50/80 p-3">
+        {summary.rows.map((row) => (
+          <div key={row.label} className="flex items-start justify-between gap-3 text-sm">
+            <span className="shrink-0 text-slate-500">{row.label}</span>
+            <span className="text-right font-medium text-slate-800">{row.value}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-3 flex items-center justify-between rounded-xl border border-blue-200/60 bg-blue-500/10 px-3 py-2.5">
+        <span className="text-sm font-medium text-slate-600">{summary.fareLabel}</span>
+        <span className="text-xl font-bold text-blue-600">
+          {summary.fare !== null ? formatCurrency(summary.fare) : "On call"}
+        </span>
+      </div>
+
+      {/* ---- Contact details ---- */}
+      <div className="mt-3 space-y-2">
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">Your Details</p>
+        <input
+          type="text"
+          value={contact.name}
+          onChange={(e) => update("name", e.target.value)}
+          placeholder="Full name *"
+          autoComplete="name"
+          maxLength={100}
+          className={inputCls}
+        />
+        <input
+          type="tel"
+          inputMode="numeric"
+          value={contact.mobile}
+          onChange={(e) => update("mobile", e.target.value)}
+          placeholder="Mobile number (10 digits) *"
+          autoComplete="tel"
+          maxLength={15}
+          className={inputCls}
+        />
+        <input
+          type="email"
+          value={contact.email}
+          onChange={(e) => update("email", e.target.value)}
+          placeholder="Email (optional - for payment receipt)"
+          autoComplete="email"
+          className={inputCls}
+        />
+      </div>
+
+      <div className="mt-3 rounded-xl border border-slate-200/70 bg-slate-50/60 p-3">
+        <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+          Terms &amp; Conditions
+        </p>
+        <ol className="space-y-1 text-[11px] leading-snug text-slate-500">
+          {TERMS_AND_CONDITIONS.map((term, i) => (
+            <li key={term} className="flex gap-1.5">
+              <span className="shrink-0 font-semibold text-slate-400">{i + 1}.</span>
+              <span>{term}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <p className="mt-3 text-center text-[11px] text-slate-400">
+        {canPay
+          ? "Fixed package fare. Tolls, parking & waiting charges (if any) are extra."
+          : "The fare for this trip is confirmed by our team - send an enquiry and we will call you."}
+      </p>
+
+      {err && (
+        <p className="mt-3 flex items-start gap-1.5 text-xs font-medium text-red-500">
+          <AlertCircle size={14} className="mt-0.5 shrink-0" /> {err}
+        </p>
+      )}
+
+      {/* ---- Actions ---- */}
+      {canPay && (
+        <button
+          type="button"
+          disabled={busy !== null}
+          onClick={() => run("pay")}
+          className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 via-blue-600 to-blue-500 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-500/30 transition-transform hover:scale-[1.01] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 sm:py-3 sm:text-sm"
+        >
+          {busy === "pay" ? (
+            <>
+              <Loader2 size={16} className="animate-spin" /> Redirecting to payment...
+            </>
+          ) : (
+            <>
+              <CreditCard size={16} /> Pay Now {formatCurrency(summary.fare)}
+            </>
+          )}
+        </button>
+      )}
+
+      <button
+        type="button"
+        disabled={busy !== null}
+        onClick={() => run("enquiry")}
+        className={
+          canPay
+            ? "mt-2 flex w-full items-center justify-center gap-2 rounded-full border border-blue-300 bg-white py-3 text-sm font-semibold text-blue-600 transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-60"
+            : "mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 via-blue-600 to-blue-500 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-500/30 transition-transform hover:scale-[1.01] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 sm:py-3 sm:text-sm"
+        }
+      >
+        {busy === "enquiry" ? (
+          <>
+            <Loader2 size={16} className="animate-spin" /> Sending...
+          </>
+        ) : (
+          <>
+            <Send size={16} /> Send Enquiry
+          </>
+        )}
+      </button>
+
+      <button
+        type="button"
+        disabled={busy !== null}
+        onClick={onWhatsApp}
+        className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-[#25D366] py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/30 transition-transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60"
+      >
+        <MessageCircle size={16} /> Continue on WhatsApp
+      </button>
+      <button
+        type="button"
+        disabled={busy !== null}
+        onClick={onClose}
+        className="mt-2 w-full rounded-xl py-2.5 text-sm font-medium text-slate-500 hover:bg-slate-50"
+      >
+        Edit Details
+      </button>
+    </>
   );
 }
 
@@ -1189,6 +1412,98 @@ useEffect(() => {
     }
     setError(null);
     setConfirmOpen(true);
+  }
+
+  // ---- Backend: build the booking payload from the selected tab ----
+  function buildBookingPayload(contact: ContactInfo): BookingPayload {
+    const base = {
+      customer_name: contact.name.trim(),
+      mobile: contact.mobile.trim(),
+      customer_email: contact.email.trim() || undefined,
+      vehicle: car.name,
+      passengers: car.seats,
+    };
+
+    if (activeTab === "local") {
+      const pkg = LOCAL_PACKAGES.find((p) => p.id === localPackageId)!;
+      return {
+        ...base,
+        service_type: "Local Taxi",
+        pickup_location: localPickup.trim(),
+        drop_location: localPickup.trim(), // local packages return to the pickup point
+        travel_date: localDate,
+        travel_time: localTime,
+        notes: `Local package: ${pkg.label}. Fare shown on website: ${formatCurrency(localFare)}. Booked from website.`,
+      };
+    }
+
+    if (activeTab === "outstation") {
+      return {
+        ...base,
+        service_type: "Outstation Cab",
+        pickup_location: outPickup.trim(),
+        drop_location: outDrop.trim(),
+        travel_date: outDate,
+        travel_time: outTime,
+        notes: `${tripType === "round" ? "Round Trip" : "One Way"}. Fare to be confirmed on call. Booked from website.`,
+      };
+    }
+
+    if (activeTab === "airport") {
+      return {
+        ...base,
+        service_type: "Airport Taxi",
+        pickup_location: airportPickupLabel.trim(),
+        drop_location: airportDropLabel.trim(),
+        travel_date: airportDate,
+        travel_time: airportTime,
+        notes: `${airportDirection === "fromAirport" ? "Airport to City" : "City to Airport"}. Fare to be confirmed on call. Booked from website.`,
+      };
+    }
+
+    return {
+      ...base,
+      service_type: "Tour Package",
+      tour_package_type: tourPkg.name,
+      travel_date: tourDate,
+      notes: `Tour: ${tourPkg.name} (${tourPkg.days}D/${tourPkg.nights}N). Fare shown on website: ${formatCurrency(tourFare)}. Booked from website.`,
+    };
+  }
+
+  // ---- "Send Enquiry" -> POST /api/enquiries ----
+  async function handleEnquiry(contact: ContactInfo): Promise<ActionResult> {
+    try {
+      const res = await submitEnquiry(buildBookingPayload(contact));
+      return { ok: true, enquiryNumber: res.enquiry?.enquiry_number };
+    } catch (e) {
+      return { ok: false, message: e instanceof Error ? e.message : "Unable to send your enquiry." };
+    }
+  }
+
+  // ---- "Pay Now" -> POST /api/payments/booking-now -> gateway page ----
+  // The amount is calculated on the SERVER from planA + vehicle_key; the
+  // browser never sends the price.
+  async function handlePayNow(contact: ContactInfo): Promise<ActionResult> {
+    try {
+      let planA: string;
+      if (activeTab === "local") planA = localPackageId;
+      else if (activeTab === "tour") planA = tourId;
+      else return { ok: false, message: "Online payment is not available for this trip. Please send an enquiry." };
+
+      const res = await startPayNow({
+        ...buildBookingPayload(contact),
+        planA,
+        vehicle_key: carId,
+      });
+
+      if (!/^https?:\/\//i.test(res.redirectUrl || "")) {
+        return { ok: false, message: "Could not open the payment page. Please try again." };
+      }
+      window.location.assign(res.redirectUrl);
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, message: e instanceof Error ? e.message : "Unable to start the payment." };
+    }
   }
 
   // ---- Build the WhatsApp message ----
@@ -1631,7 +1946,13 @@ useEffect(() => {
         </div>
 
         {confirmOpen && (
-          <ConfirmModal summary={buildSummary()} onClose={() => setConfirmOpen(false)} onConfirm={openWhatsApp} />
+          <ConfirmModal
+            summary={buildSummary()}
+            onClose={() => setConfirmOpen(false)}
+            onWhatsApp={openWhatsApp}
+            onEnquiry={handleEnquiry}
+            onPayNow={handlePayNow}
+          />
         )}
 
         {isAdmin && quoteModalOpen && (

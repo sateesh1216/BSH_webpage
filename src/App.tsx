@@ -18,6 +18,7 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 const DestinationDetail = lazy(() => import("./pages/DestinationDetail"));
 import LocalTaxi from "./pages/LocalTaxi";
 const OutstationTaxi  = lazy(() => import("./pages/Outstationtaxi"));
+const PaymentResultPage = lazy(() => import("./pages/PaymentResultPage"));
 // import ArakuPopup from "./components/home/ArakuPopup";
 export default function App() {
   return (
@@ -52,6 +53,9 @@ export default function App() {
             <Route path="/google-reviews" element={<GoogleReviews />} />
             <Route path="/privacy-policy" element={<LegalPage />} />
             <Route path="/terms" element={<LegalPage />} />
+
+            {/* Payment gateway return page (backend FRONTEND_PAYMENT_RESULT_PATH) */}
+            <Route path="/payment/result" element={<PaymentResultPage />} />
            
           </Routes>
         </Suspense>
