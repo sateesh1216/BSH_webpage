@@ -46,6 +46,8 @@ async function request<T>(path: string, init: { method?: string; body?: unknown 
       method: init.method ?? "GET",
       headers: {
         "Content-Type": "application/json",
+        // Explicit company identity for backend company-wise routing.
+        "X-Company-Key": COMPANY_KEY,
         // lets the request through when the API is exposed with an ngrok URL
         "ngrok-skip-browser-warning": "true",
       },
